@@ -140,7 +140,14 @@
     var c1=document.getElementById('sk-lang-caret'), c2=document.getElementById('sk-lang-caret-footer');
     if(c1)c1.style.transform=''; if(c2)c2.style.transform='';
   }
-  document.addEventListener('click', closeLangMenu);
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('button.sk-lang-opt[data-lang]');
+    if (btn) {
+      var lang = btn.getAttribute('data-lang');
+      if (lang) { window.location.href = '?lang=' + lang; return; }
+    }
+    closeLangMenu();
+  });
 
   /* ── BOOTSTRAP ── */
   document.addEventListener('DOMContentLoaded', function() {

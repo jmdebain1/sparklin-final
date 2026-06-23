@@ -13,7 +13,8 @@ function initI18n(): string {
     // Priority: ?lang= > cookie > default
     if (isset($_GET['lang']) && in_array($_GET['lang'], $allowed)) {
         $lang = $_GET['lang'];
-        setcookie('sk_lang', $lang, time() + 365*24*3600, '/', '', true, false);
+        $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (int)($_SERVER['SERVER_PORT'] ?? 80) === 443;
+        setcookie('sk_lang', $lang, time() + 365*24*3600, '/', '', $isSecure, false);
     } elseif (isset($_COOKIE['sk_lang']) && in_array($_COOKIE['sk_lang'], $allowed)) {
         $lang = $_COOKIE['sk_lang'];
     }
