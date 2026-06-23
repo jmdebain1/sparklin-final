@@ -1,0 +1,12 @@
+# sparklin.io — Apache (OVH)
+# Force la priorité aux pages dynamiques PHP (traduction Supabase server-side).
+# Sans ceci, Apache sert index.html (snapshot figé en FR) avant index.php.
+DirectoryIndex index.php index.html
+
+# UTF-8 par défaut
+AddDefaultCharset UTF-8
+
+# Empêche l'accès direct au .env et aux includes
+<FilesMatch "^\.env">
+    Require all denied
+</FilesMatch>
