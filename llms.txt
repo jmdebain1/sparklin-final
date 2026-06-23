@@ -1,0 +1,25 @@
+# Sparklin — Solutions IRVE intelligentes
+
+> Sparklin est la seule entreprise française à développer à la fois une plateforme de supervision IRVE et ses propres solutions de recharge. Conçu à Nantes, déployé partout en France.
+
+## Pages
+
+- Accueil : /
+- Spark 1 (prise 3,7 kW) : /spark-1/
+- Spark Plus (premium 3,7 kW) : /spark-plus/
+- Spark x Go-E (7–22 kW) : /spark-go-e/
+- Spark Pilot (supervision) : /spark-pilot/
+- Sparklin App : /app/
+- Cas PME : /cas/pme/
+- Cas collaborateurs : /cas/collaborateurs/
+- Cas hôtel : /cas/hotel/
+- Cas camping : /cas/camping/
+- Cas collectivité : /cas/collectivite/
+- À propos : /a-propos/
+- Livre blanc 2026 : /livre-blanc/
+- Contact : /contact/
+- Blog : /blog/
+
+## Entreprise
+
+Sparklin SAS, fondée mars 2021, Nantes. Actionnaires : GNKGO (conception produits) + TMG (cybersécurité/hébergement). Certifiée Lab R&D EDF. OCPP 1.6/2.0, GIREVE, RGPD/CNIL.
