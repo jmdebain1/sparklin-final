@@ -26,7 +26,7 @@ function supabaseGet(string $table, string $query = ''): ?array {
 
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+    // curl_close() is a no-op and deprecated since PHP 8.0 — the handle is freed automatically.
 
     if ($httpCode !== 200 || !$response) return null;
 
@@ -46,19 +46,25 @@ function fetchTranslations(string $lang = 'fr'): array {
     $col = $colMap[$lang] ?? 'fr';
     $fallback = 'fr';
 
-    // Fetch key + target lang + FR fallback in one query
-    $select = urlencode("key,$col,$fallback");
-    $rows = supabaseGet('sparklin_i18n', "select=$select");
-
-    if (!$rows) return [];
+    // Fetch key + target lang + FR fallback, paginating to bypass the
+    // PostgREST 1000-row response cap (the i18n table exceeds 1000 rows).
+    $select   = urlencode("key,$col,$fallback");
+    $pageSize = 1000;
+    $offset   = 0;
 
     $translations = [];
-    foreach ($rows as $row) {
-        $key = $row['key'] ?? '';
-        $val = $row[$col] ?? $row[$fallback] ?? '';
-        if ($key && $val) {
-            $translations[$key] = $val;
+    while (true) {
+        $rows = supabaseGet('sparklin_i18n', "select=$select&order=key&limit=$pageSize&offset=$offset");
+        if (!$rows) break;
+        foreach ($rows as $row) {
+            $key = $row['key'] ?? '';
+            $val = $row[$col] ?? $row[$fallback] ?? '';
+            if ($key && $val) {
+                $translations[$key] = $val;
+            }
         }
+        if (count($rows) < $pageSize) break;
+        $offset += $pageSize;
     }
     return $translations;
 }

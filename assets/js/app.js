@@ -110,10 +110,10 @@
     var trigger = document.getElementById('sk-lang-trigger');
     var caret = document.getElementById('sk-lang-caret');
     if (!menu) return;
-    var isOpen = menu.classList.contains('open');
+    var isOpen = menu.style.display === 'block';
     closeLangMenu();
     if (!isOpen) {
-      menu.classList.add('open');
+      menu.style.display = 'block';
       if(trigger) { trigger.classList.add('open'); trigger.setAttribute('aria-expanded','true'); }
       if(caret) caret.style.transform = 'rotate(180deg)';
     }
@@ -123,17 +123,17 @@
     var menu = document.getElementById('sk-lang-menu-footer');
     var caret = document.getElementById('sk-lang-caret-footer');
     if (!menu) return;
-    var isOpen = menu.classList.contains('open');
+    var isOpen = menu.style.display === 'block';
     closeLangMenu();
     if (!isOpen) {
-      menu.classList.add('open');
+      menu.style.display = 'block';
       if(caret) caret.style.transform = 'rotate(180deg)';
     }
   }
   function closeLangMenu() {
     ['sk-lang-menu','sk-lang-menu-footer'].forEach(function(id) {
       var el = document.getElementById(id);
-      if(el) el.classList.remove('open');
+      if(el) el.style.display = 'none';
     });
     var t = document.getElementById('sk-lang-trigger');
     if(t){t.classList.remove('open');t.setAttribute('aria-expanded','false');}
