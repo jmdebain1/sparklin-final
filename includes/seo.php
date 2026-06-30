@@ -35,9 +35,9 @@ if (!function_exists('sk_seo_head')) {
         $type  = $opts['type'] ?? 'website';
         $esc   = fn($s) => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 
-        // noindex hors production (preprod debaincorp, localhost, etc.)
+        // noindex hors production (preprod debaincorp, localhost…) ou si demandé (ex. page merci)
         $host = $_SERVER['HTTP_HOST'] ?? '';
-        if (stripos($host, 'sparklin.io') === false) {
+        if (!empty($opts['noindex']) || stripos($host, 'sparklin.io') === false) {
             echo "  <meta name=\"robots\" content=\"noindex, nofollow\"/>\n";
         }
 
@@ -54,6 +54,14 @@ if (!function_exists('sk_seo_head')) {
         $loc = ['fr'=>'fr_FR','en'=>'en_US','de'=>'de_DE','es'=>'es_ES','th'=>'th_TH','ms'=>'ms_MY','id'=>'id_ID'];
         echo '  <meta property="og:type" content="' . $esc($type) . "\"/>\n";
         echo '  <meta property="og:site_name" content="Sparklin"/>' . "\n";
+        if (!empty($opts['title'])) {
+            echo '  <meta property="og:title" content="' . $esc($opts['title']) . "\"/>\n";
+            echo '  <meta name="twitter:title" content="' . $esc($opts['title']) . "\"/>\n";
+        }
+        if (!empty($opts['desc'])) {
+            echo '  <meta property="og:description" content="' . $esc($opts['desc']) . "\"/>\n";
+            echo '  <meta name="twitter:description" content="' . $esc($opts['desc']) . "\"/>\n";
+        }
         echo '  <meta property="og:url" content="' . $esc(sk_seo_url($cur)) . "\"/>\n";
         echo '  <meta property="og:image" content="' . $esc($img) . "\"/>\n";
         echo '  <meta property="og:locale" content="' . ($loc[$cur] ?? 'fr_FR') . "\"/>\n";
