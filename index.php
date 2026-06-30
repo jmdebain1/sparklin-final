@@ -34,6 +34,7 @@ $words = json_encode($wordCycle[$lang] ?? $wordCycle['fr']);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(); ?>
 </head>
 <body>
 <div class="nav-mega-panel" style="display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);border-radius:0 0 14px 14px;box-shadow:0 16px 48px rgba(26,26,46,.1);padding:8px;min-width:280px;z-index:500;flex-direction:column;">

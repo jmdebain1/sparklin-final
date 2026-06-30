@@ -1,102 +1,262 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://sparklin.io/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://sparklin.io/spark-1/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/spark-1/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/spark-1/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/spark-1/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/spark-1/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/spark-1/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/spark-1/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/spark-1/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/spark-1/"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://sparklin.io/spark-plus/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/spark-plus/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/spark-plus/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/spark-plus/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/spark-plus/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/spark-plus/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/spark-plus/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/spark-plus/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/spark-plus/"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://sparklin.io/spark-go-e/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/spark-go-e/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/spark-go-e/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/spark-go-e/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/spark-go-e/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/spark-go-e/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/spark-go-e/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/spark-go-e/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/spark-go-e/"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://sparklin.io/spark-pilot/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/spark-pilot/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/spark-pilot/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/spark-pilot/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/spark-pilot/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/spark-pilot/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/spark-pilot/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/spark-pilot/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/spark-pilot/"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://sparklin.io/app/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/app/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/app/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/app/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/app/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/app/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/app/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/app/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparklin.io/cas/pme/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/cas/pme/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/cas/pme/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/cas/pme/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/cas/pme/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/cas/pme/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/cas/pme/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/cas/pme/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/cas/pme/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparklin.io/cas/collaborateurs/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/cas/collaborateurs/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/cas/collaborateurs/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/cas/collaborateurs/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/cas/collaborateurs/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/cas/collaborateurs/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/cas/collaborateurs/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/cas/collaborateurs/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/cas/collaborateurs/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparklin.io/cas/hotel/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/cas/hotel/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/cas/hotel/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/cas/hotel/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/cas/hotel/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/cas/hotel/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/cas/hotel/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/cas/hotel/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/cas/hotel/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparklin.io/cas/camping/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/cas/camping/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/cas/camping/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/cas/camping/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/cas/camping/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/cas/camping/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/cas/camping/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/cas/camping/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/cas/camping/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparklin.io/cas/collectivite/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/cas/collectivite/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/cas/collectivite/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/cas/collectivite/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/cas/collectivite/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/cas/collectivite/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/cas/collectivite/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/cas/collectivite/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/cas/collectivite/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparklin.io/a-propos/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/a-propos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/a-propos/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/a-propos/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/a-propos/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/a-propos/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/a-propos/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/a-propos/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/a-propos/"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sparklin.io/livre-blanc/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/livre-blanc/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/livre-blanc/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/livre-blanc/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/livre-blanc/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/livre-blanc/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/livre-blanc/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/livre-blanc/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/livre-blanc/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparklin.io/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/contact/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/contact/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/contact/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/contact/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/contact/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/contact/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/contact/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparklin.io/blog/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/blog/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/blog/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/blog/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/blog/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/blog/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/blog/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/blog/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/blog/"/>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparklin.io/blog/load-balancing-recharge-electrique/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/blog/load-balancing-recharge-electrique/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/blog/load-balancing-recharge-electrique/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/blog/load-balancing-recharge-electrique/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/blog/load-balancing-recharge-electrique/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/blog/load-balancing-recharge-electrique/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/blog/load-balancing-recharge-electrique/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/blog/load-balancing-recharge-electrique/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/blog/load-balancing-recharge-electrique/"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sparklin.io/blog/irve-reglementation-lom-2024/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/blog/irve-reglementation-lom-2024/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/blog/irve-reglementation-lom-2024/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/blog/irve-reglementation-lom-2024/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/blog/irve-reglementation-lom-2024/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/blog/irve-reglementation-lom-2024/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/blog/irve-reglementation-lom-2024/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/blog/irve-reglementation-lom-2024/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/blog/irve-reglementation-lom-2024/"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sparklin.io/blog/remboursement-recharge-domicile-urssaf/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/blog/remboursement-recharge-domicile-urssaf/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/blog/remboursement-recharge-domicile-urssaf/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/blog/remboursement-recharge-domicile-urssaf/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/blog/remboursement-recharge-domicile-urssaf/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/blog/remboursement-recharge-domicile-urssaf/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/blog/remboursement-recharge-domicile-urssaf/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/blog/remboursement-recharge-domicile-urssaf/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/blog/remboursement-recharge-domicile-urssaf/"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sparklin.io/blog/gireve-interoperabilite-bornes/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/blog/gireve-interoperabilite-bornes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/blog/gireve-interoperabilite-bornes/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/blog/gireve-interoperabilite-bornes/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/blog/gireve-interoperabilite-bornes/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/blog/gireve-interoperabilite-bornes/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/blog/gireve-interoperabilite-bornes/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/blog/gireve-interoperabilite-bornes/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/blog/gireve-interoperabilite-bornes/"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sparklin.io/evenements/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/evenements/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/evenements/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/evenements/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/evenements/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/evenements/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/evenements/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/evenements/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/evenements/"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
