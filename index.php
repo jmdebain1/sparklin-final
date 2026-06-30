@@ -647,6 +647,7 @@ window._skLang = '<?= lang() ?>';
 <?php $ic = function($k){ $v = tr($k); return $v === $k ? '' : $v; }; ?>
 <script>
 window.SK_INTERCONNECT_I18N = {
+  header_sub:    <?= json_encode($ic('home.ic.header_sub'), JSON_UNESCAPED_UNICODE) ?>,
   flexprice:     <?= json_encode($ic('home.ic.flexprice'), JSON_UNESCAPED_UNICODE) ?>,
   flexprice_sub: <?= json_encode($ic('home.ic.flexprice_sub'), JSON_UNESCAPED_UNICODE) ?>,
   autopay:       <?= json_encode($ic('home.ic.autopay'), JSON_UNESCAPED_UNICODE) ?>,
