@@ -226,7 +226,7 @@ $lang = initI18n();
       <span class="section-label" data-i18n="footer.lnk.contact"><?= tr('footer.lnk.contact') ?></span>
       <h1 style="font-family:var(--font-display);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:800;color:var(--dark);margin-bottom:12px;" data-i18n="contact.h1"><?= tr('contact.h1') ?></h1>
       <p style="color:var(--text-mid);margin-bottom:40px;font-size:15px;line-height:1.75;" data-i18n="contact.intro"><?= tr('contact.intro') ?></p>
-      <form name="contact" data-supabase="true" method="POST" action="/contact/" style="display:flex;flex-direction:column;gap:20px;">
+      <form name="contact" id="contact-form" method="POST" action="/contact/" onsubmit="return handleContactSubmit(event)" style="display:flex;flex-direction:column;gap:20px;">
         <input type="hidden" name="form-name" value="contact"/>
         <div class="contact-form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
           <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.f.name"><?= tr('contact.f.name') ?></label><input required type="text" name="nom" placeholder="Jean Dupont" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"/></div>
@@ -236,8 +236,40 @@ $lang = initI18n();
         <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.form.type"><?= tr('contact.form.type') ?></label><select name="type_besoin" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;background:#fff;"><option value="" data-i18n="contact.f.select"><?= tr('contact.f.select') ?></option><option data-i18n="contact.f.type0"><?= tr('contact.f.type0') ?></option><option data-i18n="contact.f.type1"><?= tr('contact.f.type1') ?></option><option data-i18n="contact.f.type2"><?= tr('contact.f.type2') ?></option><option data-i18n="contact.f.type3"><?= tr('contact.f.type3') ?></option><option data-i18n="contact.f.type_other"><?= tr('contact.f.type_other') ?></option></select></div>
         <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.form.stations"><?= tr('contact.form.stations') ?></label><input type="text" name="nb_bornes" placeholder="<?= t('contact.ph.stations') ?>" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"/></div>
         <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.form.message"><?= tr('contact.form.message') ?></label><textarea name="message" rows="4" placeholder="<?= t('contact.ph.message') ?>" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;resize:vertical;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"></textarea></div>
-        <button type="submit" style="background:var(--orange);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#c94b31'" onmouseout="this.style.background='var(--orange)'" data-i18n="ui.send_request"><?= tr('ui.send_request') ?></button>
+        <div id="contact-status" style="display:none;font-size:14px;padding:12px 16px;border-radius:10px;"></div>
+        <button type="submit" id="contact-btn" style="background:var(--orange);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#c94b31'" onmouseout="this.style.background='var(--orange)'" data-i18n="ui.send_request"><?= tr('ui.send_request') ?></button>
       </form>
+      <script>
+      async function handleContactSubmit(e){
+        e.preventDefault();
+        var form = document.getElementById('contact-form');
+        var btn  = document.getElementById('contact-btn');
+        var box  = document.getElementById('contact-status');
+        var data = Object.fromEntries(new FormData(form).entries());
+        if(!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)){
+          box.style.display='block'; box.style.background='#fde8e3'; box.style.color='#b3361c';
+          box.textContent = <?= json_encode(tr('contact.js.invalid_email')) ?>; return false;
+        }
+        var label = btn.innerHTML; btn.disabled = true; btn.style.opacity='.7';
+        btn.innerHTML = <?= json_encode(tr('contact.js.sending')) ?>;
+        box.style.display='none';
+        try{
+          var resp = await fetch('/api/send-contact.php', {
+            method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
+          });
+          if(!resp.ok) throw new Error('http');
+          form.reset();
+          box.style.display='block'; box.style.background='#e6f7ee'; box.style.color='#0a7d3e';
+          box.textContent = <?= json_encode(tr('contact.js.success')) ?>;
+        }catch(err){
+          box.style.display='block'; box.style.background='#fde8e3'; box.style.color='#b3361c';
+          box.textContent = <?= json_encode(tr('contact.js.error')) ?>;
+        }finally{
+          btn.disabled=false; btn.style.opacity='1'; btn.innerHTML=label;
+        }
+        return false;
+      }
+      </script>
     </div>
     <div style="position:sticky;top:100px;">
       <div style="background:var(--dark);border-radius:20px;padding:32px;color:#fff;margin-bottom:24px;">

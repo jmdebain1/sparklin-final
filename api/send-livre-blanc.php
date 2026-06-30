@@ -17,15 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); echo json_encode(['error'=>'Method not allowed']); exit; }
 
 $body = json_decode(file_get_contents('php://input'), true);
-$email = filter_var($body['email'] ?? '', FILTER_VALIDATE_EMAIL);
-$name  = htmlspecialchars($body['name'] ?? '', ENT_QUOTES, 'UTF-8');
-$company = htmlspecialchars($body['company'] ?? '', ENT_QUOTES, 'UTF-8');
+if (!is_array($body)) $body = $_POST;
+$email = filter_var(trim($body['email'] ?? ''), FILTER_VALIDATE_EMAIL);
+// le formulaire envoie "prenom" ; on accepte aussi "name" par compatibilité
+$name  = htmlspecialchars(trim($body['prenom'] ?? ($body['name'] ?? '')), ENT_QUOTES, 'UTF-8');
+$company = htmlspecialchars(trim($body['company'] ?? ($body['entreprise'] ?? '')), ENT_QUOTES, 'UTF-8');
 
 if (!$email) { http_response_code(400); echo json_encode(['error'=>'Email invalide']); exit; }
 
 /* ── 1. Store lead in Supabase ── */
 $supaUrl = rtrim($_ENV['SUPABASE_URL'] ?? '', '/');
-$supaKey = $_ENV['SUPABASE_SERVICE_ROLE_KEY'] ?? '';
+$supaKey = $_ENV['SUPABASE_SECRET'] ?? ($_ENV['SUPABASE_SERVICE_ROLE_KEY'] ?? '');
 
 if ($supaUrl && $supaKey) {
     $ch = curl_init("$supaUrl/rest/v1/leads");
