@@ -4,6 +4,7 @@
    Formulaire de contact → notification email via Brevo (+ lead Supabase)
    ══════════════════════════════════════════════════════════════ */
 require_once __DIR__ . '/../includes/env.php';
+require_once __DIR__ . '/../includes/brevo.php';
 loadEnv(__DIR__ . '/../.env');
 
 header('Content-Type: application/json');
@@ -22,6 +23,8 @@ $entreprise = $clean($body['entreprise'] ?? '');
 $type       = $clean($body['type_besoin'] ?? '');
 $bornes     = $clean($body['nb_bornes'] ?? '');
 $message    = $clean($body['message'] ?? '');
+// contact ou support → même liste Brevo
+$source     = in_array(($body['source'] ?? ''), ['contact','support'], true) ? $body['source'] : 'contact';
 
 if (!$email) { http_response_code(400); echo json_encode(['error' => 'Email invalide']); exit; }
 
@@ -35,7 +38,7 @@ if ($supaUrl && $supaKey) {
         CURLOPT_HTTPHEADER => ["apikey: $supaKey", "Authorization: Bearer $supaKey", "Content-Type: application/json", "Prefer: return=minimal"],
         CURLOPT_POSTFIELDS => json_encode([
             'email' => $email, 'name' => $nom, 'company' => $entreprise,
-            'source' => 'contact', 'message' => $message,
+            'source' => $source, 'message' => $message,
             'meta' => ['type_besoin' => $type, 'nb_bornes' => $bornes],
             'created_at' => date('c'),
         ], JSON_UNESCAPED_UNICODE),
@@ -78,6 +81,8 @@ $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 if ($code >= 200 && $code < 300) {
+    // Inscription à la liste Brevo "Contact & Support" (best-effort)
+    brevo_add_contact($email, $_ENV['BREVO_LIST_CONTACT_ID'] ?? 0, ['NOM' => $nom, 'SOCIETE' => $entreprise]);
     echo json_encode(['ok' => true]);
 } else {
     http_response_code(502);

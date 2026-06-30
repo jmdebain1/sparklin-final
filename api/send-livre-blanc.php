@@ -6,6 +6,7 @@
    envoie l'email via Brevo.
    ══════════════════════════════════════════════════════════════ */
 require_once __DIR__ . '/../includes/env.php';
+require_once __DIR__ . '/../includes/brevo.php';
 loadEnv(__DIR__ . '/../.env');
 
 header('Content-Type: application/json');
@@ -80,5 +81,8 @@ if ($brevoKey) {
     curl_exec($ch);
     curl_close($ch);
 }
+
+/* ── 3. Inscription à la liste Brevo "Livre blanc" (best-effort) ── */
+brevo_add_contact($email, $_ENV['BREVO_LIST_LIVREBLANC_ID'] ?? 0, ['PRENOM' => $name, 'SOCIETE' => $company]);
 
 echo json_encode(['ok' => true]);
