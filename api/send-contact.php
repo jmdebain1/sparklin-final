@@ -48,7 +48,7 @@ if ($supaUrl && $supaKey) {
 
 /* ── 2. Email de notification à l'équipe via Brevo ── */
 $brevoKey = $_ENV['BREVO_API_KEY'] ?? '';
-$fromEmail = $_ENV['BREVO_FROM_EMAIL'] ?? 'contact@sparklin.io';
+$fromEmail = $_ENV['BREVO_FROM_EMAIL'] ?? 'jean-mael.debain@sparklin.io';
 $fromName  = $_ENV['BREVO_FROM_NAME']  ?? 'Sparklin';
 $toEmail   = $_ENV['CONTACT_TO_EMAIL'] ?? 'contact@sparklin.io';
 
@@ -82,7 +82,7 @@ curl_close($ch);
 
 if ($code >= 200 && $code < 300) {
     // Inscription à la liste Brevo "Contact & Support" (best-effort)
-    brevo_add_contact($email, $_ENV['BREVO_LIST_CONTACT_ID'] ?? 0, ['NOM' => $nom, 'SOCIETE' => $entreprise]);
+    brevo_add_contact($email, $_ENV['BREVO_LIST_CONTACT_ID'] ?? 0, ['NOM' => $nom]);
     echo json_encode(['ok' => true]);
 } else {
     http_response_code(502);

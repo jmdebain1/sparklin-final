@@ -72,7 +72,7 @@ if ($brevoKey) {
             'to' => [['email' => $email, 'name' => $name]],
             'params' => ['NAME' => $name, 'COMPANY' => $company, 'PDF_URL' => $pdfUrl],
         ] : [
-            'sender' => ['name' => $_ENV['BREVO_FROM_NAME'] ?? 'Sparklin', 'email' => $_ENV['BREVO_FROM_EMAIL'] ?? 'contact@sparklin.io'],
+            'sender' => ['name' => $_ENV['BREVO_FROM_NAME'] ?? 'Sparklin', 'email' => $_ENV['BREVO_FROM_EMAIL'] ?? 'jean-mael.debain@sparklin.io'],
             'to' => [['email' => $email, 'name' => $name]],
             'subject' => 'Votre guide Sparklin — Bornes de recharge en entreprise 2026',
             'htmlContent' => "<p>Bonjour $name,</p><p>Voici votre exemplaire du guide complet de la recharge électrique en entreprise.</p><p><a href=\"$pdfUrl\">Télécharger le PDF</a></p><p>L\'équipe Sparklin</p>",
@@ -83,6 +83,6 @@ if ($brevoKey) {
 }
 
 /* ── 3. Inscription à la liste Brevo "Livre blanc" (best-effort) ── */
-brevo_add_contact($email, $_ENV['BREVO_LIST_LIVREBLANC_ID'] ?? 0, ['PRENOM' => $name, 'SOCIETE' => $company]);
+brevo_add_contact($email, $_ENV['BREVO_LIST_LIVREBLANC_ID'] ?? 0, ['PRENOM' => $name]);
 
 echo json_encode(['ok' => true]);
