@@ -9,6 +9,10 @@ function initSparklinInterconnect() {
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* i18n — valeurs injectées par PHP (window.SK_INTERCONNECT_I18N), repli FR */
+  const _i18n = window.SK_INTERCONNECT_I18N || {};
+  const L = (k, fr) => (_i18n[k] != null && _i18n[k] !== '') ? _i18n[k] : fr;
+
   /* ── CSS ── */
   if (!document.getElementById('sk5')) {
     const s = document.createElement('style');
@@ -119,7 +123,7 @@ function initSparklinInterconnect() {
     { x:85,  y:BY_BORNE, label:'Spark 1',      sub:'3,7 kW',     status:'charging',  color:'#22C55E', type:'s1'   },
     { x:270, y:BY_BORNE, label:'Spark Plus',   sub:'MID · QR',   status:'charging',  color:'#22C55E', type:'plus' },
     { x:450, y:BY_BORNE, label:'Spark x go-e', sub:'22 kW · T2', status:'available', color:'#3B82F6', type:'goe'  },
-    { x:630, y:BY_BORNE, label:'Spark 1',      sub:'Disponible', status:'available', color:'#3B82F6', type:'s1'   },
+    { x:630, y:BY_BORNE, label:'Spark 1',      sub:L('available','Disponible'), status:'available', color:'#3B82F6', type:'s1'   },
   ];
 
   // Spark Pilot — haut droite, bien espacé
@@ -375,7 +379,7 @@ function initSparklinInterconnect() {
   gPilot.appendChild(T({
     x:PX, y:PY+PH+30, 'text-anchor':'middle', 'font-size':'9',
     'font-family':'"DM Sans",sans-serif', fill:'rgba(255,255,255,.38)'
-  }, 'Dashboard'));
+  }, L('dashboard','Dashboard')));
 
   /* Animation barres */
   if (!reduced) {
@@ -415,7 +419,7 @@ function initSparklinInterconnect() {
   gTarifFG.appendChild(T({
     x:TX, y:TY+20, 'text-anchor':'middle', 'font-size':'9.5', 'font-weight':'600',
     'font-family':'"DM Sans",sans-serif', fill:'rgba(255,255,255,.55)'
-  }, 'Tarification flexible'));
+  }, L('flexprice','Tarification flexible')));
   gTarifFG.appendChild(T({
     x:TX, y:TY+50, 'text-anchor':'middle', 'font-size':'22', 'font-weight':'700',
     'font-family':'"Wix Madefor Display","DM Sans",sans-serif', fill:'#E8563A'
@@ -423,7 +427,7 @@ function initSparklinInterconnect() {
   gTarifFG.appendChild(T({
     x:TX, y:TY+68, 'text-anchor':'middle', 'font-size':'8',
     'font-family':'"DM Sans",sans-serif', fill:'rgba(255,255,255,.28)'
-  }, 'défini dans Spark Pilot'));
+  }, L('flexprice_sub','défini dans Spark Pilot')));
   gTarif.appendChild(gTarifFG);
 
   /* Connexion tarif → bâtiment (petite ligne) */
@@ -467,7 +471,7 @@ function initSparklinInterconnect() {
     x:PAX, y:PAY+21, 'text-anchor':'middle', 'font-size':'9.5', 'font-weight':'700',
     'font-family':'"Wix Madefor Display","DM Sans",sans-serif',
     fill:'#E8563A', 'letter-spacing':'0.04em'
-  }, 'Paiement automatisé'));
+  }, L('autopay','Paiement automatisé')));
 
   /* CB simulée */
   const cbX = PAX-PAW/2+14, cbY = PAY+40, cbW=64, cbH=28;
@@ -532,7 +536,7 @@ function initSparklinInterconnect() {
       gFG.appendChild(T({x:b.x,y:by+22,'text-anchor':'middle','font-size':'8.5','font-weight':'600',
         'font-family':'"DM Sans",sans-serif',fill:'#E8563A'},'0,24 €/kWh'));
       gFG.appendChild(T({x:b.x,y:by+32,'text-anchor':'middle','font-size':'6.5',
-        'font-family':'"DM Sans",sans-serif',fill:'rgba(255,255,255,.38)'},'MID certifié'));
+        'font-family':'"DM Sans",sans-serif',fill:'rgba(255,255,255,.38)'},L('mid','MID certifié')));
     } else if (b.type === 'goe') {
       /* Corps go-e */
       gFG.appendChild(R({x:bx+8,y:by+8,width:BW2-16,height:30,rx:'6',
@@ -633,10 +637,10 @@ function initSparklinInterconnect() {
   const legDiv = document.createElement('div');
   legDiv.style.cssText = 'display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:12px;font-family:"DM Sans",sans-serif;font-size:11px;color:rgba(255,255,255,.45);';
   legDiv.innerHTML = `
-    <span style="display:flex;align-items:center;gap:6px;"><span style="width:9px;height:9px;border-radius:50%;background:#22C55E;display:inline-block;flex-shrink:0;"></span>En charge</span>
-    <span style="display:flex;align-items:center;gap:6px;"><span style="width:9px;height:9px;border-radius:50%;background:#3B82F6;display:inline-block;flex-shrink:0;"></span>Disponible</span>
-    <span style="display:flex;align-items:center;gap:6px;"><span style="width:9px;height:9px;border-radius:50%;background:#E8563A;display:inline-block;flex-shrink:0;"></span>Signal Spark Pilot</span>
-    <span style="display:flex;align-items:center;gap:6px;"><span style="width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.2);display:inline-block;flex-shrink:0;"></span>Hors ligne</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:9px;height:9px;border-radius:50%;background:#22C55E;display:inline-block;flex-shrink:0;"></span>${L('charging','En charge')}</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:9px;height:9px;border-radius:50%;background:#3B82F6;display:inline-block;flex-shrink:0;"></span>${L('available','Disponible')}</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:9px;height:9px;border-radius:50%;background:#E8563A;display:inline-block;flex-shrink:0;"></span>${L('signal','Signal Spark Pilot')}</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.2);display:inline-block;flex-shrink:0;"></span>${L('offline','Hors ligne')}</span>
   `;
   wrap.appendChild(legDiv);
 }

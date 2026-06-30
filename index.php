@@ -375,7 +375,7 @@ $words = json_encode($wordCycle[$lang] ?? $wordCycle['fr']);
     <div class="home-gamme-header h-reveal" style="flex-direction:column;align-items:center;text-align:center;"text-align:center;align-items:center;display:flex;flex-direction:column;align-items:center;width:100%;">
       <div style="width:100%;text-align:center;">
         <span class="section-label" data-i18n="gamme.label"><?= tr('gamme.label') ?></span>
-        <h2 class="home-gamme-h2" data-i18n="gamme.h2" style="text-align:center;width:100%;max-width:600px;margin:8px auto 0;">La bonne borne pour chaque usage.</h2>
+        <h2 class="home-gamme-h2" data-i18n="gamme.h2" style="text-align:center;width:100%;max-width:600px;margin:8px auto 0;"><?= tr('gamme.h2') ?></h2>
         <p class="home-gamme-sub" style="max-width:600px;margin:16px auto 0;text-align:center;" data-i18n="gamme.sub"><?= tr('gamme.sub') ?></p>
       </div>
     </div>
@@ -644,6 +644,20 @@ window._wordCycleWords = <?= $words ?>;
 window._skLang = '<?= lang() ?>';
 </script>
 <script src="/assets/js/app.js"></script>
+<?php $ic = function($k){ $v = tr($k); return $v === $k ? '' : $v; }; ?>
+<script>
+window.SK_INTERCONNECT_I18N = {
+  flexprice:     <?= json_encode($ic('home.ic.flexprice'), JSON_UNESCAPED_UNICODE) ?>,
+  flexprice_sub: <?= json_encode($ic('home.ic.flexprice_sub'), JSON_UNESCAPED_UNICODE) ?>,
+  autopay:       <?= json_encode($ic('home.ic.autopay'), JSON_UNESCAPED_UNICODE) ?>,
+  mid:           <?= json_encode($ic('home.ic.mid'), JSON_UNESCAPED_UNICODE) ?>,
+  dashboard:     <?= json_encode($ic('home.ic.dashboard'), JSON_UNESCAPED_UNICODE) ?>,
+  charging:      <?= json_encode($ic('home.ic.charging'), JSON_UNESCAPED_UNICODE) ?>,
+  available:     <?= json_encode($ic('home.ic.available'), JSON_UNESCAPED_UNICODE) ?>,
+  signal:        <?= json_encode($ic('home.ic.signal'), JSON_UNESCAPED_UNICODE) ?>,
+  offline:       <?= json_encode($ic('home.ic.offline'), JSON_UNESCAPED_UNICODE) ?>
+};
+</script>
 <script src="/assets/js/sparklin-interconnect.js"></script>
 
 <script>
