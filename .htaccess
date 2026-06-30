@@ -1,13 +1,65 @@
-# sparklin.io — Apache (OVH)
-# Force la priorité aux pages dynamiques PHP (traduction Supabase server-side).
-# Sans ceci, Apache sert index.html (snapshot figé en FR) avant index.php.
-DirectoryIndex index.php index.html
+# ════════════════════════════════════════════════════════════
+#  Sparklin — Apache (OVH mutualisé)
+# ════════════════════════════════════════════════════════════
 
-# UTF-8 par défaut
+# ── Pages dynamiques PHP prioritaires (i18n server-side) ──
+DirectoryIndex index.php index.html
 AddDefaultCharset UTF-8
 
-# Empêche l'accès direct au .env et aux includes
-<FilesMatch "^\.env">
+# ── Réécritures : HTTPS + www (301) ──────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1) Forcer HTTPS — OVH est derrière un proxy : on teste les 2 signaux
+  #    (HTTPS et X-Forwarded-Proto) en ET, pour éviter toute boucle de redirection.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # 2) Forcer le www (canonicalisation → évite le duplicate content SEO)
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # Variante "sans www" (décommenter ces 2 lignes ET commenter le bloc 2) :
+  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  # RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# ── Pages d'erreur personnalisées ────────────────────────────
+ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php
+
+# ── Sécurité : bloquer les fichiers sensibles ────────────────
+# Tout fichier commençant par un point (.env, .git, .DS_Store…),
+# sauf /.well-known utilisé pour les certificats SSL.
+<FilesMatch "^\.(?!well-known)">
+    Require all denied
+</FilesMatch>
+<FilesMatch "(\.env|composer\.(json|lock)|package(-lock)?\.json|\.gitignore)$">
     Require all denied
 </FilesMatch>
 
+# Bloquer l'appel direct du code interne du dossier includes/
+RedirectMatch 404 ^/includes/.*\.php$
+
+# ── Performance : compression GZIP ───────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml \
+    application/javascript application/json application/xml image/svg+xml \
+    font/ttf font/otf font/woff font/woff2
+</IfModule>
+
+# ── Performance : cache navigateur des assets statiques ───────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                 "access plus 7 days"
+  ExpiresByType application/javascript   "access plus 7 days"
+  ExpiresByType image/jpeg               "access plus 30 days"
+  ExpiresByType image/png                "access plus 30 days"
+  ExpiresByType image/webp               "access plus 30 days"
+  ExpiresByType image/svg+xml            "access plus 30 days"
+  ExpiresByType font/woff2               "access plus 1 year"
+  # Les pages PHP ne sont jamais mises en cache (contenu traduit dynamique)
+  ExpiresByType text/html                "access plus 0 seconds"
+</IfModule>
