@@ -83,6 +83,23 @@ curl_close($ch);
 if ($code >= 200 && $code < 300) {
     // Inscription à la liste Brevo "Contact & Support" (best-effort)
     brevo_add_contact($email, $_ENV['BREVO_LIST_CONTACT_ID'] ?? 0, ['NOM' => $nom]);
+
+    // Accusé de réception au visiteur (best-effort, via template Brevo)
+    $ackTpl = intval($_ENV['BREVO_TEMPLATE_CONTACT_ACK_ID'] ?? 0);
+    if ($ackTpl) {
+        $ack = curl_init('https://api.brevo.com/v3/smtp/email');
+        curl_setopt_array($ack, [
+            CURLOPT_RETURNTRANSFER => true, CURLOPT_POST => true, CURLOPT_TIMEOUT => 10,
+            CURLOPT_HTTPHEADER => ["api-key: $brevoKey", "Content-Type: application/json", "accept: application/json"],
+            CURLOPT_POSTFIELDS => json_encode([
+                'templateId' => $ackTpl,
+                'to' => [['email' => $email, 'name' => $nom ?: $email]],
+                'params' => ['NAME' => $nom],
+            ], JSON_UNESCAPED_UNICODE),
+        ]);
+        curl_exec($ack); curl_close($ack);
+    }
+
     echo json_encode(['ok' => true]);
 } else {
     http_response_code(502);
