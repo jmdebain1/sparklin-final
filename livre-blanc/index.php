@@ -267,7 +267,14 @@ $lang = initI18n();
         <p style="font-size:11px;color:var(--text-light);" data-i18n="lb.f.privacy"><?= tr('lb.f.privacy') ?></p>
       </form>
 
+      <?php $rcSite = $_ENV['RECAPTCHA_SITE_KEY'] ?? ''; ?>
+      <?php if ($rcSite): ?><script src="https://www.google.com/recaptcha/api.js?render=<?= htmlspecialchars($rcSite, ENT_QUOTES) ?>"></script><?php endif; ?>
       <script>
+      function skRecaptcha(action){
+        var k = <?= json_encode($rcSite) ?>;
+        if(!k || typeof grecaptcha==='undefined') return Promise.resolve('');
+        return new Promise(function(res){ try{ grecaptcha.ready(function(){ grecaptcha.execute(k,{action:action}).then(res).catch(function(){res('');}); }); }catch(e){ res(''); } });
+      }
       async function handleLbSubmit(e) {
         e.preventDefault();
         var email = document.getElementById('lb-email').value.trim();
@@ -289,11 +296,12 @@ $lang = initI18n();
         btn.innerHTML = '<span style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:lb-spin .7s linear infinite;margin-right:8px;"></span>' + <?= json_encode(tr('lb.js.sending')) ?>;
 
         try {
-          // 1. Call Netlify function to send email
+          var rcToken = await skRecaptcha('livre_blanc');
+          // 1. Envoi de l'email (via Brevo)
           var resp = await fetch('/api/send-livre-blanc.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email: email, prenom: prenom})
+            body: JSON.stringify({email: email, prenom: prenom, recaptcha_token: rcToken})
           });
           var data = await resp.json();
 

@@ -5,6 +5,7 @@
    ══════════════════════════════════════════════════════════════ */
 require_once __DIR__ . '/../includes/env.php';
 require_once __DIR__ . '/../includes/brevo.php';
+require_once __DIR__ . '/../includes/recaptcha.php';
 loadEnv(__DIR__ . '/../.env');
 
 header('Content-Type: application/json');
@@ -27,6 +28,11 @@ $message    = $clean($body['message'] ?? '');
 $source     = in_array(($body['source'] ?? ''), ['contact','support'], true) ? $body['source'] : 'contact';
 
 if (!$email) { http_response_code(400); echo json_encode(['error' => 'Email invalide']); exit; }
+
+// Anti-abus reCAPTCHA v3
+if (!recaptcha_verify($body['recaptcha_token'] ?? null, 'contact')) {
+    http_response_code(429); echo json_encode(['error' => 'Vérification anti-robot échouée']); exit;
+}
 
 /* ── 1. Stocker le lead dans Supabase (table leads) ── */
 $supaUrl = rtrim($_ENV['SUPABASE_URL'] ?? '', '/');

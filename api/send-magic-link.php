@@ -8,6 +8,7 @@
    Réponse toujours "ok" (ne révèle pas si l'email est autorisé).
    ══════════════════════════════════════════════════════════════ */
 require_once __DIR__ . '/../includes/env.php';
+require_once __DIR__ . '/../includes/recaptcha.php';
 loadEnv(__DIR__ . '/../.env');
 
 header('Content-Type: application/json');
@@ -16,6 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); echo json_
 $body  = json_decode(file_get_contents('php://input'), true) ?: [];
 $email = filter_var(strtolower(trim($body['email'] ?? '')), FILTER_VALIDATE_EMAIL);
 if (!$email) { http_response_code(400); echo json_encode(['error' => 'Email invalide']); exit; }
+
+// Anti-abus reCAPTCHA v3 (protège la connexion admin)
+if (!recaptcha_verify($body['recaptcha_token'] ?? null, 'login')) {
+    http_response_code(429); echo json_encode(['error' => 'Vérification anti-robot échouée']); exit;
+}
 
 $supaUrl  = rtrim($_ENV['SUPABASE_URL'] ?? '', '/');
 $supaKey  = $_ENV['SUPABASE_SECRET'] ?? ($_ENV['SUPABASE_SERVICE_ROLE_KEY'] ?? '');

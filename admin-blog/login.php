@@ -442,9 +442,16 @@ input[type="email"]::placeholder{color:var(--text3)}
   </div>
 </div>
 
+<?php $rcSite = $_ENV['RECAPTCHA_SITE_KEY'] ?? ''; ?>
+<?php if ($rcSite): ?><script src="https://www.google.com/recaptcha/api.js?render=<?= htmlspecialchars($rcSite, ENT_QUOTES) ?>"></script><?php endif; ?>
 <script>
 var sending = false;
 var FUNCTION_URL = '/api/send-magic-link.php';
+function skRecaptcha(action){
+  var k = <?= json_encode($rcSite) ?>;
+  if(!k || typeof grecaptcha==='undefined') return Promise.resolve('');
+  return new Promise(function(res){ try{ grecaptcha.ready(function(){ grecaptcha.execute(k,{action:action}).then(res).catch(function(){res('');}); }); }catch(e){ res(''); } });
+}
 
 function showError(msg) {
   var notice = document.getElementById('notice-error');
@@ -488,10 +495,11 @@ async function handleSubmit() {
   // (on ne révèle pas si l'email est autorisé). Pas de session ici :
   // l'utilisateur clique le lien reçu par email → /admin-blog/?token=...
   try {
+    var rcToken = await skRecaptcha('login');
     await fetch(FUNCTION_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
+      body: JSON.stringify({ email: email, recaptcha_token: rcToken })
     });
   } catch (err) {
     /* on reste silencieux et on affiche quand même l'état succès */

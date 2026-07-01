@@ -7,6 +7,7 @@
    ══════════════════════════════════════════════════════════════ */
 require_once __DIR__ . '/../includes/env.php';
 require_once __DIR__ . '/../includes/brevo.php';
+require_once __DIR__ . '/../includes/recaptcha.php';
 loadEnv(__DIR__ . '/../.env');
 
 header('Content-Type: application/json');
@@ -25,6 +26,11 @@ $name  = htmlspecialchars(trim($body['prenom'] ?? ($body['name'] ?? '')), ENT_QU
 $company = htmlspecialchars(trim($body['company'] ?? ($body['entreprise'] ?? '')), ENT_QUOTES, 'UTF-8');
 
 if (!$email) { http_response_code(400); echo json_encode(['error'=>'Email invalide']); exit; }
+
+// Anti-abus reCAPTCHA v3
+if (!recaptcha_verify($body['recaptcha_token'] ?? null, 'livre_blanc')) {
+    http_response_code(429); echo json_encode(['error'=>'Vérification anti-robot échouée']); exit;
+}
 
 /* ── 1. Store lead in Supabase ── */
 $supaUrl = rtrim($_ENV['SUPABASE_URL'] ?? '', '/');

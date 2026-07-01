@@ -239,7 +239,14 @@ $lang = initI18n();
         <div id="contact-status" style="display:none;font-size:14px;padding:12px 16px;border-radius:10px;"></div>
         <button type="submit" id="contact-btn" style="background:var(--orange);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#c94b31'" onmouseout="this.style.background='var(--orange)'" data-i18n="ui.send_request"><?= tr('ui.send_request') ?></button>
       </form>
+      <?php $rcSite = $_ENV['RECAPTCHA_SITE_KEY'] ?? ''; ?>
+      <?php if ($rcSite): ?><script src="https://www.google.com/recaptcha/api.js?render=<?= htmlspecialchars($rcSite, ENT_QUOTES) ?>"></script><?php endif; ?>
       <script>
+      function skRecaptcha(action){
+        var k = <?= json_encode($rcSite) ?>;
+        if(!k || typeof grecaptcha==='undefined') return Promise.resolve('');
+        return new Promise(function(res){ try{ grecaptcha.ready(function(){ grecaptcha.execute(k,{action:action}).then(res).catch(function(){res('');}); }); }catch(e){ res(''); } });
+      }
       async function handleContactSubmit(e){
         e.preventDefault();
         var form = document.getElementById('contact-form');
@@ -253,6 +260,7 @@ $lang = initI18n();
         var label = btn.innerHTML; btn.disabled = true; btn.style.opacity='.7';
         btn.innerHTML = <?= json_encode(tr('contact.js.sending')) ?>;
         box.style.display='none';
+        data.recaptcha_token = await skRecaptcha('contact');
         try{
           var resp = await fetch('/api/send-contact.php', {
             method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
