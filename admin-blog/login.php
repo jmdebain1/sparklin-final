@@ -484,29 +484,22 @@ async function handleSubmit() {
 
   setLoading(true);
 
-  // MODE DÉMO — affiche l'état "lien envoyé" puis redirige vers le dashboard
-  setTimeout(function() {
-    // Fake session (Phase 2: remplacer par appel à /api/send-magic-link.php)
-    var fakeToken = 'demo-' + Date.now();
-    var exp = String(Date.now() + 8 * 3600 * 1000);
-    localStorage.setItem('sk_admin_session', fakeToken);
-    localStorage.setItem('sk_admin_email', email);
-    localStorage.setItem('sk_admin_exp', exp);
-    sessionStorage.setItem('sk_admin_session', fakeToken);
-    sessionStorage.setItem('sk_admin_email', email);
-    sessionStorage.setItem('sk_admin_exp', exp);
-    
-    // Affiche l'état succès
-    setLoading(false);
-    document.getElementById('success-email').textContent = email;
-    document.getElementById('form-state').style.display = 'none';
-    document.getElementById('success-state').classList.add('show');
-    
-    // Redirige vers le dashboard après 1.5s
-    setTimeout(function() {
-      window.location.replace('/admin-blog/');
-    }, 1500);
-  }, 800);
+  // Envoi réel du lien magique. On affiche toujours l'état "succès"
+  // (on ne révèle pas si l'email est autorisé). Pas de session ici :
+  // l'utilisateur clique le lien reçu par email → /admin-blog/?token=...
+  try {
+    await fetch(FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    });
+  } catch (err) {
+    /* on reste silencieux et on affiche quand même l'état succès */
+  }
+  setLoading(false);
+  document.getElementById('success-email').textContent = email;
+  document.getElementById('form-state').style.display = 'none';
+  document.getElementById('success-state').classList.add('show');
 }
 
 function resetForm() {
