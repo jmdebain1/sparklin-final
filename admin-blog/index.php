@@ -516,7 +516,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
   var SESSION_EMAIL = 'sk_admin_email';
   var SESSION_EXP   = 'sk_admin_exp';
   var VERIFY_URL    = '/api/verify-token.php';
-  var LOGIN_URL     = '/admin-blog/login.html';
+  var LOGIN_URL     = '/admin-blog/login.php';
 
   /* ── Vérifie si la session locale est valide ── */
   function isSessionValid() {
