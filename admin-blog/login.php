@@ -442,16 +442,11 @@ input[type="email"]::placeholder{color:var(--text3)}
   </div>
 </div>
 
-<?php $rcSite = $_ENV['RECAPTCHA_SITE_KEY'] ?? ''; ?>
-<?php if ($rcSite): ?><script src="https://www.google.com/recaptcha/api.js?render=<?= htmlspecialchars($rcSite, ENT_QUOTES) ?>"></script><?php endif; ?>
+<?php $sbUrl = $_ENV['SUPABASE_URL'] ?? ''; $sbKey = $_ENV['SUPABASE_ANON_KEY'] ?? ''; ?>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 var sending = false;
-var FUNCTION_URL = '/api/send-magic-link.php';
-function skRecaptcha(action){
-  var k = <?= json_encode($rcSite) ?>;
-  if(!k || typeof grecaptcha==='undefined') return Promise.resolve('');
-  return new Promise(function(res){ try{ grecaptcha.ready(function(){ grecaptcha.execute(k,{action:action}).then(res).catch(function(){res('');}); }); }catch(e){ res(''); } });
-}
+var sb = window.supabase.createClient(<?= json_encode($sbUrl) ?>, <?= json_encode($sbKey) ?>);
 
 function showError(msg) {
   var notice = document.getElementById('notice-error');
@@ -491,15 +486,16 @@ async function handleSubmit() {
 
   setLoading(true);
 
-  // Envoi réel du lien magique. On affiche toujours l'état "succès"
-  // (on ne révèle pas si l'email est autorisé). Pas de session ici :
-  // l'utilisateur clique le lien reçu par email → /admin-blog/?token=...
+  // Lien magique via Supabase Auth (email envoyé par Supabase → SMTP Brevo).
+  // shouldCreateUser:false → seuls les comptes déjà créés reçoivent le lien.
+  // On affiche toujours l'état "succès" (on ne révèle pas si l'email est autorisé).
   try {
-    var rcToken = await skRecaptcha('login');
-    await fetch(FUNCTION_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, recaptcha_token: rcToken })
+    await sb.auth.signInWithOtp({
+      email: email,
+      options: {
+        shouldCreateUser: false,
+        emailRedirectTo: window.location.origin + '/admin-blog/'
+      }
     });
   } catch (err) {
     /* on reste silencieux et on affiche quand même l'état succès */

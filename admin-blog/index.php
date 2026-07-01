@@ -508,15 +508,13 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
      Si pas de session valide → redirect login.html
      Si token magique dans URL → échange contre session token.
      ══════════════════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function() {
   'use strict';
 
-  var SESSION_KEY   = 'sk_admin_session';
-  var SESSION_EMAIL = 'sk_admin_email';
-  var SESSION_EXP   = 'sk_admin_exp';
-  var VERIFY_URL    = '/api/verify-token.php';
-  var LOGIN_URL     = '/admin-blog/login.php';
+  var LOGIN_URL = '/admin-blog/login.php';
+  var sb = window.supabase.createClient(<?= json_encode($_ENV['SUPABASE_URL'] ?? '') ?>, <?= json_encode($_ENV['SUPABASE_ANON_KEY'] ?? '') ?>);
 
   /* ── Vérifie si la session locale est valide ── */
   function isSessionValid() {
@@ -554,49 +552,20 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
     window.location.replace(LOGIN_URL);
   }
 
-  /* ── Main auth flow ── */
+  /* ── Main auth flow (Supabase Auth) ── */
   async function checkAuth() {
-    // 1. Token magique dans l'URL ?
-    var urlParams = new URLSearchParams(window.location.search);
-    var magicToken = urlParams.get('token');
-
-    if (magicToken) {
-      // Nettoie l'URL immédiatement (sécurité)
-      history.replaceState(null, '', window.location.pathname);
-
-      try {
-        var res  = await fetch(VERIFY_URL + '?token=' + encodeURIComponent(magicToken));
-        var data = await res.json();
-
-        if (res.ok && data.ok) {
-          saveSession(data.sessionToken, data.email, data.expiresIn);
-          showDashboard(data.email);
-        } else {
-          // Token invalide ou expiré → login avec message
-          sessionStorage.setItem('sk_auth_error', data.error || 'Lien invalide.');
-          redirectLogin('token_invalid');
-        }
-      } catch (err) {
-        console.error('[auth] verify error:', err);
-        // En cas d'erreur réseau, vérifie session existante
-        if (isSessionValid()) {
-          var email = localStorage.getItem(SESSION_EMAIL) || '';
-          showDashboard(email);
-        } else {
-          redirectLogin('network_error');
-        }
+    // Supabase traite automatiquement le token du lien magique présent dans l'URL.
+    try {
+      var r = await sb.auth.getSession();
+      var session = (r && r.data) ? r.data.session : null;
+      if (session && session.user) {
+        history.replaceState(null, '', window.location.pathname); // URL propre
+        showDashboard(session.user.email || '');
+        return;
       }
-      return;
+    } catch (err) {
+      console.error('[auth] getSession error:', err);
     }
-
-    // 2. Session locale valide ?
-    if (isSessionValid()) {
-      var email = localStorage.getItem(SESSION_EMAIL) || '';
-      showDashboard(email);
-      return;
-    }
-
-    // 3. Pas de session → login
     redirectLogin('no_session');
   }
 
@@ -609,11 +578,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
   // Expose logout
   window.adminLogout = function() {
-    sessionStorage.clear();
-    localStorage.removeItem('sk_admin_session');
-    localStorage.removeItem('sk_admin_email');
-    localStorage.removeItem('sk_admin_exp');
-    redirectLogin('logout');
+    sb.auth.signOut().finally(function(){ redirectLogin('logout'); });
   };
 })();
 </script>
