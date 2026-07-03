@@ -230,6 +230,8 @@ body.nav-open { overflow: hidden; }
   display: block; padding: 14px 0; font-size: 15px; font-weight: 700;
   color: var(--dark); text-decoration: none; border-bottom: 1px solid var(--bg-off);
 }
+.nav-drawer-links a.nav-drawer-lang-opt { display: flex; align-items: center; gap: 8px; }
+.nav-drawer-links a.nav-drawer-lang-opt.active { background: rgba(232,86,58,.1); color: var(--orange); }
 .nav-drawer-cta { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
 .nav-drawer-cta a.btn-primary { width: 100%; text-align: center; padding: 14px 20px; font-size: 15px; box-sizing: border-box; }
 
