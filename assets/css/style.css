@@ -960,7 +960,7 @@ a.home-cas-card, a.home-cas-card:hover, a.home-cas-card:visited { text-decoratio
 @media (max-width: 900px) {
   .nav-mega { display: none !important; }
   .nav-desktop-only { display: none !important; }
-  .sk-lang-wrap { display: none !important; }
+  #sk-lang-wrap { display: none !important; }
   .nav-hamburger { display: flex; }
   .main-nav { padding: 0 20px !important; }
 

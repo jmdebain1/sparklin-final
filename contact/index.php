@@ -377,9 +377,9 @@ $lang = initI18n();
       <ul>
         <li><a href="/cas/pme/" data-i18n="footer.lnk.pme"><?= tr('footer.lnk.pme') ?></a></li>
         <li><a href="/cas/collaborateurs/" data-i18n="footer.lnk.collab"><?= tr('footer.lnk.collab') ?></a></li>
-        <li><a href="/cas/hotel/">Hôtel &amp; Commerce</a></li>
-        <li><a href="/cas/camping/">Camping &amp; Hébergement</a></li>
-        <li><a href="/cas/collectivite/">Collectivité / Parking public</a></li>
+        <li><a href="/cas/hotel/" data-i18n="footer.lnk.hotel"><?= tr('footer.lnk.hotel') ?></a></li>
+        <li><a href="/cas/camping/" data-i18n="footer.lnk.camping"><?= tr('footer.lnk.camping') ?></a></li>
+        <li><a href="/cas/collectivite/" data-i18n="footer.lnk.coll"><?= tr('footer.lnk.coll') ?></a></li>
       </ul>
     </div>
 
@@ -387,13 +387,13 @@ $lang = initI18n();
     <div class="footer-col">
       <h4 data-i18n="footer.h4"><?= tr('footer.h4') ?></h4>
       <ul>
-        <li><a href="/livre-blanc/">Livre blanc 2026 <span class="footer-badge" data-i18n="footer.new"><?= tr('footer.new') ?></span></a></li>
-        <li><a href="/blog/">Blog IRVE</a></li>
-        <li><a href="/">Notre offre</a></li>
-        <li><a href="/a-propos/">Notre société</a></li>
-        <li><a href="/contact/">Nous contacter</a></li>
-        <li><a href="/support/">Support &amp; FAQ</a></li>
-        <li><a href="/evenements/">Événements</a></li>
+        <li><a href="/livre-blanc/"><span data-i18n="footer.lnk.lb"><?= tr('footer.lnk.lb') ?></span> <span class="footer-badge" data-i18n="footer.new"><?= tr('footer.new') ?></span></a></li>
+        <li><a href="/blog/" data-i18n="blog.label"><?= tr('blog.label') ?></a></li>
+        <li><a href="/" data-i18n="footer.lnk.offer"><?= tr('footer.lnk.offer') ?></a></li>
+        <li><a href="/a-propos/" data-i18n="footer.lnk.company"><?= tr('footer.lnk.company') ?></a></li>
+        <li><a href="/contact/" data-i18n="footer.lnk.contact_us"><?= tr('footer.lnk.contact_us') ?></a></li>
+        <li><a href="/support/" data-i18n="footer.lnk.support"><?= tr('footer.lnk.support') ?></a></li>
+        <li><a href="/evenements/" data-i18n="footer.lnk.events"><?= tr('footer.lnk.events') ?></a></li>
       </ul>
     </div>
 
