@@ -2063,9 +2063,10 @@ function applyUiLang() {
 function setText(id, text) {
   var el = document.getElementById(id);
   if (!el) return;
-  /* preserve child elements (badge spans etc.), only update text nodes */
+  /* preserve child elements (icon svg, badge spans…) and whitespace-only
+     text nodes — only overwrite the text node that already holds the label */
   Array.from(el.childNodes).forEach(n => {
-    if (n.nodeType === 3) n.textContent = ' ' + text + ' ';
+    if (n.nodeType === 3 && n.textContent.trim().length > 0) n.textContent = ' ' + text + ' ';
   });
 }
 function setLabel(id, text) {
