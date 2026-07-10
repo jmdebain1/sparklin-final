@@ -9,6 +9,12 @@
   publish = "dist"
   functions = "netlify/functions"
 
+# NOTE : les secrets Brevo/Supabase/reCAPTCHA utilisés par
+# netlify/functions/*.mjs (send-contact, send-livre-blanc) doivent
+# avoir le scope "Functions" + "Runtime" coché dans le dashboard
+# (Site settings → Environment variables) — le scope "Builds" seul
+# ne les rend pas visibles à process.env dans les Functions.
+
 [build.environment]
   # Version PHP utilisée UNIQUEMENT pendant le build (pré-rendu),
   # jamais exposée/exécutée côté visiteur.
