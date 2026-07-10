@@ -1,0 +1,68 @@
+# ══════════════════════════════════════════════════════════════
+#  Sparklin — Netlify
+#  Le site PHP est pré-rendu en HTML statique pendant le build
+#  (scripts/build-static.sh) ; PHP ne tourne jamais au runtime.
+# ══════════════════════════════════════════════════════════════
+
+[build]
+  command = "bash scripts/build-static.sh"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  # Version PHP utilisée UNIQUEMENT pendant le build (pré-rendu),
+  # jamais exposée/exécutée côté visiteur.
+  PHP_VERSION = "8.2"
+
+# ── i18n : préserve les URLs "?lang=xx" existantes (hreflang/canonical/
+#    sitemap déjà construits dessus) en réécrivant en interne vers le
+#    HTML pré-rendu pour cette langue, sans changer l'URL affichée. ──
+
+[[redirects]]
+  from = "/"
+  query = {lang = ":lang"}
+  to = "/_i18n/:lang/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  query = {lang = ":lang"}
+  to = "/_i18n/:lang/:splat/index.html"
+  status = 200
+  force = true
+
+# ── Admin : le JS référence login.php (identique au code source PHP) ──
+[[redirects]]
+  from = "/admin-blog/login.php"
+  to = "/admin-blog/login.html"
+  status = 200
+
+# ── Formulaires : /api/*.php -> Netlify Functions ──
+[[redirects]]
+  from = "/api/send-contact.php"
+  to = "/.netlify/functions/send-contact"
+  status = 200
+
+[[redirects]]
+  from = "/api/send-livre-blanc.php"
+  to = "/.netlify/functions/send-livre-blanc"
+  status = 200
+
+# ── 404 personnalisée (doit rester la DERNIÈRE règle) ──
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# ── Cache : assets statiques versionnés, pages HTML jamais mises en cache
+#    (contenu i18n servi par rewrite, doit toujours être réévalué) ──
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

@@ -2,3 +2,5 @@
 .DS_Store
 **/.DS_Store
 .claude/
+dist/
+.build-php-server.log

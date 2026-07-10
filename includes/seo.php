@@ -35,9 +35,13 @@ if (!function_exists('sk_seo_head')) {
         $type  = $opts['type'] ?? 'website';
         $esc   = fn($s) => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 
-        // noindex hors production (preprod debaincorp, localhost…) ou si demandé (ex. page merci)
+        // noindex hors production (preprod, localhost…) ou si demandé (ex. page merci).
+        // En pré-rendu statique (build Netlify), le Host vu par PHP est localhost —
+        // SK_STATIC_BUILD permet de forcer l'indexabilité indépendamment de ce Host.
+        $isStaticBuild = ($_ENV['SK_STATIC_BUILD'] ?? getenv('SK_STATIC_BUILD')) === '1';
         $host = $_SERVER['HTTP_HOST'] ?? '';
-        if (!empty($opts['noindex']) || stripos($host, 'sparklin.io') === false) {
+        $offProd = $isStaticBuild ? false : (stripos($host, 'sparklin.io') === false);
+        if (!empty($opts['noindex']) || $offProd) {
             echo "  <meta name=\"robots\" content=\"noindex, nofollow\"/>\n";
         }
 
