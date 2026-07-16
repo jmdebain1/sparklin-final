@@ -283,13 +283,18 @@ $lang = initI18n();
           var resp = await fetch('/api/send-contact.php', {
             method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
           });
-          if(!resp.ok) throw new Error('http');
+          var respData = {}; try{ respData = await resp.json(); }catch(e){}
+          if(!resp.ok){
+            box.style.display='block'; box.style.background='#fde8e3'; box.style.color='#b3361c';
+            box.textContent = '['+resp.status+'] '+(respData.error || <?= json_encode(tr('contact.js.error')) ?>);
+            return false;
+          }
           form.reset();
           box.style.display='block'; box.style.background='#e6f7ee'; box.style.color='#0a7d3e';
           box.textContent = <?= json_encode(tr('contact.js.success')) ?>;
         }catch(err){
           box.style.display='block'; box.style.background='#fde8e3'; box.style.color='#b3361c';
-          box.textContent = <?= json_encode(tr('contact.js.error')) ?>;
+          box.textContent = <?= json_encode(tr('contact.js.error')) ?> + ' (reseau: '+err+')';
         }finally{
           btn.disabled=false; btn.style.opacity='1'; btn.innerHTML=label;
         }

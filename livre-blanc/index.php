@@ -315,28 +315,30 @@ $lang = initI18n();
 
         try {
           var rcToken = await skRecaptcha('livre_blanc');
-          // 1. Envoi de l'email (via Brevo)
+          // Envoi de l'email (via Brevo)
           var resp = await fetch('/api/send-livre-blanc.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email: email, prenom: prenom, recaptcha_token: rcToken})
           });
-          var data = await resp.json();
+          var data = {}; try { data = await resp.json(); } catch(e){}
 
-          // 2. Submit form to Netlify Forms for data collection (silent)
-          var fd = new FormData();
-          fd.append('form-name', 'livre-blanc');
-          fd.append('email', email);
-          if (prenom) fd.append('prenom', prenom);
-          fetch('/', {method: 'POST', body: fd}).catch(function(){});
+          if (!resp.ok) {
+            errEl.textContent = '['+resp.status+'] ' + (data.error || <?= json_encode(tr('lb.js.invalid_email')) ?>);
+            errEl.style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = originalLabel;
+            return false;
+          }
 
-          // 3. Redirect to merci page
+          // Redirect to merci page seulement si l'envoi a reussi
           window.location.href = '/livre-blanc/merci/';
 
         } catch (err) {
-          console.error('Submission error:', err);
-          // Fallback: redirect anyway (email may still be sent)
-          window.location.href = '/livre-blanc/merci/';
+          errEl.textContent = 'Erreur reseau : ' + err;
+          errEl.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = originalLabel;
         }
 
         return false;
