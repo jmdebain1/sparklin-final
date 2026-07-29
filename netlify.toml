@@ -81,10 +81,15 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-#    Images, polices, PDF : un jour de cache, sans "immutable", pour qu'un
-#    remplacement de fichier finisse par être repris.
+#    Images : un jour de cache, sans "immutable", pour qu'un remplacement de
+#    fichier finisse par être repris.
+#
+#    Le motif est bien "/assets/images/*" et non "/assets/*" : quand plusieurs
+#    règles couvrent la même URL, Netlify retient la dernière déclarée. Un
+#    catch-all "/assets/*" écrasait donc les deux règles ci-dessus et servait
+#    aussi le CSS et le JS en max-age=86400.
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/images/*"
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
