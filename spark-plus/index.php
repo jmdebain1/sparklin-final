@@ -274,13 +274,6 @@ $lang = initI18n();
   <div class="trust-item"><strong data-i18n="gamme.s1.chip1"><?= tr('gamme.s1.chip1') ?></strong> · <span data-i18n="s1.trust.charge"><?= tr('s1.trust.charge') ?></span></div>
 </div>
 
-<!-- ══ GALLERY ══ -->
-<div class="gallery-strip">
-  <div><img src="/assets/images/spark-plus-gamme.jpg" alt="Spark Plus — vue produit" loading="lazy"/></div>
-  <div><img src="/assets/images/parking-right.jpg" alt="Spark Plus installée en parking" loading="lazy"/></div>
-  <div><img src="/assets/images/parking-left.jpg" alt="Parking équipé Sparklin" loading="lazy"/></div>
-</div>
-
 <!-- ══ INTRO ══ -->
 <section class="intro-section">
   <div class="intro-text reveal">

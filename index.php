@@ -425,7 +425,7 @@ $words = json_encode($wordCycle[$lang] ?? $wordCycle['fr']);
       </a>
       <a class="home-pcard" href="/spark-go-e/">
         <div class="home-pcard-img">
-          <img src="/assets/images/goe-gamme.jpg" alt="Spark x go-e — Borne accélérée 7–22 kW Sparklin"/>
+          <img src="/assets/images/goe-front-2026.jpg" alt="Spark x go-e — Borne accélérée 7–22 kW Sparklin"/>
           <div class="home-pcard-badge" data-i18n="gamme.s3.chip1a"><?= tr('gamme.s3.chip1a') ?></div>
         </div>
         <div class="home-pcard-body">

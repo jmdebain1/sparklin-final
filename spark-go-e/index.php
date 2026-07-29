@@ -261,7 +261,7 @@ $lang = initI18n();
   <div class="hero-visual">
     <img
       class="hero-img-main"
-      src="/assets/images/goe-core-front.jpg"
+      src="/assets/images/goe-front-2026.jpg"
       alt="Spark x Go-e — Borne de charge accélérée 7,4 à 22 kW"
       style="object-fit:contain;"
     />
@@ -274,12 +274,6 @@ $lang = initI18n();
   <div class="trust-item"><strong data-i18n="s1.trust1"><?= tr('s1.trust1') ?></strong></div>
   <div class="trust-item"><strong>-25° à 40°C</strong></div>
   <div class="trust-item"><strong data-i18n="s1.trust3"><?= tr('s1.trust3') ?></strong></div>
-</div>
-
-<div class="gallery-strip">
-  <div><img src="/assets/images/goe-core-front.jpg" alt="go-e CORE — vue face" loading="lazy"/></div>
-  <div><img src="/assets/images/goe-core-side.jpg" alt="go-e CORE — vue côté" loading="lazy"/></div>
-  <div><img src="/assets/images/goe-core-angle.jpg" alt="go-e CORE — vue angle" loading="lazy"/></div>
 </div>
 
 <!-- ══ BLOC CORE vs PRO ══ -->
@@ -364,7 +358,7 @@ $lang = initI18n();
     </ul>
   </div>
   <div class="intro-image reveal">
-    <img src="/assets/images/goe-wall.jpg" alt="go-e installée au mur — vue contexte extérieur" loading="lazy"/>
+    <img src="/assets/images/goe-wall-2026.jpg" alt="Sparklin powered by go-e — installée au mur" loading="lazy"/>
   </div>
 </section>
 
@@ -415,8 +409,8 @@ $lang = initI18n();
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.warranty"><?= t('s1.spec.warranty') ?></span><span class="spec-val" data-i18n="goe.spec.warranty_v"><?= t('goe.spec.warranty_v') ?></span></div>
     </div>
     <div class="specs-images">
-      <img src="/assets/images/goe-core-001-0.jpg" alt="go-e — vue produit face" loading="lazy"/>
-      <img src="/assets/images/goe-core-001-1.jpg" alt="go-e — vue produit angle" loading="lazy"/>
+      <img src="/assets/images/goe-front-2026.jpg" alt="Sparklin powered by go-e — vue de face" loading="lazy"/>
+      <img src="/assets/images/goe-wall-2026.jpg" alt="Sparklin powered by go-e — vue en situation" loading="lazy"/>
     </div>
   </div>
 </section>

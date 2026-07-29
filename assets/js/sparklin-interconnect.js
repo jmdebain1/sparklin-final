@@ -1,8 +1,12 @@
 /*
- * SparklinInterconnect v6
- * Schema d'architecture clair, fond blanc, photos produit reelles.
- * Spark Pilot (plateforme) en haut, les 3 bornes du catalogue en bas,
- * tarification et paiement en capacites laterales.
+ * SparklinInterconnect v7
+ * Schema d'architecture, fond blanc, rendus produit detoures.
+ *
+ * Deux mises en page reelles, choisies par media query :
+ *  - desktop (>720px) : plateforme en haut, 3 bornes en bas, capacites sur les cotes
+ *  - mobile  (<=720px) : colonne portrait, plateforme en haut puis rail vertical
+ *                        desservant 5 lignes. Aucun scroll horizontal, aucun
+ *                        texte reduit par mise a l'echelle.
  */
 function initSparklinInterconnect() {
   const wrap = document.getElementById('sparklin-interconnect');
@@ -31,6 +35,9 @@ function initSparklinInterconnect() {
     offline:  '#B9B6C4',
   };
 
+  const FD = '"Wix Madefor Display","DM Sans",sans-serif';
+  const FB = '"Wix Madefor Text","DM Sans",sans-serif';
+
   /* ── CSS ── */
   if (!document.getElementById('sk6')) {
     const s = document.createElement('style');
@@ -41,50 +48,12 @@ function initSparklinInterconnect() {
       @keyframes sk6Bar  { 0%,100%{opacity:.8} 50%{opacity:1} }
       /* flux permanent le long des liaisons (dasharray 7+9=16 → -32 = 2 motifs, boucle sans saut) */
       @keyframes sk6Flow { to { stroke-dashoffset: -32; } }
-      #sparklin-interconnect { -webkit-overflow-scrolling: touch; }
-      #sparklin-interconnect::-webkit-scrollbar { height: 6px; }
-      #sparklin-interconnect::-webkit-scrollbar-thumb { background: ${CO.borderStrong}; border-radius: 3px; }
     `;
     document.head.appendChild(s);
   }
 
-  /* ── SVG SETUP ── */
+  /* ── Helpers SVG ── */
   const ns = 'http://www.w3.org/2000/svg';
-  const W = 900, H = 500;
-
-  wrap.innerHTML = '';
-  wrap.style.cssText = [
-    'background:' + CO.white,
-    'border:1px solid ' + CO.border,
-    'border-radius:20px',
-    'padding:26px 24px 22px',
-    'position:relative',
-    'overflow-x:auto',
-    'overflow-y:hidden',
-    'box-shadow:0 12px 40px rgba(26,26,46,0.06)',
-  ].join(';');
-
-  /* Conteneur interne : garde le schema lisible sur mobile (scroll horizontal) */
-  const inner = document.createElement('div');
-  inner.style.cssText = 'min-width:720px;';
-  wrap.appendChild(inner);
-
-  /* En-tete */
-  const titleDiv = document.createElement('div');
-  titleDiv.style.cssText = 'text-align:center;margin-bottom:14px;font-family:"Wix Madefor Display","DM Sans",sans-serif;';
-  titleDiv.innerHTML = `
-    <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:${CO.orange};text-transform:uppercase;margin-bottom:5px;">Spark Pilot</div>
-    <div style="font-size:12px;color:${CO.light};letter-spacing:.01em;font-weight:300;">${IT('header_sub','Supervision temps réel · Load balancing · Paiement automatisé')}</div>
-  `;
-  inner.appendChild(titleDiv);
-
-  const svg = document.createElementNS(ns, 'svg');
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  svg.setAttribute('width', '100%');
-  svg.style.cssText = 'display:block;overflow:visible;';
-  inner.appendChild(svg);
-
-  /* Helpers */
   const mk = (tag, attrs) => {
     const el = document.createElementNS(ns, tag);
     if (attrs) Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
@@ -95,73 +64,8 @@ function initSparklinInterconnect() {
   const C = (a) => mk('circle', a);
   const P = (a) => mk('path', a);
   const T = (a, txt) => { const el = mk('text', a); el.textContent = txt; return el; };
-  const FD = '"Wix Madefor Display","DM Sans",sans-serif';
-  const FB = '"Wix Madefor Text","DM Sans",sans-serif';
 
-  /* ── DEFS ── */
-  const defs = mk('defs');
-  defs.innerHTML = `
-    <filter id="sk6Card" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="3" stdDeviation="7" flood-color="rgba(26,26,46,0.10)"/>
-    </filter>
-    <filter id="sk6Soft" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(26,26,46,0.07)"/>
-    </filter>
-    <pattern id="sk6Grid" width="36" height="36" patternUnits="userSpaceOnUse">
-      <path d="M36 0 H0 V36" fill="none" stroke="rgba(26,26,46,0.035)" stroke-width="1"/>
-    </pattern>
-  `;
-  svg.appendChild(defs);
-
-  /* Fond quadrille tres discret */
-  svg.appendChild(R({ x: 0, y: 0, width: W, height: H, fill: 'url(#sk6Grid)' }));
-
-  /* ═══════════════════════════════════════
-     LAYOUT
-     ═══════════════════════════════════════ */
-  /* Plateforme Spark Pilot (haut, centre) */
-  const PLX = 290, PLY = 36, PLW = 320, PLH = 126;
-  const PL_CX = PLX + PLW / 2, PL_BOTTOM = PLY + PLH;
-
-  /* Cartes laterales */
-  const SIDE_Y = 200, SIDE_W = 190, SIDE_H = 100;
-  const TAR_CX = 128, PAY_CX = 772;
-
-  /* Cartes produit (bas) — rendus détourés sur fond clair */
-  const CARD_Y = 296, CARD_W = 186, CARD_H = 192, VIS_H = 118;
-  const BUS_Y = 250;
-
-  const PRODUCTS = [
-    {
-      cx: 240,
-      img: '/assets/images/spark1-cutout.png',
-      alt: 'Spark 1 — prise renforcée connectée 3,7 kW',
-      label: 'Spark 1',
-      sub: '3,7 kW · Type E/F',
-      status: 'charging',
-    },
-    {
-      cx: 450,
-      img: '/assets/images/spark-plus-cutout.png',
-      alt: 'Spark Plus — prise connectée premium',
-      label: 'Spark Plus',
-      sub: IT('mid', 'MID certifié') + ' · QR',
-      status: 'charging',
-    },
-    {
-      cx: 660,
-      img: '/assets/images/goe-cutout.png',
-      alt: 'Sparklin by go-e — borne accélérée 22 kW',
-      label: 'Sparklin by go-e',
-      sub: '22 kW · Type 2',
-      status: 'available',
-    },
-  ];
-
-  /* ═══════════════════════════════════════
-     TRACES ORTHOGONAUX
-     ═══════════════════════════════════════ */
-  /* Chemin en angles droits avec coins arrondis */
+  /* Chemin en angles droits, coins arrondis */
   function ortho(pts, r) {
     r = r || 12;
     let d = `M ${pts[0][0]} ${pts[0][1]}`;
@@ -181,313 +85,416 @@ function initSparklinInterconnect() {
     return d;
   }
 
-  const gLines = G();
-  svg.appendChild(gLines);
+  /* Image detouree, jamais rognee */
+  function cutout(g, href, alt, x, y, w, h) {
+    const img = mk('image', {
+      x, y, width: w, height: h, preserveAspectRatio: 'xMidYMid meet',
+    });
+    img.setAttribute('href', href);
+    img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', href);
+    const t = mk('title'); t.textContent = alt;
+    img.appendChild(t);
+    g.appendChild(img);
+  }
 
-  /* Borne → bus → plateforme */
-  const productPaths = PRODUCTS.map(p => {
-    const pts = (p.cx === PL_CX)
-      ? [[p.cx, CARD_Y], [p.cx, PL_BOTTOM]]
-      : [[p.cx, CARD_Y], [p.cx, BUS_Y], [PL_CX, BUS_Y], [PL_CX, PL_BOTTOM]];
-    return ortho(pts, 14);
-  });
-
-  /* Cartes laterales → plateforme */
-  const tarifPath = ortho([[TAR_CX, SIDE_Y], [TAR_CX, 130], [PLX, 130]], 14);
-  const payPath   = ortho([[PAY_CX, SIDE_Y], [PAY_CX, 130], [PLX + PLW, 130]], 14);
-
-  /* Chaque liaison = un trace de fond continu + des tirets qui defilent vers
-     la plateforme, pour que le flux reste lisible meme entre deux paquets. */
-  const CONNECTIONS = [
-    ...productPaths.map((d, i) => ({
-      d,
-      color: PRODUCTS[i].status === 'charging' ? CO.charging : CO.available,
-      speed: 2.6 + i * 0.4,
-    })),
-    { d: tarifPath, color: CO.orange, speed: 3.4 },
-    { d: payPath,   color: CO.orange, speed: 3.8 },
+  /* ── Données ── */
+  const PRODUCTS = [
+    { img: '/assets/images/spark1-cutout.png',      alt: 'Spark 1 — prise renforcée connectée 3,7 kW',
+      label: 'Spark 1',          sub: '3,7 kW · Type E/F',                 status: 'charging'  },
+    { img: '/assets/images/spark-plus-cutout.png',  alt: 'Spark Plus — prise connectée premium',
+      label: 'Spark Plus',       sub: IT('mid', 'MID certifié') + ' · QR', status: 'charging'  },
+    { img: '/assets/images/goe-cutout.png',         alt: 'Sparklin by go-e — borne accélérée 22 kW',
+      label: 'Sparklin by go-e', sub: '22 kW · Type 2',                    status: 'available' },
   ];
+  const stColor = (p) => p.status === 'charging' ? CO.charging : CO.available;
+  const stLabel = (p) => p.status === 'charging'
+    ? IT('charging', 'En charge') : IT('available', 'Disponible');
 
-  CONNECTIONS.forEach(c => {
-    gLines.appendChild(P({
-      d: c.d, fill: 'none', stroke: CO.line, 'stroke-width': '1.5', 'stroke-linecap': 'round',
-    }));
-    const flow = P({
-      d: c.d, fill: 'none', stroke: c.color, 'stroke-width': '1.8',
-      'stroke-dasharray': '7 9', 'stroke-linecap': 'round', opacity: '0.45',
-    });
-    if (!reduced) flow.style.animation = `sk6Flow ${c.speed}s linear infinite`;
-    gLines.appendChild(flow);
-  });
-
-  /* ═══════════════════════════════════════
-     PAQUETS DATA (flux borne → plateforme)
-     ═══════════════════════════════════════ */
-  const gPkts = G();
-  svg.appendChild(gPkts);
-
-  function spawnPacket(pathD, color, dur) {
-    if (reduced) return;
-    const g = G();
-    /* halo blanc pour rester lisible au croisement des traces */
-    g.appendChild(C({ r: '5.5', fill: CO.white }));
-    g.appendChild(C({ r: '3', fill: color }));
-    g.setAttribute('opacity', '0');
-
-    const am = mk('animateMotion');
-    am.setAttribute('dur', `${dur}ms`);
-    am.setAttribute('repeatCount', '1');
-    am.setAttribute('path', pathD);
-    am.setAttribute('calcMode', 'spline');
-    am.setAttribute('keyTimes', '0;1');
-    am.setAttribute('keySplines', '.4 0 .2 1');
-    const ao = mk('animate', {
-      attributeName: 'opacity', values: '0;1;1;0',
-      keyTimes: '0;.1;.85;1', dur: `${dur}ms`, repeatCount: '1',
-    });
-    g.appendChild(am); g.appendChild(ao);
-    gPkts.appendChild(g);
-    setTimeout(() => { try { gPkts.removeChild(g); } catch (_) {} }, dur + 80);
-  }
-
-  if (!reduced) {
-    let pi = 0;
-    setInterval(() => {
-      const p = PRODUCTS[pi];
-      spawnPacket(productPaths[pi], p.status === 'charging' ? CO.charging : CO.available, 1500);
-      pi = (pi + 1) % PRODUCTS.length;
-    }, 760);
-    setInterval(() => spawnPacket(tarifPath, CO.orange, 1400), 3100);
-    setInterval(() => spawnPacket(payPath, CO.orange, 1400), 3900);
-    setTimeout(() => spawnPacket(productPaths[0], CO.charging, 1500), 250);
-    setTimeout(() => spawnPacket(tarifPath, CO.orange, 1400), 700);
-  }
+  /* ── Minuteries : remises a zero a chaque reconstruction ── */
+  let timers = [];
+  const every = (fn, ms) => { timers.push(setInterval(fn, ms)); };
+  const later = (fn, ms) => { timers.push(setTimeout(fn, ms)); };
+  const clearTimers = () => {
+    timers.forEach(t => { clearInterval(t); clearTimeout(t); });
+    timers = [];
+  };
 
   /* ═══════════════════════════════════════
-     PLATEFORME — SPARK PILOT
+     CONSTRUCTION
      ═══════════════════════════════════════ */
-  const gPilot = G();
-  if (!reduced) gPilot.style.cssText = 'animation:sk6In .6s .1s ease both;opacity:0;';
-  svg.appendChild(gPilot);
+  function build(mode) {
+    clearTimers();
+    const M = (mode === 'mobile');
+    const W = M ? 380 : 900;
+    const H = M ? 596 : 500;
 
-  /* Carte */
-  gPilot.appendChild(R({
-    x: PLX, y: PLY, width: PLW, height: PLH, rx: '16',
-    fill: CO.white, stroke: CO.border, 'stroke-width': '1.5', filter: 'url(#sk6Card)',
-  }));
-  /* Bandeau d'en-tete */
-  gPilot.appendChild(P({
-    d: `M ${PLX} ${PLY + 16} A 16 16 0 0 1 ${PLX + 16} ${PLY} L ${PLX + PLW - 16} ${PLY}
-        A 16 16 0 0 1 ${PLX + PLW} ${PLY + 16} L ${PLX + PLW} ${PLY + 38} L ${PLX} ${PLY + 38} Z`,
-    fill: CO.off,
-  }));
-  gPilot.appendChild(P({
-    d: `M ${PLX} ${PLY + 38} L ${PLX + PLW} ${PLY + 38}`,
-    stroke: CO.border, 'stroke-width': '1', fill: 'none',
-  }));
+    wrap.innerHTML = '';
+    wrap.style.cssText = [
+      'background:' + CO.white,
+      'border:1px solid ' + CO.border,
+      'border-radius:20px',
+      M ? 'padding:18px 14px 16px' : 'padding:26px 24px 22px',
+      'position:relative',
+      'overflow:hidden',
+      'box-shadow:0 12px 40px rgba(26,26,46,0.06)',
+    ].join(';');
 
-  /* Pastille orange + titre */
-  gPilot.appendChild(R({ x: PLX + 16, y: PLY + 12, width: 3, height: 14, rx: '1.5', fill: CO.orange }));
-  gPilot.appendChild(T({
-    x: PLX + 28, y: PLY + 24, 'font-size': '11', 'font-weight': '700',
-    'font-family': FD, fill: CO.dark, 'letter-spacing': '0.02em',
-  }, 'Spark Pilot'));
+    /* En-tete */
+    const titleDiv = document.createElement('div');
+    titleDiv.style.cssText = `text-align:center;margin-bottom:${M ? 12 : 14}px;font-family:${FD};`;
+    titleDiv.innerHTML = `
+      <div style="font-size:${M ? 10 : 11}px;font-weight:700;letter-spacing:.16em;color:${CO.orange};text-transform:uppercase;margin-bottom:5px;">Spark Pilot</div>
+      <div style="font-size:${M ? 11 : 12}px;color:${CO.light};line-height:1.5;font-weight:300;">${IT('header_sub','Supervision temps réel · Load balancing · Paiement automatisé')}</div>
+    `;
+    wrap.appendChild(titleDiv);
 
-  /* Statut en ligne */
-  const ledOK = C({ cx: PLX + PLW - 62, cy: PLY + 19, r: '3.5', fill: CO.charging });
-  if (!reduced) ledOK.style.animation = 'sk6Led 2.2s ease-in-out infinite';
-  gPilot.appendChild(ledOK);
-  gPilot.appendChild(T({
-    x: PLX + PLW - 52, y: PLY + 23, 'font-size': '9',
-    'font-family': FB, fill: CO.light,
-  }, 'En ligne'));
+    const svg = mk('svg', { viewBox: `0 0 ${W} ${H}`, width: '100%' });
+    svg.style.cssText = 'display:block;overflow:visible;';
+    wrap.appendChild(svg);
 
-  /* Corps : mini graphe de consommation */
-  gPilot.appendChild(T({
-    x: PLX + 16, y: PLY + 58, 'font-size': '8.5', 'font-weight': '500',
-    'font-family': FB, fill: CO.light, 'letter-spacing': '0.04em',
-  }, IT('dashboard', 'Dashboard')));
+    const defs = mk('defs');
+    defs.innerHTML = `
+      <filter id="sk6Card" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="3" stdDeviation="7" flood-color="rgba(26,26,46,0.10)"/>
+      </filter>
+      <filter id="sk6Soft" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(26,26,46,0.07)"/>
+      </filter>
+      <pattern id="sk6Grid" width="36" height="36" patternUnits="userSpaceOnUse">
+        <path d="M36 0 H0 V36" fill="none" stroke="rgba(26,26,46,0.035)" stroke-width="1"/>
+      </pattern>
+    `;
+    svg.appendChild(defs);
+    svg.appendChild(R({ x: 0, y: 0, width: W, height: H, fill: 'url(#sk6Grid)' }));
 
-  const BAR_BOTTOM = PLY + PLH - 16;
-  const BAR_MAX_H = 52;
-  const BAR_W = 26, BAR_GAP = 12, BAR_N = 6;
-  const BAR_X0 = PLX + (PLW - (BAR_N * BAR_W + (BAR_N - 1) * BAR_GAP)) / 2;
-  const barEls = [];
-  [22, 38, 28, 46, 18, 34].forEach((bh, i) => {
-    const bx = BAR_X0 + i * (BAR_W + BAR_GAP);
-    gPilot.appendChild(R({
-      x: bx, y: BAR_BOTTOM - BAR_MAX_H, width: BAR_W, height: BAR_MAX_H, rx: '4',
-      fill: CO.off,
-    }));
-    const bar = R({
-      x: bx, y: BAR_BOTTOM - bh, width: BAR_W, height: bh, rx: '4',
-      fill: CO.orange, opacity: (0.45 + i * 0.09).toFixed(2),
-    });
-    if (!reduced) bar.style.animation = `sk6Bar ${1.6 + i * 0.2}s ease-in-out ${i * 0.12}s infinite`;
-    gPilot.appendChild(bar);
-    barEls.push(bar);
-  });
+    const gLines = G(); svg.appendChild(gLines);
+    const gPkts  = G(); svg.appendChild(gPkts);
 
-  if (!reduced) {
-    const sets = [[22, 38, 28, 46, 18, 34], [34, 22, 44, 30, 38, 20], [18, 46, 24, 38, 28, 42], [42, 26, 48, 18, 34, 30]];
-    let si = 0;
-    setInterval(() => {
-      si = (si + 1) % sets.length;
-      sets[si].forEach((h, i) => {
-        barEls[i].setAttribute('y', BAR_BOTTOM - h);
-        barEls[i].setAttribute('height', h);
+    /* Paquet de donnees circulant vers la plateforme */
+    function spawnPacket(pathD, color, dur) {
+      if (reduced) return;
+      const g = G();
+      g.appendChild(C({ r: '5.5', fill: CO.white }));
+      g.appendChild(C({ r: '3', fill: color }));
+      g.setAttribute('opacity', '0');
+      const am = mk('animateMotion');
+      am.setAttribute('dur', `${dur}ms`);
+      am.setAttribute('repeatCount', '1');
+      am.setAttribute('path', pathD);
+      am.setAttribute('calcMode', 'spline');
+      am.setAttribute('keyTimes', '0;1');
+      am.setAttribute('keySplines', '.4 0 .2 1');
+      g.appendChild(am);
+      g.appendChild(mk('animate', {
+        attributeName: 'opacity', values: '0;1;1;0',
+        keyTimes: '0;.1;.85;1', dur: `${dur}ms`, repeatCount: '1',
+      }));
+      gPkts.appendChild(g);
+      later(() => { try { gPkts.removeChild(g); } catch (_) {} }, dur + 80);
+    }
+
+    /* Liaison : trace de fond + tirets qui defilent */
+    function connect(d, color, speed) {
+      gLines.appendChild(P({
+        d, fill: 'none', stroke: CO.line, 'stroke-width': '1.5', 'stroke-linecap': 'round',
+      }));
+      const flow = P({
+        d, fill: 'none', stroke: color, 'stroke-width': '1.8',
+        'stroke-dasharray': '7 9', 'stroke-linecap': 'round', opacity: '0.45',
       });
-    }, 1100);
-  }
+      if (!reduced) flow.style.animation = `sk6Flow ${speed}s linear infinite`;
+      gLines.appendChild(flow);
+    }
 
-  /* ═══════════════════════════════════════
-     CARTES LATERALES
-     ═══════════════════════════════════════ */
-  function sideCard(cx, delay) {
-    const g = G();
-    if (!reduced) g.style.cssText = `animation:sk6In .55s ${delay}s ease both;opacity:0;`;
-    g.appendChild(R({
-      x: cx - SIDE_W / 2, y: SIDE_Y, width: SIDE_W, height: SIDE_H, rx: '14',
-      fill: CO.white, stroke: CO.border, 'stroke-width': '1.5', filter: 'url(#sk6Soft)',
-    }));
-    svg.appendChild(g);
-    return g;
-  }
+    /* ── Plateforme Spark Pilot ── */
+    const PLX = M ? 14 : 290, PLY = M ? 4 : 36;
+    const PLW = M ? 352 : 320, PLH = M ? 116 : 126;
+    const PL_CX = PLX + PLW / 2, PL_BOTTOM = PLY + PLH;
 
-  /* Tarification flexible */
-  const gTarif = sideCard(TAR_CX, 0.3);
-  gTarif.appendChild(T({
-    x: TAR_CX, y: SIDE_Y + 24, 'text-anchor': 'middle', 'font-size': '9.5', 'font-weight': '500',
-    'font-family': FB, fill: CO.light, 'letter-spacing': '0.04em',
-  }, IT('flexprice', 'Tarification flexible')));
-  gTarif.appendChild(T({
-    x: TAR_CX, y: SIDE_Y + 58, 'text-anchor': 'middle', 'font-size': '21', 'font-weight': '800',
-    'font-family': FD, fill: CO.dark, 'letter-spacing': '-0.02em',
-  }, '0,24 €/kWh'));
-  gTarif.appendChild(T({
-    x: TAR_CX, y: SIDE_Y + 78, 'text-anchor': 'middle', 'font-size': '8.5',
-    'font-family': FB, fill: CO.light,
-  }, IT('flexprice_sub', 'défini dans Spark Pilot')));
+    const gPilot = G();
+    if (!reduced) gPilot.style.cssText = 'animation:sk6In .6s .1s ease both;opacity:0;';
+    svg.appendChild(gPilot);
 
-  /* Paiement automatise */
-  const gPay = sideCard(PAY_CX, 0.4);
-  gPay.appendChild(T({
-    x: PAY_CX, y: SIDE_Y + 24, 'text-anchor': 'middle', 'font-size': '9.5', 'font-weight': '500',
-    'font-family': FB, fill: CO.light, 'letter-spacing': '0.04em',
-  }, IT('autopay', 'Paiement automatisé')));
-
-  const cbW = 112, cbH = 34, cbX = PAY_CX - cbW / 2, cbY = SIDE_Y + 34;
-  gPay.appendChild(R({
-    x: cbX, y: cbY, width: cbW, height: cbH, rx: '6',
-    fill: CO.off, stroke: CO.border, 'stroke-width': '1',
-  }));
-  gPay.appendChild(R({ x: cbX + 10, y: cbY + 9, width: 16, height: 12, rx: '2', fill: 'rgba(232,86,58,0.30)' }));
-  gPay.appendChild(T({
-    x: cbX + 34, y: cbY + 22, 'font-size': '10', 'font-weight': '600',
-    'font-family': 'ui-monospace,SFMono-Regular,Menlo,monospace', fill: CO.mid,
-  }, '•••• 4242'));
-  gPay.appendChild(T({
-    x: PAY_CX, y: SIDE_Y + 86, 'text-anchor': 'middle', 'font-size': '8.5',
-    'font-family': FB, fill: CO.light,
-  }, 'CB · Apple Pay · Google Pay'));
-
-  /* ═══════════════════════════════════════
-     CARTES PRODUIT — PHOTOS REELLES
-     ═══════════════════════════════════════ */
-  PRODUCTS.forEach((p, i) => {
-    const x = p.cx - CARD_W / 2;
-    const g = G();
-    if (!reduced) g.style.cssText = `animation:sk6In .55s ${0.5 + i * 0.1}s ease both;opacity:0;`;
-
-    /* Carte */
-    g.appendChild(R({
-      x, y: CARD_Y, width: CARD_W, height: CARD_H, rx: '14',
+    gPilot.appendChild(R({
+      x: PLX, y: PLY, width: PLW, height: PLH, rx: '16',
       fill: CO.white, stroke: CO.border, 'stroke-width': '1.5', filter: 'url(#sk6Card)',
     }));
-
-    /* Vitrine : le rendu detoure est pose en entier sur un fond clair,
-       preserveAspectRatio "meet" pour ne jamais recadrer le produit. */
-    g.appendChild(R({
-      x: x + 10, y: CARD_Y + 10, width: CARD_W - 20, height: VIS_H,
-      rx: '10', fill: CO.off,
+    gPilot.appendChild(P({
+      d: `M ${PLX} ${PLY + 16} A 16 16 0 0 1 ${PLX + 16} ${PLY} L ${PLX + PLW - 16} ${PLY}
+          A 16 16 0 0 1 ${PLX + PLW} ${PLY + 16} L ${PLX + PLW} ${PLY + 38} L ${PLX} ${PLY + 38} Z`,
+      fill: CO.off,
     }));
-    const img = mk('image', {
-      x: x + 18, y: CARD_Y + 17, width: CARD_W - 36, height: VIS_H - 14,
-      preserveAspectRatio: 'xMidYMid meet',
+    gPilot.appendChild(P({
+      d: `M ${PLX} ${PLY + 38} L ${PLX + PLW} ${PLY + 38}`,
+      stroke: CO.border, 'stroke-width': '1', fill: 'none',
+    }));
+    gPilot.appendChild(R({ x: PLX + 16, y: PLY + 12, width: 3, height: 14, rx: '1.5', fill: CO.orange }));
+    gPilot.appendChild(T({
+      x: PLX + 28, y: PLY + 24, 'font-size': '11', 'font-weight': '700',
+      'font-family': FD, fill: CO.dark, 'letter-spacing': '0.02em',
+    }, 'Spark Pilot'));
+
+    const ledOK = C({ cx: PLX + PLW - 62, cy: PLY + 19, r: '3.5', fill: CO.charging });
+    if (!reduced) ledOK.style.animation = 'sk6Led 2.2s ease-in-out infinite';
+    gPilot.appendChild(ledOK);
+    gPilot.appendChild(T({
+      x: PLX + PLW - 52, y: PLY + 23, 'font-size': '9', 'font-family': FB, fill: CO.light,
+    }, 'En ligne'));
+    gPilot.appendChild(T({
+      x: PLX + 16, y: PLY + 58, 'font-size': '8.5', 'font-weight': '500',
+      'font-family': FB, fill: CO.light, 'letter-spacing': '0.04em',
+    }, IT('dashboard', 'Dashboard')));
+
+    /* Mini graphe */
+    const BAR_BOTTOM = PLY + PLH - (M ? 14 : 16);
+    const BAR_MAX_H = M ? 42 : 52;
+    const BAR_W = M ? 40 : 26, BAR_GAP = M ? 14 : 12, BAR_N = 6;
+    const BAR_X0 = PLX + (PLW - (BAR_N * BAR_W + (BAR_N - 1) * BAR_GAP)) / 2;
+    const barEls = [];
+    [22, 38, 28, 46, 18, 34].forEach((bh, i) => {
+      const bx = BAR_X0 + i * (BAR_W + BAR_GAP);
+      const h = Math.round(bh * BAR_MAX_H / 52);
+      gPilot.appendChild(R({
+        x: bx, y: BAR_BOTTOM - BAR_MAX_H, width: BAR_W, height: BAR_MAX_H, rx: '4', fill: CO.off,
+      }));
+      const bar = R({
+        x: bx, y: BAR_BOTTOM - h, width: BAR_W, height: h, rx: '4',
+        fill: CO.orange, opacity: (0.45 + i * 0.09).toFixed(2),
+      });
+      if (!reduced) bar.style.animation = `sk6Bar ${1.6 + i * 0.2}s ease-in-out ${i * 0.12}s infinite`;
+      gPilot.appendChild(bar);
+      barEls.push(bar);
     });
-    img.setAttribute('href', p.img);
-    img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', p.img);
-    const desc = mk('title'); desc.textContent = p.alt;
-    img.appendChild(desc);
-    g.appendChild(img);
+    if (!reduced) {
+      const sets = [[22,38,28,46,18,34],[34,22,44,30,38,20],[18,46,24,38,28,42],[42,26,48,18,34,30]];
+      let si = 0;
+      every(() => {
+        si = (si + 1) % sets.length;
+        sets[si].forEach((v, i) => {
+          const h = Math.round(v * BAR_MAX_H / 52);
+          barEls[i].setAttribute('y', BAR_BOTTOM - h);
+          barEls[i].setAttribute('height', h);
+        });
+      }, 1100);
+    }
 
-    /* Texte */
-    g.appendChild(T({
-      x: x + 16, y: CARD_Y + 150, 'font-size': '13', 'font-weight': '700',
-      'font-family': FD, fill: CO.dark, 'letter-spacing': '-0.01em',
-    }, p.label));
-    g.appendChild(T({
-      x: x + 16, y: CARD_Y + 166, 'font-size': '9.5',
-      'font-family': FB, fill: CO.light,
-    }, p.sub));
+    /* Carte "capacite" (tarification / paiement) — contenu commun */
+    function capaCard(g, x, y, w, h, kind) {
+      g.appendChild(R({
+        x, y, width: w, height: h, rx: M ? '12' : '14',
+        fill: CO.white, stroke: CO.border, 'stroke-width': '1.5', filter: 'url(#sk6Soft)',
+      }));
+      if (kind === 'tarif') {
+        if (M) {
+          g.appendChild(T({ x: x + 18, y: y + 28, 'font-size': '9.5', 'font-weight': '500',
+            'font-family': FB, fill: CO.light }, IT('flexprice', 'Tarification flexible')));
+          g.appendChild(T({ x: x + 18, y: y + 52, 'font-size': '17', 'font-weight': '800',
+            'font-family': FD, fill: CO.dark, 'letter-spacing': '-0.02em' }, '0,24 €/kWh'));
+          g.appendChild(T({ x: x + w - 18, y: y + 52, 'text-anchor': 'end', 'font-size': '8.5',
+            'font-family': FB, fill: CO.light }, IT('flexprice_sub', 'défini dans Spark Pilot')));
+        } else {
+          const cx = x + w / 2;
+          g.appendChild(T({ x: cx, y: y + 24, 'text-anchor': 'middle', 'font-size': '9.5',
+            'font-weight': '500', 'font-family': FB, fill: CO.light }, IT('flexprice', 'Tarification flexible')));
+          g.appendChild(T({ x: cx, y: y + 58, 'text-anchor': 'middle', 'font-size': '21',
+            'font-weight': '800', 'font-family': FD, fill: CO.dark, 'letter-spacing': '-0.02em' }, '0,24 €/kWh'));
+          g.appendChild(T({ x: cx, y: y + 78, 'text-anchor': 'middle', 'font-size': '8.5',
+            'font-family': FB, fill: CO.light }, IT('flexprice_sub', 'défini dans Spark Pilot')));
+        }
+      } else {
+        const cbW = M ? 92 : 112, cbH = M ? 30 : 34;
+        const cbX = M ? (x + w - cbW - 18) : (x + (w - cbW) / 2);
+        const cbY = M ? (y + h / 2 - cbH / 2) : (y + 34);
+        if (M) {
+          g.appendChild(T({ x: x + 18, y: y + 28, 'font-size': '9.5', 'font-weight': '500',
+            'font-family': FB, fill: CO.light }, IT('autopay', 'Paiement automatisé')));
+          g.appendChild(T({ x: x + 18, y: y + 50, 'font-size': '9',
+            'font-family': FB, fill: CO.light }, 'CB · Apple Pay · Google Pay'));
+        } else {
+          const cx = x + w / 2;
+          g.appendChild(T({ x: cx, y: y + 24, 'text-anchor': 'middle', 'font-size': '9.5',
+            'font-weight': '500', 'font-family': FB, fill: CO.light }, IT('autopay', 'Paiement automatisé')));
+          g.appendChild(T({ x: cx, y: y + 86, 'text-anchor': 'middle', 'font-size': '8.5',
+            'font-family': FB, fill: CO.light }, 'CB · Apple Pay · Google Pay'));
+        }
+        g.appendChild(R({ x: cbX, y: cbY, width: cbW, height: cbH, rx: '6',
+          fill: CO.off, stroke: CO.border, 'stroke-width': '1' }));
+        g.appendChild(R({ x: cbX + 9, y: cbY + 8, width: 14, height: 11, rx: '2',
+          fill: 'rgba(232,86,58,0.30)' }));
+        g.appendChild(T({ x: cbX + 30, y: cbY + cbH / 2 + 4, 'font-size': '9.5', 'font-weight': '600',
+          'font-family': 'ui-monospace,SFMono-Regular,Menlo,monospace', fill: CO.mid }, '•••• 4242'));
+      }
+    }
 
-    /* Statut */
-    const stColor = p.status === 'charging' ? CO.charging : CO.available;
-    const stLabel = p.status === 'charging' ? IT('charging', 'En charge') : IT('available', 'Disponible');
-    const sy = CARD_Y + 184;
-    const dot = C({ cx: x + 19, cy: sy - 3.5, r: '3.5', fill: stColor });
-    if (!reduced) dot.style.animation = `sk6Led ${2 + i * 0.3}s ease-in-out ${i * 0.25}s infinite`;
-    g.appendChild(dot);
-    g.appendChild(T({
-      x: x + 29, y: sy, 'font-size': '9.5', 'font-weight': '500',
-      'font-family': FB, fill: stColor,
-    }, stLabel));
+    const CONNECTIONS = [];
 
-    svg.appendChild(g);
-  });
+    if (!M) {
+      /* ══ DESKTOP ══ */
+      const CARD_Y = 296, CARD_W = 186, CARD_H = 192, VIS_H = 118;
+      const BUS_Y = 250, SIDE_Y = 200, SIDE_W = 190, SIDE_H = 100;
+      const TAR_CX = 128, PAY_CX = 772;
+      const XS = [240, 450, 660];
 
-  /* ═══════════════════════════════════════
-     LOAD BALANCING
-     ═══════════════════════════════════════ */
-  const lbDiv = document.createElement('div');
-  lbDiv.style.cssText = 'margin-top:18px;padding:0 2px;';
-  lbDiv.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;font-family:${FB};">
-      <span style="font-size:10.5px;color:${CO.light};letter-spacing:.04em;">Load balancing</span>
-      <span id="sk6lbkw" style="font-size:10.5px;color:${CO.dark};font-weight:700;font-variant-numeric:tabular-nums;">55 kW / 100 kW</span>
-    </div>
-    <div style="width:100%;height:7px;background:${CO.off};border:1px solid ${CO.border};border-radius:4px;overflow:hidden;">
-      <div id="sk6lbbar" style="width:55%;height:100%;background:linear-gradient(90deg,${CO.charging} 0%,${CO.orange} 70%,#DC2626 100%);border-radius:4px;transition:width .9s ease-out;"></div>
-    </div>
-  `;
-  inner.appendChild(lbDiv);
+      XS.forEach((cx, i) => {
+        const pts = (cx === PL_CX)
+          ? [[cx, CARD_Y], [cx, PL_BOTTOM]]
+          : [[cx, CARD_Y], [cx, BUS_Y], [PL_CX, BUS_Y], [PL_CX, PL_BOTTOM]];
+        CONNECTIONS.push({ d: ortho(pts, 14), color: stColor(PRODUCTS[i]), speed: 2.6 + i * 0.4 });
+      });
+      CONNECTIONS.push({ d: ortho([[TAR_CX, SIDE_Y], [TAR_CX, 130], [PLX, 130]], 14),
+        color: CO.orange, speed: 3.4 });
+      CONNECTIONS.push({ d: ortho([[PAY_CX, SIDE_Y], [PAY_CX, 130], [PLX + PLW, 130]], 14),
+        color: CO.orange, speed: 3.8 });
+      CONNECTIONS.forEach(c => connect(c.d, c.color, c.speed));
 
-  if (!reduced) {
-    const vals = [38, 55, 70, 46, 62, 80, 44, 58];
-    let vi = 0;
-    setInterval(() => {
-      vi = (vi + 1) % vals.length;
-      const v = vals[vi];
-      const bar = document.getElementById('sk6lbbar');
-      const kw = document.getElementById('sk6lbkw');
-      if (bar) bar.style.width = v + '%';
-      if (kw) kw.textContent = v + ' kW / 100 kW';
-    }, 2300);
+      [['tarif', TAR_CX, 0.3], ['pay', PAY_CX, 0.4]].forEach(([kind, cx, delay]) => {
+        const g = G();
+        if (!reduced) g.style.cssText = `animation:sk6In .55s ${delay}s ease both;opacity:0;`;
+        capaCard(g, cx - SIDE_W / 2, SIDE_Y, SIDE_W, SIDE_H, kind);
+        svg.appendChild(g);
+      });
+
+      PRODUCTS.forEach((p, i) => {
+        const x = XS[i] - CARD_W / 2;
+        const g = G();
+        if (!reduced) g.style.cssText = `animation:sk6In .55s ${0.5 + i * 0.1}s ease both;opacity:0;`;
+        g.appendChild(R({ x, y: CARD_Y, width: CARD_W, height: CARD_H, rx: '14',
+          fill: CO.white, stroke: CO.border, 'stroke-width': '1.5', filter: 'url(#sk6Card)' }));
+        g.appendChild(R({ x: x + 10, y: CARD_Y + 10, width: CARD_W - 20, height: VIS_H,
+          rx: '10', fill: CO.off }));
+        cutout(g, p.img, p.alt, x + 18, CARD_Y + 17, CARD_W - 36, VIS_H - 14);
+        g.appendChild(T({ x: x + 16, y: CARD_Y + 150, 'font-size': '13', 'font-weight': '700',
+          'font-family': FD, fill: CO.dark, 'letter-spacing': '-0.01em' }, p.label));
+        g.appendChild(T({ x: x + 16, y: CARD_Y + 166, 'font-size': '9.5',
+          'font-family': FB, fill: CO.light }, p.sub));
+        const sy = CARD_Y + 184;
+        const dot = C({ cx: x + 19, cy: sy - 3.5, r: '3.5', fill: stColor(p) });
+        if (!reduced) dot.style.animation = `sk6Led ${2 + i * 0.3}s ease-in-out ${i * 0.25}s infinite`;
+        g.appendChild(dot);
+        g.appendChild(T({ x: x + 29, y: sy, 'font-size': '9.5', 'font-weight': '500',
+          'font-family': FB, fill: stColor(p) }, stLabel(p)));
+        svg.appendChild(g);
+      });
+
+    } else {
+      /* ══ MOBILE ══ colonne portrait, rail vertical a gauche */
+      const RAIL_X = 30, RAIL_Y = 144;
+      const ROW_X = 56, ROW_W = W - ROW_X - 14, ROW_H = 74, ROW_GAP = 12;
+      const ROW_Y0 = 168;
+      const rowY = (i) => ROW_Y0 + i * (ROW_H + ROW_GAP);
+      const rowMid = (i) => rowY(i) + ROW_H / 2;
+
+      /* 5 lignes : 3 bornes puis les 2 capacites */
+      const ROWS = [
+        ...PRODUCTS.map((p, i) => ({ kind: 'product', p, i })),
+        { kind: 'tarif' }, { kind: 'pay' },
+      ];
+
+      ROWS.forEach((row, i) => {
+        const mid = rowMid(i);
+        const d = ortho([[ROW_X, mid], [RAIL_X, mid], [RAIL_X, RAIL_Y], [PL_CX, RAIL_Y], [PL_CX, PL_BOTTOM]], 10);
+        const color = row.kind === 'product' ? stColor(row.p) : CO.orange;
+        CONNECTIONS.push({ d, color, speed: 2.8 + i * 0.35 });
+      });
+      CONNECTIONS.forEach(c => connect(c.d, c.color, c.speed));
+
+      ROWS.forEach((row, i) => {
+        const y = rowY(i);
+        const g = G();
+        if (!reduced) g.style.cssText = `animation:sk6In .5s ${0.3 + i * 0.08}s ease both;opacity:0;`;
+
+        if (row.kind !== 'product') {
+          capaCard(g, ROW_X, y, ROW_W, ROW_H, row.kind);
+          svg.appendChild(g);
+          return;
+        }
+
+        const p = row.p;
+        g.appendChild(R({ x: ROW_X, y, width: ROW_W, height: ROW_H, rx: '12',
+          fill: CO.white, stroke: CO.border, 'stroke-width': '1.5', filter: 'url(#sk6Soft)' }));
+        /* vitrine carree a gauche */
+        g.appendChild(R({ x: ROW_X + 8, y: y + 8, width: 58, height: ROW_H - 16, rx: '9', fill: CO.off }));
+        cutout(g, p.img, p.alt, ROW_X + 12, y + 12, 50, ROW_H - 24);
+        /* texte */
+        const tx = ROW_X + 78;
+        g.appendChild(T({ x: tx, y: y + 27, 'font-size': '12.5', 'font-weight': '700',
+          'font-family': FD, fill: CO.dark, 'letter-spacing': '-0.01em' }, p.label));
+        g.appendChild(T({ x: tx, y: y + 43, 'font-size': '9.5',
+          'font-family': FB, fill: CO.light }, p.sub));
+        const dot = C({ cx: tx + 3, cy: y + 56, r: '3.5', fill: stColor(p) });
+        if (!reduced) dot.style.animation = `sk6Led ${2 + i * 0.3}s ease-in-out ${i * 0.25}s infinite`;
+        g.appendChild(dot);
+        g.appendChild(T({ x: tx + 13, y: y + 59.5, 'font-size': '9.5', 'font-weight': '500',
+          'font-family': FB, fill: stColor(p) }, stLabel(p)));
+        svg.appendChild(g);
+      });
+    }
+
+    /* Flux de paquets */
+    if (!reduced && CONNECTIONS.length) {
+      let ci = 0;
+      every(() => {
+        const c = CONNECTIONS[ci];
+        spawnPacket(c.d, c.color, M ? 1800 : 1500);
+        ci = (ci + 1) % CONNECTIONS.length;
+      }, M ? 900 : 760);
+      later(() => spawnPacket(CONNECTIONS[0].d, CONNECTIONS[0].color, M ? 1800 : 1500), 300);
+    }
+
+    /* ── Load balancing ── */
+    const lbDiv = document.createElement('div');
+    lbDiv.style.cssText = `margin-top:${M ? 14 : 18}px;padding:0 2px;`;
+    lbDiv.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;font-family:${FB};">
+        <span style="font-size:10.5px;color:${CO.light};letter-spacing:.04em;">Load balancing</span>
+        <span id="sk6lbkw" style="font-size:10.5px;color:${CO.dark};font-weight:700;font-variant-numeric:tabular-nums;">55 kW / 100 kW</span>
+      </div>
+      <div style="width:100%;height:7px;background:${CO.off};border:1px solid ${CO.border};border-radius:4px;overflow:hidden;">
+        <div id="sk6lbbar" style="width:55%;height:100%;background:linear-gradient(90deg,${CO.charging} 0%,${CO.orange} 70%,#DC2626 100%);border-radius:4px;transition:width .9s ease-out;"></div>
+      </div>
+    `;
+    wrap.appendChild(lbDiv);
+
+    if (!reduced) {
+      const vals = [38, 55, 70, 46, 62, 80, 44, 58];
+      let vi = 0;
+      every(() => {
+        vi = (vi + 1) % vals.length;
+        const v = vals[vi];
+        const bar = document.getElementById('sk6lbbar');
+        const kw = document.getElementById('sk6lbkw');
+        if (bar) bar.style.width = v + '%';
+        if (kw) kw.textContent = v + ' kW / 100 kW';
+      }, 2300);
+    }
+
+    /* ── Legende ── */
+    const legDiv = document.createElement('div');
+    legDiv.style.cssText = `display:flex;gap:${M ? '10px 16px' : '22px'};justify-content:center;flex-wrap:wrap;`
+      + `margin-top:${M ? 14 : 18}px;padding-top:${M ? 12 : 16}px;border-top:1px solid ${CO.border};`
+      + `font-family:${FB};font-size:${M ? 10.5 : 11}px;color:${CO.light};`;
+    const dot = (c) => `<span style="width:8px;height:8px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0;"></span>`;
+    legDiv.innerHTML = `
+      <span style="display:flex;align-items:center;gap:7px;">${dot(CO.charging)}${IT('charging', 'En charge')}</span>
+      <span style="display:flex;align-items:center;gap:7px;">${dot(CO.available)}${IT('available', 'Disponible')}</span>
+      <span style="display:flex;align-items:center;gap:7px;">${dot(CO.orange)}${IT('signal', 'Signal Spark Pilot')}</span>
+      <span style="display:flex;align-items:center;gap:7px;">${dot(CO.offline)}${IT('offline', 'Hors ligne')}</span>
+    `;
+    wrap.appendChild(legDiv);
   }
 
-  /* ═══════════════════════════════════════
-     LEGENDE
-     ═══════════════════════════════════════ */
-  const legDiv = document.createElement('div');
-  legDiv.style.cssText = `display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid ${CO.border};font-family:${FB};font-size:11px;color:${CO.light};`;
-  const dot = (c) => `<span style="width:8px;height:8px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0;"></span>`;
-  legDiv.innerHTML = `
-    <span style="display:flex;align-items:center;gap:7px;">${dot(CO.charging)}${IT('charging', 'En charge')}</span>
-    <span style="display:flex;align-items:center;gap:7px;">${dot(CO.available)}${IT('available', 'Disponible')}</span>
-    <span style="display:flex;align-items:center;gap:7px;">${dot(CO.orange)}${IT('signal', 'Signal Spark Pilot')}</span>
-    <span style="display:flex;align-items:center;gap:7px;">${dot(CO.offline)}${IT('offline', 'Hors ligne')}</span>
-  `;
-  inner.appendChild(legDiv);
+  /* ── Bascule desktop / mobile sur franchissement du seuil ── */
+  const mq = window.matchMedia('(max-width: 720px)');
+  let current = null;
+  const apply = () => {
+    const mode = mq.matches ? 'mobile' : 'desktop';
+    if (mode === current) return;
+    current = mode;
+    build(mode);
+  };
+  apply();
+  if (mq.addEventListener) mq.addEventListener('change', apply);
+  else if (mq.addListener) mq.addListener(apply);
 }
 
 if (document.readyState === 'loading') {
