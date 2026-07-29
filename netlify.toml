@@ -61,12 +61,32 @@
   to = "/404.html"
   status = 404
 
-# ── Cache : assets statiques versionnés, pages HTML jamais mises en cache
-#    (contenu i18n servi par rewrite, doit toujours être réévalué) ──
+# ── Cache ──
+#    Attention : nos assets n'ont PAS de hash dans le nom de fichier
+#    (style.css, sparklin-interconnect.js…). "immutable" ne doit donc jamais
+#    être utilisé ici : il dit au navigateur de ne pas revalider du tout, et
+#    une mise à jour reste invisible pour les visiteurs déjà venus jusqu'à
+#    expiration du max-age (7 jours auparavant, même en rechargement forcé).
+#
+#    CSS/JS : revalidation systématique. L'ETag renvoie un 304 vide quand rien
+#    n'a changé, le coût est négligeable et un déploiement est visible tout de
+#    suite.
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+#    Images, polices, PDF : un jour de cache, sans "immutable", pour qu'un
+#    remplacement de fichier finisse par être repris.
 [[headers]]
   for = "/assets/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800, immutable"
+    Cache-Control = "public, max-age=86400"
 
 [[headers]]
   for = "/*.html"
