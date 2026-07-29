@@ -39,6 +39,8 @@ function initSparklinInterconnect() {
       @keyframes sk6In   { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
       @keyframes sk6Led  { 0%,100%{opacity:1} 50%{opacity:.35} }
       @keyframes sk6Bar  { 0%,100%{opacity:.8} 50%{opacity:1} }
+      /* flux permanent le long des liaisons (dasharray 7+9=16 → -32 = 2 motifs, boucle sans saut) */
+      @keyframes sk6Flow { to { stroke-dashoffset: -32; } }
       #sparklin-interconnect { -webkit-overflow-scrolling: touch; }
       #sparklin-interconnect::-webkit-scrollbar { height: 6px; }
       #sparklin-interconnect::-webkit-scrollbar-thumb { background: ${CO.borderStrong}; border-radius: 3px; }
@@ -125,14 +127,14 @@ function initSparklinInterconnect() {
   const SIDE_Y = 200, SIDE_W = 190, SIDE_H = 100;
   const TAR_CX = 128, PAY_CX = 772;
 
-  /* Cartes produit (bas) — vraies photos */
-  const CARD_Y = 320, CARD_W = 186, CARD_H = 150, PHOTO_H = 86;
+  /* Cartes produit (bas) — rendus détourés sur fond clair */
+  const CARD_Y = 296, CARD_W = 186, CARD_H = 192, VIS_H = 118;
   const BUS_Y = 250;
 
   const PRODUCTS = [
     {
       cx: 240,
-      img: '/assets/images/prise-connectee-8.jpg',
+      img: '/assets/images/spark1-cutout.png',
       alt: 'Spark 1 — prise renforcée connectée 3,7 kW',
       label: 'Spark 1',
       sub: '3,7 kW · Type E/F',
@@ -140,7 +142,7 @@ function initSparklinInterconnect() {
     },
     {
       cx: 450,
-      img: '/assets/images/spark-plus-gamme.jpg',
+      img: '/assets/images/spark-plus-cutout.png',
       alt: 'Spark Plus — prise connectée premium',
       label: 'Spark Plus',
       sub: IT('mid', 'MID certifié') + ' · QR',
@@ -148,7 +150,7 @@ function initSparklinInterconnect() {
     },
     {
       cx: 660,
-      img: '/assets/images/goe-gamme.jpg',
+      img: '/assets/images/goe-cutout.png',
       alt: 'Sparklin by go-e — borne accélérée 22 kW',
       label: 'Sparklin by go-e',
       sub: '22 kW · Type 2',
@@ -194,10 +196,28 @@ function initSparklinInterconnect() {
   const tarifPath = ortho([[TAR_CX, SIDE_Y], [TAR_CX, 130], [PLX, 130]], 14);
   const payPath   = ortho([[PAY_CX, SIDE_Y], [PAY_CX, 130], [PLX + PLW, 130]], 14);
 
-  [...productPaths, tarifPath, payPath].forEach(d => {
+  /* Chaque liaison = un trace de fond continu + des tirets qui defilent vers
+     la plateforme, pour que le flux reste lisible meme entre deux paquets. */
+  const CONNECTIONS = [
+    ...productPaths.map((d, i) => ({
+      d,
+      color: PRODUCTS[i].status === 'charging' ? CO.charging : CO.available,
+      speed: 2.6 + i * 0.4,
+    })),
+    { d: tarifPath, color: CO.orange, speed: 3.4 },
+    { d: payPath,   color: CO.orange, speed: 3.8 },
+  ];
+
+  CONNECTIONS.forEach(c => {
     gLines.appendChild(P({
-      d, fill: 'none', stroke: CO.line, 'stroke-width': '1.5', 'stroke-linecap': 'round',
+      d: c.d, fill: 'none', stroke: CO.line, 'stroke-width': '1.5', 'stroke-linecap': 'round',
     }));
+    const flow = P({
+      d: c.d, fill: 'none', stroke: c.color, 'stroke-width': '1.8',
+      'stroke-dasharray': '7 9', 'stroke-linecap': 'round', opacity: '0.45',
+    });
+    if (!reduced) flow.style.animation = `sk6Flow ${c.speed}s linear infinite`;
+    gLines.appendChild(flow);
   });
 
   /* ═══════════════════════════════════════
@@ -385,24 +405,15 @@ function initSparklinInterconnect() {
       fill: CO.white, stroke: CO.border, 'stroke-width': '1.5', filter: 'url(#sk6Card)',
     }));
 
-    /* Zone photo : coins arrondis en haut uniquement */
-    const clipId = `sk6Ph${i}`;
-    const clip = mk('clipPath', { id: clipId });
-    clip.appendChild(P({
-      d: `M ${x} ${CARD_Y + 14} A 14 14 0 0 1 ${x + 14} ${CARD_Y}
-          L ${x + CARD_W - 14} ${CARD_Y} A 14 14 0 0 1 ${x + CARD_W} ${CARD_Y + 14}
-          L ${x + CARD_W} ${CARD_Y + PHOTO_H} L ${x} ${CARD_Y + PHOTO_H} Z`,
-    }));
-    defs.appendChild(clip);
-
+    /* Vitrine : le rendu detoure est pose en entier sur un fond clair,
+       preserveAspectRatio "meet" pour ne jamais recadrer le produit. */
     g.appendChild(R({
-      x, y: CARD_Y, width: CARD_W, height: PHOTO_H,
-      fill: CO.off, 'clip-path': `url(#${clipId})`,
+      x: x + 10, y: CARD_Y + 10, width: CARD_W - 20, height: VIS_H,
+      rx: '10', fill: CO.off,
     }));
     const img = mk('image', {
-      x, y: CARD_Y, width: CARD_W, height: PHOTO_H,
-      preserveAspectRatio: 'xMidYMid slice',
-      'clip-path': `url(#${clipId})`,
+      x: x + 18, y: CARD_Y + 17, width: CARD_W - 36, height: VIS_H - 14,
+      preserveAspectRatio: 'xMidYMid meet',
     });
     img.setAttribute('href', p.img);
     img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', p.img);
@@ -410,26 +421,20 @@ function initSparklinInterconnect() {
     img.appendChild(desc);
     g.appendChild(img);
 
-    /* Filet de separation photo / texte */
-    g.appendChild(P({
-      d: `M ${x} ${CARD_Y + PHOTO_H} L ${x + CARD_W} ${CARD_Y + PHOTO_H}`,
-      stroke: CO.border, 'stroke-width': '1', fill: 'none',
-    }));
-
     /* Texte */
     g.appendChild(T({
-      x: x + 16, y: CARD_Y + PHOTO_H + 22, 'font-size': '13', 'font-weight': '700',
+      x: x + 16, y: CARD_Y + 150, 'font-size': '13', 'font-weight': '700',
       'font-family': FD, fill: CO.dark, 'letter-spacing': '-0.01em',
     }, p.label));
     g.appendChild(T({
-      x: x + 16, y: CARD_Y + PHOTO_H + 37, 'font-size': '9.5',
+      x: x + 16, y: CARD_Y + 166, 'font-size': '9.5',
       'font-family': FB, fill: CO.light,
     }, p.sub));
 
     /* Statut */
     const stColor = p.status === 'charging' ? CO.charging : CO.available;
     const stLabel = p.status === 'charging' ? IT('charging', 'En charge') : IT('available', 'Disponible');
-    const sy = CARD_Y + PHOTO_H + 54;
+    const sy = CARD_Y + 184;
     const dot = C({ cx: x + 19, cy: sy - 3.5, r: '3.5', fill: stColor });
     if (!reduced) dot.style.animation = `sk6Led ${2 + i * 0.3}s ease-in-out ${i * 0.25}s infinite`;
     g.appendChild(dot);
