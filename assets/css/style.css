@@ -1109,3 +1109,153 @@ a.home-cas-card, a.home-cas-card:hover, a.home-cas-card:visited { text-decoratio
   form[name="evenements-notif"] input { min-width: 0 !important; flex: 1 1 100% !important; }
   form[name="evenements-notif"] button { width: 100% !important; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LARGEUR ADAPTATIVE — TRES GRAND ECRAN
+   Les sections "full-bleed" (grilles collees aux bords) n'avaient aucune
+   largeur maximale : au-dela de ~1440px de viewport le contenu s'etirait
+   indefiniment et les lignes de texte devenaient illisibles.
+   On plafonne la colonne de contenu a --sk-content (1280px, dans le meme
+   rythme que .sk-wrap 1200px et .footer-grid 1240px) en gonflant le padding
+   horizontal. En dessous de 1440px de viewport, max() retombe sur 80px :
+   le rendu actuel est donc strictement inchange.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root { --sk-content: 1280px; }
+
+@media (min-width: 1200px) {
+  section.intro-section,
+  header.hero,
+  section.cas-hero,
+  .pillars-section,
+  .specs-section,
+  .pilot-section,
+  .faq-section,
+  .cas-problem,
+  .cas-solution,
+  .cas-chiffres,
+  .cas-reglementation {
+    padding-inline: max(80px, (100% - var(--sk-content)) / 2) !important;
+  }
+
+  /* Home hero : la colonne de texte s'aligne sur la colonne de contenu,
+     l'image de droite reste volontairement full-bleed jusqu'au bord. */
+  section.home-hero > div[style*="order:1"] {
+    padding-left: max(80px, (100vw - var(--sk-content)) / 2) !important;
+    padding-right: clamp(24px, 3vw, 56px) !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   INTRO-SECTION — VERSION MOBILE
+   Pages concernees : spark-pilot, app, spark-1 / plus / go-e et les 5 cas
+   clients. Les regles mobile precedentes etaient neutralisees par les
+   !important du bloc desktop (.intro-image img { height:100% !important;
+   min-height:320px !important }) : l'image debordait de son conteneur
+   (320px dans une boite de 280px) et se retrouvait rognee.
+   On repasse sur un ratio fluide plutot qu'une hauteur fixe.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  section.intro-section {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    align-items: start !important;
+  }
+
+  .intro-image {
+    order: -1;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10 !important;
+    overflow: hidden !important;
+    border-radius: 14px !important;
+  }
+  .intro-image img {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    object-fit: cover !important;
+    border-radius: 14px !important;
+  }
+
+  .intro-text { justify-content: flex-start !important; }
+  .intro-text .section-label { margin-bottom: 10px !important; }
+  .intro-text h2 {
+    font-size: clamp(1.5rem, 5.4vw, 2rem) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 14px !important;
+  }
+  .intro-text p {
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+    margin-bottom: 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  section.intro-section { gap: 24px !important; }
+  .intro-image { aspect-ratio: 3 / 2 !important; border-radius: 12px !important; }
+  .intro-image img { border-radius: 12px !important; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PROMO LIVRE BLANC (home) — VERSION MOBILE
+   La grille interne est declaree en style inline "1fr auto", que le filet
+   de securite mobile ci-dessus ne cible pas : les deux colonnes restaient
+   cote a cote et ecrasaient le texte contre la couverture du livre.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .lb-promo-section { padding: 56px 20px !important; }
+
+  .lb-promo-section .sk-wrap {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    justify-items: center !important;
+    text-align: center !important;
+    /* la section porte deja son padding de 20px : on evite de le doubler */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* colonne de texte : tout recentrer (badge, titre, accroche, puces) */
+  .lb-promo-section .sk-wrap > div:first-child {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
+  }
+  .lb-promo-section .sk-wrap > div:first-child > div:last-child {
+    justify-content: center !important;
+    gap: 8px 14px !important;
+  }
+  .lb-promo-section h2 {
+    font-size: clamp(1.35rem, 5.4vw, 1.8rem) !important;
+    margin-bottom: 10px !important;
+  }
+  .lb-promo-section p { margin-left: auto !important; margin-right: auto !important; }
+
+  /* colonne couverture + bouton : le CTA passe pleine largeur, pas 140px */
+  .lb-promo-section .sk-wrap > div:last-child { width: 100%; }
+  .lb-promo-section .sk-wrap > div:last-child > a {
+    width: 100% !important;
+    max-width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 14px 22px !important;
+    font-size: 14px !important;
+    box-sizing: border-box;
+  }
+
+  /* les blobs decoratifs deviennent parasites a cette taille */
+  .lb-promo-section > div[style*="border-radius:50%"] { display: none !important; }
+}
