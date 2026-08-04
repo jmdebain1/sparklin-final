@@ -382,7 +382,7 @@ $lang = initI18n();
             <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--text-light);font-weight:700;flex-shrink:0;">→</span><span data-i18n="app.eco.mgr.li5"><?= tr('app.eco.mgr.li5') ?></span></div>
             <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--text-light);font-weight:700;flex-shrink:0;">→</span><span data-i18n="app.eco.mgr.li6"><?= tr('app.eco.mgr.li6') ?></span></div>
           </div>
-          <a href="#" style="margin-top:20px;display:inline-flex;font-size:13px;color:var(--orange);font-weight:500;text-decoration:none;border-bottom:1px solid rgba(232,86,58,0.3);padding-bottom:2px;" data-i18n="feat.cta"><?= tr('feat.cta') ?></a>
+          <a href="https://sparklin.io/spark-pilot/" style="margin-top:20px;display:inline-flex;font-size:13px;color:var(--orange);font-weight:500;text-decoration:none;border-bottom:1px solid rgba(232,86,58,0.3);padding-bottom:2px;" data-i18n="feat.cta"><?= tr('feat.cta') ?></a>
         </div>
       </div>
     </div>
