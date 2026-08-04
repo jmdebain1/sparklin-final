@@ -261,7 +261,7 @@ $lang = initI18n();
 <section style="background:var(--bg-off);padding:80px clamp(24px,5vw,80px);">
   <div class="sk-wrap" style="max-width:900px;">
     <span class="section-label" data-i18n="about.conviction.h2"><?= tr('about.conviction.h2') ?></span>
-    <h2 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);margin:12px 0 28px;line-height:1.15;" data-i18n="about.conviction.title"><?= tr('about.conviction.title') ?><br data-i18n="about.conviction.sub"><?= tr('about.conviction.sub') ?><em style="font-style:normal;color:var(--orange);" data-i18n="about.conviction.sub2"><?= tr('about.conviction.sub2') ?></em></h2>
+    <h2 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);margin:12px 0 28px;line-height:1.15;" data-i18n="about.conviction.title"><?= tr('about.conviction.title') ?><br data-i18n="about.conviction.sub"><?= tr('about.conviction.sub') ?> <em style="font-style:normal;color:var(--orange);" data-i18n="about.conviction.sub2"><?= tr('about.conviction.sub2') ?></em></h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
       <div>
         <p style="font-size:16px;color:var(--text-mid);line-height:1.8;font-weight:300;margin-bottom:20px;" data-i18n="about.conviction.p1"><?= t('about.conviction.p1') ?></p>
@@ -403,7 +403,7 @@ $lang = initI18n();
 <section style="padding:80px clamp(24px,5vw,80px);background:var(--bg-off);">
   <div class="sk-wrap" style="max-width:900px;">
     <span class="section-label" data-i18n="about.shareholders"><?= tr('about.shareholders') ?></span>
-    <h2 style="font-family:var(--font-display);font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:800;color:var(--dark);margin:12px 0 36px;" data-i18n="about.investors"><?= tr('about.investors') ?><br data-i18n="about.investors.b"><?= tr('about.investors.b') ?><em style="font-style:normal;color:var(--orange);" data-i18n="about.investors.em"><?= t('about.investors.em') ?></em></h2>
+    <h2 style="font-family:var(--font-display);font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:800;color:var(--dark);margin:12px 0 36px;" data-i18n="about.investors"><?= tr('about.investors') ?><br data-i18n="about.investors.b"><?= tr('about.investors.b') ?> <em style="font-style:normal;color:var(--orange);" data-i18n="about.investors.em"><?= t('about.investors.em') ?></em></h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
       <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:16px;padding:28px;">
         <div style="font-family:var(--font-display);font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;" data-i18n="about.share.gnkgo.label"><?= t('about.share.gnkgo.label') ?></div>

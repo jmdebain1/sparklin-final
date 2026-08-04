@@ -241,7 +241,7 @@ $lang = initI18n();
 <section class="cas-hero">
     <div>
       <div class="hero-badge" data-i18n="cas.collab.hero.badge"><?= tr('cas.collab.hero.badge') ?></div>
-      <h1 data-i18n="cas.collab.h1"><?= tr('cas.collab.h1') ?><em data-i18n="cas.collab.h1b"><?= tr('cas.collab.h1b') ?></em></h1>
+      <h1 data-i18n="cas.collab.h1"><?= tr('cas.collab.h1') ?> <em data-i18n="cas.collab.h1b"><?= tr('cas.collab.h1b') ?></em></h1>
       <p data-i18n="cas.collab.lead"><?= tr('cas.collab.lead') ?></p>
       <div style="display:flex;gap:14px;flex-wrap:wrap;">
         <a href="/contact/" class="btn-primary" data-i18n="pilot.hero.cta1"><?= tr('pilot.hero.cta1') ?></a>

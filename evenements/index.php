@@ -267,7 +267,7 @@ $lang = initI18n();
   <div class="sk-wrap" style="max-width:1060px;">
     <div style="text-align:center;margin-bottom:52px;">
       <span class="section-label" data-i18n="events.agenda"><?= tr('events.agenda') ?></span>
-      <h2 class="section-title" style="text-align:center;" data-i18n="events.next"><?= tr('events.next') ?><em style="font-style:normal;color:var(--orange)" data-i18n="events.event"><?= tr('events.event') ?></em></h2>
+      <h2 class="section-title" style="text-align:center;" data-i18n="events.next"><?= tr('events.next') ?> <em style="font-style:normal;color:var(--orange)" data-i18n="events.event"><?= tr('events.event') ?></em></h2>
       <p style="font-size:15px;color:var(--text-mid);max-width:540px;margin:16px auto 0;line-height:1.75;" data-i18n="events.desc"><?= tr('events.desc') ?></p>
     </div>
 

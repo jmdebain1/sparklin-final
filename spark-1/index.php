@@ -243,7 +243,7 @@ $lang = initI18n();
 <header class="hero" style="background:var(--bg-off);">
   <div>
     <div class="hero-badge" data-i18n="s1.badge"><?= tr('s1.badge') ?></div>
-    <h1 data-i18n="s1.hero.h1"><?= tr('s1.hero.h1') ?><em data-i18n="s1.hero.h1b"><?= tr('s1.hero.h1b') ?></em><?= tr('s1.hero.h1c') ?></h1>
+    <h1 data-i18n="s1.hero.h1"><?= tr('s1.hero.h1') ?> <em data-i18n="s1.hero.h1b"><?= tr('s1.hero.h1b') ?></em><?= tr('s1.hero.h1c') ?></h1>
     <p class="hero-sub" data-i18n="s1.hero.sub"><?= tr('s1.hero.sub') ?></p>
     <div class="hero-actions">
       <a href="/contact/" class="btn-primary" data-i18n="pilot.hero.cta1"><?= tr('pilot.hero.cta1') ?></a>
