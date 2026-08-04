@@ -555,15 +555,19 @@ $lang = initI18n();
      Website ID: 326a0f31-24a5-4709-9538-ff5f4aa65f71
      ══════════════════════════════════════════════════════════ -->
 <script type="text/javascript">
-  window.$crisp=[];
-  window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
-  (function(){
+  // Ne se charge qu'apres consentement cookies (voir skCookieChoice / skCookieInit
+  // plus bas) : window.skLoadCrisp() est l'unique point d'entree, protege contre
+  // un double chargement.
+  window.skLoadCrisp = function(){
+    if (window.$crisp) return; // deja charge
+    window.$crisp=[];
+    window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
     var d=document;
     var s=d.createElement("script");
     s.src="https://client.crisp.chat/l.js";
     s.async=1;
     d.getElementsByTagName("head")[0].appendChild(s);
-  })();
+  };
 </script>
 <!-- ══ /CRISP ════════════════════════════════════════════════ -->
 
@@ -695,12 +699,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (accepted) {
       // Ici : activer analytique (GA, etc.) si besoin
+      if (window.skLoadCrisp) window.skLoadCrisp();
     }
   }
   window.skCookieChoice = skCookieChoice;
   function skCookieInit() {
     try {
       var consent = localStorage.getItem(COOKIE_KEY);
+      if (consent === 'accepted' && window.skLoadCrisp) window.skLoadCrisp();
       if (consent) return; // déjà répondu
     } catch(e){}
     var banner = document.getElementById('sk-cookie-banner');

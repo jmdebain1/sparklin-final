@@ -303,11 +303,11 @@ $lang = initI18n();
           <td>Crisp (messagerie d'assistance)</td>
           <td>Maintien de la session de chat en ligne avec l'équipe Sparklin</td>
           <td>Durée de la session / quelques mois selon le cookie</td>
-          <td>Non (strictement nécessaire au fonctionnement de l'outil)</td>
+          <td>Oui</td>
         </tr>
       </tbody>
     </table>
-    <p>Les cookies de mesure d'audience (Google Analytics) ne sont déposés qu'après acceptation via le bandeau prévu à cet effet. Le détail du traitement réalisé par Google est décrit dans la section «&nbsp;Statistiques et analyses d'audience&nbsp;» des <a href="/mentions-legales/">Mentions légales</a>.</p>
+    <p>Les cookies de mesure d'audience (Google Analytics) et l'outil de messagerie d'assistance (Crisp) ne sont chargés qu'après acceptation via le bandeau prévu à cet effet. Le détail du traitement réalisé par Google est décrit dans la section «&nbsp;Statistiques et analyses d'audience&nbsp;» des <a href="/mentions-legales/">Mentions légales</a>.</p>
 
     <h2 id="tiers">Cookies émis par des tiers</h2>
     <p>Certains contenus ou outils intégrés au Site (mesure d'audience, messagerie d'assistance) sont fournis par des prestataires tiers qui peuvent déposer leurs propres cookies. Sparklin n'a pas le contrôle direct sur ces cookies&nbsp;; nous vous invitons à consulter les politiques de confidentialité de ces prestataires pour plus d'information&nbsp;:</p>
@@ -461,15 +461,19 @@ $lang = initI18n();
      Website ID: 326a0f31-24a5-4709-9538-ff5f4aa65f71
      ══════════════════════════════════════════════════════════ -->
 <script type="text/javascript">
-  window.$crisp=[];
-  window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
-  (function(){
+  // Ne se charge qu'apres consentement cookies (voir skCookieChoice / skCookieInit
+  // plus bas) : window.skLoadCrisp() est l'unique point d'entree, protege contre
+  // un double chargement.
+  window.skLoadCrisp = function(){
+    if (window.$crisp) return; // deja charge
+    window.$crisp=[];
+    window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
     var d=document;
     var s=d.createElement("script");
     s.src="https://client.crisp.chat/l.js";
     s.async=1;
     d.getElementsByTagName("head")[0].appendChild(s);
-  })();
+  };
 </script>
 <!-- ══ /CRISP ════════════════════════════════════════════════ -->
 
@@ -601,12 +605,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (accepted) {
       // Ici : activer analytique (GA, etc.) si besoin
+      if (window.skLoadCrisp) window.skLoadCrisp();
     }
   }
   window.skCookieChoice = skCookieChoice;
   function skCookieInit() {
     try {
       var consent = localStorage.getItem(COOKIE_KEY);
+      if (consent === 'accepted' && window.skLoadCrisp) window.skLoadCrisp();
       if (consent) return; // déjà répondu
     } catch(e){}
     var banner = document.getElementById('sk-cookie-banner');
