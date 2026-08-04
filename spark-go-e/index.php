@@ -271,8 +271,8 @@ $lang = initI18n();
 <div class="trust-bar">
   <div class="trust-item"><strong data-i18n="goe.power_range"><?= t('goe.power_range') ?></strong></div>
   <div class="trust-item"><strong>IP66 / IK08</strong></div>
-  <div class="trust-item"><strong data-i18n="s1.trust1"><?= tr('s1.trust1') ?></strong></div>
-  <div class="trust-item"><strong>-25° à 40°C</strong></div>
+  <div class="trust-item"><strong data-i18n="goe.trust.ocpp"><?= tr('goe.trust.ocpp') ?></strong></div>
+  <div class="trust-item"><strong>-25° à 45°C</strong></div>
   <div class="trust-item"><strong data-i18n="s1.trust3"><?= tr('s1.trust3') ?></strong></div>
 </div>
 
@@ -404,8 +404,8 @@ $lang = initI18n();
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.certif"><?= t('s1.spec.certif') ?></span><span class="spec-val">CE</span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="goe.spec.indices"><?= t('goe.spec.indices') ?></span><span class="spec-val">IP66 · IK08</span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.comm"><?= t('s1.spec.comm') ?></span><span class="spec-val">WiFi / 4G / RJ45</span></div>
-      <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.protocol"><?= t('s1.spec.protocol') ?></span><span class="spec-val">OCPP 1.6 &amp; 2.0</span></div>
-      <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.temp"><?= t('s1.spec.temp') ?></span><span class="spec-val">-25° à 40°C</span></div>
+      <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.protocol"><?= t('s1.spec.protocol') ?></span><span class="spec-val">OCPP 1.6 JSON</span></div>
+      <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.temp"><?= t('s1.spec.temp') ?></span><span class="spec-val">-25° à 45°C</span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.warranty"><?= t('s1.spec.warranty') ?></span><span class="spec-val" data-i18n="goe.spec.warranty_v"><?= t('goe.spec.warranty_v') ?></span></div>
     </div>
     <div class="specs-images">
