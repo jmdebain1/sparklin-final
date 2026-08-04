@@ -103,6 +103,36 @@
     els.forEach(function(c) { obs.observe(c); });
   }
 
+  /* ── LANGUAGE PERSISTENCE ──
+     The site is pre-rendered per language and deployed as static files;
+     Netlify's redirect engine picks the right file purely from the
+     ?lang= query string (see netlify.toml) — there is no server-side
+     session/cookie to fall back on in production. Internal links are
+     authored as plain paths ("/spark-1/"), so following one from a
+     translated page silently dropped back to the French default. This
+     rewrites every same-origin path link on the page to carry the
+     language of the CURRENT page, so it keeps propagating page to page. */
+  function currentLang() {
+    var m = /[?&]lang=([a-z]{2})(?:&|$)/.exec(location.search);
+    return m ? m[1] : null;
+  }
+  function persistLangInLinks() {
+    var lang = currentLang();
+    if (!lang || lang === 'fr') return; // French pages carry no ?lang=, nothing to propagate
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      if (a.hasAttribute('data-lang')) return; // language switcher itself: leave the explicit choice
+      var href = a.getAttribute('href');
+      if (!href || href.charAt(0) !== '/' || href.charAt(1) === '/') return; // only same-origin path links
+      if (href.indexOf('/assets/') === 0 || href.indexOf('/api/') === 0 || href.indexOf('/.netlify/') === 0) return;
+      if (/[?&]lang=/.test(href)) return; // already carries a language
+      var hashIdx = href.indexOf('#');
+      var hash = hashIdx === -1 ? '' : href.slice(hashIdx);
+      var base = hashIdx === -1 ? href : href.slice(0, hashIdx);
+      var sep = base.indexOf('?') === -1 ? '?' : '&';
+      a.setAttribute('href', base + sep + 'lang=' + lang + hash);
+    });
+  }
+
   /* ── LANG MENU (UI only — no translation logic) ── */
   function toggleLangMenu(e) {
     e.stopPropagation();
@@ -151,6 +181,7 @@
 
   /* ── BOOTSTRAP ── */
   document.addEventListener('DOMContentLoaded', function() {
+    persistLangInLinks();
     initReveals();
     if (document.getElementById('hero-word')) {
       initWordCycle();

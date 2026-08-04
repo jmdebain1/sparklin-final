@@ -264,7 +264,7 @@ $words = json_encode($wordCycle[$lang] ?? $wordCycle['fr']);
 <header class="hero">
     <div>
       <div class="hero-badge" data-i18n="hero.badge"><?= tr('hero.badge') ?></div>
-      <h1><span data-i18n="hero.h1"><?= tr('hero.h1') ?></span><br><span id="hero-word" class="word-cycle" data-i18n-word="true" style="color:var(--orange);">intelligente.</span></h1>
+      <h1><span data-i18n="hero.h1"><?= tr('hero.h1') ?></span><br><span id="hero-word" class="word-cycle" data-i18n-word="true" style="color:var(--orange);"><?= htmlspecialchars(($wordCycle[$lang] ?? $wordCycle['fr'])[0], ENT_QUOTES, 'UTF-8') ?></span></h1>
       <p class="hero-sub" data-i18n="hero.sub"><?= tr('hero.sub') ?></p>
       <div class="hero-actions">
         <a href="/contact/" class="btn-primary" style="font-size:15px;padding:15px 30px;" data-i18n="hero.cta1"><?= tr('hero.cta1') ?></a>
@@ -272,9 +272,9 @@ $words = json_encode($wordCycle[$lang] ?? $wordCycle['fr']);
       </div>
       
       <div class="home-metrics-strip" style="display:flex;align-items:center;gap:0;margin-top:28px;padding:16px 20px;background:var(--bg-off);border-radius:12px;flex-wrap:wrap;gap:6px;">
-            <span class="chip"><span class="chip-dot"></span>Prise connectée renforcée</span>
-            <span class="chip"><span class="chip-dot"></span>Monophasée et triphasée</span>
-            <span class="chip"><span class="chip-dot"></span>Conçue en France</span>
+            <span class="chip"><span class="chip-dot"></span><span data-i18n="home.hero.chip1"><?= t('home.hero.chip1') ?></span></span>
+            <span class="chip"><span class="chip-dot"></span><span data-i18n="home.hero.chip2"><?= t('home.hero.chip2') ?></span></span>
+            <span class="chip"><span class="chip-dot"></span><span data-i18n="home.hero.chip3"><?= t('home.hero.chip3') ?></span></span>
           </div>
 
       </div>

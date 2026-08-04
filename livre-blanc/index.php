@@ -332,8 +332,9 @@ $lang = initI18n();
             return false;
           }
 
-          // Redirect to merci page seulement si l'envoi a reussi
-          window.location.href = '/livre-blanc/merci/';
+          // Redirect to merci page seulement si l'envoi a reussi (en conservant la langue courante)
+          var lbLangMatch = /[?&]lang=([a-z]{2})(?:&|$)/.exec(window.location.search);
+          window.location.href = '/livre-blanc/merci/' + (lbLangMatch ? '?lang=' + lbLangMatch[1] : '');
 
         } catch (err) {
           errEl.textContent = 'Erreur reseau : ' + err;
