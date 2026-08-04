@@ -10,8 +10,8 @@ $lang = initI18n();
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title><?= tr('meta.evenements.title') ?></title>
-  <meta name="description" content="<?= tr('meta.evenements.desc') ?>" data-i18n-meta="meta.evenements.desc"/>
+  <title>CGU du site — Sparklin</title>
+  <meta name="description" content="Conditions générales d'utilisation du site sparklin.io : accès, services, données personnelles, hébergement OVH."/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png"/>
@@ -20,7 +20,7 @@ $lang = initI18n();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('meta.evenements.title'),'desc'=>tr('meta.evenements.desc')]); ?>
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>'CGU du site — Sparklin', 'desc'=>"Conditions générales d'utilisation du site sparklin.io : accès, services, données personnelles, hébergement OVH."]); ?>
 </head>
 <body>
 <nav class="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:stretch;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 clamp(20px,5vw,80px);height:64px;">
@@ -237,156 +237,128 @@ $lang = initI18n();
   </div>
 
 </div>
+
+<style>
+.legal-doc { max-width: 760px; }
+.legal-doc h1.section-title { margin-bottom: 6px; }
+.legal-doc .legal-updated { font-size: 12.5px; color: var(--text-light); margin-bottom: 36px; display:block; }
+.legal-doc h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--dark); letter-spacing: -0.01em; margin: 40px 0 14px; }
+.legal-doc h2:first-of-type { margin-top: 8px; }
+.legal-doc h3 { font-family: var(--font-body); font-size: 0.95rem; font-weight: 700; color: var(--dark); margin: 22px 0 10px; }
+.legal-doc p { font-size: 15.5px; color: var(--text-mid); line-height: 1.75; font-weight: 300; margin-bottom: 16px; }
+.legal-doc ul, .legal-doc ol { margin: 0 0 16px; padding-left: 22px; }
+.legal-doc li { font-size: 15.5px; color: var(--text-mid); line-height: 1.75; font-weight: 300; margin-bottom: 8px; }
+.legal-doc a { color: var(--orange); font-weight: 500; text-decoration: none; }
+.legal-doc a:hover { text-decoration: underline; }
+.legal-doc strong { color: var(--dark); font-weight: 600; }
+.legal-toc { background: var(--bg-off); border: 1px solid var(--border); border-radius: 16px; padding: 22px 26px; margin: 28px 0 40px; }
+.legal-toc div { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); margin-bottom: 12px; }
+.legal-toc ol { margin: 0; padding-left: 18px; columns: 2; column-gap: 28px; }
+.legal-toc li { font-size: 13.5px; margin-bottom: 7px; }
+.legal-toc a { color: var(--text-mid); font-weight: 400; }
+.legal-toc a:hover { color: var(--orange); }
+.legal-card { background: var(--bg-off); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; margin-top: 40px; }
+.legal-card p { margin-bottom: 6px; font-size: 14.5px; }
+.legal-card p:last-child { margin-bottom: 0; }
+@media (max-width: 640px) { .legal-toc ol { columns: 1; } }
+</style>
+
 <main style="padding-top:64px;">
+<section style="background:var(--bg-white);padding:72px 0 80px;">
+  <div class="sk-wrap legal-doc">
+    <span class="section-label">Conditions générales</span>
+    <h1 class="section-title">Conditions générales d'utilisation du site</h1>
+    <span class="legal-updated">Applicables au site www.sparklin.io — dernière mise à jour&nbsp;: juillet 2026</span>
 
-<!-- ══ HERO ═════════════════════════════════════════════════════ -->
-<header class="hero" id="ev-hero">
-  <div>
-    <div class="hero-badge" data-i18n="events.hero.badge"><?= tr('events.hero.badge') ?></div>
-    <h1 data-i18n="events.hero.h1a"><?= tr('events.hero.h1a') ?><br><em data-i18n="events.hero.h1b"><?= tr('events.hero.h1b') ?></em></h1>
-    <p class="hero-sub" data-i18n="events.hero.sub"><?= t('events.hero.sub') ?></p>
-    <div class="hero-actions">
-      <a href="#prochains" class="btn-primary" data-i18n="events.cta1"><?= tr('events.cta1') ?></a>
-      <a href="/contact/" class="btn-outline" data-i18n="events.cta2"><?= tr('events.cta2') ?></a>
-    </div>
-    <div class="hero-chips">
-      <span class="chip"><span class="chip-dot"></span><span data-i18n="events.chip1"><?= t('events.chip1') ?></span></span>
-      <span class="chip"><span class="chip-dot"></span><span data-i18n="events.chip2"><?= t('events.chip2') ?></span></span>
-      <span class="chip"><span class="chip-dot"></span><span data-i18n="events.chip3"><?= t('events.chip3') ?></span></span>
-      <span class="chip"><span class="chip-dot"></span><span data-i18n="events.chip4"><?= t('events.chip4') ?></span></span>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <img class="hero-img-main" src="/assets/images/parking-right.jpg" alt="Sparklin aux salons professionnels IRVE" style="object-fit:cover;border-radius:20px;width:100%;height:100%;max-height:520px;"/>
-  </div>
-</header>
-
-<!-- ══ PROCHAINS ÉVÉNEMENTS ══════════════════════════════════════ -->
-<!-- ══ PROCHAINS ÉVÉNEMENTS ══════════════════════════════════════ -->
-<section id="prochains" style="padding:80px clamp(20px,5vw,80px);background:var(--bg-white);">
-  <div class="sk-wrap" style="max-width:1060px;">
-    <div style="text-align:center;margin-bottom:52px;">
-      <span class="section-label" data-i18n="events.agenda"><?= tr('events.agenda') ?></span>
-      <h2 class="section-title" style="text-align:center;" data-i18n="events.next"><?= tr('events.next') ?><em style="font-style:normal;color:var(--orange)" data-i18n="events.event"><?= tr('events.event') ?></em></h2>
-      <p style="font-size:15px;color:var(--text-mid);max-width:540px;margin:16px auto 0;line-height:1.75;" data-i18n="events.desc"><?= tr('events.desc') ?></p>
+    <div class="legal-toc">
+      <div>Sommaire</div>
+      <ol>
+        <li><a href="#objet">Objet</a></li>
+        <li><a href="#editeur">Éditeur du site</a></li>
+        <li><a href="#hebergement">Hébergement</a></li>
+        <li><a href="#acces">Accès au site</a></li>
+        <li><a href="#services">Description des services</a></li>
+        <li><a href="#formulaires">Formulaires et demandes</a></li>
+        <li><a href="#pi">Propriété intellectuelle</a></li>
+        <li><a href="#donnees">Données personnelles et cookies</a></li>
+        <li><a href="#liens">Liens hypertextes</a></li>
+        <li><a href="#responsabilite">Responsabilité</a></li>
+        <li><a href="#modification">Modification des CGU</a></li>
+        <li><a href="#droit">Droit applicable et litiges</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
     </div>
 
-    <div style="display:flex;flex-direction:column;gap:20px;">
+    <h2 id="objet">1. Objet</h2>
+    <p>Les présentes Conditions Générales d'Utilisation (ci-après «&nbsp;CGU&nbsp;») ont pour objet de définir les modalités et conditions dans lesquelles Sparklin met à disposition des internautes le site www.sparklin.io (ci-après «&nbsp;le Site&nbsp;»), ainsi que les conditions d'accès et d'utilisation de ce Site. Le Site a pour finalité de présenter les produits et services de Sparklin (bornes et prises de recharge connectées, applications de supervision) et de permettre la prise de contact avec la société.</p>
+    <p>L'accès et la navigation sur le Site impliquent l'acceptation pleine et entière des présentes CGU par tout visiteur (ci-après «&nbsp;l'Utilisateur&nbsp;»).</p>
+    <p>Ces CGU concernent uniquement l'utilisation du site vitrine www.sparklin.io. Elles ne s'appliquent pas à l'usage des applications mobiles Sparklin (Spark-A, Spark-i) ni de la plateforme de supervision Spark Pilot, qui sont régies par des conditions générales d'utilisation distinctes, consultables sur la page <a href="/cgu-app/">CGU des applications</a>.</p>
 
-      <!-- POWER TO DRIVE MUNICH 2026 -->
-      <div class="ev-future">
-        <div class="ev-date-col" style="background:var(--orange);">
-          <div class="ev-date-month" style="font-size:9px;">Sept.</div>
-          <div class="ev-date-day" style="font-size:2.2rem;">15</div>
-          <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.85);">→ 17</div>
-          <div class="ev-date-year">2026</div>
-        </div>
-        <div class="ev-body">
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <span class="ev-badge ev-badge-soon" data-i18n="events.soon"><?= tr('events.soon') ?></span>
-            <span style="font-size:12px;color:var(--text-mid);">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <span data-i18n="events.ptd.loc"><?= t('events.ptd.loc') ?></span>
-            </span>
-          </div>
-          <h3 class="ev-h3">Power To Drive — International EV Charging Expo 2026</h3>
-          <p class="ev-desc" data-i18n="events.ptd.desc"><?= t('events.ptd.desc') ?></p>
-          <div class="ev-tags">
-            <span class="ev-tag" data-i18n="events.tag1"><?= tr('events.tag1') ?></span>
-            <span class="ev-tag">OCPP 2.0</span>
-            <span class="ev-tag" data-i18n="events.tag2"><?= tr('events.tag2') ?></span>
-            <span class="ev-tag">GIREVE &amp; roaming</span>
-            <span class="ev-tag" data-i18n="events.tag3"><?= tr('events.tag3') ?></span>
-          </div>
-          <div class="ev-actions">
-            <a href="https://www.powertodrive.de/home?lang=en" target="_blank" rel="noopener" class="btn-primary" style="font-size:13px;padding:10px 20px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              <span data-i18n="events.ptd.site"><?= t('events.ptd.site') ?></span>
-            </a>
-            <a href="/contact/" class="btn-outline" style="font-size:13px;padding:10px 20px;" data-i18n="ui.book_meeting"><?= tr('ui.book_meeting') ?></a>
-          </div>
-        </div>
-      </div>
+    <h2 id="editeur">2. Éditeur du site</h2>
+    <p>Le Site est édité par&nbsp;:</p>
+    <ul>
+      <li>Sparklin SAS, dont le siège social est situé 4 rue de la Cornouaille, 44300 Nantes, France&nbsp;;</li>
+      <li>Adresse de contact&nbsp;: <a href="mailto:contact@sparklin.io">contact@sparklin.io</a>&nbsp;;</li>
+      <li>Les autres mentions relatives à l'éditeur (immatriculation, directeur de la publication) figurent sur la page <a href="/mentions-legales/">Mentions légales</a>.</li>
+    </ul>
 
-    </div>
-  </div>
-</section>
+    <h2 id="hebergement">3. Hébergement</h2>
+    <p>Le Site est hébergé par&nbsp;:</p>
+    <ul>
+      <li>OVH SAS, société par actions simplifiée au capital de 10&nbsp;174&nbsp;560&nbsp;€, immatriculée au RCS de Lille Métropole sous le numéro 424&nbsp;761&nbsp;419&nbsp;00045&nbsp;;</li>
+      <li>Siège social&nbsp;: 2 rue Kellermann, 59100 Roubaix, France.</li>
+    </ul>
 
-<!-- ══ PARTICIPATIONS PASSÉES ═══════════════════════════════════ -->
-<section style="padding:80px clamp(20px,5vw,80px);background:var(--bg-off);">
-  <div class="sk-wrap" style="max-width:1060px;">
-    <div style="text-align:center;margin-bottom:48px;">
-      <span class="section-label" data-i18n="events.experience"><?= tr('events.experience') ?></span>
-      <h2 class="section-title" style="text-align:center;" data-i18n="events.past"><?= tr('events.past') ?></h2>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
+    <h2 id="acces">4. Accès au site</h2>
+    <p>Sparklin s'efforce de permettre l'accès au Site 24 heures sur 24 et 7 jours sur 7, sauf cas de force majeure ou événement hors de son contrôle, et sous réserve des éventuelles opérations de maintenance nécessaires au bon fonctionnement du Site.</p>
+    <p>Sparklin ne saurait être tenue responsable de toute indisponibilité temporaire du Site, quelle qu'en soit la cause, ni des conséquences qui pourraient en résulter pour l'Utilisateur.</p>
 
-      <!-- Salon des Maires 2025 -->
-      <div class="ev-past-card">
-        <div class="ev-past-top">
-          <div class="ev-past-icon-wrap">
-            <div class="ev-past-icon" style="background:linear-gradient(135deg,#2E4057,#4A6FA5);">🏛️</div>
-          </div>
-          <span class="ev-past-badge">Nov. 2025</span>
-        </div>
-        <div class="ev-past-name" data-i18n="events.maires"><?= tr('events.maires') ?></div>
-        <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;" data-i18n="events.maires.desc"><?= t('events.maires.desc') ?></p>
-        <ul class="ev-li">
-          <li class="ev-result" data-i18n="events.maires.r1"><?= t('events.maires.r1') ?></li>
-          <li class="ev-result" data-i18n="events.maires.r2"><?= t('events.maires.r2') ?></li>
-          <li class="ev-result" data-i18n="events.maires.r3"><?= t('events.maires.r3') ?></li>
-        </ul>
-      </div>
+    <h2 id="services">5. Description des services</h2>
+    <p>Le Site permet notamment à l'Utilisateur de&nbsp;:</p>
+    <ul>
+      <li>consulter des informations sur les produits Sparklin (Spark 1, Spark Plus, Spark x go-e) et sur la plateforme Spark Pilot&nbsp;;</li>
+      <li>consulter le blog, le livre blanc et les autres contenus éditoriaux publiés par Sparklin&nbsp;;</li>
+      <li>prendre contact avec Sparklin via les formulaires mis à disposition&nbsp;;</li>
+      <li>accéder, via des liens dédiés, à des services tiers exploités par Sparklin (plateforme de supervision manager.sparklin.io, outil d'activation setup.sparklin.io, applications mobiles) dont l'utilisation est soumise à leurs propres conditions générales.</li>
+    </ul>
+    <p>Le Site ne propose aucune vente en ligne ni aucun paiement directement sur ses pages&nbsp;: toute commande ou souscription à une offre Sparklin fait l'objet d'un échange commercial distinct.</p>
 
-      <!-- Salon Environnement de Travail & Achats 2026 -->
-      <div class="ev-past-card">
-        <div class="ev-past-top">
-          <div class="ev-past-icon-wrap">
-            <div class="ev-past-icon" style="background:linear-gradient(135deg,#1A6B3A,#2E9B5F);">🏢</div>
-          </div>
-          <span class="ev-past-badge">2026</span>
-        </div>
-        <div class="ev-past-name" data-i18n="events.env_travail"><?= tr('events.env_travail') ?></div>
-        <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;" data-i18n="events.envt.desc"><?= t('events.envt.desc') ?></p>
-        <ul class="ev-li">
-          <li class="ev-result" data-i18n="events.envt.r1"><?= t('events.envt.r1') ?></li>
-          <li class="ev-result" data-i18n="events.envt.r2"><?= t('events.envt.r2') ?></li>
-          <li class="ev-result" data-i18n="events.envt.r3"><?= t('events.envt.r3') ?></li>
-        </ul>
-      </div>
+    <h2 id="formulaires">6. Formulaires et demandes</h2>
+    <p>Certaines pages du Site (notamment «&nbsp;Contact&nbsp;» et «&nbsp;Livre blanc&nbsp;») proposent des formulaires permettant à l'Utilisateur de transmettre des informations à Sparklin (nom, adresse email, message, et le cas échéant société ou besoin exprimé). Ces informations sont utilisées exclusivement pour traiter la demande de l'Utilisateur, lui répondre et, le cas échéant, assurer un suivi commercial. Elles ne sont ni cédées ni vendues à des tiers.</p>
+    <p>Ces formulaires sont protégés par un dispositif de vérification anti-robot (reCAPTCHA) destiné à limiter les soumissions automatisées et abusives.</p>
 
+    <h2 id="pi">7. Propriété intellectuelle</h2>
+    <p>L'ensemble des éléments composant le Site (structure, textes, graphismes, images, logos, photographies, vidéos, marques) est protégé par le droit de la propriété intellectuelle et demeure la propriété exclusive de Sparklin ou de ses partenaires, sauf mention contraire.</p>
+    <p>Toute reproduction, représentation, adaptation ou exploitation, totale ou partielle, de ces éléments, par quelque procédé que ce soit, est interdite sans l'autorisation écrite préalable de Sparklin et pourrait constituer une contrefaçon au sens des articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+
+    <h2 id="donnees">8. Données personnelles et cookies</h2>
+    <p>Le traitement des données à caractère personnel collectées via le Site (formulaires, mesure d'audience) est réalisé conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés modifiée.</p>
+    <p>Le Site dépose des cookies techniques nécessaires à son fonctionnement ainsi que, sous réserve du consentement de l'Utilisateur recueilli via le bandeau dédié, des cookies de mesure d'audience (Google Analytics). Ces derniers permettent d'analyser la fréquentation du Site à des fins statistiques&nbsp;; ils ne sont déposés qu'après acceptation et peuvent être refusés ou retirés à tout moment. Voir la section «&nbsp;Statistiques et analyses d'audience&nbsp;» des <a href="/mentions-legales/">Mentions légales</a> pour le détail de ce traitement.</p>
+    <p>Conformément à la réglementation applicable, l'Utilisateur dispose d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur les données le concernant, qu'il peut exercer en écrivant à <a href="mailto:contact@sparklin.io">contact@sparklin.io</a>. Il dispose également du droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL).</p>
+
+    <h2 id="liens">9. Liens hypertextes</h2>
+    <p>Le Site peut contenir des liens vers des sites tiers sur lesquels Sparklin n'exerce aucun contrôle. Sparklin décline toute responsabilité quant au contenu de ces sites et aux conséquences pouvant résulter de leur consultation ou utilisation par l'Utilisateur.</p>
+
+    <h2 id="responsabilite">10. Responsabilité</h2>
+    <p>Sparklin s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur le Site, sans pouvoir toutefois garantir leur exhaustivité ou leur absence d'erreur. L'Utilisateur reconnaît utiliser ces informations sous sa seule responsabilité.</p>
+    <p>Sparklin ne pourra être tenue responsable des dommages directs ou indirects résultant de l'accès au Site, de son indisponibilité, ou de l'utilisation qui en est faite, notamment en cas de dysfonctionnement, d'incompatibilité avec un équipement de l'Utilisateur, ou de défaillance du réseau Internet.</p>
+
+    <h2 id="modification">11. Modification des CGU</h2>
+    <p>Sparklin se réserve le droit de modifier les présentes CGU à tout moment, notamment pour les adapter aux évolutions du Site ou de la réglementation. La version applicable est celle publiée sur cette page à la date de consultation du Site.</p>
+
+    <h2 id="droit">12. Droit applicable et litiges</h2>
+    <p>Les présentes CGU sont soumises au droit français. En cas de litige et à défaut de résolution amiable, les tribunaux français compétents seront seuls saisis, dans les conditions de droit commun.</p>
+
+    <h2 id="contact">13. Contact</h2>
+    <div class="legal-card">
+      <p><strong>Sparklin SAS</strong></p>
+      <p>4 rue de la Cornouaille, 44300 Nantes, France</p>
+      <p><a href="mailto:contact@sparklin.io">contact@sparklin.io</a></p>
     </div>
   </div>
 </section>
-
-<section style="padding:72px clamp(24px,5vw,80px);background:var(--dark);">
-  <div class="sk-wrap" style="max-width:600px;text-align:center;">
-    <span class="section-label" style="color:rgba(255,255,255,.4);" data-i18n="ui.stay_informed"><?= tr('ui.stay_informed') ?></span>
-    <h2 style="font-family:'Wix Madefor Display',sans-serif;font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:800;color:#fff;line-height:1.15;margin:12px 0;text-align:center;" data-i18n="events.notify_h2"><?= tr('events.notify_h2') ?><br><em style="font-style:normal;color:var(--orange)" data-i18n="events.notify_sub"><?= tr('events.notify_sub') ?></em></h2>
-    <p style="font-size:15px;color:rgba(255,255,255,.55);font-weight:300;line-height:1.7;margin-bottom:28px;" data-i18n="events.notify.sub"><?= tr('events.notify.sub') ?></p>
-    <form name="evenements-notif" supabase style="display:flex;gap:10px;max-width:420px;margin:0 auto;">
-      <input type="email" name="email" required placeholder="votre@email.com"
-        style="flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-family:'Wix Madefor Text',sans-serif;font-size:14px;padding:12px 16px;outline:none;transition:border-color .2s;"
-        onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(255,255,255,.15)'"/>
-      <button type="submit"
-        style="background:var(--orange);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-size:14px;font-weight:600;font-family:'Wix Madefor Text',sans-serif;cursor:pointer;transition:background .15s;"
-        onmouseover="this.style.background='#d44e34'" onmouseout="this.style.background='var(--orange)'" data-i18n="events.notify.btn"><?= tr('events.notify.btn') ?></button>
-    </form>
-  </div>
-</section>
-
-<!-- ══ CTA CLOSE ════════════════════════════════════════════════ -->
-<section class="cta-close">
-  <div class="made-tag" data-i18n="events.cta.tag"><?= t('events.cta.tag') ?></div>
-  <h2 class="section-title" data-i18n="events.cta.h2a"><?= t('events.cta.h2a') ?> <em style="font-style:normal;color:var(--orange)" data-i18n="events.cta.h2b"><?= t('events.cta.h2b') ?></em></h2>
-  <p class="section-body" data-i18n="events.cta.body"><?= t('events.cta.body') ?></p>
-  <div class="cta-close-actions">
-    <a href="/contact/" class="btn-primary-light" data-i18n="events.cta.contact"><?= t('events.cta.contact') ?></a>
-    <a href="/livre-blanc/" class="btn-ghost" data-i18n="cta.lb"><?= tr('cta.lb') ?></a>
-  </div>
-</section>
-
 </main>
+
 <footer class="site-footer">
   <div class="footer-grid">
 
@@ -584,190 +556,6 @@ document.addEventListener('DOMContentLoaded', function() {
 #sk-cookie-reject:hover { border-color:#4A4A6A; color:#1A1A2E; }
 #sk-cookie-accept:hover { background:#FF6B4A; }
 
-/* ── EVENTS PAGE ─────────────────────────────────────────────── */
-
-.ev-future {
-  display: flex;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(26,26,46,.07);
-  background: #fff;
-}
-
-.ev-date-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 96px;
-  padding: 28px 18px;
-  color: #fff;
-  text-align: center;
-  gap: 4px;
-  flex-shrink: 0;
-}
-
-.ev-date-month {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  opacity: .85;
-}
-
-.ev-date-day {
-  font-family: 'Wix Madefor Display', sans-serif;
-  font-size: 2.6rem;
-  font-weight: 800;
-  line-height: 1;
-  color: #fff;
-}
-
-.ev-date-year {
-  font-size: 11px;
-  font-weight: 600;
-  opacity: .75;
-  margin-top: 2px;
-}
-
-.ev-body {
-  flex: 1;
-  padding: 28px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.ev-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-
-.ev-badge-soon {
-  background: rgba(255,111,73,.12);
-  color: var(--orange);
-}
-
-.ev-h3 {
-  font-family: 'Wix Madefor Display', sans-serif;
-  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
-  font-weight: 700;
-  color: var(--text-dark);
-  line-height: 1.25;
-  margin: 0;
-}
-
-.ev-desc {
-  font-size: 14.5px;
-  color: var(--text-mid);
-  line-height: 1.7;
-  margin: 0;
-}
-
-.ev-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.ev-tag {
-  background: var(--bg-off);
-  color: var(--text-mid);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 4px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-}
-
-.ev-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 4px;
-}
-
-/* Past event cards */
-.ev-past-card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 2px 12px rgba(26,26,46,.05);
-  display: flex;
-  flex-direction: column;
-}
-
-.ev-past-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.ev-past-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-
-.ev-past-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 12px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  background: var(--bg-off);
-  color: var(--text-mid);
-  border: 1px solid var(--border);
-}
-
-.ev-past-name {
-  font-family: 'Wix Madefor Display', sans-serif;
-  font-size: 15.5px;
-  font-weight: 700;
-  color: var(--text-dark);
-  line-height: 1.3;
-  margin-bottom: 10px;
-}
-
-.ev-li {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: auto;
-}
-
-.ev-result {
-  font-size: 13px;
-  color: var(--text-mid);
-  line-height: 1.5;
-  padding: 6px 10px;
-  background: var(--bg-off);
-  border-radius: 8px;
-}
-
-@media (max-width: 700px) {
-  .ev-future { flex-direction: column; }
-  .ev-date-col { flex-direction: row; min-width: unset; padding: 16px 20px; gap: 10px; }
-  .ev-body { padding: 20px; }
-}
-
 /* ── SPECIFIC FIXES (injected corrections) ───────────────────── */
 
 /* HOME — Spark Pilot net-feats: 1 col on mobile */
@@ -868,4 +656,3 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 </body>
-</html>

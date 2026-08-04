@@ -623,8 +623,8 @@ $lang = initI18n();
   <div class="footer-bottom">
     <span class="footer-bottom-left" data-i18n="footer.legal"><?= tr('footer.legal') ?></span>
     <nav class="footer-bottom-links">
-      <a href="https://www.sparklin.io/mentions-légales" data-i18n="footer.lnk.legal"><?= tr('footer.lnk.legal') ?></a>
-      <a href="https://www.sparklin.io/cgu-app" data-i18n="footer.lnk.cgu"><?= tr('footer.lnk.cgu') ?></a>
+      <a href="/mentions-legales/" data-i18n="footer.lnk.legal"><?= tr('footer.lnk.legal') ?></a>
+      <a href="/cgu/" data-i18n="footer.lnk.cgu"><?= tr('footer.lnk.cgu') ?></a>
       <a href="/contact/" data-i18n="footer.lnk.contact"><?= tr('footer.lnk.contact') ?></a>
       <a href="https://manager.sparklin.io">Spark Pilot</a>
     </nav>
