@@ -1,12 +1,7 @@
 <?php
-/* ══════════════════════════════════════════════════════════════
-   sparklin.io — Sparklin App — Application mobile
-   Architecture : PHP + Supabase (translations server-side)
-   ══════════════════════════════════════════════════════════════ */
 require_once __DIR__ . '/../includes/env.php';
 require_once __DIR__ . '/../includes/supabase.php';
 require_once __DIR__ . '/../includes/i18n.php';
-
 loadEnv(__DIR__ . '/../.env');
 $lang = initI18n();
 ?>
@@ -15,8 +10,8 @@ $lang = initI18n();
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title><?= tr('meta.app.title') ?></title>
-  <meta name="description" content="<?= tr('meta.app.desc') ?>" data-i18n-meta="meta.app.desc"/>
+  <title>Politique cookies — Sparklin</title>
+  <meta name="description" content="Politique cookies du site sparklin.io : cookies utilisés, finalités, durées, gestion du consentement."/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png"/>
@@ -25,7 +20,7 @@ $lang = initI18n();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('meta.app.title'),'desc'=>tr('meta.app.desc')]); ?>
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>'Politique cookies — Sparklin', 'desc'=>'Politique cookies du site sparklin.io : cookies utilisés, finalités, durées, gestion du consentement.']); ?>
 </head>
 <body>
 <nav class="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:stretch;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 clamp(20px,5vw,80px);height:64px;">
@@ -242,226 +237,94 @@ $lang = initI18n();
   </div>
 
 </div>
+
+<style>
+.legal-doc { max-width: 760px; }
+.legal-doc h1.section-title { margin-bottom: 6px; }
+.legal-doc .legal-updated { font-size: 12.5px; color: var(--text-light); margin-bottom: 36px; display:block; }
+.legal-doc h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--dark); letter-spacing: -0.01em; margin: 40px 0 14px; }
+.legal-doc h2:first-of-type { margin-top: 8px; }
+.legal-doc h3 { font-family: var(--font-body); font-size: 0.95rem; font-weight: 700; color: var(--dark); margin: 22px 0 10px; }
+.legal-doc p { font-size: 15.5px; color: var(--text-mid); line-height: 1.75; font-weight: 300; margin-bottom: 16px; }
+.legal-doc ul, .legal-doc ol { margin: 0 0 16px; padding-left: 22px; }
+.legal-doc li { font-size: 15.5px; color: var(--text-mid); line-height: 1.75; font-weight: 300; margin-bottom: 8px; }
+.legal-doc a { color: var(--orange); font-weight: 500; text-decoration: none; }
+.legal-doc a:hover { text-decoration: underline; }
+.legal-doc strong { color: var(--dark); font-weight: 600; }
+.legal-toc { background: var(--bg-off); border: 1px solid var(--border); border-radius: 16px; padding: 22px 26px; margin: 28px 0 40px; }
+.legal-toc div { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); margin-bottom: 12px; }
+.legal-toc ol { margin: 0; padding-left: 18px; columns: 2; column-gap: 28px; }
+.legal-toc li { font-size: 13.5px; margin-bottom: 7px; }
+.legal-toc a { color: var(--text-mid); font-weight: 400; }
+.legal-toc a:hover { color: var(--orange); }
+.legal-card { background: var(--bg-off); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; margin-top: 40px; }
+.legal-card p { margin-bottom: 6px; font-size: 14.5px; }
+.legal-card p:last-child { margin-bottom: 0; }
+.legal-note { background: rgba(232,86,58,0.06); border: 1px solid rgba(232,86,58,0.22); border-radius: 12px; padding: 16px 20px; margin-bottom: 32px; }
+.legal-note p { margin: 0; font-size: 13.5px; color: var(--text-mid); }
+.legal-table { width:100%; border-collapse: collapse; margin: 8px 0 28px; font-size: 14px; }
+.legal-table th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-light); font-weight:700; padding:10px 14px; background:var(--bg-off); border-bottom:1px solid var(--border); }
+.legal-table td { padding:12px 14px; border-bottom:1px solid var(--border); color:var(--text-mid); font-weight:300; vertical-align:top; }
+.legal-table tr:last-child td { border-bottom:none; }
+@media (max-width: 640px) { .legal-toc ol { columns: 1; } .legal-table { display:block; overflow-x:auto; } }
+</style>
+
 <main style="padding-top:64px;">
-<!-- HERO -->
-  <header class="hero">
-    <div>
-      <div class="hero-badge" data-i18n="app.hero.badge"><?= tr('app.hero.badge') ?></div>
-      <h1 data-i18n="app.hero.h1a"><?= tr('app.hero.h1a') ?> <em data-i18n="app.hero.h1b"><?= tr('app.hero.h1b') ?></em><?= tr('app.hero.h1c') ?></h1>
-      <p class="hero-sub" data-i18n="app.hero.sub"><?= tr('app.hero.sub') ?></p>
-      <div class="hero-actions">
-        <a href="https://apps.apple.com/fr/app/sparklin/id1615738603" class="btn-primary" data-i18n="app.dl.appstore"><?= tr('app.dl.appstore') ?></a>
-        <a href="https://play.google.com/store/apps/details?id=io.sparklin.app&gl=FR" class="btn-outline" data-i18n="app.dl.googleplay"><?= tr('app.dl.googleplay') ?></a>
-      </div>
-      <div class="hero-chips">
-        <span class="chip"><span class="chip-dot"></span><span data-i18n="app.chip1"><?= tr('app.chip1') ?></span></span>
-        <span class="chip"><span class="chip-dot"></span><span data-i18n="app.chip2"><?= tr('app.chip2') ?></span></span>
-        <span class="chip"><span class="chip-dot"></span><span data-i18n="app.chip3"><?= tr('app.chip3') ?></span></span>
-        <span class="chip"><span class="chip-dot"></span><span data-i18n="app.chip4"><?= tr('app.chip4') ?></span></span>
-        <span class="chip"><span class="chip-dot"></span><span data-i18n="app.chip5"><?= tr('app.chip5') ?></span></span>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <img class="hero-img-main" src="/assets/images/app-mobile-payment.jpg" alt="Application Sparklin mobile — interface de recharge et paiement"/>
-    </div>
-  </header>
+<section style="background:var(--bg-white);padding:72px 0 80px;">
+  <div class="sk-wrap legal-doc">
+    <span class="section-label">Cookies</span>
+    <h1 class="section-title">Politique cookies</h1>
+    <span class="legal-updated">Site www.sparklin.io — dernière mise à jour&nbsp;: juillet 2026</span>
 
-  
+    <h2 id="quest-ce">Qu'est-ce qu'un cookie&nbsp;?</h2>
+    <p>Un cookie est un petit fichier texte déposé sur votre appareil (ordinateur, tablette, mobile) lors de la consultation d'un site internet. Il permet notamment de reconnaître votre navigateur lors de vos visites, de mémoriser vos préférences ou de mesurer la fréquentation du site.</p>
 
-  <!-- INTRO -->
-  <section class="intro-section">
-    <div class="intro-text reveal">
-      <span class="section-label" data-i18n="app.intro.h2"><?= tr('app.intro.h2') ?></span>
-      <h2 data-i18n="app.intro.sub"><?= tr('app.intro.sub') ?></h2>
-      <p data-i18n="app.intro.p1"><?= tr('app.intro.p1') ?></p>
-      <p data-i18n="app.intro.p2"><?= tr('app.intro.p2') ?></p>
-      <p data-i18n="app.intro.p3"><?= tr('app.intro.p3') ?></p>
-    </div>
-    <div class="intro-image reveal" style="min-height:300px;aspect-ratio:4/3;">
-      <img src="/assets/images/app-communities.jpg" alt="Utilisateur de l&rsquo;application Sparklin — gestion de sa session de recharge sur smartphone"/>
-    </div>
-  </section>
+    <h2 id="gestion">Comment vos choix sont-ils appliqués&nbsp;?</h2>
+    <p>Lors de votre première visite, un bandeau vous permet d'accepter ou de refuser le dépôt des cookies non essentiels. Votre choix est mémorisé sur votre appareil et peut être modifié à tout moment en effaçant les données de navigation de votre navigateur pour ce site, ce qui réaffichera le bandeau de consentement.</p>
+    <p>Vous pouvez également configurer votre navigateur pour refuser globalement le dépôt de cookies&nbsp;; cela peut toutefois limiter certaines fonctionnalités du Site.</p>
 
-  <!-- FONCTIONNALITÉS EN GRILLE -->
-  <section class="pillars-section">
-    <div class="pillars-header reveal">
-      <span class="section-label" data-i18n="app.feats.h2"><?= tr('app.feats.h2') ?></span>
-      <h2 class="section-title" data-i18n="app.feats.sub"><?= tr('app.feats.sub') ?></h2>
-      <p class="section-body" data-i18n="app.feats.body"><?= tr('app.feats.body') ?></p>
-    </div>
-    <div class="app-feats-grid reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+    <h2 id="liste">Cookies utilisés sur ce site</h2>
+    <table class="legal-table">
+      <thead><tr><th>Cookie</th><th>Finalité</th><th>Durée</th><th>Soumis à consentement</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>sk_lang</code></td>
+          <td>Mémorise la langue choisie pour l'affichage du site</td>
+          <td>1 an</td>
+          <td>Non (strictement nécessaire)</td>
+        </tr>
+        <tr>
+          <td>Google Analytics (<code>_ga</code>, <code>_gid</code>…)</td>
+          <td>Mesure d'audience&nbsp;: pages consultées, provenance du trafic, statistiques anonymisées</td>
+          <td>Jusqu'à 13 mois</td>
+          <td>Oui</td>
+        </tr>
+        <tr>
+          <td>Crisp (messagerie d'assistance)</td>
+          <td>Maintien de la session de chat en ligne avec l'équipe Sparklin</td>
+          <td>Durée de la session / quelques mois selon le cookie</td>
+          <td>Non (strictement nécessaire au fonctionnement de l'outil)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Les cookies de mesure d'audience (Google Analytics) ne sont déposés qu'après acceptation via le bandeau prévu à cet effet. Le détail du traitement réalisé par Google est décrit dans la section «&nbsp;Statistiques et analyses d'audience&nbsp;» des <a href="/mentions-legales/">Mentions légales</a>.</p>
 
-      <div class="pillar-card">
-        <div class="pillar-icon">⚡</div>
-        <h3 data-i18n="app.f1.title"><?= tr('app.f1.title') ?></h3>
-        <p data-i18n="app.f1.desc"><?= tr('app.f1.desc') ?></p>
-      </div>
+    <h2 id="tiers">Cookies émis par des tiers</h2>
+    <p>Certains contenus ou outils intégrés au Site (mesure d'audience, messagerie d'assistance) sont fournis par des prestataires tiers qui peuvent déposer leurs propres cookies. Sparklin n'a pas le contrôle direct sur ces cookies&nbsp;; nous vous invitons à consulter les politiques de confidentialité de ces prestataires pour plus d'information&nbsp;:</p>
+    <ul>
+      <li>Google — <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener">politique cookies de Google</a></li>
+      <li>Crisp — <a href="https://crisp.chat/en/privacy/" target="_blank" rel="noopener">politique de confidentialité de Crisp</a></li>
+    </ul>
 
-      <div class="pillar-card">
-        <div class="pillar-icon">🔲</div>
-        <h3 data-i18n="app.f2.title"><?= tr('app.f2.title') ?></h3>
-        <p data-i18n="app.f2.desc"><?= tr('app.f2.desc') ?></p>
-      </div>
+    <h2 id="donnees-personnelles">Données personnelles</h2>
+    <p>Pour tout ce qui concerne le traitement de vos données personnelles au-delà des cookies (formulaires, finalités, durée de conservation, droits), consultez la <a href="/politique-confidentialite/">Politique de confidentialité</a>.</p>
 
-      <div class="pillar-card">
-        <div class="pillar-icon">⏱️</div>
-        <h3 data-i18n="app.f3.title"><?= tr('app.f3.title') ?></h3>
-        <p data-i18n="app.f3.desc"><?= tr('app.f3.desc') ?></p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-icon">💳</div>
-        <h3 data-i18n="app.f4.title"><?= tr('app.f4.title') ?></h3>
-        <p data-i18n="app.f4.desc"><?= tr('app.f4.desc') ?></p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-icon">🧾</div>
-        <h3 data-i18n="app.f5.title"><?= tr('app.f5.title') ?></h3>
-        <p data-i18n="app.f5.desc"><?= tr('app.f5.desc') ?></p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-icon">📊</div>
-        <h3 data-i18n="app.f6.title"><?= tr('app.f6.title') ?></h3>
-        <p data-i18n="app.f6.desc"><?= tr('app.f6.desc') ?></p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-icon">🔔</div>
-        <h3 data-i18n="app.f7.title"><?= tr('app.f7.title') ?></h3>
-        <p data-i18n="app.f7.desc"><?= tr('app.f7.desc') ?></p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-icon">🏘️</div>
-        <h3 data-i18n="app.f8.title"><?= tr('app.f8.title') ?></h3>
-        <p data-i18n="app.f8.desc"><?= tr('app.f8.desc') ?></p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-icon">🌐</div>
-        <h3 data-i18n="app.f9.title"><?= tr('app.f9.title') ?></h3>
-        <p data-i18n="app.f9.desc"><?= tr('app.f9.desc') ?></p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- GESTIONNAIRE vs UTILISATEUR -->
-  <section class="specs-section" style="background:var(--bg-off);">
-    <div class="sk-wrap">
-      <div class="reveal" style="text-align:center;margin-bottom:48px;">
-        <span class="section-label" data-i18n="app.ecosystem.h2"><?= tr('app.ecosystem.h2') ?></span>
-        <h2 class="section-title" data-i18n="app.eco.h2"><?= tr('app.eco.h2') ?></h2>
-        <p class="section-body" style="max-width:600px;margin:0 auto;" data-i18n="app.eco.body"><?= tr('app.eco.body') ?></p>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="reveal">
-        <div style="background:var(--bg-white);border:1.5px solid rgba(232,86,58,0.25);border-radius:16px;padding:32px;">
-          <div style="font-size:32px;margin-bottom:16px;">📱</div>
-          <h3 style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="app.eco.app.name"><?= tr('app.eco.app.name') ?></h3>
-          <p style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:16px;" data-i18n="app.eco.app.role"><?= tr('app.eco.app.role') ?></p>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--orange);font-weight:700;flex-shrink:0;">✓</span><span data-i18n="app.eco.app.li1"><?= tr('app.eco.app.li1') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--orange);font-weight:700;flex-shrink:0;">✓</span><span data-i18n="app.eco.app.li2"><?= tr('app.eco.app.li2') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--orange);font-weight:700;flex-shrink:0;">✓</span><span data-i18n="app.eco.app.li3"><?= tr('app.eco.app.li3') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--orange);font-weight:700;flex-shrink:0;">✓</span><span data-i18n="app.eco.app.li4"><?= tr('app.eco.app.li4') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--orange);font-weight:700;flex-shrink:0;">✓</span><span data-i18n="app.eco.app.li5"><?= tr('app.eco.app.li5') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--orange);font-weight:700;flex-shrink:0;">✓</span><span data-i18n="app.eco.app.li6"><?= tr('app.eco.app.li6') ?></span></div>
-          </div>
-        </div>
-        <div style="background:var(--bg-white);border:1.5px solid var(--border);border-radius:16px;padding:32px;">
-          <div style="font-size:32px;margin-bottom:16px;">🖥️</div>
-          <h3 style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="gamme.s1.manager"><?= tr('gamme.s1.manager') ?></h3>
-          <p style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-light);margin-bottom:16px;" data-i18n="app.eco.mgr.role"><?= tr('app.eco.mgr.role') ?></p>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--text-light);font-weight:700;flex-shrink:0;">→</span><span data-i18n="app.eco.mgr.li1"><?= tr('app.eco.mgr.li1') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--text-light);font-weight:700;flex-shrink:0;">→</span><span data-i18n="app.eco.mgr.li2"><?= tr('app.eco.mgr.li2') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--text-light);font-weight:700;flex-shrink:0;">→</span><span data-i18n="app.eco.mgr.li3"><?= tr('app.eco.mgr.li3') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--text-light);font-weight:700;flex-shrink:0;">→</span><span data-i18n="app.eco.mgr.li4"><?= tr('app.eco.mgr.li4') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--text-light);font-weight:700;flex-shrink:0;">→</span><span data-i18n="app.eco.mgr.li5"><?= tr('app.eco.mgr.li5') ?></span></div>
-            <div style="font-size:13.5px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--text-light);font-weight:700;flex-shrink:0;">→</span><span data-i18n="app.eco.mgr.li6"><?= tr('app.eco.mgr.li6') ?></span></div>
-          </div>
-          <a href="#" style="margin-top:20px;display:inline-flex;font-size:13px;color:var(--orange);font-weight:500;text-decoration:none;border-bottom:1px solid rgba(232,86,58,0.3);padding-bottom:2px;" data-i18n="feat.cta"><?= tr('feat.cta') ?></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SCREENSHOTS -->
-  <section class="pilot-section" style="background:var(--bg-white);">
-    <div class="pilot-layout">
-      <div>
-        <span class="section-label reveal" data-i18n="app.ux.label"><?= tr('app.ux.label') ?></span>
-        <h2 class="section-title reveal" data-i18n="app.ux.h2"><?= tr('app.ux.h2') ?></h2>
-        <p class="section-body reveal" data-i18n="app.ux.body"><?= tr('app.ux.body') ?></p>
-        <div class="pilot-features reveal">
-          <div class="pilot-feature">
-            <div class="pilot-feature-icon">🔐</div>
-            <div class="pilot-feature-text">
-              <h4 data-i18n="app.ux.f1.title"><?= tr('app.ux.f1.title') ?></h4>
-              <p data-i18n="app.ux.f1.desc"><?= tr('app.ux.f1.desc') ?></p>
-            </div>
-          </div>
-          <div class="pilot-feature">
-            <div class="pilot-feature-icon">🎯</div>
-            <div class="pilot-feature-text">
-              <h4 data-i18n="app.ux.f2.title"><?= tr('app.ux.f2.title') ?></h4>
-              <p data-i18n="app.ux.f2.desc"><?= tr('app.ux.f2.desc') ?></p>
-            </div>
-          </div>
-          <div class="pilot-feature">
-            <div class="pilot-feature-icon">🔋</div>
-            <div class="pilot-feature-text">
-              <h4 data-i18n="app.ux.f3.title"><?= tr('app.ux.f3.title') ?></h4>
-              <p data-i18n="app.ux.f3.desc"><?= tr('app.ux.f3.desc') ?></p>
-            </div>
-          </div>
-          <div class="pilot-feature">
-            <div class="pilot-feature-icon">💬</div>
-            <div class="pilot-feature-text">
-              <h4 data-i18n="app.ux.f4.title"><?= tr('app.ux.f4.title') ?></h4>
-              <p data-i18n="app.ux.f4.desc"><?= tr('app.ux.f4.desc') ?></p>
-            </div>
-          </div>
-        </div>
-        <div style="display:flex;gap:12px;margin-top:32px;" class="reveal">
-          <a href="https://apps.apple.com/fr/app/sparklin/id1615738603" class="btn-primary" data-i18n="app.dl.appstore"><?= tr('app.dl.appstore') ?></a>
-          <a href="https://play.google.com/store/apps/details?id=io.sparklin.app&gl=FR" class="btn-outline" data-i18n="app.dl.googleplay"><?= tr('app.dl.googleplay') ?></a>
-        </div>
-      </div>
-      <div class="pilot-screens reveal">
-        <div class="pilot-screen"><img src="/assets/images/app-mobile-payment.jpg" alt="Application Sparklin — &eacute;cran principal de suivi de charge"/></div>
-        <div class="pilot-screen"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — tableau de bord gestionnaire"/></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  
-<!-- ══ FAQ ══ -->
-<section class="faq-section" style="background:var(--bg-off);padding:72px clamp(20px,5vw,80px);">
-  <div class="sk-wrap sk-wrap--narrow">
-    <span class="section-label">FAQ</span>
-    <h2 class="section-title" style="margin-bottom:36px;" data-i18n="app.faq.h2"><?= tr('app.faq.h2') ?></h2>
-    <div class="faq-list">
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="app.faq.q1"><?= tr('app.faq.q1') ?></span><span class="faq-icon">+</span></button><div class="faq-answer"><p data-i18n="app.faq.a1"><?= tr('app.faq.a1') ?></p></div></div>
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="app.faq.q2"><?= tr('app.faq.q2') ?></span><span class="faq-icon">+</span></button><div class="faq-answer"><p data-i18n="app.faq.a2"><?= tr('app.faq.a2') ?></p></div></div>
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="app.faq.q3"><?= tr('app.faq.q3') ?></span><span class="faq-icon">+</span></button><div class="faq-answer"><p data-i18n="app.faq.a3"><?= tr('app.faq.a3') ?></p></div></div>
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="app.faq.q4"><?= tr('app.faq.q4') ?></span><span class="faq-icon">+</span></button><div class="faq-answer"><p data-i18n="app.faq.a4"><?= tr('app.faq.a4') ?></p></div></div>
-    </div>
+    <h2 id="contact">Contact</h2>
+    <p>Pour toute question relative à l'utilisation des cookies sur ce site, vous pouvez écrire à <a href="mailto:contact@sparklin.io">contact@sparklin.io</a>.</p>
   </div>
 </section>
-<section class="cta-close">
-    <div class="made-tag" data-i18n="app.cta.tag"><?= tr('app.cta.tag') ?></div>
-    <h2 class="section-title" data-i18n="app.cta.h2"><?= tr('app.cta.h2') ?></h2>
-    <p class="section-body" data-i18n="app.cta.body"><?= tr('app.cta.body') ?></p>
-    <div class="cta-close-actions">
-      <a href="https://apps.apple.com/fr/app/sparklin/id1615738603" class="btn-primary-light" data-i18n="app.cta.appstore"><?= tr('app.cta.appstore') ?></a>
-      <a href="https://play.google.com/store/apps/details?id=io.sparklin.app&gl=FR" class="btn-ghost" data-i18n="app.cta.googleplay"><?= tr('app.cta.googleplay') ?></a>
-    </div>
-  </section>
 </main>
+
 <footer class="site-footer">
   <div class="footer-grid">
 
@@ -547,15 +410,12 @@ $lang = initI18n();
   <div class="footer-bottom">
     <span class="footer-bottom-left" data-i18n="footer.legal"><?= tr('footer.legal') ?></span>
     <nav class="footer-bottom-links">
-      <a href="/mentions-legales/" data-i18n="footer.lnk.legal"><?= tr('footer.lnk.legal') ?></a>
-      <a href="/cgu/" data-i18n="footer.lnk.cgu"><?= tr('footer.lnk.cgu') ?></a>
-      <a href="/politique-confidentialite/">Confidentialité</a>
-      <a href="/politique-cookies/">Cookies</a>
+      <a href="https://www.sparklin.io/mentions-légales" data-i18n="footer.lnk.legal"><?= tr('footer.lnk.legal') ?></a>
+      <a href="https://www.sparklin.io/cgu-app" data-i18n="footer.lnk.cgu"><?= tr('footer.lnk.cgu') ?></a>
       <a href="/contact/" data-i18n="footer.lnk.contact"><?= tr('footer.lnk.contact') ?></a>
       <a href="https://manager.sparklin.io">Spark Pilot</a>
     </nav>
   </div>
-<div class="faq-item"><div class="faq-q">Faut-il un compte pour recharger ?</div><div class="faq-a">Pour les bornes publiques, un simple scan du QR Code depuis l'application suffit, sans cr&eacute;ation de compte. Pour les bornes priv&eacute;es, un compte permet de g&eacute;rer les acc&egrave;s et le paiement.</div></div>
 </footer>
 <script src="/assets/js/app.js"></script>
 <script src="/assets/js/sparklin-interconnect.js"></script>
@@ -762,4 +622,3 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 </body>
-</html>

@@ -283,6 +283,7 @@ $lang = initI18n();
         <div id="lb-error" style="display:none;background:#FEF2F2;color:#DC2626;border:1px solid rgba(220,38,38,.2);border-radius:8px;padding:10px 14px;font-size:13px;"></div>
         <button type="submit" id="lb-btn" style="background:var(--orange);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;" onmouseover="this.style.background='#c94b31'" onmouseout="this.style.background='var(--orange)'" data-i18n="lb.f.submit">📥 <?= tr('lb.f.submit') ?></button>
         <p style="font-size:11px;color:var(--text-light);" data-i18n="lb.f.privacy"><?= tr('lb.f.privacy') ?></p>
+        <p style="font-size:11px;color:var(--text-light);">En soumettant ce formulaire, vous acceptez que vos données (email, prénom) soient utilisées par Sparklin pour vous envoyer le document demandé et, le cas échéant, vous informer de ses offres. Voir notre <a href="/politique-confidentialite/" style="color:var(--orange);">politique de confidentialité</a>.</p>
       </form>
 
       <?php $rcSite = $_ENV['RECAPTCHA_SITE_KEY'] ?? ''; ?>
@@ -447,6 +448,8 @@ $lang = initI18n();
     <nav class="footer-bottom-links">
       <a href="/mentions-legales/" data-i18n="footer.lnk.legal"><?= tr('footer.lnk.legal') ?></a>
       <a href="/cgu/" data-i18n="footer.lnk.cgu"><?= tr('footer.lnk.cgu') ?></a>
+      <a href="/politique-confidentialite/">Confidentialité</a>
+      <a href="/politique-cookies/">Cookies</a>
       <a href="/contact/" data-i18n="footer.lnk.contact"><?= tr('footer.lnk.contact') ?></a>
       <a href="https://manager.sparklin.io">Spark Pilot</a>
     </nav>

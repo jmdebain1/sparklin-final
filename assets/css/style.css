@@ -924,7 +924,7 @@ a.home-cas-card, a.home-cas-card:hover, a.home-cas-card:visited { text-decoratio
   padding: 24px 0; flex-wrap: wrap; gap: 12px;
 }
 .footer-bottom-left { font-size: 12px; color: rgba(255,255,255,0.25); }
-.footer-bottom-links { display: flex; gap: 20px; }
+.footer-bottom-links { display: flex; flex-wrap: wrap; gap: 10px 20px; }
 .footer-bottom-links a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
 .footer-bottom-links a:hover { color: rgba(255,255,255,0.6); }
 

@@ -332,8 +332,8 @@ $lang = initI18n();
     <p>Toute reproduction, représentation, adaptation ou exploitation, totale ou partielle, de ces éléments, par quelque procédé que ce soit, est interdite sans l'autorisation écrite préalable de Sparklin et pourrait constituer une contrefaçon au sens des articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
 
     <h2 id="donnees">8. Données personnelles et cookies</h2>
-    <p>Le traitement des données à caractère personnel collectées via le Site (formulaires, mesure d'audience) est réalisé conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés modifiée.</p>
-    <p>Le Site dépose des cookies techniques nécessaires à son fonctionnement ainsi que, sous réserve du consentement de l'Utilisateur recueilli via le bandeau dédié, des cookies de mesure d'audience (Google Analytics). Ces derniers permettent d'analyser la fréquentation du Site à des fins statistiques&nbsp;; ils ne sont déposés qu'après acceptation et peuvent être refusés ou retirés à tout moment. Voir la section «&nbsp;Statistiques et analyses d'audience&nbsp;» des <a href="/mentions-legales/">Mentions légales</a> pour le détail de ce traitement.</p>
+    <p>Le traitement des données à caractère personnel collectées via le Site (formulaires, mesure d'audience) est réalisé conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés modifiée. Le détail des données collectées, de leurs finalités, de leurs destinataires et de leur durée de conservation figure dans notre <a href="/politique-confidentialite/">Politique de confidentialité</a>.</p>
+    <p>Le Site dépose des cookies techniques nécessaires à son fonctionnement ainsi que, sous réserve du consentement de l'Utilisateur recueilli via le bandeau dédié, des cookies de mesure d'audience (Google Analytics). Ces derniers permettent d'analyser la fréquentation du Site à des fins statistiques&nbsp;; ils ne sont déposés qu'après acceptation et peuvent être refusés ou retirés à tout moment. Voir la <a href="/politique-cookies/">Politique cookies</a> pour le détail de ce traitement.</p>
     <p>Conformément à la réglementation applicable, l'Utilisateur dispose d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur les données le concernant, qu'il peut exercer en écrivant à <a href="mailto:contact@sparklin.io">contact@sparklin.io</a>. Il dispose également du droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL).</p>
 
     <h2 id="liens">9. Liens hypertextes</h2>
@@ -446,6 +446,8 @@ $lang = initI18n();
     <nav class="footer-bottom-links">
       <a href="/mentions-legales/" data-i18n="footer.lnk.legal"><?= tr('footer.lnk.legal') ?></a>
       <a href="/cgu/" data-i18n="footer.lnk.cgu"><?= tr('footer.lnk.cgu') ?></a>
+      <a href="/politique-confidentialite/">Confidentialité</a>
+      <a href="/politique-cookies/">Cookies</a>
       <a href="/contact/" data-i18n="footer.lnk.contact"><?= tr('footer.lnk.contact') ?></a>
       <a href="https://manager.sparklin.io">Spark Pilot</a>
     </nav>

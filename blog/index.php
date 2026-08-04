@@ -370,6 +370,8 @@ $lang = initI18n();
     <nav class="footer-bottom-links">
       <a href="/mentions-legales/" data-i18n="footer.lnk.legal"><?= tr('footer.lnk.legal') ?></a>
       <a href="/cgu/" data-i18n="footer.lnk.cgu"><?= tr('footer.lnk.cgu') ?></a>
+      <a href="/politique-confidentialite/">Confidentialité</a>
+      <a href="/politique-cookies/">Cookies</a>
       <a href="/contact/" data-i18n="footer.lnk.contact"><?= tr('footer.lnk.contact') ?></a>
       <a href="https://manager.sparklin.io">Spark Pilot</a>
     </nav>

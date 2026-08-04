@@ -255,6 +255,7 @@ $lang = initI18n();
         <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.form.stations"><?= tr('contact.form.stations') ?></label><input type="text" name="nb_bornes" placeholder="<?= t('contact.ph.stations') ?>" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"/></div>
         <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.form.message"><?= tr('contact.form.message') ?></label><textarea name="message" rows="4" placeholder="<?= t('contact.ph.message') ?>" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;resize:vertical;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"></textarea></div>
         <div id="contact-status" style="display:none;font-size:14px;padding:12px 16px;border-radius:10px;"></div>
+        <p style="font-size:11px;color:var(--text-light);">Les informations transmises via ce formulaire sont utilisées par Sparklin pour traiter votre demande. Voir notre <a href="/politique-confidentialite/" style="color:var(--orange);">politique de confidentialité</a>.</p>
         <button type="submit" id="contact-btn" style="background:var(--orange);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#c94b31'" onmouseout="this.style.background='var(--orange)'" data-i18n="ui.send_request"><?= tr('ui.send_request') ?></button>
       </form>
       <?php $rcSite = $_ENV['RECAPTCHA_SITE_KEY'] ?? ''; ?>
@@ -409,6 +410,8 @@ $lang = initI18n();
     <nav class="footer-bottom-links">
       <a href="/mentions-legales/" data-i18n="footer.lnk.legal"><?= tr('footer.lnk.legal') ?></a>
       <a href="/cgu/" data-i18n="footer.lnk.cgu"><?= tr('footer.lnk.cgu') ?></a>
+      <a href="/politique-confidentialite/">Confidentialité</a>
+      <a href="/politique-cookies/">Cookies</a>
       <a href="/contact/" data-i18n="footer.lnk.contact"><?= tr('footer.lnk.contact') ?></a>
       <a href="https://manager.sparklin.io">Spark Pilot</a>
     </nav>
