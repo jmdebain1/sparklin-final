@@ -273,39 +273,12 @@ $lang = initI18n();
 
     <div style="display:flex;flex-direction:column;gap:20px;">
 
-      <!-- POWER TO DRIVE MUNICH 2026 -->
-      <div class="ev-future">
-        <div class="ev-date-col" style="background:var(--orange);">
-          <div class="ev-date-month" style="font-size:9px;">Sept.</div>
-          <div class="ev-date-day" style="font-size:2.2rem;">15</div>
-          <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.85);">→ 17</div>
-          <div class="ev-date-year">2026</div>
-        </div>
-        <div class="ev-body">
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <span class="ev-badge ev-badge-soon" data-i18n="events.soon"><?= tr('events.soon') ?></span>
-            <span style="font-size:12px;color:var(--text-mid);">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <span data-i18n="events.ptd.loc"><?= t('events.ptd.loc') ?></span>
-            </span>
-          </div>
-          <h3 class="ev-h3">Power To Drive — International EV Charging Expo 2026</h3>
-          <p class="ev-desc" data-i18n="events.ptd.desc"><?= t('events.ptd.desc') ?></p>
-          <div class="ev-tags">
-            <span class="ev-tag" data-i18n="events.tag1"><?= tr('events.tag1') ?></span>
-            <span class="ev-tag">OCPP 2.0</span>
-            <span class="ev-tag" data-i18n="events.tag2"><?= tr('events.tag2') ?></span>
-            <span class="ev-tag">GIREVE &amp; roaming</span>
-            <span class="ev-tag" data-i18n="events.tag3"><?= tr('events.tag3') ?></span>
-          </div>
-          <div class="ev-actions">
-            <a href="https://www.powertodrive.de/home?lang=en" target="_blank" rel="noopener" class="btn-primary" style="font-size:13px;padding:10px 20px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              <span data-i18n="events.ptd.site"><?= t('events.ptd.site') ?></span>
-            </a>
-            <a href="/contact/" class="btn-outline" style="font-size:13px;padding:10px 20px;" data-i18n="ui.book_meeting"><?= tr('ui.book_meeting') ?></a>
-          </div>
-        </div>
+      <!-- Aucun salon confirme pour le moment : la precedente entree (Power To Drive
+           Munich, annoncee 15-17 sept. 2026) affichait des dates fausses pour un
+           salon dont l'edition 2026 s'est deja tenue (23-25 juin) — retiree plutot
+           que corrigee, faute de confirmation d'une reelle participation Sparklin. ── -->
+      <div style="text-align:center;padding:56px 32px;border:1.5px dashed var(--border-dark);border-radius:16px;">
+        <p style="font-size:15px;color:var(--text-mid);line-height:1.7;max-width:440px;margin:0 auto;" data-i18n="events.none"><?= tr('events.none') ?></p>
       </div>
 
     </div>

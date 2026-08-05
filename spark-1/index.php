@@ -319,7 +319,7 @@ $lang = initI18n();
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.power"><?= tr('s1.spec.power') ?></span><span class="spec-val"><?= tr('s1.spec.power.v') ?></span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.connector"><?= tr('s1.spec.connector') ?></span><span class="spec-val">Type E (FR) / Type F (EU)</span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.comm"><?= tr('s1.spec.comm') ?></span><span class="spec-val">WiFi + 4G</span></div>
-      <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.protocol"><?= tr('s1.spec.protocol') ?></span><span class="spec-val">OCPP 1.6 &amp; 2.0</span></div>
+      <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.protocol"><?= tr('s1.spec.protocol') ?></span><span class="spec-val">OCPP 1.6J</span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.ident"><?= tr('s1.spec.ident') ?></span><span class="spec-val"><?= tr('s1.spec.ident.v') ?></span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.protection"><?= tr('s1.spec.protection') ?></span><span class="spec-val"><?= tr('s1.spec.protection.v') ?></span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.certif"><?= tr('s1.spec.certif') ?></span><span class="spec-val">CE, NF C 61-314, IEC 60884-1, …</span></div>

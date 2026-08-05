@@ -347,7 +347,7 @@ $lang = initI18n();
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.power"><?= tr('s1.spec.power') ?></span><span class="spec-val"><?= tr('s1.spec.power.v') ?></span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.connector"><?= tr('s1.spec.connector') ?></span><span class="spec-val"><?= tr('splus.spec.connector.v') ?></span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.comm"><?= tr('s1.spec.comm') ?></span><span class="spec-val">WiFi / 4G / RJ45 / Mesh</span></div>
-      <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.protocol"><?= tr('s1.spec.protocol') ?></span><span class="spec-val">OCPP 1.6 &amp; 2.0</span></div>
+      <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.protocol"><?= tr('s1.spec.protocol') ?></span><span class="spec-val">OCPP 1.6J</span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.ident"><?= tr('s1.spec.ident') ?></span><span class="spec-val"><?= tr('splus.spec.ident.v') ?></span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="splus.spec.meter"><?= tr('splus.spec.meter') ?></span><span class="spec-val"><?= tr('splus.spec.meter.v') ?></span></div>
       <div class="spec-row"><span class="spec-name" data-i18n="s1.spec.temp"><?= tr('s1.spec.temp') ?></span><span class="spec-val"><?= tr('splus.spec.temp.v') ?></span></div>
