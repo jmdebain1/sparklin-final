@@ -328,6 +328,23 @@ $lang = initI18n();
         </ul>
       </div>
 
+      <!-- Power To Drive — Munich, 23-25 juin 2026 -->
+      <div class="ev-past-card">
+        <div class="ev-past-top">
+          <div class="ev-past-icon-wrap">
+            <div class="ev-past-icon" style="background:linear-gradient(135deg,#B23A1E,#E8563A);">⚡</div>
+          </div>
+          <span class="ev-past-badge">Juin 2026</span>
+        </div>
+        <div class="ev-past-name" data-i18n="events.ptd_past.name"><?= tr('events.ptd_past.name') ?></div>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;" data-i18n="events.ptd_past.desc"><?= t('events.ptd_past.desc') ?></p>
+        <ul class="ev-li">
+          <li class="ev-result" data-i18n="events.ptd_past.r1"><?= t('events.ptd_past.r1') ?></li>
+          <li class="ev-result" data-i18n="events.ptd_past.r2"><?= t('events.ptd_past.r2') ?></li>
+          <li class="ev-result" data-i18n="events.ptd_past.r3"><?= t('events.ptd_past.r3') ?></li>
+        </ul>
+      </div>
+
     </div>
   </div>
 </section>
