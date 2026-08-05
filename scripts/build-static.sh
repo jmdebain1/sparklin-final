@@ -2,7 +2,7 @@
 # ══════════════════════════════════════════════════════════════════════════
 #  build-static.sh — pré-rend le site PHP en HTML statique pour Netlify
 #
-#  Principe : les 25 pages PHP (22 publiques + 404 + 2 admin-blog) ne
+#  Principe : les 30 pages PHP (27 publiques + 404 + 2 admin-blog) ne
 #  tournent jamais côté client sur Netlify. On les exécute UNE FOIS, ici,
 #  pendant le build (via le serveur intégré PHP), pour chacune des 7 langues
 #  publiques, et on écrit le HTML obtenu sur disque. Netlify ne sert ensuite
@@ -38,10 +38,15 @@ PAGES=(
   "/cas/collectivite/"
   "/cas/hotel/"
   "/cas/pme/"
+  "/cgu/"
+  "/cgu-app/"
   "/contact/"
   "/evenements/"
   "/livre-blanc/"
   "/livre-blanc/merci/"
+  "/mentions-legales/"
+  "/politique-confidentialite/"
+  "/politique-cookies/"
   "/spark-1/"
   "/spark-go-e/"
   "/spark-pilot/"
