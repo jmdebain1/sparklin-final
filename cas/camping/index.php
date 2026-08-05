@@ -293,7 +293,7 @@ $lang = initI18n();
     </div>
   </section>
 
-  <section class="specs-section" style="background:var(--bg-off);">
+  <section class="specs-section" id="camping-chiffres" style="background:var(--bg-off);">
     <div class="sk-wrap">
       <div class="reveal" style="margin-bottom:40px;"><span class="section-label" data-i18n="ui.simulation"><?= tr('ui.simulation') ?></span><h2 class="section-title" data-i18n="cas.camping.sim.h2"><?= tr('cas.camping.sim.h2') ?></h2></div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;" class="reveal">

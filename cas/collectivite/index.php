@@ -283,7 +283,7 @@ $lang = initI18n();
     </div>
   </section>
 
-  <section class="specs-section" style="background:var(--bg-off);">
+  <section class="specs-section" id="collectivite-chiffres" style="background:var(--bg-off);">
     <div class="sk-wrap">
       <div class="reveal" style="margin-bottom:40px;"><span class="section-label" data-i18n="cas.collab.ex.label"><?= tr('cas.collab.ex.label') ?></span><h2 class="section-title" data-i18n="cas.coll.spec.h2"><?= tr('cas.coll.spec.h2') ?></h2></div>
       <div class="reveal" style="overflow-x:auto;margin-bottom:32px;">
