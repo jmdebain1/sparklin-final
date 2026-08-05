@@ -10,8 +10,8 @@ $lang = initI18n();
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mentions légales — Sparklin</title>
-  <meta name="description" content="Mentions légales du site sparklin.io : éditeur, propriété intellectuelle, responsabilité et droit applicable."/>
+  <title><?= tr('legal.ml.meta_title') ?></title>
+  <meta name="description" content="<?= tr('legal.ml.meta_desc') ?>" data-i18n-meta="legal.ml.meta_desc"/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png"/>
@@ -20,7 +20,7 @@ $lang = initI18n();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>'Mentions légales — Sparklin', 'desc'=>'Mentions légales du site sparklin.io : éditeur, propriété intellectuelle, responsabilité et droit applicable.']); ?>
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('legal.ml.meta_title'), 'desc'=>tr('legal.ml.meta_desc')]); ?>
 </head>
 <body>
 <nav class="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:stretch;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 clamp(20px,5vw,80px);height:64px;">
@@ -266,62 +266,62 @@ $lang = initI18n();
 <main style="padding-top:64px;">
 <section style="background:var(--bg-white);padding:72px 0 80px;">
   <div class="sk-wrap legal-doc">
-    <span class="section-label">Informations légales</span>
-    <h1 class="section-title">Mentions légales</h1>
+    <span class="section-label" data-i18n="legal.ml.eyebrow"><?= tr('legal.ml.eyebrow') ?></span>
+    <h1 class="section-title" data-i18n="legal.ml.h1"><?= tr('legal.ml.h1') ?></h1>
     <span class="legal-updated">Site www.sparklin.io</span>
 
-    <p>Nous respectons et prenons votre intimité web au sérieux. Toutes les données recueillies lors de vos visites sont confidentielles et anonymes, dédiées uniquement à l'amélioration du site en lui-même. Nous ne révèlerons, vendrons ou distribuerons jamais aucune information recueillie sur ce site à un quelconque tiers.</p>
-    <p>Pour utiliser ce site web, vous devez lire et accepter les conditions d'utilisation ci-dessous. Elles sont spécifiées pour votre protection et soulignent nos obligations envers vous.</p>
-    <p>Le présent document a pour objet de définir les modalités et conditions dans lesquelles d'une part, Sparklin, ci-après dénommée l'ÉDITEUR, met à la disposition de ses utilisateurs le site, et les services disponibles sur le site et d'autre part, la manière par laquelle l'utilisateur accède au site et utilise ses services.</p>
-    <p>Toute connexion au site est subordonnée au respect des présentes conditions. Pour l'utilisateur, le simple accès au site de l'ÉDITEUR à l'adresse URL suivante www.sparklin.io implique l'acceptation de l'ensemble des conditions décrites ci-après.</p>
+    <p data-i18n="legal.ml.p_intro1"><?= tr('legal.ml.p_intro1') ?></p>
+    <p data-i18n="legal.ml.p_intro2"><?= tr('legal.ml.p_intro2') ?></p>
+    <p data-i18n="legal.ml.p_intro3"><?= tr('legal.ml.p_intro3') ?></p>
+    <p data-i18n="legal.ml.p_intro4"><?= tr('legal.ml.p_intro4') ?></p>
     <ul>
       <li>contact@sparklin.io</li>
       <li>Sparklin SAS, 4 Rue de la Cornouaille, 44300 Nantes (FR)</li>
     </ul>
-    <p>Ce site web www.sparklin.io est la propriété de Sparklin SAS. Conception, design et développement&nbsp;: Sparklin.</p>
+    <p data-i18n="legal.ml.p_property"><?= tr('legal.ml.p_property') ?></p>
 
-    <h2>Propriété intellectuelle</h2>
-    <p>La structure générale du site Sparklin, ainsi que les textes, graphiques, images, sons et vidéos la composant, sont la propriété de l'éditeur ou de ses partenaires. Toute représentation et/ou reproduction et/ou exploitation partielle ou totale des contenus et services proposés par le présent site, par quelque procédé que ce soit, sans l'autorisation préalable et par écrit de Sparklin et/ou de ses partenaires est strictement interdite et serait susceptible de constituer une contrefaçon au sens des articles L 335-2 et suivants du Code de la propriété intellectuelle.</p>
+    <h2 data-i18n="legal.ml.h2_ip"><?= tr('legal.ml.h2_ip') ?></h2>
+    <p data-i18n="legal.ml.p_ip"><?= tr('legal.ml.p_ip') ?></p>
 
-    <h2>Liens hypertextes</h2>
-    <p>Le site www.sparklin.io peut contenir des liens hypertextes vers d'autres sites présents sur le réseau Internet. Les liens vers ces autres ressources vous font quitter le site www.sparklin.io.</p>
-    <p>Il est possible de créer un lien vers la page de présentation de ce site sans autorisation expresse de l'ÉDITEUR. Aucune autorisation ou demande d'information préalable ne peut être exigée par l'éditeur à l'égard d'un site qui souhaite établir un lien vers le site de l'éditeur. Il convient toutefois d'afficher ce site dans une nouvelle fenêtre du navigateur. Cependant, l'ÉDITEUR se réserve le droit de demander la suppression d'un lien qu'il estime non conforme à l'objet du site www.sparklin.io.</p>
+    <h2 data-i18n="legal.ml.h2_links"><?= tr('legal.ml.h2_links') ?></h2>
+    <p data-i18n="legal.ml.p_links1"><?= tr('legal.ml.p_links1') ?></p>
+    <p data-i18n="legal.ml.p_links2"><?= tr('legal.ml.p_links2') ?></p>
 
-    <h2>Responsabilité de l'éditeur</h2>
-    <p>Les informations et/ou documents figurant sur ce site et/ou accessibles par ce site proviennent de sources considérées comme étant fiables.</p>
-    <p>Toutefois, ces informations et/ou documents sont susceptibles de contenir des inexactitudes techniques et des erreurs typographiques. L'ÉDITEUR se réserve le droit de les corriger, dès que ces erreurs sont portées à sa connaissance.</p>
-    <p>Il est fortement recommandé de vérifier l'exactitude et la pertinence des informations et/ou documents mis à disposition sur ce site.</p>
-    <p>Les informations et/ou documents disponibles sur ce site sont susceptibles d'être modifiés à tout moment, et peuvent avoir fait l'objet de mises à jour. En particulier, ils peuvent avoir fait l'objet d'une mise à jour entre le moment de leur téléchargement et celui où l'utilisateur en prend connaissance.</p>
-    <p>L'utilisation des informations et/ou documents disponibles sur ce site se fait sous l'entière et seule responsabilité de l'utilisateur, qui assume la totalité des conséquences pouvant en découler, sans que l'ÉDITEUR puisse être recherché à ce titre, et sans recours contre ce dernier.</p>
-    <p>L'ÉDITEUR ne pourra en aucun cas être tenu responsable de tout dommage de quelque nature qu'il soit résultant de l'interprétation ou de l'utilisation des informations et/ou documents disponibles sur ce site.</p>
+    <h2 data-i18n="legal.ml.h2_resp"><?= tr('legal.ml.h2_resp') ?></h2>
+    <p data-i18n="legal.ml.p_resp1"><?= tr('legal.ml.p_resp1') ?></p>
+    <p data-i18n="legal.ml.p_resp2"><?= tr('legal.ml.p_resp2') ?></p>
+    <p data-i18n="legal.ml.p_resp3"><?= tr('legal.ml.p_resp3') ?></p>
+    <p data-i18n="legal.ml.p_resp4"><?= tr('legal.ml.p_resp4') ?></p>
+    <p data-i18n="legal.ml.p_resp5"><?= tr('legal.ml.p_resp5') ?></p>
+    <p data-i18n="legal.ml.p_resp6"><?= tr('legal.ml.p_resp6') ?></p>
 
-    <h2>Accès au site</h2>
-    <p>L'ÉDITEUR s'efforce de permettre l'accès au site 24 heures sur 24, 7 jours sur 7, sauf en cas de force majeure ou d'un événement hors du contrôle de l'ÉDITEUR, et sous réserve des éventuelles pannes et interventions de maintenance nécessaires au bon fonctionnement du site et des services.</p>
-    <p>Par conséquent, l'ÉDITEUR ne peut garantir une disponibilité du site et/ou des services, une fiabilité des transmissions et des performances en termes de temps de réponse ou de qualité. Il n'est prévu aucune assistance technique vis-à-vis de l'utilisateur que ce soit par des moyens électronique ou téléphonique.</p>
-    <p>La responsabilité de l'éditeur ne saurait être engagée en cas d'impossibilité d'accès à ce site et/ou d'utilisation des services.</p>
-    <p>Par ailleurs, l'ÉDITEUR peut être amené à interrompre le site ou une partie des services, à tout moment sans préavis, le tout sans droit à indemnités. L'utilisateur reconnaît et accepte que l'ÉDITEUR ne soit pas responsable des interruptions, et des conséquences qui peuvent en découler pour l'utilisateur ou tout tiers.</p>
+    <h2 data-i18n="legal.ml.h2_access"><?= tr('legal.ml.h2_access') ?></h2>
+    <p data-i18n="legal.ml.p_access1"><?= tr('legal.ml.p_access1') ?></p>
+    <p data-i18n="legal.ml.p_access2"><?= tr('legal.ml.p_access2') ?></p>
+    <p data-i18n="legal.ml.p_access3"><?= tr('legal.ml.p_access3') ?></p>
+    <p data-i18n="legal.ml.p_access4"><?= tr('legal.ml.p_access4') ?></p>
 
-    <h2>Modification des conditions d'utilisation</h2>
-    <p>L'ÉDITEUR se réserve la possibilité de modifier, à tout moment et sans préavis, les présentes conditions d'utilisation afin de les adapter aux évolutions du site et/ou de son exploitation.</p>
+    <h2 data-i18n="legal.ml.h2_modif"><?= tr('legal.ml.h2_modif') ?></h2>
+    <p data-i18n="legal.ml.p_modif1"><?= tr('legal.ml.p_modif1') ?></p>
 
-    <h2>Règles d'usage d'internet</h2>
-    <p>L'utilisateur déclare accepter les caractéristiques et les limites d'Internet, et notamment reconnaît que&nbsp;:</p>
-    <p>L'ÉDITEUR n'assume aucune responsabilité sur les services accessibles par Internet et n'exerce aucun contrôle de quelque forme que ce soit sur la nature et les caractéristiques des données qui pourraient transiter par l'intermédiaire de son centre serveur.</p>
-    <p>L'utilisateur reconnaît que les données circulant sur Internet ne sont pas protégées notamment contre les détournements éventuels. La présence du logo Sparklin institue une présomption simple de validité. La communication de toute information jugée par l'utilisateur de nature sensible ou confidentielle se fait à ses risques et périls.</p>
-    <p>L'utilisateur reconnaît que les données circulant sur Internet peuvent être réglementées en termes d'usage ou être protégées par un droit de propriété. L'utilisateur est seul responsable de l'usage des données qu'il consulte, interroge et transfère sur Internet.</p>
-    <p>L'utilisateur reconnaît que l'ÉDITEUR ne dispose d'aucun moyen de contrôle sur le contenu des services accessibles sur Internet et/ou de son exploitation.</p>
+    <h2 data-i18n="legal.ml.h2_rules"><?= tr('legal.ml.h2_rules') ?></h2>
+    <p data-i18n="legal.ml.p_rules_intro"><?= tr('legal.ml.p_rules_intro') ?></p>
+    <p data-i18n="legal.ml.p_rules1"><?= tr('legal.ml.p_rules1') ?></p>
+    <p data-i18n="legal.ml.p_rules2"><?= tr('legal.ml.p_rules2') ?></p>
+    <p data-i18n="legal.ml.p_rules3"><?= tr('legal.ml.p_rules3') ?></p>
+    <p data-i18n="legal.ml.p_rules4"><?= tr('legal.ml.p_rules4') ?></p>
 
-    <h2>Droit applicable</h2>
-    <p>Tant le présent site que les modalités et conditions de son utilisation sont régis par le droit français, quel que soit le lieu d'utilisation. En cas de contestation éventuelle, et après l'échec de toute tentative de recherche d'une solution amiable, les tribunaux français seront seuls compétents pour connaître de ce litige.</p>
-    <p>Pour toute question relative aux présentes conditions d'utilisation du site, vous pouvez nous écrire à l'adresse suivante&nbsp;: <a href="mailto:contact@sparklin.io">contact@sparklin.io</a></p>
+    <h2 data-i18n="legal.ml.h2_law"><?= tr('legal.ml.h2_law') ?></h2>
+    <p data-i18n="legal.ml.p_law1"><?= tr('legal.ml.p_law1') ?></p>
+    <p data-i18n="legal.ml.p_law2"><?= tr('legal.ml.p_law2') ?></p>
 
-    <h2>Statistiques et analyses d'audience</h2>
-    <p>Ce site utilise Google Analytics, un service d'analyse de site internet fourni par Google Inc. («&nbsp;Google&nbsp;»). Google Analytics utilise des cookies, qui sont des fichiers texte placés sur votre ordinateur, pour aider l'éditeur du site internet à analyser l'utilisation du site par ses utilisateurs. Les données générées par les cookies concernant votre utilisation du site (y compris votre adresse IP) seront transmises et stockées par Google sur des serveurs situés aux États-Unis. Google utilisera cette information dans le but d'évaluer votre utilisation du site, de compiler des rapports sur l'activité du site à destination de son éditeur et de fournir d'autres services relatifs à l'activité du site et à l'utilisation d'Internet. Google est susceptible de communiquer ces données à des tiers en cas d'obligation légale ou lorsque ces tiers traitent ces données pour le compte de Google, y compris notamment l'éditeur de ce site.</p>
-    <p>Google ne recoupera pas votre adresse IP avec toute autre donnée détenue par Google. Vous pouvez désactiver l'utilisation de cookies en sélectionnant les paramètres appropriés de votre navigateur. Cependant, une telle désactivation pourrait empêcher l'utilisation de certaines fonctionnalités de ce site. En utilisant ce site internet, vous consentez expressément au traitement de vos données nominatives par Google dans les conditions et pour les finalités décrites ci-dessus.</p>
+    <h2 data-i18n="legal.ml.h2_stats"><?= tr('legal.ml.h2_stats') ?></h2>
+    <p data-i18n="legal.ml.p_stats1"><?= tr('legal.ml.p_stats1') ?></p>
+    <p data-i18n="legal.ml.p_stats2"><?= tr('legal.ml.p_stats2') ?></p>
 
     <div class="legal-card">
       <p><strong>Sparklin</strong></p>
-      <p>Siège social</p>
+      <p data-i18n="legal.ml.card_hq"><?= tr('legal.ml.card_hq') ?></p>
       <p>4 rue de la Cornouaille</p>
       <p>44300 Nantes</p>
       <p><a href="mailto:contact@sparklin.io">contact@sparklin.io</a></p>

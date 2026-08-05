@@ -10,8 +10,8 @@ $lang = initI18n();
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CGU du site — Sparklin</title>
-  <meta name="description" content="Conditions générales d'utilisation du site sparklin.io : accès, services, données personnelles, hébergement OVH."/>
+  <title><?= tr('legal.cgu.meta_title') ?></title>
+  <meta name="description" content="<?= tr('legal.cgu.meta_desc') ?>" data-i18n-meta="legal.cgu.meta_desc"/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png"/>
@@ -20,7 +20,7 @@ $lang = initI18n();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>'CGU du site — Sparklin', 'desc'=>"Conditions générales d'utilisation du site sparklin.io : accès, services, données personnelles, hébergement OVH."]); ?>
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('legal.cgu.meta_title'), 'desc'=>tr('legal.cgu.meta_desc')]); ?>
 </head>
 <body>
 <nav class="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:stretch;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 clamp(20px,5vw,80px);height:64px;">
@@ -266,90 +266,90 @@ $lang = initI18n();
 <main style="padding-top:64px;">
 <section style="background:var(--bg-white);padding:72px 0 80px;">
   <div class="sk-wrap legal-doc">
-    <span class="section-label">Conditions générales</span>
-    <h1 class="section-title">Conditions générales d'utilisation du site</h1>
-    <span class="legal-updated">Applicables au site www.sparklin.io — dernière mise à jour&nbsp;: juillet 2026</span>
+    <span class="section-label" data-i18n="legal.cgu.eyebrow"><?= tr('legal.cgu.eyebrow') ?></span>
+    <h1 class="section-title" data-i18n="legal.cgu.h1"><?= tr('legal.cgu.h1') ?></h1>
+    <span class="legal-updated" data-i18n="legal.cgu.updated"><?= tr('legal.cgu.updated') ?></span>
 
     <div class="legal-toc">
-      <div>Sommaire</div>
+      <div data-i18n="legal.cgu.toc_label"><?= tr('legal.cgu.toc_label') ?></div>
       <ol>
-        <li><a href="#objet">Objet</a></li>
-        <li><a href="#editeur">Éditeur du site</a></li>
-        <li><a href="#hebergement">Hébergement</a></li>
-        <li><a href="#acces">Accès au site</a></li>
-        <li><a href="#services">Description des services</a></li>
-        <li><a href="#formulaires">Formulaires et demandes</a></li>
-        <li><a href="#pi">Propriété intellectuelle</a></li>
-        <li><a href="#donnees">Données personnelles et cookies</a></li>
-        <li><a href="#liens">Liens hypertextes</a></li>
-        <li><a href="#responsabilite">Responsabilité</a></li>
-        <li><a href="#modification">Modification des CGU</a></li>
-        <li><a href="#droit">Droit applicable et litiges</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#objet" data-i18n="legal.cgu.h_objet"><?= tr('legal.cgu.h_objet') ?></a></li>
+        <li><a href="#editeur" data-i18n="legal.cgu.h_editeur"><?= tr('legal.cgu.h_editeur') ?></a></li>
+        <li><a href="#hebergement" data-i18n="legal.cgu.h_hebergement"><?= tr('legal.cgu.h_hebergement') ?></a></li>
+        <li><a href="#acces" data-i18n="legal.cgu.h_acces"><?= tr('legal.cgu.h_acces') ?></a></li>
+        <li><a href="#services" data-i18n="legal.cgu.h_services"><?= tr('legal.cgu.h_services') ?></a></li>
+        <li><a href="#formulaires" data-i18n="legal.cgu.h_formulaires"><?= tr('legal.cgu.h_formulaires') ?></a></li>
+        <li><a href="#pi" data-i18n="legal.cgu.h_pi"><?= tr('legal.cgu.h_pi') ?></a></li>
+        <li><a href="#donnees" data-i18n="legal.cgu.h_donnees"><?= tr('legal.cgu.h_donnees') ?></a></li>
+        <li><a href="#liens" data-i18n="legal.cgu.h_liens"><?= tr('legal.cgu.h_liens') ?></a></li>
+        <li><a href="#responsabilite" data-i18n="legal.cgu.h_responsabilite"><?= tr('legal.cgu.h_responsabilite') ?></a></li>
+        <li><a href="#modification" data-i18n="legal.cgu.h_modification"><?= tr('legal.cgu.h_modification') ?></a></li>
+        <li><a href="#droit" data-i18n="legal.cgu.h_droit"><?= tr('legal.cgu.h_droit') ?></a></li>
+        <li><a href="#contact" data-i18n="legal.cgu.h_contact"><?= tr('legal.cgu.h_contact') ?></a></li>
       </ol>
     </div>
 
-    <h2 id="objet">1. Objet</h2>
-    <p>Les présentes Conditions Générales d'Utilisation (ci-après «&nbsp;CGU&nbsp;») ont pour objet de définir les modalités et conditions dans lesquelles Sparklin met à disposition des internautes le site www.sparklin.io (ci-après «&nbsp;le Site&nbsp;»), ainsi que les conditions d'accès et d'utilisation de ce Site. Le Site a pour finalité de présenter les produits et services de Sparklin (bornes et prises de recharge connectées, applications de supervision) et de permettre la prise de contact avec la société.</p>
-    <p>L'accès et la navigation sur le Site impliquent l'acceptation pleine et entière des présentes CGU par tout visiteur (ci-après «&nbsp;l'Utilisateur&nbsp;»).</p>
-    <p>Ces CGU concernent uniquement l'utilisation du site vitrine www.sparklin.io. Elles ne s'appliquent pas à l'usage des applications mobiles Sparklin (Spark-A, Spark-i) ni de la plateforme de supervision Spark Pilot, qui sont régies par des conditions générales d'utilisation distinctes, consultables sur la page <a href="/cgu-app/">CGU des applications</a>.</p>
+    <h2 id="objet">1. <?= tr('legal.cgu.h_objet') ?></h2>
+    <p data-i18n="legal.cgu.p_objet1"><?= tr('legal.cgu.p_objet1') ?></p>
+    <p data-i18n="legal.cgu.p_objet2"><?= tr('legal.cgu.p_objet2') ?></p>
+    <p data-i18n="legal.cgu.p_objet3"><?= tr('legal.cgu.p_objet3') ?></p>
 
-    <h2 id="editeur">2. Éditeur du site</h2>
-    <p>Le Site est édité par&nbsp;:</p>
+    <h2 id="editeur">2. <?= tr('legal.cgu.h_editeur') ?></h2>
+    <p data-i18n="legal.cgu.p_editeur_intro"><?= tr('legal.cgu.p_editeur_intro') ?></p>
     <ul>
-      <li>Sparklin SAS, dont le siège social est situé 4 rue de la Cornouaille, 44300 Nantes, France&nbsp;;</li>
-      <li>Adresse de contact&nbsp;: <a href="mailto:contact@sparklin.io">contact@sparklin.io</a>&nbsp;;</li>
-      <li>Les autres mentions relatives à l'éditeur (immatriculation, directeur de la publication) figurent sur la page <a href="/mentions-legales/">Mentions légales</a>.</li>
+      <li data-i18n="legal.cgu.li_editeur1"><?= tr('legal.cgu.li_editeur1') ?></li>
+      <li data-i18n="legal.cgu.li_editeur2"><?= tr('legal.cgu.li_editeur2') ?></li>
+      <li data-i18n="legal.cgu.li_editeur3"><?= tr('legal.cgu.li_editeur3') ?></li>
     </ul>
 
-    <h2 id="hebergement">3. Hébergement</h2>
-    <p>Le Site est hébergé par&nbsp;:</p>
+    <h2 id="hebergement">3. <?= tr('legal.cgu.h_hebergement') ?></h2>
+    <p data-i18n="legal.cgu.p_hebergement_intro"><?= tr('legal.cgu.p_hebergement_intro') ?></p>
     <ul>
-      <li>OVH SAS, société par actions simplifiée au capital de 10&nbsp;174&nbsp;560&nbsp;€, immatriculée au RCS de Lille Métropole sous le numéro 424&nbsp;761&nbsp;419&nbsp;00045&nbsp;;</li>
-      <li>Siège social&nbsp;: 2 rue Kellermann, 59100 Roubaix, France.</li>
+      <li data-i18n="legal.cgu.li_ovh1"><?= tr('legal.cgu.li_ovh1') ?></li>
+      <li data-i18n="legal.cgu.li_ovh2"><?= tr('legal.cgu.li_ovh2') ?></li>
     </ul>
 
-    <h2 id="acces">4. Accès au site</h2>
-    <p>Sparklin s'efforce de permettre l'accès au Site 24 heures sur 24 et 7 jours sur 7, sauf cas de force majeure ou événement hors de son contrôle, et sous réserve des éventuelles opérations de maintenance nécessaires au bon fonctionnement du Site.</p>
-    <p>Sparklin ne saurait être tenue responsable de toute indisponibilité temporaire du Site, quelle qu'en soit la cause, ni des conséquences qui pourraient en résulter pour l'Utilisateur.</p>
+    <h2 id="acces">4. <?= tr('legal.cgu.h_acces') ?></h2>
+    <p data-i18n="legal.cgu.p_acces1"><?= tr('legal.cgu.p_acces1') ?></p>
+    <p data-i18n="legal.cgu.p_acces2"><?= tr('legal.cgu.p_acces2') ?></p>
 
-    <h2 id="services">5. Description des services</h2>
-    <p>Le Site permet notamment à l'Utilisateur de&nbsp;:</p>
+    <h2 id="services">5. <?= tr('legal.cgu.h_services') ?></h2>
+    <p data-i18n="legal.cgu.p_services_intro"><?= tr('legal.cgu.p_services_intro') ?></p>
     <ul>
-      <li>consulter des informations sur les produits Sparklin (Spark 1, Spark Plus, Spark x go-e) et sur la plateforme Spark Pilot&nbsp;;</li>
-      <li>consulter le blog, le livre blanc et les autres contenus éditoriaux publiés par Sparklin&nbsp;;</li>
-      <li>prendre contact avec Sparklin via les formulaires mis à disposition&nbsp;;</li>
-      <li>accéder, via des liens dédiés, à des services tiers exploités par Sparklin (plateforme de supervision manager.sparklin.io, outil d'activation setup.sparklin.io, applications mobiles) dont l'utilisation est soumise à leurs propres conditions générales.</li>
+      <li data-i18n="legal.cgu.li_services1"><?= tr('legal.cgu.li_services1') ?></li>
+      <li data-i18n="legal.cgu.li_services2"><?= tr('legal.cgu.li_services2') ?></li>
+      <li data-i18n="legal.cgu.li_services3"><?= tr('legal.cgu.li_services3') ?></li>
+      <li data-i18n="legal.cgu.li_services4"><?= tr('legal.cgu.li_services4') ?></li>
     </ul>
-    <p>Le Site ne propose aucune vente en ligne ni aucun paiement directement sur ses pages&nbsp;: toute commande ou souscription à une offre Sparklin fait l'objet d'un échange commercial distinct.</p>
+    <p data-i18n="legal.cgu.p_services_note"><?= tr('legal.cgu.p_services_note') ?></p>
 
-    <h2 id="formulaires">6. Formulaires et demandes</h2>
-    <p>Certaines pages du Site (notamment «&nbsp;Contact&nbsp;» et «&nbsp;Livre blanc&nbsp;») proposent des formulaires permettant à l'Utilisateur de transmettre des informations à Sparklin (nom, adresse email, message, et le cas échéant société ou besoin exprimé). Ces informations sont utilisées exclusivement pour traiter la demande de l'Utilisateur, lui répondre et, le cas échéant, assurer un suivi commercial. Elles ne sont ni cédées ni vendues à des tiers.</p>
-    <p>Ces formulaires sont protégés par un dispositif de vérification anti-robot (reCAPTCHA) destiné à limiter les soumissions automatisées et abusives.</p>
+    <h2 id="formulaires">6. <?= tr('legal.cgu.h_formulaires') ?></h2>
+    <p data-i18n="legal.cgu.p_formulaires1"><?= tr('legal.cgu.p_formulaires1') ?></p>
+    <p data-i18n="legal.cgu.p_formulaires2"><?= tr('legal.cgu.p_formulaires2') ?></p>
 
-    <h2 id="pi">7. Propriété intellectuelle</h2>
-    <p>L'ensemble des éléments composant le Site (structure, textes, graphismes, images, logos, photographies, vidéos, marques) est protégé par le droit de la propriété intellectuelle et demeure la propriété exclusive de Sparklin ou de ses partenaires, sauf mention contraire.</p>
-    <p>Toute reproduction, représentation, adaptation ou exploitation, totale ou partielle, de ces éléments, par quelque procédé que ce soit, est interdite sans l'autorisation écrite préalable de Sparklin et pourrait constituer une contrefaçon au sens des articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+    <h2 id="pi">7. <?= tr('legal.cgu.h_pi') ?></h2>
+    <p data-i18n="legal.cgu.p_pi1"><?= tr('legal.cgu.p_pi1') ?></p>
+    <p data-i18n="legal.cgu.p_pi2"><?= tr('legal.cgu.p_pi2') ?></p>
 
-    <h2 id="donnees">8. Données personnelles et cookies</h2>
-    <p>Le traitement des données à caractère personnel collectées via le Site (formulaires, mesure d'audience) est réalisé conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés modifiée. Le détail des données collectées, de leurs finalités, de leurs destinataires et de leur durée de conservation figure dans notre <a href="/politique-confidentialite/">Politique de confidentialité</a>.</p>
-    <p>Le Site dépose des cookies techniques nécessaires à son fonctionnement ainsi que, sous réserve du consentement de l'Utilisateur recueilli via le bandeau dédié, des cookies de mesure d'audience (Google Analytics). Ces derniers permettent d'analyser la fréquentation du Site à des fins statistiques&nbsp;; ils ne sont déposés qu'après acceptation et peuvent être refusés ou retirés à tout moment. Voir la <a href="/politique-cookies/">Politique cookies</a> pour le détail de ce traitement.</p>
-    <p>Conformément à la réglementation applicable, l'Utilisateur dispose d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur les données le concernant, qu'il peut exercer en écrivant à <a href="mailto:contact@sparklin.io">contact@sparklin.io</a>. Il dispose également du droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL).</p>
+    <h2 id="donnees">8. <?= tr('legal.cgu.h_donnees') ?></h2>
+    <p data-i18n="legal.cgu.p_donnees1"><?= tr('legal.cgu.p_donnees1') ?></p>
+    <p data-i18n="legal.cgu.p_donnees2"><?= tr('legal.cgu.p_donnees2') ?></p>
+    <p data-i18n="legal.cgu.p_donnees3"><?= tr('legal.cgu.p_donnees3') ?></p>
 
-    <h2 id="liens">9. Liens hypertextes</h2>
-    <p>Le Site peut contenir des liens vers des sites tiers sur lesquels Sparklin n'exerce aucun contrôle. Sparklin décline toute responsabilité quant au contenu de ces sites et aux conséquences pouvant résulter de leur consultation ou utilisation par l'Utilisateur.</p>
+    <h2 id="liens">9. <?= tr('legal.cgu.h_liens') ?></h2>
+    <p data-i18n="legal.cgu.p_liens1"><?= tr('legal.cgu.p_liens1') ?></p>
 
-    <h2 id="responsabilite">10. Responsabilité</h2>
-    <p>Sparklin s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur le Site, sans pouvoir toutefois garantir leur exhaustivité ou leur absence d'erreur. L'Utilisateur reconnaît utiliser ces informations sous sa seule responsabilité.</p>
-    <p>Sparklin ne pourra être tenue responsable des dommages directs ou indirects résultant de l'accès au Site, de son indisponibilité, ou de l'utilisation qui en est faite, notamment en cas de dysfonctionnement, d'incompatibilité avec un équipement de l'Utilisateur, ou de défaillance du réseau Internet.</p>
+    <h2 id="responsabilite">10. <?= tr('legal.cgu.h_responsabilite') ?></h2>
+    <p data-i18n="legal.cgu.p_resp1"><?= tr('legal.cgu.p_resp1') ?></p>
+    <p data-i18n="legal.cgu.p_resp2"><?= tr('legal.cgu.p_resp2') ?></p>
 
-    <h2 id="modification">11. Modification des CGU</h2>
-    <p>Sparklin se réserve le droit de modifier les présentes CGU à tout moment, notamment pour les adapter aux évolutions du Site ou de la réglementation. La version applicable est celle publiée sur cette page à la date de consultation du Site.</p>
+    <h2 id="modification">11. <?= tr('legal.cgu.h_modification') ?></h2>
+    <p data-i18n="legal.cgu.p_modif1"><?= tr('legal.cgu.p_modif1') ?></p>
 
-    <h2 id="droit">12. Droit applicable et litiges</h2>
-    <p>Les présentes CGU sont soumises au droit français. En cas de litige et à défaut de résolution amiable, les tribunaux français compétents seront seuls saisis, dans les conditions de droit commun.</p>
+    <h2 id="droit">12. <?= tr('legal.cgu.h_droit') ?></h2>
+    <p data-i18n="legal.cgu.p_droit1"><?= tr('legal.cgu.p_droit1') ?></p>
 
-    <h2 id="contact">13. Contact</h2>
+    <h2 id="contact">13. <?= tr('legal.cgu.h_contact') ?></h2>
     <div class="legal-card">
       <p><strong>Sparklin SAS</strong></p>
       <p>4 rue de la Cornouaille, 44300 Nantes, France</p>

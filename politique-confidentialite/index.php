@@ -10,8 +10,8 @@ $lang = initI18n();
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Politique de confidentialité — Sparklin</title>
-  <meta name="description" content="Politique de confidentialité du site sparklin.io : données collectées, finalités, destinataires, durée de conservation, droits RGPD."/>
+  <title><?= t('legal.pc.meta_title') ?></title>
+  <meta name="description" content="<?= t('legal.pc.meta_desc') ?>"/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png"/>
@@ -20,7 +20,7 @@ $lang = initI18n();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>'Politique de confidentialité — Sparklin', 'desc'=>'Politique de confidentialité du site sparklin.io : données collectées, finalités, destinataires, durée de conservation, droits RGPD.']); ?>
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>t('legal.pc.meta_title'), 'desc'=>t('legal.pc.meta_desc')]); ?>
 </head>
 <body>
 <nav class="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:stretch;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 clamp(20px,5vw,80px);height:64px;">
@@ -272,81 +272,41 @@ $lang = initI18n();
 <main style="padding-top:64px;">
 <section style="background:var(--bg-white);padding:72px 0 80px;">
   <div class="sk-wrap legal-doc">
-    <span class="section-label">Données personnelles</span>
-    <h1 class="section-title">Politique de confidentialité</h1>
-    <span class="legal-updated">Site www.sparklin.io — dernière mise à jour&nbsp;: juillet 2026</span>
+    <span class="section-label" data-i18n="legal.pc.eyebrow"><?= tr('legal.pc.eyebrow') ?></span>
+    <h1 class="section-title" data-i18n="legal.pc.h1"><?= tr('legal.pc.h1') ?></h1>
+    <span class="legal-updated" data-i18n="legal.pc.updated"><?= tr('legal.pc.updated') ?></span>
 
-    <div class="legal-note"><p><strong>Note de mise en ligne&nbsp;:</strong> la durée de conservation indiquée ci-dessous est une durée usuelle en matière de prospection commerciale (recommandation CNIL), reprise à titre indicatif en l'absence de politique de conservation formalisée transmise par Sparklin. Elle doit être confirmée ou ajustée par l'entreprise.</p></div>
+    <div data-i18n="legal.pc.note"><?= tr('legal.pc.note') ?></div>
 
-    <h2 id="responsable">Responsable de traitement</h2>
-    <p>Le responsable du traitement des données à caractère personnel collectées sur le site www.sparklin.io est&nbsp;:</p>
-    <div class="legal-card">
-      <p><strong>Sparklin SAS</strong></p>
-      <p>4 rue de la Cornouaille, 44300 Nantes, France</p>
-      <p><a href="mailto:contact@sparklin.io">contact@sparklin.io</a></p>
-    </div>
+    <h2 id="responsable" data-i18n="legal.pc.h_responsable"><?= tr('legal.pc.h_responsable') ?></h2>
+    <div data-i18n="legal.pc.body_responsable"><?= tr('legal.pc.body_responsable') ?></div>
 
-    <h2 id="donnees">Données collectées et finalités</h2>
-    <p>Le Site collecte des données personnelles uniquement lorsque l'Utilisateur les transmet volontairement via l'un de ses formulaires, ou de façon automatisée à des fins de mesure d'audience.</p>
-    <table class="legal-table">
-      <thead><tr><th>Formulaire / source</th><th>Données collectées</th><th>Finalité</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Formulaire de contact</td>
-          <td>Nom, email, entreprise (facultatif), nature du besoin, nombre de bornes, message</td>
-          <td>Traiter la demande et y répondre&nbsp;; échange commercial si pertinent</td>
-        </tr>
-        <tr>
-          <td>Formulaire livre blanc</td>
-          <td>Email, prénom</td>
-          <td>Envoyer le document demandé&nbsp;; information sur les offres Sparklin</td>
-        </tr>
-        <tr>
-          <td>Navigation sur le site</td>
-          <td>Données de mesure d'audience (adresse IP, pages consultées) via Google Analytics</td>
-          <td>Statistiques de fréquentation, amélioration du site — uniquement après consentement</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>Ces formulaires sont protégés par un dispositif de vérification anti-robot (Google reCAPTCHA), qui analyse le comportement de navigation pour distinguer un utilisateur humain d'une soumission automatisée.</p>
+    <h2 id="donnees" data-i18n="legal.pc.h_donnees"><?= tr('legal.pc.h_donnees') ?></h2>
+    <div data-i18n="legal.pc.body_donnees"><?= tr('legal.pc.body_donnees') ?></div>
 
-    <h2 id="base-legale">Base légale des traitements</h2>
-    <p>Les traitements décrits ci-dessus reposent selon le cas sur&nbsp;:</p>
-    <ul>
-      <li>l'exécution de mesures précontractuelles prises à la demande de l'Utilisateur (réponse à une demande de contact ou de devis)&nbsp;;</li>
-      <li>l'intérêt légitime de Sparklin à assurer un suivi commercial de ses prospects&nbsp;;</li>
-      <li>le consentement de l'Utilisateur, pour le dépôt de cookies de mesure d'audience (voir la <a href="/politique-cookies/">Politique cookies</a>).</li>
-    </ul>
+    <h2 id="base-legale" data-i18n="legal.pc.h_base_legale"><?= tr('legal.pc.h_base_legale') ?></h2>
+    <div data-i18n="legal.pc.body_base_legale"><?= tr('legal.pc.body_base_legale') ?></div>
 
-    <h2 id="destinataires">Destinataires des données</h2>
-    <p>Les données collectées sont destinées à l'équipe Sparklin et sont transmises, pour les seuls besoins techniques de leur traitement, aux prestataires suivants&nbsp;:</p>
-    <ul>
-      <li><strong>Supabase</strong> — hébergement de la base de données des demandes (leads)&nbsp;;</li>
-      <li><strong>Brevo</strong> — envoi des emails transactionnels et, le cas échéant, inscription à une liste de contact commerciale&nbsp;;</li>
-      <li><strong>Google (reCAPTCHA, Analytics)</strong> — protection anti-abus des formulaires et mesure d'audience&nbsp;;</li>
-      <li><strong>OVH</strong> — hébergement du site (voir les <a href="/mentions-legales/">Mentions légales</a>).</li>
-    </ul>
-    <p>Ces prestataires n'utilisent les données transmises que pour l'exécution des services fournis à Sparklin et ne sont pas autorisés à les exploiter à d'autres fins.</p>
+    <h2 id="destinataires" data-i18n="legal.pc.h_destinataires"><?= tr('legal.pc.h_destinataires') ?></h2>
+    <div data-i18n="legal.pc.body_destinataires"><?= tr('legal.pc.body_destinataires') ?></div>
 
-    <h2 id="duree">Durée de conservation</h2>
-    <p>Les données issues des formulaires sont conservées pendant la durée nécessaire au traitement de la demande, puis, à des fins de prospection commerciale, pendant une durée de trois (3) ans à compter du dernier contact avec Sparklin, conformément aux recommandations de la CNIL en la matière.</p>
+    <h2 id="duree" data-i18n="legal.pc.h_duree"><?= tr('legal.pc.h_duree') ?></h2>
+    <div data-i18n="legal.pc.body_duree"><?= tr('legal.pc.body_duree') ?></div>
 
-    <h2 id="transferts">Transferts hors Union européenne</h2>
-    <p>Certains prestataires (notamment Google, pour reCAPTCHA et Analytics) sont susceptibles de traiter des données en dehors de l'Union européenne, en particulier aux États-Unis. Ces transferts sont encadrés par les garanties prévues par la réglementation applicable (clauses contractuelles types de la Commission européenne ou mécanisme équivalent).</p>
+    <h2 id="transferts" data-i18n="legal.pc.h_transferts"><?= tr('legal.pc.h_transferts') ?></h2>
+    <div data-i18n="legal.pc.body_transferts"><?= tr('legal.pc.body_transferts') ?></div>
 
-    <h2 id="securite">Sécurité</h2>
-    <p>Le Site est servi en HTTPS et les échanges de données via les formulaires sont chiffrés. Sparklin met en œuvre les mesures techniques et organisationnelles raisonnables pour protéger les données contre tout accès, altération ou divulgation non autorisés.</p>
+    <h2 id="securite" data-i18n="legal.pc.h_securite"><?= tr('legal.pc.h_securite') ?></h2>
+    <div data-i18n="legal.pc.body_securite"><?= tr('legal.pc.body_securite') ?></div>
 
-    <h2 id="droits">Droits des personnes</h2>
-    <p>Conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés modifiée, toute personne dispose d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur les données la concernant.</p>
-    <p>Ces droits peuvent être exercés en écrivant à <a href="mailto:contact@sparklin.io">contact@sparklin.io</a>, en précisant l'objet de la demande et en joignant, si nécessaire, un justificatif d'identité.</p>
-    <p>Il est également possible d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) — <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>.</p>
+    <h2 id="droits" data-i18n="legal.pc.h_droits"><?= tr('legal.pc.h_droits') ?></h2>
+    <div data-i18n="legal.pc.body_droits"><?= tr('legal.pc.body_droits') ?></div>
 
-    <h2 id="cookies">Cookies</h2>
-    <p>Le fonctionnement des cookies déposés par le Site (techniques, mesure d'audience, chat en ligne) est détaillé dans la <a href="/politique-cookies/">Politique cookies</a>.</p>
+    <h2 id="cookies" data-i18n="legal.pc.h_cookies"><?= tr('legal.pc.h_cookies') ?></h2>
+    <div data-i18n="legal.pc.body_cookies"><?= tr('legal.pc.body_cookies') ?></div>
 
-    <h2 id="modification">Modification de la présente politique</h2>
-    <p>Sparklin peut être amenée à modifier la présente politique de confidentialité, notamment pour l'adapter aux évolutions légales, réglementaires ou techniques. La version en vigueur est celle publiée sur cette page.</p>
+    <h2 id="modification" data-i18n="legal.pc.h_modification"><?= tr('legal.pc.h_modification') ?></h2>
+    <div data-i18n="legal.pc.body_modification"><?= tr('legal.pc.body_modification') ?></div>
   </div>
 </section>
 </main>

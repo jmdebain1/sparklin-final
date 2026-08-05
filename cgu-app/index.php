@@ -10,8 +10,8 @@ $lang = initI18n();
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CGU des applications — Spark Pilot, Spark-A, Spark-i — Sparklin</title>
-  <meta name="description" content="Conditions générales d'utilisation des applications mobiles Sparklin (Spark-A, Spark-i) et de la plateforme Spark Pilot."/>
+  <title><?= t('legal.cguapp.meta_title') ?></title>
+  <meta name="description" content="<?= t('legal.cguapp.meta_desc') ?>"/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png"/>
@@ -20,7 +20,7 @@ $lang = initI18n();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>'CGU des applications — Spark Pilot, Spark-A, Spark-i — Sparklin', 'desc'=>"Conditions générales d'utilisation des applications mobiles Sparklin (Spark-A, Spark-i) et de la plateforme Spark Pilot."]); ?>
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>t('legal.cguapp.meta_title'), 'desc'=>t('legal.cguapp.meta_desc')]); ?>
 </head>
 <body>
 <nav class="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:stretch;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 clamp(20px,5vw,80px);height:64px;">
@@ -268,259 +268,91 @@ $lang = initI18n();
 <main style="padding-top:64px;">
 <section style="background:var(--bg-white);padding:72px 0 80px;">
   <div class="sk-wrap legal-doc">
-    <span class="section-label">Conditions générales</span>
-    <h1 class="section-title">CGU des applications Sparklin</h1>
-    <span class="legal-updated">Applications Spark-A, Spark-i et Spark Pilot — en vigueur au 01/04/2023</span>
+    <span class="section-label" data-i18n="legal.cguapp.eyebrow"><?= tr('legal.cguapp.eyebrow') ?></span>
+    <h1 class="section-title" data-i18n="legal.cguapp.h1"><?= tr('legal.cguapp.h1') ?></h1>
+    <span class="legal-updated" data-i18n="legal.cguapp.updated"><?= tr('legal.cguapp.updated') ?></span>
 
     <div class="legal-toc">
-      <div>Sommaire</div>
+      <div data-i18n="legal.cguapp.toc_label"><?= tr('legal.cguapp.toc_label') ?></div>
       <ol>
-        <li><a href="#infos-legales">Informations légales</a></li>
-        <li><a href="#definitions">Définitions</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#objet">Objet</a></li>
-        <li><a href="#acceptation">Acceptation des CGU</a></li>
-        <li><a href="#engagements">Engagements de Sparklin</a></li>
-        <li><a href="#obligations">Obligations des utilisateurs</a></li>
-        <li><a href="#responsabilites">Responsabilités</a></li>
-        <li><a href="#conditions-financieres">Conditions financières</a></li>
-        <li><a href="#paiement">Service de paiement intégré</a></li>
-        <li><a href="#facturation">Facturation</a></li>
-        <li><a href="#liens">Liens hypertextes</a></li>
-        <li><a href="#donnees">Données personnelles</a></li>
-        <li><a href="#pi">Propriété intellectuelle</a></li>
-        <li><a href="#droit">Droit applicable</a></li>
-        <li><a href="#duree">Durée</a></li>
-        <li><a href="#mediation">Notification, réclamation, médiation</a></li>
-        <li><a href="#annexe-a">Annexe A — Services Sparklin</a></li>
-        <li><a href="#annexe-b">Annexe B — Applications mobiles</a></li>
+        <li><a href="#infos-legales"><?= tr('legal.cguapp.h_infos') ?></a></li>
+        <li><a href="#definitions"><?= tr('legal.cguapp.h_definitions') ?></a></li>
+        <li><a href="#contact"><?= tr('legal.cguapp.h_contact') ?></a></li>
+        <li><a href="#objet"><?= tr('legal.cguapp.h_objet') ?></a></li>
+        <li><a href="#acceptation"><?= tr('legal.cguapp.h_acceptation') ?></a></li>
+        <li><a href="#engagements"><?= tr('legal.cguapp.h_engagements') ?></a></li>
+        <li><a href="#obligations"><?= tr('legal.cguapp.h_obligations') ?></a></li>
+        <li><a href="#responsabilites"><?= tr('legal.cguapp.h_responsabilites') ?></a></li>
+        <li><a href="#conditions-financieres"><?= tr('legal.cguapp.h_conditions_fin') ?></a></li>
+        <li><a href="#paiement"><?= tr('legal.cguapp.h_paiement') ?></a></li>
+        <li><a href="#facturation"><?= tr('legal.cguapp.h_facturation') ?></a></li>
+        <li><a href="#liens"><?= tr('legal.cguapp.h_liens') ?></a></li>
+        <li><a href="#donnees"><?= tr('legal.cguapp.h_donnees') ?></a></li>
+        <li><a href="#pi"><?= tr('legal.cguapp.h_pi') ?></a></li>
+        <li><a href="#droit"><?= tr('legal.cguapp.h_droit') ?></a></li>
+        <li><a href="#duree"><?= tr('legal.cguapp.h_duree') ?></a></li>
+        <li><a href="#mediation"><?= tr('legal.cguapp.h_mediation') ?></a></li>
+        <li><a href="#annexe-a"><?= tr('legal.cguapp.h_annexe_a') ?></a></li>
+        <li><a href="#annexe-b"><?= tr('legal.cguapp.h_annexe_b') ?></a></li>
       </ol>
     </div>
 
-    <h2 id="infos-legales">Informations légales</h2>
-    <p>En vertu de l'article 6 de la Loi n°2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé dans cet article l'identité des différents intervenants dans le cadre de la réalisation et du suivi du présent contrat.</p>
-    <p>Les applications mobiles Spark-A et Spark-i sont développées et éditées par la société Sparklin SAS, RCS Nantes B 894 896 448, domiciliée à l'adresse 4 rue de la Cornouaille, 44300 Nantes, France.</p>
-    <p>Téléphone&nbsp;: 02 85 52 26 35 — courriel&nbsp;: <a href="mailto:contact@sparklin.io">contact@sparklin.io</a></p>
-    <p>Hébergeur&nbsp;:<br>Trident Media Guard SA,<br>RCS 441 392 586<br>4 rue de la Cornouaille, 44300 Nantes, France</p>
+    <h2 id="infos-legales" data-i18n="legal.cguapp.h_infos"><?= tr('legal.cguapp.h_infos') ?></h2>
+    <div data-i18n="legal.cguapp.body_infos"><?= tr('legal.cguapp.body_infos') ?></div>
 
-    <h2 id="definitions">Définitions</h2>
-    <p>Pour le présent Contrat les termes suivants sont définis comme suit&nbsp;:</p>
-    <p><strong>«&nbsp;Application Utilisateur&nbsp;»</strong>&nbsp;: désigne l'application mobile SPARKLIN installée sur le téléphone de l'Utilisateur pour les besoins de l'utilisation de la Prise et qui comprennent les Services SPARKLIN ainsi que tous les contenus, outils, fonctions et fonctionnalités proposés, à savoir&nbsp;:</p>
-    <ol>
-      <li><strong>Application Spark-A</strong>&nbsp;: l'application destinée aux Utilisateurs des Prises Sparklin et leur permettant d'accéder aux Services Sparklin, publiée sur le marché d'application Google Play®.</li>
-      <li><strong>Application Spark-i</strong>&nbsp;: l'application destinée aux Utilisateurs des Prises Sparklin et leur permettant d'accéder aux Services Sparklin, publiée sur le marché d'application App Store®.</li>
-      <li><strong>«&nbsp;Application Installateur&nbsp;»</strong>&nbsp;: désigne l'application mobile SPARKLIN installée sur le téléphone de l'Installateur pour les besoins de l'installation de la Prise à la demande du Gérant. L'Application Installateur permet notamment à l'Installateur de faire la mise en service logicielle après installation et raccordement de la Prise.</li>
-    </ol>
-    <p><strong>«&nbsp;Application Spark Pilot&nbsp;»</strong>&nbsp;: désigne l'application web SPARKLIN installée sur le téléphone du Gérant pour le suivi de fonctionnement des Prises et la gestion des Utilisateurs et de la Communauté.</p>
-    <p><strong>«&nbsp;Communauté&nbsp;»</strong>&nbsp;: un ensemble d'Utilisateurs identifiés et ayant des droits d'usage et des conditions d'usage spécifiques et particulières à un ensemble de Prises défini par le Gérant.</p>
-    <p><strong>«&nbsp;Compte Sparklin&nbsp;»</strong>&nbsp;: désigne l'espace personnel créé par l'Utilisateur lors de son inscription sur l'Application Utilisateur.</p>
-    <p><strong>«&nbsp;Contrat&nbsp;»</strong> ou <strong>«&nbsp;CGU&nbsp;»</strong> ou <strong>«&nbsp;Conditions Générales d'Utilisation&nbsp;»</strong>&nbsp;: le présent document contractuel qui encadre les conditions d'accès et d'utilisation par l'Utilisateur à l'Application Utilisateur et aux Services Sparklin.</p>
-    <p><strong>«&nbsp;Donnée(s)&nbsp;»</strong>&nbsp;: désigne l'ensemble des informations et données, y compris toutes Données Personnelles, saisies, entrées ou téléchargées, automatiquement ou par l'Utilisateur, dans l'Application Utilisateur.</p>
-    <p><strong>«&nbsp;Donnée(s) Personnelle(s)&nbsp;»</strong>&nbsp;: désigne toute information se rapportant à une personne physique identifiée ou identifiable&nbsp;; est réputée être une «&nbsp;personne physique identifiable&nbsp;», une personne physique qui peut être identifiée, directement ou indirectement, notamment par référence à un identifiant, tel qu'un nom, un numéro d'identification, des données de localisation, un identifiant en ligne, ou à un ou plusieurs éléments spécifiques propres à son identité physique, physiologique, génétique, psychique, économique, culturelle ou sociale, y compris des données codifiées ou pseudonymes dès lors que l'utilisation desdites données permet de réattribuer celles-ci à une personne identifiée ou identifiable telle que définie ci-dessus.</p>
-    <p><strong>«&nbsp;Installateur&nbsp;»</strong> désigne les sous-traitants (électriciens) de SPARKLIN pour les besoins de l'installation de la Prise.</p>
-    <p><strong>«&nbsp;Gérant&nbsp;»</strong>&nbsp;: désigne le fournisseur d'hébergement ou le gestionnaire de lieux privés ou publics équipés de Prises. Il s'agit de l'organisation propriétaire de la Prise, ou la personne désignée en tant que gérant par le propriétaire de la Prise, en charge d'assurer la gestion des Utilisateurs et de la Communauté. Le Gérant contracte l'offre de service auprès de Sparklin et fixe notamment les règles d'utilisation des Prises.</p>
-    <p><strong>«&nbsp;Partenaires Sparklin&nbsp;»</strong> ou <strong>«&nbsp;Partenaires&nbsp;»</strong>&nbsp;: toute personne morale ayant une relation contractuelle avec la société Sparklin autre que les clients, notamment le prestataire de Service de Paiement Intégré.</p>
-    <p><strong>«&nbsp;Point de Recharge Sparklin&nbsp;»</strong>&nbsp;: un lieu physique équipé d'une ou de plusieurs Prises.</p>
-    <p><strong>«&nbsp;Prise(s)&nbsp;»</strong>&nbsp;: désigne la prise électrique, conçue et fabriquée par SPARKLIN, destinée à la recharge de véhicules électriques ou hybrides rechargeables, connectée à un réseau de communication permettant la mise en œuvre des Services Sparklin au bénéfice d'Utilisateurs.</p>
-    <p><strong>«&nbsp;Service de Paiement Intégré&nbsp;»</strong>&nbsp;: l'un des services proposés par Sparklin, par l'intermédiaire de son prestataire, qui permet à un Utilisateur de commander et de suivre l'exécution d'un Service puis de valider le paiement d'un Service Sparklin depuis une des Applications Mobiles Sparklin.</p>
-    <p><strong>«&nbsp;Services Sparklin&nbsp;»</strong>&nbsp;: l'ensemble des services fournis par Sparklin qui peuvent être fournis aux Utilisateurs, tels que listés et définis en Annexe A.</p>
-    <p><strong>«&nbsp;Transaction&nbsp;»</strong>&nbsp;: le processus commençant par la commande d'un Service Sparklin par un Utilisateur, l'exécution de cette commande et des Services afférents, et enfin la validation du paiement par l'Utilisateur.</p>
-    <p><strong>«&nbsp;Utilisateur(s)&nbsp;»</strong>&nbsp;: tout utilisateur, particulier ou membre d'une organisation, qui a acquis des droits d'utilisation des Prises et qui, à ce titre, bénéficie d'un Compte Sparklin ou d'un droit de création de Compte Sparklin lui permettant l'accès aux Prises.</p>
+    <h2 id="definitions" data-i18n="legal.cguapp.h_definitions"><?= tr('legal.cguapp.h_definitions') ?></h2>
+    <div data-i18n="legal.cguapp.body_definitions"><?= tr('legal.cguapp.body_definitions') ?></div>
 
-    <h2 id="contact">Contact</h2>
-    <p>Pour toute question ou demande d'information concernant l'application, ou tout signalement de contenu ou d'activités illicites, l'Utilisateur peut contacter l'éditeur à l'adresse de messagerie électronique suivante&nbsp;: <a href="mailto:contact@sparklin.io">contact@sparklin.io</a>, ou adresser un courrier à&nbsp;:</p>
-    <div class="legal-card">
-      <p><strong>SAS Sparklin</strong></p>
-      <p>4 rue de la Cornouaille</p>
-      <p>44300 Nantes, France</p>
-    </div>
+    <h2 id="contact" data-i18n="legal.cguapp.h_contact"><?= tr('legal.cguapp.h_contact') ?></h2>
+    <div data-i18n="legal.cguapp.body_contact"><?= tr('legal.cguapp.body_contact') ?></div>
 
-    <h2 id="objet">Objet</h2>
-    <p>Les présentes Conditions Générales d'Utilisation ont pour objet de définir&nbsp;:</p>
-    <ol>
-      <li>Les modalités et conditions selon lesquelles Sparklin met à disposition des Utilisateurs l'Application Utilisateur et les Services Sparklin&nbsp;;</li>
-      <li>Les droits et les obligations des Utilisateurs dans le cadre de l'utilisation de l'Application Utilisateur et des Services Sparklin.</li>
-    </ol>
+    <h2 id="objet" data-i18n="legal.cguapp.h_objet"><?= tr('legal.cguapp.h_objet') ?></h2>
+    <div data-i18n="legal.cguapp.body_objet"><?= tr('legal.cguapp.body_objet') ?></div>
 
-    <h2 id="acceptation">Acceptation des CGU</h2>
-    <p>Les CGU sont mises à disposition des Utilisateurs au sein de l'Application Utilisateur, dans l'onglet dédié où elles sont directement consultables.</p>
-    <p>L'accès et l'utilisation de l'Application Utilisateur sont soumis à l'acceptation et au respect des présentes Conditions Générales d'Utilisation. L'acceptation explicite de chaque Utilisateur sera demandée lors de sa première connexion aux Services Sparklin à travers l'Application Utilisateur. Au moment de la création d'un Compte Sparklin, prévue dans les conditions de l'article «&nbsp;Conditions d'accès&nbsp;», l'Utilisateur doit consulter et accepter les CGU.</p>
-    <p>Sparklin se réserve le droit de modifier, à tout moment et sans préavis, les présentes Conditions Générales d'Utilisation. Dans un tel cas, Sparklin portera à la connaissance des Utilisateurs les CGU modifiées ainsi que leur date d'entrée en vigueur. L'Utilisateur peut refuser ces modifications dans un délai d'un (1) mois suivant la notification de la modification, par courrier recommandé avec accusé de réception ou à l'adresse électronique suivante&nbsp;: <a href="mailto:contact@sparklin.io">contact@sparklin.io</a>. Un tel refus entraînera la perte de la possibilité d'utiliser les Services Sparklin sur l'Application Utilisateur. La poursuite de l'utilisation de l'Application Utilisateur et des Services Sparklin vaudra acceptation des CGU modifiées. La nouvelle version des CGU sera disponible dans un onglet de l'Application Utilisateur avec sa date d'entrée en vigueur.</p>
-    <p>De même, Sparklin apportera de temps à autre des modifications à l'Application Utilisateur ainsi qu'aux Services Sparklin, sans que ces changements n'entraînent de droits supplémentaires ni de dédommagements ou autres recours au bénéfice des Utilisateurs, ceux-ci restant libres à tout moment de renoncer aux Services Sparklin.</p>
+    <h2 id="acceptation" data-i18n="legal.cguapp.h_acceptation"><?= tr('legal.cguapp.h_acceptation') ?></h2>
+    <div data-i18n="legal.cguapp.body_acceptation"><?= tr('legal.cguapp.body_acceptation') ?></div>
 
-    <h2 id="engagements">Engagements de Sparklin</h2>
-    <h3>1. Pré-requis technique</h3>
-    <p>L'Application Utilisateur et les Services Sparklin sont accessibles à tout Utilisateur ayant un accès internet. Tous les frais nécessaires pour l'accès aux services informatiques (matériel informatique, connexion Internet…) sont à la charge de l'Utilisateur.</p>
-    <p>L'Utilisateur s'engage, en souscrivant aux présentes CGU, à disposer d'une connexion sécurisée garantissant une utilisation de l'Application Utilisateur et des Services Sparklin conforme aux conditions prévues par les présentes.</p>
-    <h3>2. Inscription</h3>
-    <p>L'accès à l'Application Utilisateur et aux Services Sparklin est ouvert aux Utilisateurs autorisés.</p>
-    <p>L'Utilisateur est informé par courriel qu'un accès à l'Application Utilisateur lui a été créé par le Gérant. L'Utilisateur doit alors télécharger et se connecter à l'Application Utilisateur. Il doit renseigner son numéro de téléphone aux fins de vérification de son autorisation. L'Utilisateur pourra créer son Compte Sparklin si son accès a été autorisé par un Gérant.</p>
-    <p>L'accès à l'Application Utilisateur est définitivement validé lorsque l'Utilisateur accepte les présentes CGU ainsi que la Politique de confidentialité en cochant les cases prévues à cet effet, lors de la première connexion.</p>
-    <p>L'utilisation de l'Application Utilisateur par des personnes physiques est réservée aux personnes majeures ou bénéficiant d'un accord parental ou d'un tuteur légal. Sparklin se réserve le droit de demander une justification de l'âge de l'Utilisateur, ou d'un accord parental ou du tuteur légal, à tout moment et par tout moyen.</p>
-    <p>Pour créer un Compte Sparklin, l'Utilisateur doit renseigner au Gérant les informations suivantes&nbsp;:</p>
-    <ul>
-      <li>N° de téléphone&nbsp;;</li>
-      <li>Nom et prénom (l'Utilisateur ne doit pas renseigner un pseudonyme ou un nom inventé)&nbsp;;</li>
-      <li>Adresse email.</li>
-    </ul>
-    <p>Lors de son inscription, l'Utilisateur s'engage à fournir l'ensemble des informations requises de façon exacte, sincère et à jour, et à les maintenir à jour aussi longtemps qu'il continuera à utiliser les Services Sparklin. L'Utilisateur doit en particulier fournir un numéro de téléphone valide, sur lequel Sparklin lui adressera une confirmation de son inscription. Une même adresse de messagerie électronique ne peut être utilisée pour inscrire plusieurs Utilisateurs aux Services Sparklin.</p>
-    <p>Toute communication transmise par Sparklin et ses Partenaires vers les Utilisateurs est réputée avoir été réceptionnée et lue par l'Utilisateur. Ce dernier s'engage donc à consulter régulièrement les messages reçus sur cette adresse de courriel et à répondre dans un délai raisonnable, ou dans les délais indiqués par Sparklin ou ses Partenaires, lorsque cela est demandé.</p>
-    <p>Une seule inscription aux Services Sparklin est acceptée par personne physique. Chaque Utilisateur se voit attribuer un identifiant unique lui permettant d'accéder à un espace dont l'accès lui est réservé, son Compte Sparklin, en complément de la saisie de son mot de passe.</p>
-    <p>Le mot de passe est unique et confidentiel&nbsp;: l'Utilisateur est responsable de sa confidentialité et reste responsable de l'usage qui peut en être fait en cas de divulgation à des tiers.</p>
-    <p>En cas de suspicion d'usage frauduleux ou de perte ou de vol d'identifiant et/ou de mot de passe, l'Utilisateur doit en informer sans délai Sparklin par email à l'adresse suivante&nbsp;: <a href="mailto:sav@sparklin.io">sav@sparklin.io</a>. Sparklin ne pourra être tenue pour responsable de toute utilisation frauduleuse du Compte Sparklin de l'Utilisateur.</p>
-    <p>Sparklin se réserve, à sa discrétion, la possibilité de refuser une demande d'inscription à l'Application Utilisateur et aux Services Sparklin.</p>
-    <h3>3. Désinscription — Suspension</h3>
-    <p>L'Utilisateur inscrit pourra à tout moment demander sa désinscription en se rendant sur la page dédiée dans son Compte Sparklin. Toute désinscription sera effective immédiatement après que l'Utilisateur aura rempli le formulaire prévu à cet effet et confirmé sa demande.</p>
-    <p>Une désinscription, quel qu'en soit le motif, ne dédouane pas l'Utilisateur du paiement des sommes possiblement dues à Sparklin ou à ses Partenaires, qui conservent tous droits et moyens de recouvrement jusqu'à extinction de ces créances.</p>
-    <p>Sparklin se réserve en outre le droit de suspendre voire de fermer, de plein droit, l'accès aux Services Sparklin en cas de non-respect des présentes CGU et des conditions d'utilisation des Partenaires par les Utilisateurs.</p>
-    <p>Par ailleurs, à tout moment, l'Utilisateur peut se voir retirer son autorisation par le Gérant d'accéder et d'utiliser l'Application Utilisateur.</p>
-    <p>En cas d'informations erronées ou mensongères communiquées par l'Utilisateur, Sparklin se réserve le droit de suspendre voire de fermer le Compte Sparklin de l'Utilisateur jusqu'à, le cas échéant, rectification des informations.</p>
+    <h2 id="engagements" data-i18n="legal.cguapp.h_engagements"><?= tr('legal.cguapp.h_engagements') ?></h2>
+    <div data-i18n="legal.cguapp.body_engagements"><?= tr('legal.cguapp.body_engagements') ?></div>
 
-    <h2 id="obligations">Obligations des utilisateurs</h2>
-    <p>Les Utilisateurs s'engagent à respecter les termes et les conditions des présentes CGU et notamment à utiliser l'Application Utilisateur aux seules fins de bénéficier des Services Sparklin.</p>
-    <p>L'Utilisateur s'engage en particulier à utiliser l'Application Utilisateur et les Services Sparklin&nbsp;:</p>
-    <ul>
-      <li>conformément à leur destination&nbsp;;</li>
-      <li>dans le respect des Droits de Propriété Intellectuelle, notamment ceux rappelés à la clause «&nbsp;Propriété intellectuelle&nbsp;» des présentes CGU.</li>
-    </ul>
-    <p>L'Utilisateur s'engage notamment à&nbsp;:</p>
-    <ul>
-      <li>prendre toutes les précautions nécessaires afin d'éviter la propagation de virus, chevaux de Troie, vers, bombes, ou tout autre outil destiné à endommager, nuire ou entraver l'Application Utilisateur et les Services Sparklin&nbsp;;</li>
-      <li>ne pas transmettre de virus ou tout autre programme nuisible ou destructeur, et plus généralement ne pas perturber le fonctionnement de l'Application Utilisateur&nbsp;;</li>
-      <li>prendre toutes les mesures appropriées pour protéger ses propres données, logiciels et matériels de la contamination par des virus ou autres formes d'attaques circulant éventuellement via l'Application Utilisateur&nbsp;;</li>
-      <li>renseigner des informations et coordonnées exactes, sincères et véritables&nbsp;;</li>
-      <li>ne pas mettre en ligne et/ou télécharger sur l'Application Utilisateur des contenus à caractère diffamatoire, injurieux, obscène, pornographique, vulgaire, offensant, agressif, déplacé, violent, menaçant, harcelant, raciste, xénophobe, à connotation sexuelle, incitant à la haine, à la violence ou à la discrimination, encourageant les activités ou l'usage de substances illégales ou, plus généralement, contraires aux finalités de l'Application Utilisateur et des Services Sparklin, de nature à porter atteinte aux droits de Sparklin ou d'un tiers, ou contraires aux bonnes mœurs&nbsp;;</li>
-      <li>ne pas porter atteinte aux droits et à l'image de Sparklin, notamment à ses droits de propriété intellectuelle&nbsp;;</li>
-      <li>se conformer aux présentes CGU et à la Politique de Confidentialité&nbsp;;</li>
-      <li>ne pas utiliser sur l'Application Utilisateur des logiciels ou programmes effectuant des tâches automatisées, quelles qu'en soient les fonctionnalités, une telle pratique étant assimilée à une atteinte à un système automatisé de données&nbsp;;</li>
-      <li>ne pas reprendre tout ou partie des contenus disponibles sur l'Application Utilisateur sans l'autorisation des titulaires des droits&nbsp;;</li>
-      <li>ne pas reproduire et/ou utiliser la marque, la dénomination sociale, le logo ou tout signe distinctif de Sparklin et/ou d'un tiers sans autorisation.</li>
-    </ul>
-    <p>En outre, les Utilisateurs s'engagent à signaler à Sparklin, sans délai, tout incident concernant l'Application Utilisateur et les Services Sparklin pouvant avoir des incidences sur leur fonctionnement, et notamment tout acte de piratage, d'hameçonnage ou d'utilisation illicite. Ils s'engagent également à ne pas entraver ou perturber les Services fournis par Sparklin.</p>
-    <p>Enfin, les Utilisateurs s'engagent à utiliser l'Application Utilisateur et les Services Sparklin conformément aux dispositions légales et réglementaires applicables.</p>
-    <p>À défaut du respect des présentes stipulations, le Compte Sparklin pourra être suspendu ou fermé à l'appréciation de Sparklin, conformément aux présentes CGU.</p>
+    <h2 id="obligations" data-i18n="legal.cguapp.h_obligations"><?= tr('legal.cguapp.h_obligations') ?></h2>
+    <div data-i18n="legal.cguapp.body_obligations"><?= tr('legal.cguapp.body_obligations') ?></div>
 
-    <h2 id="responsabilites">Responsabilités</h2>
-    <p>Les Utilisateurs acceptent expressément que l'utilisation de l'Application Utilisateur et des Services Sparklin se fasse sous leur responsabilité.</p>
-    <p>Sparklin n'est responsable que du contenu qu'elle a elle-même édité, sans pour autant garantir l'exactitude, la complétude et l'actualité des informations diffusées.</p>
-    <p>Sparklin n'est pas responsable&nbsp;:</p>
-    <ul>
-      <li>en cas de difficultés liées au service de traitement des paiements fourni aux Utilisateurs par le prestataire de Service de Paiement Intégré&nbsp;;</li>
-      <li>en cas de problème ou de défaillances techniques, informatiques, réseaux ou autres, ou en cas d'incompatibilité de l'Application Utilisateur avec un matériel ou logiciel tiers nécessaire à sa bonne exécution ou utilisation&nbsp;;</li>
-      <li>des dommages directs ou indirects, matériels ou immatériels, prévisibles ou imprévisibles, résultant de l'utilisation ou des difficultés d'utilisation de l'Application Utilisateur ou des Services Sparklin, à l'exception des cas prévus par la loi&nbsp;;</li>
-      <li>des conséquences pour l'Utilisateur des caractéristiques intrinsèques d'Internet, notamment celles relatives au manque de fiabilité et au défaut de sécurisation des informations y circulant&nbsp;;</li>
-      <li>des contenus ou activités illicites réalisés par l'Utilisateur sur l'Application Utilisateur.</li>
-    </ul>
-    <p>L'Utilisateur est responsable&nbsp;:</p>
-    <ul>
-      <li>de la protection de son matériel et de ses Données&nbsp;;</li>
-      <li>de l'utilisation qu'il fait de l'Application Utilisateur et des Services Sparklin&nbsp;;</li>
-      <li>du non-respect de la lettre ou de l'esprit des présentes CGU.</li>
-    </ul>
+    <h2 id="responsabilites" data-i18n="legal.cguapp.h_responsabilites"><?= tr('legal.cguapp.h_responsabilites') ?></h2>
+    <div data-i18n="legal.cguapp.body_responsabilites"><?= tr('legal.cguapp.body_responsabilites') ?></div>
 
-    <h2 id="conditions-financieres">Conditions financières</h2>
-    <div class="legal-note"><p><strong>Note&nbsp;:</strong> le document source transmis par Sparklin reprend, sous cette rubrique, le même texte que la section «&nbsp;Responsabilités&nbsp;» ci-dessus plutôt que les conditions tarifaires proprement dites. Ce paragraphe est reproduit à l'identique en attendant la version corrigée.</p></div>
-    <p>Les Utilisateurs acceptent expressément que l'utilisation de l'Application Utilisateur et des Services Sparklin se fasse sous leur responsabilité.</p>
-    <p>Sparklin n'est responsable que du contenu qu'elle a elle-même édité, sans pour autant garantir l'exactitude, la complétude et l'actualité des informations diffusées.</p>
-    <p>Sparklin n'est pas responsable&nbsp;:</p>
-    <ul>
-      <li>en cas de difficultés liées au service de traitement des paiements fourni aux Utilisateurs par le prestataire de Service de Paiement Intégré&nbsp;;</li>
-      <li>en cas de problème ou de défaillances techniques, informatiques, réseaux ou autres, ou en cas d'incompatibilité de l'Application Utilisateur avec un matériel ou logiciel tiers nécessaire à sa bonne exécution ou utilisation&nbsp;;</li>
-      <li>des dommages directs ou indirects, matériels ou immatériels, prévisibles ou imprévisibles, résultant de l'utilisation ou des difficultés d'utilisation de l'Application Utilisateur ou des Services Sparklin, à l'exception des cas prévus par la loi&nbsp;;</li>
-      <li>des conséquences pour l'Utilisateur des caractéristiques intrinsèques d'Internet, notamment celles relatives au manque de fiabilité et au défaut de sécurisation des informations y circulant&nbsp;;</li>
-      <li>des contenus ou activités illicites réalisés par l'Utilisateur sur l'Application Utilisateur.</li>
-    </ul>
-    <p>L'Utilisateur est responsable de la protection de son matériel et de ses Données, ainsi que de l'utilisation qu'il fait de l'Application Utilisateur et des Services Sparklin.</p>
+    <h2 id="conditions-financieres" data-i18n="legal.cguapp.h_conditions_fin"><?= tr('legal.cguapp.h_conditions_fin') ?></h2>
+    <div data-i18n="legal.cguapp.body_conditions_fin"><?= tr('legal.cguapp.body_conditions_fin') ?></div>
 
-    <h2 id="paiement">Service de paiement intégré</h2>
-    <p>Sparklin a conclu un accord avec un Partenaire pour le traitement des paiements effectués à l'aide du Service de Paiement Intégré et la conservation des informations relatives aux cartes bancaires des Utilisateurs. Pour pouvoir utiliser le Service de Paiement Intégré, l'Utilisateur conclura un contrat directement avec le Partenaire prestataire de services de paiement et acceptera ses conditions générales. Il sera demandé aux Utilisateurs de le confirmer lors de l'enregistrement de leur carte de paiement.</p>
-    <p>Dans le cadre du Service de Paiement Intégré, l'Utilisateur valide le paiement à l'issue de la réalisation d'un Service qu'il a commandé au moyen d'une des Applications Mobiles&nbsp;; par exemple, sans que cet exemple soit limitatif, au terme d'une session de charge d'un véhicule électrique au moyen d'une Prise Connectée Sparklin. Si à l'issue de l'exécution du Service l'Utilisateur ne valide pas le paiement, cette validation sera réalisée automatiquement après un délai de 24 heures, sauf si l'Utilisateur conteste la bonne exécution de tout ou partie de la Transaction avant l'échéance de ce délai.</p>
-    <p>Dans le cadre de l'utilisation du Service de Paiement Intégré, il est nécessaire que la carte ou le moyen de paiement de l'Utilisateur soit valide&nbsp;; Sparklin vérifiera, par tout moyen utile, la validité de la carte ou du moyen de paiement de l'Utilisateur avant d'autoriser l'exécution de la commande du Service. Par ailleurs, il est précisé que le montant du paiement validé par l'Utilisateur sera, dans un premier temps, conservé sur un compte séquestre contrôlé par le Partenaire prestataire de services de paiement choisi par Sparklin&nbsp;; le montant sera définitivement transféré sur un compte contrôlé par Sparklin après la clôture de la Transaction.</p>
-    <p>Dans le cadre du Service de Paiement Intégré, la Transaction est clôturée&nbsp;:</p>
-    <ul>
-      <li>automatiquement après l'expiration de la période de contestation de 24 heures («&nbsp;Période de Contestation&nbsp;») si aucun litige n'est déclaré par l'Utilisateur au moyen de la fonction prévue à cet effet dans l'Application Utilisateur&nbsp;;</li>
-      <li>à la clôture du litige par Sparklin, si un litige est déclaré au cours de la Période de Contestation par l'Utilisateur.</li>
-    </ul>
-    <p>Une fois la Transaction finalisée, le prix du service est immédiatement transféré par le Partenaire prestataire de services de paiement vers Sparklin.</p>
-    <p>SPARKLIN ne fournit aucun service de traitement des paiements aux Utilisateurs. Il incombe aux Utilisateurs de fournir les coordonnées exactes des cartes de crédit, des cartes de débit et de tout autre mode de paiement offert sur l'Application Utilisateur. L'Utilisateur sera seul responsable de la transmission des informations liées à sa carte bancaire, et Sparklin décline toute responsabilité s'agissant de la saisie, du traitement, de l'utilisation et de la conservation de ces données dans toute la mesure autorisée par la législation applicable.</p>
-    <p>L'attention des Utilisateurs est attirée sur le fait que le droit d'utiliser le Service de Paiement Intégré ne peut être conféré par Sparklin et ses Partenaires que dans le cadre des Transactions effectuées par un Utilisateur en son nom propre. En particulier, et sans que cela soit limitatif, les Utilisateurs ne sont pas autorisés à revendre, engager ou, de toute autre manière, autoriser des tiers à utiliser le Service de Paiement Intégré pour leur transférer les bénéfices d'un Service&nbsp;; un Service étant réputé être délivré exclusivement à l'Utilisateur identifié.</p>
-    <p>En cas de suspicion de fraude de quelque nature que ce soit, de déclaration de litige abusive, d'usage non conforme aux conditions des présentes CGU, ou de violation des conditions générales d'un Partenaire, Sparklin se réserve le droit de suspendre immédiatement le Compte de l'Utilisateur concerné ainsi que les Transactions en cours.</p>
+    <h2 id="paiement" data-i18n="legal.cguapp.h_paiement"><?= tr('legal.cguapp.h_paiement') ?></h2>
+    <div data-i18n="legal.cguapp.body_paiement"><?= tr('legal.cguapp.body_paiement') ?></div>
 
-    <h2 id="facturation">Facturation</h2>
-    <p>Le Gérant donne mandat à SPARKLIN, en vertu duquel, pour chaque transaction effectuée au moyen de l'Application Spark-A, SPARKLIN peut établir, au nom et pour le compte du Gérant, une facture et/ou un reçu concernant des services de recharge fournis aux Utilisateurs, sous réserve que le Gérant y ait indiqué les détails de facturation.</p>
-    <p>Le Gérant peut contester les factures et/ou reçus que SPARKLIN a établis en son nom et pour son compte pendant une période maximale de trois (3) jours à compter de la date d'émission. Passé ce délai, le Gérant est réputé avoir validé cette facture et/ou ce reçu.</p>
-    <p>Il est entendu que le Gérant effectuera le stockage et l'archivage des factures et/ou reçus conformément aux lois applicables.</p>
+    <h2 id="facturation" data-i18n="legal.cguapp.h_facturation"><?= tr('legal.cguapp.h_facturation') ?></h2>
+    <div data-i18n="legal.cguapp.body_facturation"><?= tr('legal.cguapp.body_facturation') ?></div>
 
-    <h2 id="liens">Liens hypertextes</h2>
-    <p>L'Application Utilisateur peut contenir des liens hypertextes pointant vers d'autres sites internet sur lesquels Sparklin n'exerce pas de contrôle.</p>
-    <p>Dans une telle situation, Sparklin décline toute responsabilité quant aux contenus, publicités, produits, services ou tout autre élément disponible que l'Utilisateur pourra consulter sur ces sites non contrôlés par Sparklin.</p>
+    <h2 id="liens" data-i18n="legal.cguapp.h_liens"><?= tr('legal.cguapp.h_liens') ?></h2>
+    <div data-i18n="legal.cguapp.body_liens"><?= tr('legal.cguapp.body_liens') ?></div>
 
-    <h2 id="donnees">Données personnelles</h2>
-    <p>La Politique de confidentialité, disponible sur le site www.sparklin.io, décrit les Données personnelles des Utilisateurs collectées par Sparklin et les finalités pour lesquelles Sparklin traite ces données. En acceptant les présentes CGU, l'Utilisateur reconnaît avoir pris connaissance de la Politique de confidentialité des Données Personnelles.</p>
+    <h2 id="donnees" data-i18n="legal.cguapp.h_donnees"><?= tr('legal.cguapp.h_donnees') ?></h2>
+    <div data-i18n="legal.cguapp.body_donnees"><?= tr('legal.cguapp.body_donnees') ?></div>
 
-    <h2 id="pi">Propriété intellectuelle</h2>
-    <p>L'ensemble des éléments constitutifs de l'Application Utilisateur, notamment, mais sans que cela soit limitatif, le design utilisateur, l'organisation de la navigation au sein de l'Application Utilisateur Sparklin, les textes, graphiques, images, photographies, sons, vidéos, représentations en 3 dimensions et autres éléments logiciels qui composent l'Application Utilisateur, sont la propriété de Sparklin et sont à ce titre protégés par les lois en vigueur en France.</p>
-    <p>Les présentes CGU n'emportent aucune cession, d'aucune sorte, des droits de propriété intellectuelle sur l'un ou l'autre de ces éléments.</p>
-    <p>Toute représentation, reproduction, ingénierie inversée, adaptation ou exploitation partielle ou totale des éléments logiciels, contenus, marques, inventions brevetées, modèles ou de toute autre propriété de Sparklin, par quelque procédé que ce soit, est strictement interdite sans l'autorisation préalable, expresse et écrite de Sparklin, et constituerait, sans cet accord, une contrefaçon au sens des articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
-    <p>L'autorisation donnée par Sparklin à l'Utilisateur d'accéder à l'Application Utilisateur et aux Services Sparklin ne vaut pas reconnaissance d'un droit à l'Utilisateur et, en particulier, ne confère aucun droit de propriété intellectuelle relatif à quelque élément que ce soit de l'Application Utilisateur, lesquels restent la propriété exclusive de Sparklin.</p>
-    <p>Le présent Contrat confère à l'Utilisateur, sous réserve du respect plein et entier des CGU et du paiement des sommes dues à Sparklin, un droit d'usage des Applications Mobiles Sparklin, de manière non exclusive, non transférable et non cessible, pour toute la durée des présentes CGU.</p>
-    <p>Ce droit d'utilisation s'effectue par accès distant à partir de l'Application Utilisateur et comprend&nbsp;:</p>
-    <ul>
-      <li>le droit d'accéder à l'Application Utilisateur conformément aux présentes CGU&nbsp;;</li>
-      <li>le droit d'accéder aux Services Sparklin conformément aux présentes CGU.</li>
-    </ul>
-    <p>Il est interdit à l'Utilisateur d'introduire, de combiner ou d'intégrer des composants logiciels ou des données, ou de procéder à toute autre action, par quelque moyen que ce soit, qui modifierait ou serait susceptible de modifier le comportement, le contenu ou l'apparence de l'Application Utilisateur et des Services Sparklin.</p>
+    <h2 id="pi" data-i18n="legal.cguapp.h_pi"><?= tr('legal.cguapp.h_pi') ?></h2>
+    <div data-i18n="legal.cguapp.body_pi"><?= tr('legal.cguapp.body_pi') ?></div>
 
-    <h2 id="droit">Droit applicable</h2>
-    <p>Les présentes Conditions Générales d'Utilisation sont régies par et devront être interprétées selon le droit français.</p>
-    <p>En cas de conflit ou de litige survenant à propos de l'exécution, de la résiliation ou des conditions du présent contrat, les parties s'efforceront de régler leur différend à l'amiable.</p>
-    <p>Si aucune solution amiable n'était trouvée, le litige serait porté exclusivement devant les juridictions compétentes de Nantes.</p>
+    <h2 id="droit" data-i18n="legal.cguapp.h_droit"><?= tr('legal.cguapp.h_droit') ?></h2>
+    <div data-i18n="legal.cguapp.body_droit"><?= tr('legal.cguapp.body_droit') ?></div>
 
-    <h2 id="duree">Durée</h2>
-    <p>Les présentes CGU sont opposables aux Utilisateurs dès leur acceptation et sont conclues pour une durée indéterminée.</p>
-    <p>Il est rappelé que l'Utilisateur peut, à tout moment et quel que soit le motif, se désinscrire et supprimer son Compte Sparklin dans les conditions fixées à l'article «&nbsp;Désinscription — Suspension&nbsp;» des présentes CGU. De même, Sparklin peut être amenée à suspendre ou retirer l'accès de l'Application à l'Utilisateur dans les mêmes conditions.</p>
-    <p>La désinscription vaut résiliation des présentes CGU.</p>
-    <p>En cas de résiliation par Sparklin, Sparklin en informera l'Utilisateur au moyen de l'adresse de courriel fournie et maintenue à jour par l'Utilisateur dans son Compte Sparklin&nbsp;; si cette adresse n'est pas accessible pour quelque raison que ce soit, Sparklin n'a pas d'autre obligation d'informer l'Utilisateur de la résiliation du présent Contrat.</p>
-    <p>Il est précisé que la résiliation du présent Contrat à l'initiative de Sparklin n'entraîne aucun droit supplémentaire ni aucun dédommagement ou autre recours au bénéfice de l'Utilisateur.</p>
-    <p>En cas de résiliation par l'Utilisateur, il est rappelé que l'Utilisateur reste redevable et doit s'acquitter dans les plus brefs délais des sommes restant dues à Sparklin, que Sparklin pourra réclamer et recouvrer par tout moyen à sa convenance et aux frais de l'Utilisateur.</p>
+    <h2 id="duree" data-i18n="legal.cguapp.h_duree"><?= tr('legal.cguapp.h_duree') ?></h2>
+    <div data-i18n="legal.cguapp.body_duree"><?= tr('legal.cguapp.body_duree') ?></div>
 
-    <h2 id="mediation">Notification, réclamation et médiation</h2>
-    <p>Toute notification et/ou réclamation devra être effectuée par mail envoyé à&nbsp;: <a href="mailto:dpo@sparklin.io">dpo@sparklin.io</a></p>
-    <p>L'Utilisateur, lorsqu'il agit en qualité de consommateur, est informé de la possibilité de recourir, en cas de contestation résultant de l'utilisation de l'Application Utilisateur et des Services Sparklin, à une procédure de médiation conventionnelle ou à tout autre mode alternatif de règlement des différends, dès lors qu'un tel litige n'a pas pu être réglé dans le cadre d'une réclamation préalable directement introduite auprès de Sparklin.</p>
-    <p>Sparklin est tenu de communiquer les coordonnées du médiateur qu'il a désigné.</p>
-    <p>Pour information, site de la Commission européenne dans le cadre de la médiation&nbsp;: <a href="http://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></p>
+    <h2 id="mediation" data-i18n="legal.cguapp.h_mediation"><?= tr('legal.cguapp.h_mediation') ?></h2>
+    <div data-i18n="legal.cguapp.body_mediation"><?= tr('legal.cguapp.body_mediation') ?></div>
 
-    <h2 id="annexe-a">Annexe A — Services Sparklin</h2>
-    <p>La liste des Services Sparklin est la liste des Services qui peuvent être rendus par Sparklin et ses Partenaires aux Utilisateurs Sparklin.</p>
-    <p>Sparklin n'a aucune obligation d'offrir l'un quelconque de ses Services à un Utilisateur donné et reste seule partie à ce contrat à pouvoir décider quel Service est offert à quel Utilisateur.</p>
-    <p>La liste de ces Services est susceptible d'être modifiée, complétée ou réduite à tout moment à la seule discrétion de Sparklin, sans que ces changements n'entraînent de droits supplémentaires ni de dédommagements ou autres recours au bénéfice des Utilisateurs, ceux-ci restant libres à tout moment de renoncer aux Services Sparklin.</p>
-    <p>Liste des Services à la date du 01/04/2023&nbsp;:</p>
-    <ul>
-      <li>Accès au service de charge pour véhicules électriques&nbsp;;</li>
-      <li>Accès à un compte utilisateur&nbsp;;</li>
-      <li>Accès à des communautés&nbsp;;</li>
-      <li>Lancement d'une session de charge dans ces communautés&nbsp;;</li>
-      <li>Suivi de sa session de charge à distance&nbsp;;</li>
-      <li>Arrêt de sa session de charge à distance&nbsp;;</li>
-      <li>Planification des heures de charge à domicile&nbsp;;</li>
-      <li>Paiement en ligne&nbsp;;</li>
-      <li>Édition de notes de frais&nbsp;;</li>
-      <li>Déclaration de la nature de la session de charge (motif professionnel ou personnel)&nbsp;;</li>
-      <li>Consultation de l'historique de charge.</li>
-    </ul>
+    <h2 id="annexe-a" data-i18n="legal.cguapp.h_annexe_a"><?= tr('legal.cguapp.h_annexe_a') ?></h2>
+    <div data-i18n="legal.cguapp.body_annexe_a"><?= tr('legal.cguapp.body_annexe_a') ?></div>
 
-    <h2 id="annexe-b">Annexe B — Présentation des applications mobiles Sparklin</h2>
-    <p>La liste des fonctionnalités des Applications Mobiles Sparklin est la liste des fonctionnalités offertes aux Utilisateurs.</p>
-    <p>Sparklin n'a aucune obligation d'offrir l'une quelconque de ses fonctionnalités à un Utilisateur donné et reste seule à pouvoir décider quelles fonctionnalités sont offertes aux Utilisateurs.</p>
-    <p>La liste de ces fonctionnalités est susceptible de varier entre les applications Spark-A et Spark-i, et également d'être modifiée, complétée ou réduite à tout moment à la seule discrétion de Sparklin, sans que ces changements n'entraînent de droits supplémentaires ni de dédommagements ou autres recours au bénéfice des Utilisateurs, ceux-ci restant libres à tout moment de renoncer aux Services Sparklin.</p>
-    <p>À la date du 01/04/2023, les applications Spark-A et Spark-i ont pour fonctionnalités&nbsp;:</p>
-    <ul>
-      <li>le suivi par un Utilisateur Sparklin de ses droits de consommation et de ses droits d'accès dans la ou les différentes Communautés auxquelles il appartient&nbsp;;</li>
-      <li>le paiement ou l'enregistrement, par un Utilisateur Sparklin, du service de chargement du véhicule électrique, selon les tarifs définis dans les Conditions Générales de Vente&nbsp;;</li>
-      <li>la validation d'une Transaction par l'Utilisateur&nbsp;;</li>
-      <li>l'enregistrement d'un litige au sujet d'une Transaction par l'Utilisateur&nbsp;;</li>
-      <li>l'accès à l'historique de charge et aux factures pour un Utilisateur.</li>
-    </ul>
+    <h2 id="annexe-b" data-i18n="legal.cguapp.h_annexe_b"><?= tr('legal.cguapp.h_annexe_b') ?></h2>
+    <div data-i18n="legal.cguapp.body_annexe_b"><?= tr('legal.cguapp.body_annexe_b') ?></div>
   </div>
 </section>
 </main>
