@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../includes/env.php';
-require_once __DIR__ . '/../includes/supabase.php';
-require_once __DIR__ . '/../includes/i18n.php';
-loadEnv(__DIR__ . '/../.env');
+require_once __DIR__ . '/../../includes/env.php';
+require_once __DIR__ . '/../../includes/supabase.php';
+require_once __DIR__ . '/../../includes/i18n.php';
+loadEnv(__DIR__ . '/../../.env');
 $lang = initI18n();
 ?>
 <!DOCTYPE html>
@@ -10,8 +10,8 @@ $lang = initI18n();
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title><?= tr('meta.blog.title') ?></title>
-  <meta name="description" content="<?= tr('meta.blog.desc') ?>" data-i18n-meta="meta.blog.desc"/>
+  <title><?= tr('blog.wallbox.meta_title') ?></title>
+  <meta name="description" content="<?= tr('blog.wallbox.meta_desc') ?>" data-i18n-meta="blog.wallbox.meta_desc"/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png"/>
@@ -20,7 +20,21 @@ $lang = initI18n();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('meta.blog.title'),'desc'=>tr('meta.blog.desc')]); ?>
+  <meta name="keywords" content="prise renforcée vs wallbox, prise renforcée connectée prix, Spark 1 avis, recharge 3.7 kW maison suffisant"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Prise renforcée connectée vs wallbox 7,4 kW : quel est le vrai choix pour 80% des conducteurs de VE ?",
+    "description": "Pour la majorité des trajets quotidiens, la prise renforcée connectée est le choix le plus rationnel — voici pourquoi.",
+    "image": "https://sparklin.io/assets/images/spark1-render-hd.png",
+    "datePublished": "2026-08-12",
+    "author": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
+    "publisher": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
+    "mainEntityOfPage": {"@type": "WebPage", "@id": "https://sparklin.io/blog/prise-renforcee-connectee-vs-wallbox-comparatif-2026/"}
+  }
+  </script>
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('blog.wallbox.meta_title'),'desc'=>tr('blog.wallbox.meta_desc'),'type'=>'article']); ?>
 </head>
 <body>
 <nav class="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:stretch;justify-content:space-between;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 clamp(20px,5vw,80px);height:64px;">
@@ -30,10 +44,8 @@ $lang = initI18n();
     <a href="/" style="display:flex;align-items:center;flex-shrink:0;"><svg style="height:52px;width:auto;display:block;" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 242.5 78.07"><defs><style>.cls-1{fill:#ff6f49;}.cls-2{fill:#ed6e4f;}</style></defs><path class="cls-1" d="M182,13a4.74,4.74,0,1,0,4.74,4.74A4.74,4.74,0,0,0,182,13Z"/><path class="cls-2" d="M50.88,26.79h6.94L58,29.55A12.54,12.54,0,0,1,72.77,28c3.75,2.3,6,6.45,6,11.56a14.15,14.15,0,0,1-1.6,6.81,12.36,12.36,0,0,1-19,3.42V65.06H50.88Zm7.35,12.76c0,4,2.73,6.89,6.48,6.89s6.48-2.94,6.48-6.89-2.73-6.89-6.48-6.89S58.23,35.59,58.23,39.55Z"/><path class="cls-2" d="M83.26,32.76a12,12,0,0,1,10.8-6.43,11.79,11.79,0,0,1,8.36,3.27l.18-2.73h6.92V52.3h-6.13l-.53-2.73a13.94,13.94,0,0,1-8.8,3.24,11.9,11.9,0,0,1-6.38-1.71c-3.75-2.27-6.05-6.42-6.05-11.53A14.11,14.11,0,0,1,83.26,32.76ZM95.71,46.49c3.76,0,6.49-2.94,6.49-6.92s-2.73-6.86-6.49-6.86-6.48,3-6.48,6.86S92,46.49,95.71,46.49Zm6.46-5.16"/><path class="cls-2" d="M113.77,52.3V26.79h6.43l.35,3.65a8.76,8.76,0,0,1,7.66-4.16,12.78,12.78,0,0,1,3.42.51l-1,6.35a9.23,9.23,0,0,0-2.91-.48c-4,0-6.59,3-6.59,8.39V52.3Z"/><path class="cls-2" d="M134.8,52.3V14h7.35V37.25a43.48,43.48,0,0,1,3.7-4.75l5-5.71h8L149,38.25l11.64,14h-9l-7.3-8.62-2.22,2.6v6Z"/><path class="cls-2" d="M171.9,13V52.3h-7.35V13Z"/><path class="cls-2" d="M192.24,52.3V26.79h6.43L199,29.9a10.6,10.6,0,0,1,8.24-3.62c5.94,0,9.77,4.13,9.77,11.15V52.3h-7.38V38.86c0-4.14-1.55-6.2-4.64-6.2s-5.38,2.45-5.38,6.71V52.3Z"/><path class="cls-2" d="M25.49,49.37,29,43.76a32.43,32.43,0,0,0,4.1,2.34,8.12,8.12,0,0,0,3.35.87,3.06,3.06,0,0,0,1.84-.52A1.57,1.57,0,0,0,39,45.13a2.16,2.16,0,0,0-1.3-1.89,30.71,30.71,0,0,0-3-1.42c-1.21-.5-2.42-1.06-3.64-1.69A9.68,9.68,0,0,1,28,37.68a5.91,5.91,0,0,1-1.23-3.88,6.68,6.68,0,0,1,2.6-5.4c1.73-1.41,4.19-2.12,7.36-2.12a22.14,22.14,0,0,1,4.9.58,15.38,15.38,0,0,1,4.69,1.88L43,34.4a12.29,12.29,0,0,0-3-1.33A10.46,10.46,0,0,0,37,32.49a4.79,4.79,0,0,0-1.59.29,1.15,1.15,0,0,0-.87,1.15,1.82,1.82,0,0,0,1.2,1.58,28.88,28.88,0,0,0,2.86,1.27c1.19.46,2.41,1,3.67,1.64a9.89,9.89,0,0,1,3.2,2.51,6.18,6.18,0,0,1,1.3,4.1,7,7,0,0,1-1.39,4.37,8.89,8.89,0,0,1-3.73,2.8,13.15,13.15,0,0,1-5.14,1A17.86,17.86,0,0,1,31,52.24,18.87,18.87,0,0,1,25.49,49.37Z"/><path class="cls-2" d="M182,27.54a9.76,9.76,0,0,1-3.67-.73V52.3h7.35V26.81A9.78,9.78,0,0,1,182,27.54Z"/></svg></a>
   </div>
 
-  <!-- MEGA NAV — all items in one flex container with align-items:stretch -->
+  <!-- MEGA NAV -->
   <div class="nav-mega" id="main-mega-nav" style="display:flex;align-items:center;height:100%;gap:0;">
-
-    <!-- GÉRER VOS BORNES -->
     <div class="nav-mega-item" id="nav-gerer" style="position:relative;display:flex;align-items:center;">
       <button class="nav-mega-trigger" onclick="toggleMega('nav-gerer')" style="padding:0 16px;font-size:15px;font-weight:500;color:var(--text-mid);border:none;background:none;cursor:pointer;white-space:nowrap;display:flex;align-items:center;font-family:var(--font-body);border-bottom:2px solid transparent;transition:color .2s,border-color .2s;" data-i18n="nav.manage"><?= tr('nav.manage') ?></button>
       <div class="nav-mega-panel" style="display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);border-radius:0 0 16px 16px;box-shadow:0 16px 48px rgba(26,26,46,.1);padding:16px;z-index:300;min-width:220px;flex-direction:column;gap:2px;">
@@ -42,50 +54,38 @@ $lang = initI18n();
           <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);">Spark Pilot</div><div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.pilot_sub') ?></div></div>
         </a>
         <a href="/app/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
           <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);">Sparklin App</div><div style="font-size:12px;color:var(--text-light);margin-top:1px;">iOS &amp; Android</div></div>
         </a>
       </div>
     </div>
-
-    <!-- NOS BORNES -->
     <div class="nav-mega-item" id="nav-bornes" style="position:relative;display:flex;align-items:center;">
       <button class="nav-mega-trigger" onclick="toggleMega('nav-bornes')" style="padding:0 16px;font-size:15px;font-weight:500;color:var(--text-mid);border:none;background:none;cursor:pointer;white-space:nowrap;display:flex;align-items:center;font-family:var(--font-body);border-bottom:2px solid transparent;transition:color .2s,border-color .2s;" data-i18n="nav.solutions"><?= tr('nav.solutions') ?></button>
       <div class="nav-mega-panel" style="display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);border-radius:0 0 16px 16px;box-shadow:0 16px 48px rgba(26,26,46,.1);padding:16px;z-index:300;min-width:220px;flex-direction:column;gap:2px;">
         <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);padding:4px 10px 8px;display:block;"><?= t('nav.range') ?></span>
         <a href="/spark-1/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
           <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);">Spark 1</div><div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.s1_sub') ?></div></div>
         </a>
         <a href="/spark-plus/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
           <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);">Spark Plus</div><div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.splus_sub') ?></div></div>
         </a>
         <a href="/spark-go-e/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
           <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);">Spark x go-e</div><div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.goe_sub') ?></div></div>
         </a>
       </div>
     </div>
-
-    <!-- CAS CLIENTS -->
     <div class="nav-mega-item" id="nav-cas" style="position:relative;display:flex;align-items:center;">
       <button class="nav-mega-trigger" onclick="toggleMega('nav-cas')" style="padding:0 16px;font-size:15px;font-weight:500;color:var(--text-mid);border:none;background:none;cursor:pointer;white-space:nowrap;display:flex;align-items:center;font-family:var(--font-body);border-bottom:2px solid transparent;transition:color .2s,border-color .2s;" data-i18n="nav.cases"><?= tr('nav.cases') ?></button>
       <div class="nav-mega-panel" style="display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);border-radius:0 0 16px 16px;box-shadow:0 16px 48px rgba(26,26,46,.1);padding:16px;z-index:300;min-width:240px;flex-direction:column;gap:2px;">
         <a href="/cas/pme/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
           <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);" data-i18n="cas.pme.title"><?= tr('cas.pme.title') ?></div><div style="font-size:12px;color:var(--text-light);margin-top:1px;" data-i18n="cas.pme.sub"><?= tr('cas.pme.sub') ?></div></div>
         </a>
         <a href="/cas/collaborateurs/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
           <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);" data-i18n="cas.collab.title"><?= tr('cas.collab.title') ?></div><div style="font-size:12px;color:var(--text-light);margin-top:1px;" data-i18n="cas.collab.sub"><?= tr('cas.collab.sub') ?></div></div>
         </a>
         <a href="/cas/hotel/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
           <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);" data-i18n="cas.hotel.title"><?= tr('cas.hotel.title') ?></div><div style="font-size:12px;color:var(--text-light);margin-top:1px;" data-i18n="cas.hotel.sub"><?= tr('cas.hotel.sub') ?></div></div>
         </a>
         <a href="/cas/camping/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
           <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);"><?= t('footer.lnk.camping') ?></div><div style="font-size:12px;color:var(--text-light);margin-top:1px;" data-i18n="cas.camping.sub"><?= tr('cas.camping.sub') ?></div></div>
         </a>
         <a href="/cas/collectivite/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
@@ -93,63 +93,38 @@ $lang = initI18n();
         </a>
       </div>
     </div>
-
-    <!-- RESSOURCES -->
     <div class="nav-mega-item" id="nav-ressources" style="position:relative;display:flex;align-items:center;">
       <button class="nav-mega-trigger" onclick="toggleMega('nav-ressources')" style="padding:0 16px;font-size:15px;font-weight:500;color:var(--text-mid);border:none;background:none;cursor:pointer;white-space:nowrap;display:flex;align-items:center;font-family:var(--font-body);border-bottom:2px solid transparent;transition:color .2s,border-color .2s;" data-i18n="nav.resources"><?= tr('nav.resources') ?></button>
       <div class="nav-mega-panel" style="display:none;flex-direction:column;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);border-radius:0 0 16px 16px;box-shadow:0 16px 48px rgba(26,26,46,.1);padding:8px;min-width:260px;z-index:500;">
         <a href="/blog/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          <div>
-            <div style="font-size:14.5px;font-weight:500;color:var(--text-dark);"><?= t('blog.label') ?></div>
-            <div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.d.blog.sub') ?></div>
-          </div>
+          <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);"><?= t('blog.label') ?></div><div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.d.blog.sub') ?></div></div>
         </a>
         <a href="/livre-blanc/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
-          <div>
-            <div style="font-size:14.5px;font-weight:500;color:var(--text-dark);"><?= t('footer.lnk.lb') ?> <span style="background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:100px;vertical-align:middle;" data-i18n="footer.new"><?= tr('footer.new') ?></span></div>
-            <div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.lb_sub') ?></div>
-          </div>
+          <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);"><?= t('footer.lnk.lb') ?> <span style="background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:100px;vertical-align:middle;" data-i18n="footer.new"><?= tr('footer.new') ?></span></div><div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.lb_sub') ?></div></div>
         </a>
         <a href="/support/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
-          <div>
-            <div style="font-size:14.5px;font-weight:500;color:var(--text-dark);"><?= t('footer.lnk.support') ?></div>
-            <div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.d.support.sub') ?></div>
-          </div>
+          <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);"><?= t('footer.lnk.support') ?></div><div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.d.support.sub') ?></div></div>
         </a>
         <a href="/evenements/" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:background .15s;" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'">
-          
-          <div>
-            <div style="font-size:14.5px;font-weight:500;color:var(--text-dark);"><?= t('footer.lnk.events') ?></div>
-            <div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.d.events.sub') ?></div>
-          </div>
+          <div><div style="font-size:14.5px;font-weight:500;color:var(--text-dark);"><?= t('footer.lnk.events') ?></div><div style="font-size:12px;color:var(--text-light);margin-top:1px;"><?= t('nav.d.events.sub') ?></div></div>
         </a>
       </div>
     </div>
-
-    <!-- À PROPOS — intégré dans nav-mega comme les autres items -->
     <div class="nav-mega-item" style="position:relative;display:flex;align-items:center;">
       <a href="/a-propos/" data-i18n="nav.about" class="nav-desktop-only" style="padding:0 16px;font-size:15px;font-weight:500;color:var(--text-mid);text-decoration:none;white-space:nowrap;display:flex;align-items:center;font-family:var(--font-body);border-bottom:2px solid transparent;transition:color .2s,border-color .2s;"><?= t('nav.about') ?></a>
     </div>
-
   </div>
 
   <!-- RIGHT: CTA + LANG -->
   <div class="nav-desktop-only" style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
     <a href="/contact/" style="background:var(--orange);color:#fff;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;box-shadow:0 4px 16px rgba(232,86,58,.25);transition:background .2s;" onmouseover="this.style.background='var(--orange-light)'" onmouseout="this.style.background='var(--orange)'" data-i18n="nav.cta"><?= tr('nav.cta') ?></a>
-
-    <!-- LANG DROPDOWN -->
     <div class="sk-lang-wrap" id="sk-lang-wrap" style="position:relative;flex-shrink:0;">
-      <button class="sk-lang-trigger" id="sk-lang-trigger" onclick="toggleLangMenu(event)"
-        aria-haspopup="listbox" aria-expanded="false"
-        style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:none;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--text-mid);transition:all .15s;white-space:nowrap;">
+      <button class="sk-lang-trigger" id="sk-lang-trigger" onclick="toggleLangMenu(event)" aria-haspopup="listbox" aria-expanded="false" style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:none;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--text-mid);transition:all .15s;white-space:nowrap;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         <span id="sk-lang-label"><?= strtoupper(lang()) ?></span>
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" id="sk-lang-caret" style="transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <div class="sk-lang-menu" id="sk-lang-menu" role="listbox"
-        style="display:none;position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 32px rgba(26,26,46,.1);min-width:170px;padding:5px;z-index:999;overflow:hidden;">
+      <div class="sk-lang-menu" id="sk-lang-menu" role="listbox" style="display:none;position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 32px rgba(26,26,46,.1);min-width:170px;padding:5px;z-index:999;overflow:hidden;">
         <a class="sk-lang-opt" data-lang="fr"<?= lang()==='fr'?' style="background:var(--bg-off);font-weight:700;color:var(--orange);border-radius:6px;"':'' ?> href="?lang=fr" title="Français"><span>Français</span></a>
         <a class="sk-lang-opt" data-lang="en"<?= lang()==='en'?' style="background:var(--bg-off);font-weight:700;color:var(--orange);border-radius:6px;"':'' ?> href="?lang=en" title="English"><span>English</span></a>
         <a class="sk-lang-opt" data-lang="de"<?= lang()==='de'?' style="background:var(--bg-off);font-weight:700;color:var(--orange);border-radius:6px;"':'' ?> href="?lang=de" title="Deutsch"><span>Deutsch</span></a>
@@ -161,65 +136,30 @@ $lang = initI18n();
     </div>
   </div>
 
-  <!-- MOBILE HAMBURGER -->
   <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
-<!-- MOBILE DRAWER -->
 <div class="nav-mobile-drawer" id="nav-mobile-drawer">
-
   <div class="nav-drawer-section">
-    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)">
-      <?= t('nav.manage') ?> <span class="arrow">›</span>
-    </button>
-    <div class="nav-drawer-links">
-      <a href="/spark-pilot/"><?= t('nav.dr_pilot') ?></a>
-      <a href="/app/"><?= t('nav.dr_app') ?></a>
-    </div>
+    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)"><?= t('nav.manage') ?> <span class="arrow">›</span></button>
+    <div class="nav-drawer-links"><a href="/spark-pilot/"><?= t('nav.dr_pilot') ?></a><a href="/app/"><?= t('nav.dr_app') ?></a></div>
   </div>
-
   <div class="nav-drawer-section">
-    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)">
-      <?= t('nav.solutions') ?> <span class="arrow">›</span>
-    </button>
-    <div class="nav-drawer-links">
-      <a href="/spark-1/"><?= t('nav.dr_s1') ?></a>
-      <a href="/spark-plus/"><?= t('nav.dr_splus') ?></a>
-      <a href="/spark-go-e/"><?= t('nav.dr_goe') ?></a>
-    </div>
+    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)"><?= t('nav.solutions') ?> <span class="arrow">›</span></button>
+    <div class="nav-drawer-links"><a href="/spark-1/"><?= t('nav.dr_s1') ?></a><a href="/spark-plus/"><?= t('nav.dr_splus') ?></a><a href="/spark-go-e/"><?= t('nav.dr_goe') ?></a></div>
   </div>
-
   <div class="nav-drawer-section">
-    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)">
-      <?= t('nav.cases') ?> <span class="arrow">›</span>
-    </button>
-    <div class="nav-drawer-links">
-      <a href="/cas/pme/"><?= t('nav.dr_pme') ?></a>
-      <a href="/cas/collaborateurs/"><?= t('nav.dr_collab') ?></a>
-      <a href="/cas/hotel/"><?= t('footer.lnk.hotel') ?></a>
-      <a href="/cas/camping/"><?= t('footer.lnk.camping') ?></a>
-      <a href="/cas/collectivite/"><?= t('nav.dr_coll') ?></a>
-    </div>
+    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)"><?= t('nav.cases') ?> <span class="arrow">›</span></button>
+    <div class="nav-drawer-links"><a href="/cas/pme/"><?= t('nav.dr_pme') ?></a><a href="/cas/collaborateurs/"><?= t('nav.dr_collab') ?></a><a href="/cas/hotel/"><?= t('footer.lnk.hotel') ?></a><a href="/cas/camping/"><?= t('footer.lnk.camping') ?></a><a href="/cas/collectivite/"><?= t('nav.dr_coll') ?></a></div>
   </div>
-
   <div class="nav-drawer-section">
-    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)">
-      <?= t('nav.resources') ?> <span class="arrow">›</span>
-    </button>
-    <div class="nav-drawer-links">
-      <a href="/blog/"><?= t('blog.label') ?></a>
-      <a href="/livre-blanc/"><?= t('nav.dr_lb') ?></a>
-      <a href="/support/"><?= t('nav.dr_support') ?></a>
-      <a href="/evenements/"><?= t('footer.lnk.events') ?></a>
-    </div>
+    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)"><?= t('nav.resources') ?> <span class="arrow">›</span></button>
+    <div class="nav-drawer-links"><a href="/blog/"><?= t('blog.label') ?></a><a href="/livre-blanc/"><?= t('nav.dr_lb') ?></a><a href="/support/"><?= t('nav.dr_support') ?></a><a href="/evenements/"><?= t('footer.lnk.events') ?></a></div>
   </div>
-
   <a class="nav-drawer-link" href="/a-propos/"><?= t('nav.about') ?></a>
   <div class="nav-drawer-section">
-    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)">
-      <?= t('nav.language') ?> <span class="arrow">›</span>
-    </button>
+    <button class="nav-drawer-trigger" onclick="toggleDrawerSection(this)"><?= t('nav.language') ?> <span class="arrow">›</span></button>
     <div class="nav-drawer-links">
       <a href="?lang=fr" data-lang="fr" class="nav-drawer-lang-opt<?= lang()==='fr'?' active':'' ?>"><span>🇫🇷</span><span>Français</span></a>
       <a href="?lang=en" data-lang="en" class="nav-drawer-lang-opt<?= lang()==='en'?' active':'' ?>"><span>🇬🇧</span><span>English</span></a>
@@ -230,107 +170,55 @@ $lang = initI18n();
       <a href="?lang=id" data-lang="id" class="nav-drawer-lang-opt<?= lang()==='id'?' active':'' ?>"><span>🇮🇩</span><span>Bahasa Indonesia</span></a>
     </div>
   </div>
-
-
-  <div class="nav-drawer-cta">
-    <a href="/contact/" class="btn-primary"><?= t('nav.cta') ?> →</a>
-  </div>
-
+  <div class="nav-drawer-cta"><a href="/contact/" class="btn-primary"><?= t('nav.cta') ?> →</a></div>
 </div>
+
 <main style="padding-top:64px;">
-<section style="padding:80px clamp(20px,5vw,80px);">
-  <div class="sk-wrap">
-    <span class="section-label">Blog</span>
-    <h1 style="font-family:var(--font-display);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:800;color:var(--dark);margin-bottom:48px;" data-i18n="blog.h1"><?= tr('blog.h1') ?></h1>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;">
-      <a href="/blog/load-balancing-recharge-electrique/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;background:linear-gradient(135deg,var(--dark),#2d2d48);display:flex;align-items:center;justify-content:center;font-size:48px;">⚡</div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat1"><?= tr('blog.cat1') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art1.title"><?= tr('blog.art1.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art1.excerpt"><?= tr('blog.art1.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/irve-reglementation-lom-2024/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;background:linear-gradient(135deg,#2d4a6b,#1a2d44);display:flex;align-items:center;justify-content:center;font-size:48px;">📋</div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat2"><?= tr('blog.cat2') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art2.title"><?= tr('blog.art2.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art2.excerpt"><?= tr('blog.art2.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/remboursement-recharge-domicile-urssaf/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;background:linear-gradient(135deg,#2d4a2d,#1a3d1a);display:flex;align-items:center;justify-content:center;font-size:48px;">💰</div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat3"><?= tr('blog.cat3') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art3.title"><?= tr('blog.art3.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art3.excerpt"><?= tr('blog.art3.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/gireve-interoperabilite-bornes/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;background:linear-gradient(135deg,#4a2d6b,#2d1a44);display:flex;align-items:center;justify-content:center;font-size:48px;">🔗</div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat4"><?= tr('blog.cat4') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art4.title"><?= tr('blog.art4.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art4.excerpt"><?= tr('blog.art4.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/loi-lom-2026-obligations-entreprise-sanctions/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;overflow:hidden;position:relative;background:#1a1a2e;">
-          <img src="/assets/images/parking-right-web.png" alt="Parking d'entreprise équipé de bornes conformes à la Loi LOM" style="width:100%;height:100%;object-fit:cover;opacity:.7;"/>
-        </div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat5"><?= tr('blog.cat5') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art5.title"><?= tr('blog.art5.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art5.excerpt"><?= tr('blog.art5.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/load-balancing-irve-economies-facture-electrique/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;overflow:hidden;position:relative;background:#1a1a2e;">
-          <img src="/assets/images/parking-left-web.png" alt="Parking 80 places équipé de 20 bornes Spark Plus pilotées" style="width:100%;height:100%;object-fit:cover;opacity:.7;"/>
-        </div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat6"><?= tr('blog.cat6') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art6.title"><?= tr('blog.art6.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art6.excerpt"><?= tr('blog.art6.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/remboursement-recharge-domicile-salaries-urssaf-2026/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;overflow:hidden;position:relative;background:#1a1a2e;">
-          <img src="/assets/images/spark1-potelet-hd.jpg" alt="Salarié rechargeant à domicile avec une prise connectée Sparklin" style="width:100%;height:100%;object-fit:cover;opacity:.7;"/>
-        </div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat7"><?= tr('blog.cat7') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art7.title"><?= tr('blog.art7.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art7.excerpt"><?= tr('blog.art7.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/prise-renforcee-connectee-vs-wallbox-comparatif-2026/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;overflow:hidden;position:relative;background:#1a1a2e;">
-          <img src="/assets/images/spark1-render-hd.png" alt="Comparatif prise renforcée connectée Spark 1 et wallbox Spark Plus" style="width:100%;height:100%;object-fit:cover;opacity:.7;"/>
-        </div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat8"><?= tr('blog.cat8') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art8.title"><?= tr('blog.art8.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art8.excerpt"><?= tr('blog.art8.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
+<div style="height:340px;background:#1a1a2e;display:flex;align-items:flex-end;padding:0;position:relative;overflow:hidden;">
+  <img src="/assets/images/spark1-render-hd.png" alt="<?= t('blog.wallbox.img_hero_alt') ?>" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;"/>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,26,46,.2) 0%,rgba(26,26,46,.85) 100%);"></div>
+</div>
+<article style="padding:60px clamp(20px,5vw,80px);">
+  <div class="sk-wrap sk-wrap--narrow">
+    <div style="font-size:12px;font-weight:600;color:var(--text-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;" data-i18n="blog.wallbox.div1"><?= tr('blog.wallbox.div1') ?></div>
+
+    <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:20px;" data-i18n="blog.wallbox.h1"><?= tr('blog.wallbox.h1') ?></h1>
+    <div data-i18n="blog.wallbox.p_intro" style="margin-bottom:32px;"><?= tr('blog.wallbox.p_intro') ?></div>
+
+    <h2 id="calcul" data-i18n="blog.wallbox.h2_calcul"><?= tr('blog.wallbox.h2_calcul') ?></h2>
+    <div data-i18n="blog.wallbox.body_calcul"><?= tr('blog.wallbox.body_calcul') ?></div>
+
+    <h2 id="cout" data-i18n="blog.wallbox.h2_cout"><?= tr('blog.wallbox.h2_cout') ?></h2>
+    <div data-i18n="blog.wallbox.body_cout"><?= tr('blog.wallbox.body_cout') ?></div>
+
+    <figure style="margin:32px 0;">
+      <img src="/assets/images/spark1-potelet-hd.jpg" alt="<?= t('blog.wallbox.img_inline_alt') ?>" style="width:100%;border-radius:12px;display:block;"/>
+      <figcaption style="font-size:12px;color:var(--text-light);margin-top:8px;">La Spark 1, prise renforcée connectée, installée sur potelet à domicile.</figcaption>
+    </figure>
+
+    <h2 id="connectee" data-i18n="blog.wallbox.h2_connectee"><?= tr('blog.wallbox.h2_connectee') ?></h2>
+    <div data-i18n="blog.wallbox.body_connectee"><?= tr('blog.wallbox.body_connectee') ?></div>
+
+    <h2 id="profils" data-i18n="blog.wallbox.h2_profils"><?= tr('blog.wallbox.h2_profils') ?></h2>
+    <div data-i18n="blog.wallbox.body_profils"><?= tr('blog.wallbox.body_profils') ?></div>
+
+    <h2 id="installation" data-i18n="blog.wallbox.h2_installation"><?= tr('blog.wallbox.h2_installation') ?></h2>
+    <div data-i18n="blog.wallbox.body_installation"><?= tr('blog.wallbox.body_installation') ?></div>
+
+    <div style="background:var(--dark);border-radius:16px;padding:32px;margin-top:40px;text-align:center;">
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:800;color:#fff;margin-bottom:8px;" data-i18n="blog.wallbox.cta_title"><?= tr('blog.wallbox.cta_title') ?></div>
+      <p style="color:rgba(255,255,255,.6);font-size:14px;margin-bottom:20px;line-height:1.7;" data-i18n="blog.wallbox.cta_text"><?= tr('blog.wallbox.cta_text') ?></p>
+      <a href="/spark-1/" style="display:inline-block;background:var(--orange);color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;text-decoration:none;font-size:15px;" data-i18n="blog.wallbox.cta_btn"><?= tr('blog.wallbox.cta_btn') ?></a>
+    </div>
+
+    <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);">
+      <a href="/blog/" style="font-size:14px;color:var(--text-mid);text-decoration:none;font-weight:500;" data-i18n="blog.back"><?= tr('blog.back') ?></a>
     </div>
   </div>
-</section>
+</article>
 </main>
 <footer class="site-footer">
   <div class="footer-grid">
-
-    <!-- BRAND -->
     <div class="footer-brand">
       <a href="/" style="display:inline-block;margin-bottom:20px;"><svg style="height:48px;width:auto;display:block;" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 242.5 78.07"><defs><style>.cls-1{fill:#ff6f49;}.cls-2{fill:#ed6e4f;}</style></defs><path class="cls-1" d="M182,13a4.74,4.74,0,1,0,4.74,4.74A4.74,4.74,0,0,0,182,13Z"/><path class="cls-2" d="M50.88,26.79h6.94L58,29.55A12.54,12.54,0,0,1,72.77,28c3.75,2.3,6,6.45,6,11.56a14.15,14.15,0,0,1-1.6,6.81,12.36,12.36,0,0,1-19,3.42V65.06H50.88Zm7.35,12.76c0,4,2.73,6.89,6.48,6.89s6.48-2.94,6.48-6.89-2.73-6.89-6.48-6.89S58.23,35.59,58.23,39.55Z"/><path class="cls-2" d="M83.26,32.76a12,12,0,0,1,10.8-6.43,11.79,11.79,0,0,1,8.36,3.27l.18-2.73h6.92V52.3h-6.13l-.53-2.73a13.94,13.94,0,0,1-8.8,3.24,11.9,11.9,0,0,1-6.38-1.71c-3.75-2.27-6.05-6.42-6.05-11.53A14.11,14.11,0,0,1,83.26,32.76ZM95.71,46.49c3.76,0,6.49-2.94,6.49-6.92s-2.73-6.86-6.49-6.86-6.48,3-6.48,6.86S92,46.49,95.71,46.49Zm6.46-5.16"/><path class="cls-2" d="M113.77,52.3V26.79h6.43l.35,3.65a8.76,8.76,0,0,1,7.66-4.16,12.78,12.78,0,0,1,3.42.51l-1,6.35a9.23,9.23,0,0,0-2.91-.48c-4,0-6.59,3-6.59,8.39V52.3Z"/><path class="cls-2" d="M134.8,52.3V14h7.35V37.25a43.48,43.48,0,0,1,3.7-4.75l5-5.71h8L149,38.25l11.64,14h-9l-7.3-8.62-2.22,2.6v6Z"/><path class="cls-2" d="M171.9,13V52.3h-7.35V13Z"/><path class="cls-2" d="M192.24,52.3V26.79h6.43L199,29.9a10.6,10.6,0,0,1,8.24-3.62c5.94,0,9.77,4.13,9.77,11.15V52.3h-7.38V38.86c0-4.14-1.55-6.2-4.64-6.2s-5.38,2.45-5.38,6.71V52.3Z"/><path class="cls-2" d="M25.49,49.37,29,43.76a32.43,32.43,0,0,0,4.1,2.34,8.12,8.12,0,0,0,3.35.87,3.06,3.06,0,0,0,1.84-.52A1.57,1.57,0,0,0,39,45.13a2.16,2.16,0,0,0-1.3-1.89,30.71,30.71,0,0,0-3-1.42c-1.21-.5-2.42-1.06-3.64-1.69A9.68,9.68,0,0,1,28,37.68a5.91,5.91,0,0,1-1.23-3.88,6.68,6.68,0,0,1,2.6-5.4c1.73-1.41,4.19-2.12,7.36-2.12a22.14,22.14,0,0,1,4.9.58,15.38,15.38,0,0,1,4.69,1.88L43,34.4a12.29,12.29,0,0,0-3-1.33A10.46,10.46,0,0,0,37,32.49a4.79,4.79,0,0,0-1.59.29,1.15,1.15,0,0,0-.87,1.15,1.82,1.82,0,0,0,1.2,1.58,28.88,28.88,0,0,0,2.86,1.27c1.19.46,2.41,1,3.67,1.64a9.89,9.89,0,0,1,3.2,2.51,6.18,6.18,0,0,1,1.3,4.1,7,7,0,0,1-1.39,4.37,8.89,8.89,0,0,1-3.73,2.8,13.15,13.15,0,0,1-5.14,1A17.86,17.86,0,0,1,31,52.24,18.87,18.87,0,0,1,25.49,49.37Z"/><path class="cls-2" d="M182,27.54a9.76,9.76,0,0,1-3.67-.73V52.3h7.35V26.81A9.78,9.78,0,0,1,182,27.54Z"/></svg></a>
       <p data-i18n="footer.desc"><?= tr('footer.desc') ?></p>
@@ -341,14 +229,12 @@ $lang = initI18n();
         <a href="https://www.facebook.com/SparklinCharge/" class="footer-social-btn footer-social-orange" title="Facebook" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
       </div>
       <div class="sk-lang-wrap" id="sk-lang-wrap-footer" style="position:relative;margin-top:16px;">
-      <button onclick="toggleLangMenuFooter(event)"
-        style="display:flex;align-items:center;gap:6px;padding:6px 12px;background:none;border:1px solid rgba(255,255,255,.15);border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:rgba(255,255,255,.55);transition:all .15s;">
+      <button onclick="toggleLangMenuFooter(event)" style="display:flex;align-items:center;gap:6px;padding:6px 12px;background:none;border:1px solid rgba(255,255,255,.15);border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:rgba(255,255,255,.55);transition:all .15s;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         <span id="sk-lang-label-footer"><?= strtoupper(lang()) ?></span>
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" id="sk-lang-caret-footer" style="transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <div id="sk-lang-menu-footer" role="listbox"
-        style="display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 -8px 32px rgba(26,26,46,.15);min-width:180px;padding:5px;z-index:999;">
+      <div id="sk-lang-menu-footer" role="listbox" style="display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 -8px 32px rgba(26,26,46,.15);min-width:180px;padding:5px;z-index:999;">
       <button class="sk-lang-opt sk-lang-opt-dark" data-lang="fr"<?= lang()==='fr'?' style="background:rgba(255,255,255,.10);font-weight:700;color:#fff;"':'' ?> href="?lang=fr" title="Français"><span class="sk-lang-flag">🇫🇷</span><span>Français</span></button>
       <button class="sk-lang-opt sk-lang-opt-dark" data-lang="en"<?= lang()==='en'?' style="background:rgba(255,255,255,.10);font-weight:700;color:#fff;"':'' ?> href="?lang=en" title="English"><span class="sk-lang-flag">🇬🇧</span><span>English</span></button>
       <button class="sk-lang-opt sk-lang-opt-dark" data-lang="de"<?= lang()==='de'?' style="background:rgba(255,255,255,.10);font-weight:700;color:#fff;"':'' ?> href="?lang=de" title="Deutsch"><span class="sk-lang-flag">🇩🇪</span><span>Deutsch</span></button>
@@ -359,8 +245,6 @@ $lang = initI18n();
       </div>
     </div>
     </div>
-
-    <!-- COL 1 : Gérer vos bornes -->
     <div class="footer-col">
       <h4 data-i18n="footer.h1"><?= tr('footer.h1') ?></h4>
       <ul>
@@ -370,8 +254,6 @@ $lang = initI18n();
         <li><a href="https://setup.sparklin.io" data-i18n="footer.lnk.activate"><?= tr('footer.lnk.activate') ?></a></li>
       </ul>
     </div>
-
-    <!-- COL 2 : Solutions de recharge -->
     <div class="footer-col">
       <h4 data-i18n="footer.h2"><?= tr('footer.h2') ?></h4>
       <ul>
@@ -380,8 +262,6 @@ $lang = initI18n();
         <li><a href="/spark-go-e/">Spark x go-e — 7–22 kW</a></li>
       </ul>
     </div>
-
-    <!-- COL 3 : Cas clients -->
     <div class="footer-col">
       <h4 data-i18n="footer.h3"><?= tr('footer.h3') ?></h4>
       <ul>
@@ -392,8 +272,6 @@ $lang = initI18n();
         <li><a href="/cas/collectivite/" data-i18n="footer.lnk.coll"><?= tr('footer.lnk.coll') ?></a></li>
       </ul>
     </div>
-
-    <!-- COL 4 : Ressources -->
     <div class="footer-col">
       <h4 data-i18n="footer.h4"><?= tr('footer.h4') ?></h4>
       <ul>
@@ -406,9 +284,7 @@ $lang = initI18n();
         <li><a href="/evenements/" data-i18n="footer.lnk.events"><?= tr('footer.lnk.events') ?></a></li>
       </ul>
     </div>
-
   </div>
-
   <div class="footer-bottom">
     <span class="footer-bottom-left" data-i18n="footer.legal"><?= tr('footer.legal') ?></span>
     <nav class="footer-bottom-links">
@@ -424,7 +300,6 @@ $lang = initI18n();
 </footer>
 <script src="/assets/js/app.js"></script>
 <script src="/assets/js/sparklin-interconnect.js"></script>
-
 <script>
 (function() {
   function toggleMega(id) {
@@ -434,10 +309,8 @@ $lang = initI18n();
     if (!el) return;
     var panel = el.querySelector('.nav-mega-panel');
     var isOpen = panel && panel.style.display === 'flex';
-    // close all
     panels.forEach(function(p) { p.style.display = 'none'; });
     items.forEach(function(i)  { i.classList.remove('open'); });
-    // open if was closed
     if (!isOpen && panel) {
       panel.style.display = 'flex';
       el.classList.add('open');
@@ -445,32 +318,16 @@ $lang = initI18n();
   }
   document.addEventListener('click', function(e) {
     if (!e.target.closest || !e.target.closest('.nav-mega-item')) {
-      document.querySelectorAll('.nav-mega-panel').forEach(function(p) {
-        p.style.display = 'none';
-      });
-      document.querySelectorAll('.nav-mega-item').forEach(function(i) {
-        i.classList.remove('open');
-      });
+      document.querySelectorAll('.nav-mega-panel').forEach(function(p) { p.style.display = 'none'; });
+      document.querySelectorAll('.nav-mega-item').forEach(function(i) { i.classList.remove('open'); });
     }
   });
   window.toggleMega = toggleMega;
 })();
 </script>
-
-
-
-
-
-<!-- ══ CRISP LIVECHAT ══════════════════════════════════════════
-     Module: modules/addon/crisp
-     Website ID: 326a0f31-24a5-4709-9538-ff5f4aa65f71
-     ══════════════════════════════════════════════════════════ -->
 <script type="text/javascript">
-  // Ne se charge qu'apres consentement cookies (voir skCookieChoice / skCookieInit
-  // plus bas) : window.skLoadCrisp() est l'unique point d'entree, protege contre
-  // un double chargement.
   window.skLoadCrisp = function(){
-    if (window.$crisp) return; // deja charge
+    if (window.$crisp) return;
     window.$crisp=[];
     window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
     var d=document;
@@ -480,9 +337,6 @@ $lang = initI18n();
     d.getElementsByTagName("head")[0].appendChild(s);
   };
 </script>
-<!-- ══ /CRISP ════════════════════════════════════════════════ -->
-
-
 <script>
 function toggleMobileNav() {
   var btn = document.getElementById('nav-hamburger');
@@ -498,7 +352,6 @@ function toggleDrawerSection(trigger) {
   trigger.classList.toggle('open', !isOpen);
   links.classList.toggle('open', !isOpen);
 }
-// Close drawer on nav link click
 document.addEventListener('DOMContentLoaded', function() {
   var drawer = document.getElementById('nav-mobile-drawer');
   if (drawer) {
@@ -512,8 +365,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-
-<!-- ══ COOKIE BANNER ══ -->
 <div id="sk-cookie-banner" aria-live="polite" role="region" aria-label="Politique de cookies" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#FFFFFF;border-top:1px solid #E8E6E0;box-shadow:0 -4px 24px rgba(26,26,46,0.08);padding:14px clamp(16px,4vw,60px);font-family:'Wix Madefor Text','DM Sans',system-ui,sans-serif;animation:skCookieIn .3s ease-out;">
   <div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;">
     <p style="margin:0;font-size:13px;color:#4A4A6A;line-height:1.5;flex:1;min-width:240px;">
@@ -530,70 +381,6 @@ document.addEventListener('DOMContentLoaded', function() {
 @keyframes skCookieIn { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
 #sk-cookie-reject:hover { border-color:#4A4A6A; color:#1A1A2E; }
 #sk-cookie-accept:hover { background:#FF6B4A; }
-
-/* ── SPECIFIC FIXES (injected corrections) ───────────────────── */
-
-/* HOME — Spark Pilot net-feats: 1 col on mobile */
-@media (max-width: 640px) {
-  .home-net-feats { grid-template-columns: 1fr !important; }
-  .home-net-feat {
-    padding: 20px !important;
-    display: flex !important;
-    gap: 14px !important;
-    align-items: flex-start !important;
-  }
-  .home-net-feat > div:first-child { flex-shrink: 0; }
-}
-
-/* APP — Fonctionnalités: 1 col on mobile */
-@media (max-width: 640px) {
-  .app-feats-grid { grid-template-columns: 1fr !important; }
-}
-@media (max-width: 900px) {
-  .app-feats-grid { grid-template-columns: 1fr 1fr !important; }
-}
-
-/* GO-E — Deux versions: 1 col on mobile */
-@media (max-width: 640px) {
-  .goe-versions-grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-    max-width: 100% !important;
-  }
-}
-
-/* CONTACT — Mobile layout */
-@media (max-width: 900px) {
-  .contact-layout {
-    grid-template-columns: 1fr !important;
-    gap: 40px !important;
-  }
-  /* Sticky panel becomes normal flow */
-  .contact-layout > div:last-child > div[style*="sticky"] {
-    position: static !important;
-  }
-}
-@media (max-width: 640px) {
-  .contact-layout { gap: 32px !important; }
-  .contact-form-row {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-  /* Form fields full width */
-  .contact-layout input,
-  .contact-layout select,
-  .contact-layout textarea,
-  .contact-layout button[type="submit"] {
-    width: 100% !important;
-    box-sizing: border-box !important;
-    font-size: 16px !important; /* prevents iOS zoom on focus */
-  }
-  .contact-layout button[type="submit"] {
-    padding: 16px !important;
-    font-size: 16px !important;
-  }
-}
-
 </style>
 <script>
 (function(){
@@ -609,7 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(function(){ banner.style.display = 'none'; }, 240);
     }
     if (accepted) {
-      // Ici : activer analytique (GA, etc.) si besoin
       if (window.skLoadCrisp) window.skLoadCrisp();
     }
   }
@@ -618,12 +404,10 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
       var consent = localStorage.getItem(COOKIE_KEY);
       if (consent === 'accepted' && window.skLoadCrisp) window.skLoadCrisp();
-      if (consent) return; // déjà répondu
+      if (consent) return;
     } catch(e){}
     var banner = document.getElementById('sk-cookie-banner');
-    if (banner) {
-      banner.style.display = 'block';
-    }
+    if (banner) { banner.style.display = 'block'; }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function(){ setTimeout(skCookieInit, 800); });
