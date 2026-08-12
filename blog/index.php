@@ -2,8 +2,10 @@
 require_once __DIR__ . '/../includes/env.php';
 require_once __DIR__ . '/../includes/supabase.php';
 require_once __DIR__ . '/../includes/i18n.php';
+require_once __DIR__ . '/../includes/content.php';
 loadEnv(__DIR__ . '/../.env');
 $lang = initI18n();
+$skPress = getPressMentions();
 ?>
 <!DOCTYPE html>
 <html lang="<?= lang() ?>">
@@ -326,6 +328,29 @@ $lang = initI18n();
     </div>
   </div>
 </section>
+
+<?php if (!empty($skPress)): ?>
+<section style="padding:0 clamp(20px,5vw,80px) 80px;">
+  <div class="sk-wrap" style="border-top:1px solid var(--border);padding-top:56px;">
+    <span class="section-label" data-i18n="blog.press.eyebrow"><?= tr('blog.press.eyebrow') ?></span>
+    <h2 style="font-family:var(--font-display);font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;color:var(--dark);margin-bottom:12px;" data-i18n="blog.press.title"><?= tr('blog.press.title') ?></h2>
+    <p style="font-size:14px;color:var(--text-mid);margin-bottom:28px;max-width:560px;" data-i18n="blog.press.desc"><?= tr('blog.press.desc') ?></p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <?php foreach ($skPress as $p): ?>
+      <a href="<?= htmlspecialchars($p['url'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;background:#fff;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.borderColor='var(--orange)';this.style.boxShadow='0 4px 16px rgba(26,26,46,.06)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow=''">
+        <div style="min-width:0;">
+          <div style="font-size:14px;font-weight:600;color:var(--dark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><?= htmlspecialchars($p['title'], ENT_QUOTES, 'UTF-8') ?></div>
+          <div style="font-size:12px;color:var(--text-light);margin-top:2px;">
+            <?= htmlspecialchars($p['source_name'], ENT_QUOTES, 'UTF-8') ?><?php if (!empty($p['published_label'])): ?> · <?= htmlspecialchars($p['published_label'], ENT_QUOTES, 'UTF-8') ?><?php endif; ?>
+          </div>
+        </div>
+        <span style="flex-shrink:0;font-size:13px;font-weight:600;color:var(--orange);white-space:nowrap;">Lire l'article →</span>
+      </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
 </main>
 <footer class="site-footer">
   <div class="footer-grid">

@@ -2,8 +2,11 @@
 require_once __DIR__ . '/../includes/env.php';
 require_once __DIR__ . '/../includes/supabase.php';
 require_once __DIR__ . '/../includes/i18n.php';
+require_once __DIR__ . '/../includes/content.php';
 loadEnv(__DIR__ . '/../.env');
 $lang = initI18n();
+$skUpcomingEvents = getEvents('upcoming');
+$skPastEvents     = getEvents('past');
 ?>
 <!DOCTYPE html>
 <html lang="<?= lang() ?>">
@@ -273,13 +276,24 @@ $lang = initI18n();
 
     <div style="display:flex;flex-direction:column;gap:20px;">
 
-      <!-- Aucun salon confirme pour le moment : la precedente entree (Power To Drive
-           Munich, annoncee 15-17 sept. 2026) affichait des dates fausses pour un
-           salon dont l'edition 2026 s'est deja tenue (23-25 juin) — retiree plutot
-           que corrigee, faute de confirmation d'une reelle participation Sparklin. ── -->
+      <?php if (empty($skUpcomingEvents)): ?>
+      <!-- Aucun evenement a venir n'est actuellement enregistre en base (gere depuis
+           l'onglet "Evenements" de l'admin) : on affiche le message d'attente par
+           defaut plutot qu'une date non confirmee. -->
       <div style="text-align:center;padding:56px 32px;border:1.5px dashed var(--border-dark);border-radius:16px;">
         <p style="font-size:15px;color:var(--text-mid);line-height:1.7;max-width:440px;margin:0 auto;" data-i18n="events.none"><?= tr('events.none') ?></p>
       </div>
+      <?php else: foreach ($skUpcomingEvents as $ev): ?>
+      <div style="border:1px solid var(--border);border-radius:16px;padding:32px;display:flex;gap:20px;align-items:flex-start;">
+        <div style="width:52px;height:52px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;background:<?= htmlspecialchars($ev['icon_gradient'] ?? '', ENT_QUOTES, 'UTF-8') ?>;"><?= htmlspecialchars($ev['icon'] ?? '⚡', ENT_QUOTES, 'UTF-8') ?></div>
+        <div style="flex:1;">
+          <?php if (!empty($ev['badge'])): ?><span class="ev-past-badge"><?= htmlspecialchars($ev['badge'], ENT_QUOTES, 'UTF-8') ?></span><?php endif; ?>
+          <div class="ev-past-name" style="margin-top:8px;"><?= htmlspecialchars($ev['title'], ENT_QUOTES, 'UTF-8') ?></div>
+          <?php if (!empty($ev['description'])): ?><p style="font-size:14px;color:var(--text-mid);line-height:1.7;margin-top:8px;"><?= htmlspecialchars($ev['description'], ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
+          <?php if (!empty($ev['link_url'])): ?><a href="<?= htmlspecialchars($ev['link_url'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;color:var(--orange);font-weight:600;font-size:14px;text-decoration:none;"><?= htmlspecialchars($ev['link_label'] ?: 'En savoir plus', ENT_QUOTES, 'UTF-8') ?> →</a><?php endif; ?>
+        </div>
+      </div>
+      <?php endforeach; endif; ?>
 
     </div>
   </div>
@@ -294,56 +308,25 @@ $lang = initI18n();
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
 
-      <!-- Salon des Maires 2025 -->
+      <?php foreach ($skPastEvents as $ev): ?>
       <div class="ev-past-card">
         <div class="ev-past-top">
           <div class="ev-past-icon-wrap">
-            <div class="ev-past-icon" style="background:linear-gradient(135deg,#2E4057,#4A6FA5);">🏛️</div>
+            <div class="ev-past-icon" style="background:<?= htmlspecialchars($ev['icon_gradient'] ?? '', ENT_QUOTES, 'UTF-8') ?>;"><?= htmlspecialchars($ev['icon'] ?? '⚡', ENT_QUOTES, 'UTF-8') ?></div>
           </div>
-          <span class="ev-past-badge">Nov. 2025</span>
+          <?php if (!empty($ev['badge'])): ?><span class="ev-past-badge"><?= htmlspecialchars($ev['badge'], ENT_QUOTES, 'UTF-8') ?></span><?php endif; ?>
         </div>
-        <div class="ev-past-name" data-i18n="events.maires"><?= tr('events.maires') ?></div>
-        <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;" data-i18n="events.maires.desc"><?= t('events.maires.desc') ?></p>
+        <div class="ev-past-name"><?= htmlspecialchars($ev['title'], ENT_QUOTES, 'UTF-8') ?></div>
+        <?php if (!empty($ev['description'])): ?><p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;"><?= htmlspecialchars($ev['description'], ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
+        <?php if (!empty($ev['highlights'])): ?>
         <ul class="ev-li">
-          <li class="ev-result" data-i18n="events.maires.r1"><?= t('events.maires.r1') ?></li>
-          <li class="ev-result" data-i18n="events.maires.r2"><?= t('events.maires.r2') ?></li>
-          <li class="ev-result" data-i18n="events.maires.r3"><?= t('events.maires.r3') ?></li>
+          <?php foreach ($ev['highlights'] as $h): ?>
+          <li class="ev-result"><?= htmlspecialchars($h, ENT_QUOTES, 'UTF-8') ?></li>
+          <?php endforeach; ?>
         </ul>
+        <?php endif; ?>
       </div>
-
-      <!-- Salon Environnement de Travail & Achats 2026 -->
-      <div class="ev-past-card">
-        <div class="ev-past-top">
-          <div class="ev-past-icon-wrap">
-            <div class="ev-past-icon" style="background:linear-gradient(135deg,#1A6B3A,#2E9B5F);">🏢</div>
-          </div>
-          <span class="ev-past-badge">2026</span>
-        </div>
-        <div class="ev-past-name" data-i18n="events.env_travail"><?= tr('events.env_travail') ?></div>
-        <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;" data-i18n="events.envt.desc"><?= t('events.envt.desc') ?></p>
-        <ul class="ev-li">
-          <li class="ev-result" data-i18n="events.envt.r1"><?= t('events.envt.r1') ?></li>
-          <li class="ev-result" data-i18n="events.envt.r2"><?= t('events.envt.r2') ?></li>
-          <li class="ev-result" data-i18n="events.envt.r3"><?= t('events.envt.r3') ?></li>
-        </ul>
-      </div>
-
-      <!-- Power To Drive — Munich, 23-25 juin 2026 -->
-      <div class="ev-past-card">
-        <div class="ev-past-top">
-          <div class="ev-past-icon-wrap">
-            <div class="ev-past-icon" style="background:linear-gradient(135deg,#B23A1E,#E8563A);">⚡</div>
-          </div>
-          <span class="ev-past-badge">Juin 2026</span>
-        </div>
-        <div class="ev-past-name" data-i18n="events.ptd_past.name"><?= tr('events.ptd_past.name') ?></div>
-        <p style="font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;" data-i18n="events.ptd_past.desc"><?= t('events.ptd_past.desc') ?></p>
-        <ul class="ev-li">
-          <li class="ev-result" data-i18n="events.ptd_past.r1"><?= t('events.ptd_past.r1') ?></li>
-          <li class="ev-result" data-i18n="events.ptd_past.r2"><?= t('events.ptd_past.r2') ?></li>
-          <li class="ev-result" data-i18n="events.ptd_past.r3"><?= t('events.ptd_past.r3') ?></li>
-        </ul>
-      </div>
+      <?php endforeach; ?>
 
     </div>
   </div>

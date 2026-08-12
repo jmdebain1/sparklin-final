@@ -667,6 +667,16 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
     Éditeur
   </button>
   <div class="sb-section">Contenu</div>
+  <button class="sb-item" id="nav-events" onclick="showView('events')">
+    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Événements
+    <span class="sb-badge" id="sb-events-count">—</span>
+  </button>
+  <button class="sb-item" id="nav-press" onclick="showView('press')">
+    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
+    Presse
+    <span class="sb-badge" id="sb-press-count">—</span>
+  </button>
   <button class="sb-item" id="nav-analytics" id="nav-analytics" onclick="showView('analytics')">
     <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
     Analytiques
@@ -1077,6 +1087,126 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
   </div><!-- end editor-wrap -->
 </div>
 
+<!-- ─── ÉVÉNEMENTS ───────────────────────────────────────────── -->
+<div class="view" id="view-events">
+  <div class="ph">
+    <div><div class="ph-title">Événements</div><div class="ph-sub" id="ev-count-sub">Chargement…</div></div>
+    <button class="btn btn-primary btn-sm" onclick="openEventForm()">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      Nouvel événement
+    </button>
+  </div>
+  <div class="filters" id="ev-filters">
+    <button class="fpill active" data-f="all" onclick="setEventFilter('all',this)">Tous</button>
+    <button class="fpill" data-f="upcoming" onclick="setEventFilter('upcoming',this)">À venir</button>
+    <button class="fpill" data-f="past" onclick="setEventFilter('past',this)">Passés</button>
+  </div>
+
+  <!-- Form (create/edit) -->
+  <div class="card" id="ev-form-card" style="display:none;">
+    <div class="card-inner" style="display:flex;flex-direction:column;gap:12px;">
+      <div style="font-weight:700;font-size:14px;" id="ev-form-title">Nouvel événement</div>
+      <input type="hidden" id="ev-f-id"/>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Statut</label>
+          <select id="ev-f-status" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;">
+            <option value="upcoming">À venir</option>
+            <option value="past">Passé</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Badge (ex. « Juin 2026 »)</label>
+          <input id="ev-f-badge" placeholder="Juin 2026" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Titre</label>
+          <input id="ev-f-title" placeholder="Nom du salon / événement" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Icône (emoji)</label>
+          <input id="ev-f-icon" placeholder="⚡" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+        </div>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Description</label>
+        <textarea id="ev-f-desc" rows="2" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Points clés (un par ligne)</label>
+        <textarea id="ev-f-highlights" rows="3" placeholder="🤝 Contacts qualifiés&#10;🔌 Démo live des bornes" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;resize:vertical;"></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Lien (optionnel)</label>
+          <input id="ev-f-link" placeholder="https://…" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Libellé du lien</label>
+          <input id="ev-f-link-label" placeholder="Site officiel" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button class="btn btn-secondary btn-sm" onclick="closeEventForm()">Annuler</button>
+        <button class="btn btn-primary btn-sm" onclick="submitEventForm()">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="ev-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+</div>
+
+<!-- ─── PRESSE ───────────────────────────────────────────────── -->
+<div class="view" id="view-press">
+  <div class="ph">
+    <div><div class="ph-title">Presse</div><div class="ph-sub" id="press-count-sub">Chargement…</div></div>
+    <button class="btn btn-primary btn-sm" onclick="openPressForm()">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      Ajouter un lien
+    </button>
+  </div>
+  <p style="font-size:12px;color:var(--text3);margin-top:-8px;">Les liens ci-dessous s'affichent dans la section « Ils parlent de nous » en bas de la page <a href="/blog/" target="_blank" style="color:var(--orange);">/blog/</a>.</p>
+
+  <div class="card" id="press-form-card" style="display:none;">
+    <div class="card-inner" style="display:flex;flex-direction:column;gap:12px;">
+      <div style="font-weight:700;font-size:14px;">Nouveau lien presse</div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Titre de l'article</label>
+        <input id="press-f-title" placeholder="Titre tel qu'affiché" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Média</label>
+          <input id="press-f-source" placeholder="Automobile Propre" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Date (optionnel)</label>
+          <input id="press-f-date" placeholder="Décembre 2021" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+        </div>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">URL de l'article</label>
+        <input id="press-f-url" placeholder="https://…" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button class="btn btn-secondary btn-sm" onclick="closePressForm()">Annuler</button>
+        <button class="btn btn-primary btn-sm" onclick="submitPressForm()">Ajouter</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="overflow:hidden;padding:0;">
+    <table class="art-table" id="press-table">
+      <thead>
+        <tr><th>Titre</th><th style="width:160px">Média</th><th style="width:120px">Date</th><th style="width:60px"></th></tr>
+      </thead>
+      <tbody id="press-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
 <!-- ─── ANALYTICS ────────────────────────────────────────────── -->
 <div class="view" id="view-analytics">
   <div class="ph"><div><div class="ph-title">Analytiques</div><div class="ph-sub">30 derniers jours</div></div></div>
@@ -1218,6 +1348,8 @@ function showView(v){
   if(v==='dashboard'){renderDash();}
   if(v==='articles'){renderArts(currentFilter);}
   if(v==='analytics'){renderAnalytics();}
+  if(v==='events'){loadEvents();}
+  if(v==='press'){loadPress();}
   window.scrollTo(0,0);
 }
 function openEditor(id){
@@ -2259,6 +2391,226 @@ function renderArtsFiltered() {
   var inp = document.getElementById('base-url-input');
   if (inp) inp.value = base;
   window.SK_SITE_URL = window.location.origin;
+})();
+</script>
+
+<!-- ══ ÉVÉNEMENTS & PRESSE — CRUD réel (Supabase + Netlify Functions) ══ -->
+<script>
+(function() {
+  'use strict';
+
+  var SB_URL  = <?= json_encode($_ENV['SUPABASE_URL'] ?? '') ?>;
+  var SB_ANON = <?= json_encode($_ENV['SUPABASE_ANON_KEY'] ?? '') ?>;
+  var eventsCache = [];
+  var pressCache  = [];
+  var eventFilter = 'all';
+
+  async function accessToken() {
+    try {
+      var r = await window.__sbAdmin.auth.getSession();
+      return r && r.data && r.data.session ? r.data.session.access_token : null;
+    } catch (e) { return null; }
+  }
+
+  // Réutilise le même client Supabase que le auth-guard (évite d'en recréer un second)
+  window.__sbAdmin = window.__sbAdmin || window.supabase.createClient(SB_URL, SB_ANON);
+
+  async function sbSelect(table, query) {
+    var resp = await fetch(SB_URL.replace(/\/$/, '') + '/rest/v1/' + table + '?' + query, {
+      headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON }
+    });
+    if (!resp.ok) return [];
+    return resp.json();
+  }
+
+  async function adminCall(fn, method, body) {
+    var token = await accessToken();
+    if (!token) { toast('Session expirée, reconnectez-vous', 'red'); return null; }
+    var opts = { method: method, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } };
+    if (body) opts.body = JSON.stringify(body);
+    var resp = await fetch('/.netlify/functions/' + fn, opts);
+    var data = null;
+    try { data = await resp.json(); } catch (e) {}
+    if (!resp.ok) { toast((data && data.error) || 'Erreur', 'red'); return null; }
+    return data;
+  }
+
+  /* ── ÉVÉNEMENTS ── */
+  window.loadEvents = async function() {
+    document.getElementById('ev-list').innerHTML = '<p style="font-size:13px;color:var(--text3);padding:20px;">Chargement…</p>';
+    eventsCache = await sbSelect('events', 'select=*&order=sort_order.asc,id.desc');
+    renderEvents();
+    document.getElementById('sb-events-count').textContent = eventsCache.length;
+  };
+
+  window.setEventFilter = function(f, btn) {
+    eventFilter = f;
+    document.querySelectorAll('#ev-filters .fpill').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderEvents();
+  };
+
+  function renderEvents() {
+    var list = eventFilter === 'all' ? eventsCache : eventsCache.filter(function(e){ return e.status === eventFilter; });
+    document.getElementById('ev-count-sub').textContent = eventsCache.length + ' événement' + (eventsCache.length > 1 ? 's' : '') +
+      ' · ' + eventsCache.filter(function(e){return e.status==='upcoming';}).length + ' à venir';
+    if (!list.length) {
+      document.getElementById('ev-list').innerHTML = '<p style="font-size:13px;color:var(--text3);padding:20px;text-align:center;">Aucun événement.</p>';
+      return;
+    }
+    document.getElementById('ev-list').innerHTML = list.map(function(e) {
+      var highlights = (e.highlights || []).map(function(h){ return '<li style="font-size:12px;color:var(--text2);">' + escapeHtml(h) + '</li>'; }).join('');
+      return '<div class="card"><div class="card-inner" style="display:flex;gap:16px;align-items:flex-start;">' +
+        '<div style="width:44px;height:44px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;background:' + (e.icon_gradient || '#ccc') + ';">' + escapeHtml(e.icon || '⚡') + '</div>' +
+        '<div style="flex:1;min-width:0;">' +
+          '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">' +
+            '<span class="status ' + (e.status === 'past' ? 's-draft' : 's-published') + '">' + (e.status === 'past' ? 'Passé' : 'À venir') + '</span>' +
+            (e.badge ? '<span class="sb-badge">' + escapeHtml(e.badge) + '</span>' : '') +
+          '</div>' +
+          '<div style="font-weight:700;font-size:14px;color:var(--text);">' + escapeHtml(e.title) + '</div>' +
+          (e.description ? '<p style="font-size:12.5px;color:var(--text3);margin:4px 0 8px;line-height:1.6;">' + escapeHtml(e.description) + '</p>' : '') +
+          (highlights ? '<ul style="margin:0;padding-left:16px;display:flex;flex-direction:column;gap:2px;">' + highlights + '</ul>' : '') +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">' +
+          '<button class="btn btn-secondary btn-sm" onclick="toggleEventStatus(' + e.id + ',\'' + e.status + '\')">' + (e.status === 'past' ? '↩ Marquer à venir' : '✓ Marquer passé') + '</button>' +
+          '<button class="btn btn-secondary btn-sm" onclick="editEvent(' + e.id + ')">Modifier</button>' +
+          '<button class="btn btn-danger btn-sm" onclick="deleteEvent(' + e.id + ')">Supprimer</button>' +
+        '</div>' +
+      '</div></div>';
+    }).join('');
+  }
+
+  window.openEventForm = function() {
+    document.getElementById('ev-form-title').textContent = 'Nouvel événement';
+    ['ev-f-id','ev-f-badge','ev-f-title','ev-f-desc','ev-f-highlights','ev-f-link','ev-f-link-label'].forEach(function(id){ document.getElementById(id).value = ''; });
+    document.getElementById('ev-f-status').value = 'upcoming';
+    document.getElementById('ev-f-icon').value = '⚡';
+    document.getElementById('ev-form-card').style.display = 'block';
+    document.getElementById('ev-form-card').scrollIntoView({behavior:'smooth', block:'center'});
+  };
+  window.closeEventForm = function() { document.getElementById('ev-form-card').style.display = 'none'; };
+
+  window.editEvent = function(id) {
+    var e = eventsCache.find(function(x){ return x.id === id; });
+    if (!e) return;
+    document.getElementById('ev-form-title').textContent = 'Modifier l\'événement';
+    document.getElementById('ev-f-id').value = e.id;
+    document.getElementById('ev-f-status').value = e.status;
+    document.getElementById('ev-f-badge').value = e.badge || '';
+    document.getElementById('ev-f-title').value = e.title || '';
+    document.getElementById('ev-f-icon').value = e.icon || '⚡';
+    document.getElementById('ev-f-desc').value = e.description || '';
+    document.getElementById('ev-f-highlights').value = (e.highlights || []).join('\n');
+    document.getElementById('ev-f-link').value = e.link_url || '';
+    document.getElementById('ev-f-link-label').value = e.link_label || '';
+    document.getElementById('ev-form-card').style.display = 'block';
+    document.getElementById('ev-form-card').scrollIntoView({behavior:'smooth', block:'center'});
+  };
+
+  window.submitEventForm = async function() {
+    var id = document.getElementById('ev-f-id').value;
+    var title = document.getElementById('ev-f-title').value.trim();
+    if (!title) { toast('Le titre est requis', 'red'); return; }
+    var payload = {
+      status: document.getElementById('ev-f-status').value,
+      badge: document.getElementById('ev-f-badge').value.trim(),
+      title: title,
+      icon: document.getElementById('ev-f-icon').value.trim() || '⚡',
+      description: document.getElementById('ev-f-desc').value.trim(),
+      highlights: document.getElementById('ev-f-highlights').value.split('\n').map(function(s){return s.trim();}).filter(Boolean),
+      link_url: document.getElementById('ev-f-link').value.trim(),
+      link_label: document.getElementById('ev-f-link-label').value.trim()
+    };
+    var result;
+    if (id) { payload.id = parseInt(id, 10); result = await adminCall('admin-events', 'PATCH', payload); }
+    else { result = await adminCall('admin-events', 'POST', payload); }
+    if (result) { toast(id ? 'Événement mis à jour' : 'Événement créé', 'green'); closeEventForm(); loadEvents(); }
+  };
+
+  window.toggleEventStatus = async function(id, current) {
+    var next = current === 'past' ? 'upcoming' : 'past';
+    var result = await adminCall('admin-events', 'PATCH', { id: id, status: next });
+    if (result) { toast('Statut mis à jour', 'green'); loadEvents(); }
+  };
+
+  window.deleteEvent = async function(id) {
+    if (!confirm('Supprimer cet événement ?')) return;
+    var token = await accessToken();
+    if (!token) { toast('Session expirée', 'red'); return; }
+    var resp = await fetch('/.netlify/functions/admin-events?id=' + id, { method: 'DELETE', headers: { Authorization: 'Bearer ' + token } });
+    if (resp.ok) { toast('Événement supprimé', 'green'); loadEvents(); }
+    else { toast('Échec de la suppression', 'red'); }
+  };
+
+  /* ── PRESSE ── */
+  window.loadPress = async function() {
+    document.getElementById('press-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:20px;">Chargement…</td></tr>';
+    pressCache = await sbSelect('press_mentions', 'select=*&order=sort_order.asc,id.desc');
+    renderPress();
+    document.getElementById('sb-press-count').textContent = pressCache.length;
+    document.getElementById('press-count-sub').textContent = pressCache.length + ' lien' + (pressCache.length > 1 ? 's' : '');
+  };
+
+  function renderPress() {
+    if (!pressCache.length) {
+      document.getElementById('press-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:20px;">Aucun lien presse.</td></tr>';
+      return;
+    }
+    document.getElementById('press-tbody').innerHTML = pressCache.map(function(p) {
+      return '<tr>' +
+        '<td><a href="' + escapeAttr(p.url) + '" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none;font-weight:500;font-size:13px;">' + escapeHtml(p.title) + '</a></td>' +
+        '<td style="font-size:12px;color:var(--text3);">' + escapeHtml(p.source_name) + '</td>' +
+        '<td style="font-size:12px;color:var(--text3);">' + escapeHtml(p.published_label || '—') + '</td>' +
+        '<td><button class="btn btn-ghost btn-icon btn-sm" title="Supprimer" onclick="deletePress(' + p.id + ')"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg></button></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  window.openPressForm = function() {
+    ['press-f-title','press-f-source','press-f-date','press-f-url'].forEach(function(id){ document.getElementById(id).value = ''; });
+    document.getElementById('press-form-card').style.display = 'block';
+    document.getElementById('press-form-card').scrollIntoView({behavior:'smooth', block:'center'});
+  };
+  window.closePressForm = function() { document.getElementById('press-form-card').style.display = 'none'; };
+
+  window.submitPressForm = async function() {
+    var payload = {
+      title: document.getElementById('press-f-title').value.trim(),
+      source_name: document.getElementById('press-f-source').value.trim(),
+      published_label: document.getElementById('press-f-date').value.trim(),
+      url: document.getElementById('press-f-url').value.trim()
+    };
+    if (!payload.title || !payload.source_name || !payload.url) { toast('Titre, média et URL sont requis', 'red'); return; }
+    var result = await adminCall('admin-press', 'POST', payload);
+    if (result) { toast('Lien ajouté', 'green'); closePressForm(); loadPress(); }
+  };
+
+  window.deletePress = async function(id) {
+    if (!confirm('Supprimer ce lien presse ?')) return;
+    var token = await accessToken();
+    if (!token) { toast('Session expirée', 'red'); return; }
+    var resp = await fetch('/.netlify/functions/admin-press?id=' + id, { method: 'DELETE', headers: { Authorization: 'Bearer ' + token } });
+    if (resp.ok) { toast('Lien supprimé', 'green'); loadPress(); }
+    else { toast('Échec de la suppression', 'red'); }
+  };
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  // Fallback si toast() n'existe pas déjà ailleurs dans le dashboard
+  if (typeof window.toast !== 'function') {
+    window.toast = function(msg) { console.log('[toast]', msg); };
+  }
+
+  // Compte les badges sidebar dès le chargement de la session (best-effort, silencieux si erreur)
+  document.addEventListener('DOMContentLoaded', function() {
+    sbSelect('events', 'select=id').then(function(r){ document.getElementById('sb-events-count').textContent = r.length; }).catch(function(){});
+    sbSelect('press_mentions', 'select=id').then(function(r){ document.getElementById('sb-press-count').textContent = r.length; }).catch(function(){});
+  });
 })();
 </script>
 </body>
