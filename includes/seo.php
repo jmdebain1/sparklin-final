@@ -29,6 +29,18 @@ if (!function_exists('sk_seo_head')) {
     }
 
     function sk_seo_head(array $opts = []): void {
+        // Google Tag Manager — présent sur toutes les pages publiques via ce
+        // point d'entrée commun (sk_seo_head() est appelé dans le <head> de
+        // chaque page). Volontairement absent de l'admin (admin-blog/*.php
+        // n'appelle pas sk_seo_head) : pas de tracking visiteur sur l'outil interne.
+        echo "  <!-- Google Tag Manager -->\n";
+        echo "  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n";
+        echo "  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n";
+        echo "  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n";
+        echo "  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n";
+        echo "  })(window,document,'script','dataLayer','GTM-MLZH6M32');</script>\n";
+        echo "  <!-- End Google Tag Manager -->\n";
+
         $langs = ['fr','en','de','es','th','ms','id'];
         $cur   = function_exists('lang') ? lang() : 'fr';
         $img   = $opts['image'] ?? (sk_seo_base() . '/assets/images/dashboard-imac.jpg');

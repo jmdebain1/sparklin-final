@@ -40,6 +40,10 @@ $words = json_encode($wordCycle[$lang] ?? $wordCycle['fr']);
   <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('meta.home.title'),'desc'=>tr('meta.home.desc')]); ?>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MLZH6M32"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <div class="nav-mega-panel" style="display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);border-radius:0 0 14px 14px;box-shadow:0 16px 48px rgba(26,26,46,.1);padding:8px;min-width:280px;z-index:500;flex-direction:column;">
 <a href="/livre-blanc/" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;text-decoration:none;transition:background .15s;color:var(--text-dark);" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'"><span style="font-size:16px;width:24px;text-align:center;flex-shrink:0;">📘</span><div><div style="font-size:14px;font-weight:500;color:var(--text-dark);">Livre blanc 2026 <span style="background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:100px;vertical-align:middle;">Nouveau</span></div><div style="font-size:11.5px;color:var(--text-light);margin-top:1px;">Guide IRVE pour entreprises</div></div></a>
 <a href="/blog/" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;text-decoration:none;transition:background .15s;color:var(--text-dark);" onmouseover="this.style.background='var(--bg-off)'" onmouseout="this.style.background='transparent'"><span style="font-size:16px;width:24px;text-align:center;flex-shrink:0;">✍️</span><div><div style="font-size:14px;font-weight:500;color:var(--text-dark);">Blog IRVE</div><div style="font-size:11.5px;color:var(--text-light);margin-top:1px;">Actualités &amp; conseils</div></div></a>
