@@ -339,16 +339,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="section-label" data-i18n="blog.press.eyebrow"><?= tr('blog.press.eyebrow') ?></span>
     <h2 style="font-family:var(--font-display);font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;color:var(--dark);margin-bottom:12px;" data-i18n="blog.press.title"><?= tr('blog.press.title') ?></h2>
     <p style="font-size:14px;color:var(--text-mid);margin-bottom:28px;max-width:560px;" data-i18n="blog.press.desc"><?= tr('blog.press.desc') ?></p>
-    <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;">
       <?php foreach ($skPress as $p): ?>
-      <a href="<?= htmlspecialchars($p['url'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;background:#fff;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.borderColor='var(--orange)';this.style.boxShadow='0 4px 16px rgba(26,26,46,.06)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow=''">
-        <div style="min-width:0;">
-          <div style="font-size:14px;font-weight:600;color:var(--dark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><?= htmlspecialchars($p['title'], ENT_QUOTES, 'UTF-8') ?></div>
-          <div style="font-size:12px;color:var(--text-light);margin-top:2px;">
+      <a href="<?= htmlspecialchars($p['url'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+        <?php if (!empty($p['image_url'])): ?>
+        <div style="height:150px;overflow:hidden;position:relative;background:var(--bg-off);">
+          <img src="<?= htmlspecialchars($p['image_url'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($p['title'], ENT_QUOTES, 'UTF-8') ?>" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.style.display='none'"/>
+        </div>
+        <?php else: ?>
+        <div style="height:150px;background:linear-gradient(135deg,var(--dark),#2d2d48);display:flex;align-items:center;justify-content:center;font-size:36px;">📰</div>
+        <?php endif; ?>
+        <div style="padding:18px 20px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--orange);margin-bottom:6px;">
             <?= htmlspecialchars($p['source_name'], ENT_QUOTES, 'UTF-8') ?><?php if (!empty($p['published_label'])): ?> · <?= htmlspecialchars($p['published_label'], ENT_QUOTES, 'UTF-8') ?><?php endif; ?>
           </div>
+          <div style="font-size:14px;font-weight:600;color:var(--dark);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;"><?= htmlspecialchars($p['title'], ENT_QUOTES, 'UTF-8') ?></div>
+          <div style="margin-top:12px;font-size:12.5px;font-weight:600;color:var(--orange);">Lire l'article →</div>
         </div>
-        <span style="flex-shrink:0;font-size:13px;font-weight:600;color:var(--orange);white-space:nowrap;">Lire l'article →</span>
       </a>
       <?php endforeach; ?>
     </div>

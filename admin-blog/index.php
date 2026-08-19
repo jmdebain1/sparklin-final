@@ -1190,6 +1190,10 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
         <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">URL de l'article</label>
         <input id="press-f-url" placeholder="https://…" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
       </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Image (optionnel — récupérée automatiquement depuis l'article sinon)</label>
+        <input id="press-f-image" placeholder="https://…jpg" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
+      </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;">
         <button class="btn btn-secondary btn-sm" onclick="closePressForm()">Annuler</button>
         <button class="btn btn-primary btn-sm" onclick="submitPressForm()">Ajouter</button>
@@ -1197,14 +1201,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
     </div>
   </div>
 
-  <div class="card" style="overflow:hidden;padding:0;">
-    <table class="art-table" id="press-table">
-      <thead>
-        <tr><th>Titre</th><th style="width:160px">Média</th><th style="width:120px">Date</th><th style="width:60px"></th></tr>
-      </thead>
-      <tbody id="press-tbody"></tbody>
-    </table>
-  </div>
+  <div id="press-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;"></div>
 </div>
 
 <!-- ─── ANALYTICS ────────────────────────────────────────────── -->
@@ -2544,7 +2541,7 @@ function renderArtsFiltered() {
 
   /* ── PRESSE ── */
   window.loadPress = async function() {
-    document.getElementById('press-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:20px;">Chargement…</td></tr>';
+    document.getElementById('press-list').innerHTML = '<p style="font-size:13px;color:var(--text3);padding:20px;grid-column:1/-1;">Chargement…</p>';
     pressCache = await sbSelect('press_mentions', 'select=*&order=sort_order.asc,id.desc');
     renderPress();
     document.getElementById('sb-press-count').textContent = pressCache.length;
@@ -2553,21 +2550,26 @@ function renderArtsFiltered() {
 
   function renderPress() {
     if (!pressCache.length) {
-      document.getElementById('press-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:20px;">Aucun lien presse.</td></tr>';
+      document.getElementById('press-list').innerHTML = '<p style="font-size:13px;color:var(--text3);padding:20px;text-align:center;grid-column:1/-1;">Aucun lien presse.</p>';
       return;
     }
-    document.getElementById('press-tbody').innerHTML = pressCache.map(function(p) {
-      return '<tr>' +
-        '<td><a href="' + escapeAttr(p.url) + '" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none;font-weight:500;font-size:13px;">' + escapeHtml(p.title) + '</a></td>' +
-        '<td style="font-size:12px;color:var(--text3);">' + escapeHtml(p.source_name) + '</td>' +
-        '<td style="font-size:12px;color:var(--text3);">' + escapeHtml(p.published_label || '—') + '</td>' +
-        '<td><button class="btn btn-ghost btn-icon btn-sm" title="Supprimer" onclick="deletePress(' + p.id + ')"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg></button></td>' +
-      '</tr>';
+    document.getElementById('press-list').innerHTML = pressCache.map(function(p) {
+      var img = p.image_url
+        ? '<div style="height:110px;border-radius:10px 10px 0 0;overflow:hidden;background:var(--bg2);"><img src="' + escapeAttr(p.image_url) + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.style.display=\'none\'"/></div>'
+        : '<div style="height:110px;border-radius:10px 10px 0 0;background:linear-gradient(135deg,var(--text),#2d2d48);display:flex;align-items:center;justify-content:center;font-size:26px;">📰</div>';
+      return '<div class="card" style="overflow:hidden;padding:0;">' +
+        img +
+        '<div style="padding:12px 14px;">' +
+          '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--orange);margin-bottom:4px;">' + escapeHtml(p.source_name) + (p.published_label ? ' · ' + escapeHtml(p.published_label) : '') + '</div>' +
+          '<a href="' + escapeAttr(p.url) + '" target="_blank" rel="noopener" style="display:block;color:var(--text);text-decoration:none;font-weight:600;font-size:13px;line-height:1.4;margin-bottom:10px;">' + escapeHtml(p.title) + '</a>' +
+          '<button class="btn btn-danger btn-sm" style="width:100%;justify-content:center;" onclick="deletePress(' + p.id + ')">Supprimer</button>' +
+        '</div>' +
+      '</div>';
     }).join('');
   }
 
   window.openPressForm = function() {
-    ['press-f-title','press-f-source','press-f-date','press-f-url'].forEach(function(id){ document.getElementById(id).value = ''; });
+    ['press-f-title','press-f-source','press-f-date','press-f-url','press-f-image'].forEach(function(id){ document.getElementById(id).value = ''; });
     document.getElementById('press-form-card').style.display = 'block';
     document.getElementById('press-form-card').scrollIntoView({behavior:'smooth', block:'center'});
   };
@@ -2578,10 +2580,15 @@ function renderArtsFiltered() {
       title: document.getElementById('press-f-title').value.trim(),
       source_name: document.getElementById('press-f-source').value.trim(),
       published_label: document.getElementById('press-f-date').value.trim(),
-      url: document.getElementById('press-f-url').value.trim()
+      url: document.getElementById('press-f-url').value.trim(),
+      image_url: document.getElementById('press-f-image').value.trim() || null
     };
     if (!payload.title || !payload.source_name || !payload.url) { toast('Titre, média et URL sont requis', 'red'); return; }
+    var btn = event.target;
+    var originalLabel = btn.innerHTML;
+    btn.disabled = true; btn.textContent = 'Ajout en cours…';
     var result = await adminCall('admin-press', 'POST', payload);
+    btn.disabled = false; btn.innerHTML = originalLabel;
     if (result) { toast('Lien ajouté', 'green'); closePressForm(); loadPress(); }
   };
 
