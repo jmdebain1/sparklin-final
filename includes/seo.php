@@ -29,6 +29,18 @@ if (!function_exists('sk_seo_head')) {
     }
 
     function sk_seo_head(array $opts = []): void {
+        // Google Ads (gtag.js) — même point d'entrée commun que GTM ci-dessous,
+        // volontairement absent de l'admin.
+        echo "  <!-- Google tag (gtag.js) -->\n";
+        echo "  <script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-18111265049\"></script>\n";
+        echo "  <script>\n";
+        echo "    window.dataLayer = window.dataLayer || [];\n";
+        echo "    function gtag(){dataLayer.push(arguments);}\n";
+        echo "    gtag('js', new Date());\n";
+        echo "\n";
+        echo "    gtag('config', 'AW-18111265049');\n";
+        echo "  </script>\n";
+
         // Google Tag Manager — présent sur toutes les pages publiques via ce
         // point d'entrée commun (sk_seo_head() est appelé dans le <head> de
         // chaque page). Volontairement absent de l'admin (admin-blog/*.php
