@@ -337,6 +337,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           }
 
           // Redirect to merci page seulement si l'envoi a reussi (en conservant la langue courante)
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({event:'form_submission', form_name:'livre_blanc'});
           var lbLangMatch = /[?&]lang=([a-z]{2})(?:&|$)/.exec(window.location.search);
           window.location.href = '/livre-blanc/merci/' + (lbLangMatch ? '?lang=' + lbLangMatch[1] : '');
 
