@@ -28,7 +28,7 @@ $lang = initI18n();
     "headline": "Load balancing : comment déployer 50 bornes sans renforcement EDF",
     "description": "Le load balancing dynamique permet de déployer massivement des bornes IRVE sans modifier votre contrat Enedis. Guide tec",
     "datePublished": "2025-09-15",
-    "author": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
+    "author": {"@type": "Person", "name": "Mhaia"},
     "publisher": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
     "mainEntityOfPage": {"@type": "WebPage", "@id": "https://sparklin.io/blog/load-balancing-recharge-electrique/"}
   }
@@ -260,10 +260,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="position:relative;z-index:1;font-size:80px;">⚡</div>
 </div>
 <article style="padding:60px clamp(20px,5vw,80px);">
-  <div class="sk-wrap sk-wrap--narrow">
+  <div class="sk-wrap sk-wrap--narrow blog-body">
     <div style="font-size:12px;font-weight:600;color:var(--text-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;" data-i18n="blog.lb.div1"><?= tr('blog.lb.div1') ?></div>
-    
+
 <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:20px;" data-i18n="blog.lb.h11"><?= tr('blog.lb.h11') ?></h1>
+<div class="blog-byline"><div class="blog-byline-avatar">M</div><span>Par <strong>Mhaia</strong></span><span class="blog-byline-dot"></span><span>15 septembre 2025</span></div>
 <p style="font-size:17px;color:var(--text-mid);line-height:1.75;margin-bottom:40px;font-weight:300;" data-i18n="blog.lb.p1"><?= tr('blog.lb.p1') ?></p>
 
 <nav style="background:var(--bg-off);border-radius:12px;padding:20px 24px;margin-bottom:40px;">

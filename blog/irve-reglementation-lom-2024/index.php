@@ -20,19 +20,7 @@ $lang = initI18n();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <meta name="keywords" content="load balancing IRVE, répartition puissance bornes recharge, Spark Pilot, déploiement IRVE"/>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Load balancing : comment déployer 50 bornes sans renforcement EDF",
-    "description": "Le load balancing dynamique permet de déployer massivement des bornes IRVE sans modifier votre contrat Enedis. Guide tec",
-    "datePublished": "2025-09-15",
-    "author": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
-    "publisher": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
-    "mainEntityOfPage": {"@type": "WebPage", "@id": "https://sparklin.io/blog/load-balancing-recharge-electrique/"}
-  }
-  </script>
+  <meta name="keywords" content="loi LOM IRVE, obligations bornes recharge entreprise, décret tertiaire, loi APER, sanctions LOM"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -40,7 +28,7 @@ $lang = initI18n();
     "headline": "LOM 2026 : toutes les obligations IRVE pour les entreprises françaises",
     "description": "La Loi LOM impose des bornes de recharge dans les parkings d'entreprise. Calendrier 2024-2030, amendes 75 000 €, finance",
     "datePublished": "2025-10-02",
-    "author": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
+    "author": {"@type": "Person", "name": "Mhaia"},
     "publisher": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
     "mainEntityOfPage": {"@type": "WebPage", "@id": "https://sparklin.io/blog/irve-reglementation-lom-2024/"}
   }
@@ -272,10 +260,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="position:relative;z-index:1;font-size:80px;">⚡</div>
 </div>
 <article style="padding:60px clamp(20px,5vw,80px);">
-  <div class="sk-wrap sk-wrap--narrow">
+  <div class="sk-wrap sk-wrap--narrow blog-body">
     <div style="font-size:12px;font-weight:600;color:var(--text-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;" data-i18n="blog.lom.div1"><?= tr('blog.lom.div1') ?></div>
-    
+
 <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:20px;" data-i18n="blog.lom.h11"><?= tr('blog.lom.h11') ?></h1>
+<div class="blog-byline"><div class="blog-byline-avatar">M</div><span>Par <strong>Mhaia</strong></span><span class="blog-byline-dot"></span><span>2 octobre 2025</span></div>
 <p style="font-size:17px;color:var(--text-mid);line-height:1.75;margin-bottom:40px;font-weight:300;" data-i18n="blog.lom.p1"><?= tr('blog.lom.p1') ?></p>
 
 <nav style="background:var(--bg-off);border-radius:12px;padding:20px 24px;margin-bottom:40px;">

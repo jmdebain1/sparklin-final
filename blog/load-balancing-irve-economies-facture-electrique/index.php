@@ -29,12 +29,12 @@ $lang = initI18n();
     "description": "Sans pilotage, la facture Enedis d'un parking multi-bornes peut tripler en 6 mois. Exemple chiffré sur un parking 80 places.",
     "image": "https://sparklin.io/assets/images/parking-left-web.png",
     "datePublished": "2026-08-12",
-    "author": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
+    "author": {"@type": "Person", "name": "Mhaia"},
     "publisher": {"@type": "Organization", "name": "Sparklin", "url": "https://sparklin.io"},
     "mainEntityOfPage": {"@type": "WebPage", "@id": "https://sparklin.io/blog/load-balancing-irve-economies-facture-electrique/"}
   }
   </script>
-  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('blog.lb26.meta_title'),'desc'=>tr('blog.lb26.meta_desc'),'type'=>'article']); ?>
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('blog.lb26.meta_title'),'desc'=>tr('blog.lb26.meta_desc'),'type'=>'article','image'=>'https://sparklin.io/assets/images/parking-left-web.png','imageAlt'=>tr('blog.lb26.img_hero_alt')]); ?>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -183,10 +183,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,26,46,.2) 0%,rgba(26,26,46,.85) 100%);"></div>
 </div>
 <article style="padding:60px clamp(20px,5vw,80px);">
-  <div class="sk-wrap sk-wrap--narrow">
+  <div class="sk-wrap sk-wrap--narrow blog-body">
     <div style="font-size:12px;font-weight:600;color:var(--text-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;" data-i18n="blog.lb26.div1"><?= tr('blog.lb26.div1') ?></div>
 
     <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:20px;" data-i18n="blog.lb26.h1"><?= tr('blog.lb26.h1') ?></h1>
+    <div class="blog-byline"><div class="blog-byline-avatar">M</div><span>Par <strong>Mhaia</strong></span><span class="blog-byline-dot"></span><span>12 août 2026</span></div>
     <div data-i18n="blog.lb26.p_intro" style="margin-bottom:32px;"><?= tr('blog.lb26.p_intro') ?></div>
 
     <h2 id="puissance" data-i18n="blog.lb26.h2_puissance"><?= tr('blog.lb26.h2_puissance') ?></h2>

@@ -92,6 +92,10 @@ if (!function_exists('sk_seo_head')) {
         }
         echo '  <meta property="og:url" content="' . $esc(sk_seo_url($cur)) . "\"/>\n";
         echo '  <meta property="og:image" content="' . $esc($img) . "\"/>\n";
+        if (!empty($opts['imageAlt'])) {
+            echo '  <meta property="og:image:alt" content="' . $esc($opts['imageAlt']) . "\"/>\n";
+            echo '  <meta name="twitter:image:alt" content="' . $esc($opts['imageAlt']) . "\"/>\n";
+        }
         echo '  <meta property="og:locale" content="' . ($loc[$cur] ?? 'fr_FR') . "\"/>\n";
         foreach ($loc as $l => $lc) {
             if ($l !== $cur) echo '  <meta property="og:locale:alternate" content="' . $lc . "\"/>\n";
