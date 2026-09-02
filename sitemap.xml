@@ -196,6 +196,19 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sparklin.io/blog/monetisation-bornes-recharge-tourisme-revenus-passifs/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/blog/monetisation-bornes-recharge-tourisme-revenus-passifs/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/blog/monetisation-bornes-recharge-tourisme-revenus-passifs/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/blog/monetisation-bornes-recharge-tourisme-revenus-passifs/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/blog/monetisation-bornes-recharge-tourisme-revenus-passifs/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/blog/monetisation-bornes-recharge-tourisme-revenus-passifs/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/blog/monetisation-bornes-recharge-tourisme-revenus-passifs/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/blog/monetisation-bornes-recharge-tourisme-revenus-passifs/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/blog/monetisation-bornes-recharge-tourisme-revenus-passifs/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://sparklin.io/blog/load-balancing-recharge-electrique/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/blog/load-balancing-recharge-electrique/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/blog/load-balancing-recharge-electrique/?lang=en"/>

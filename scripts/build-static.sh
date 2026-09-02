@@ -29,14 +29,6 @@ PAGES=(
   "/a-propos/"
   "/app/"
   "/blog/"
-  "/blog/gireve-interoperabilite-bornes/"
-  "/blog/irve-reglementation-lom-2024/"
-  "/blog/load-balancing-recharge-electrique/"
-  "/blog/remboursement-recharge-domicile-urssaf/"
-  "/blog/loi-lom-2026-obligations-entreprise-sanctions/"
-  "/blog/load-balancing-irve-economies-facture-electrique/"
-  "/blog/remboursement-recharge-domicile-salaries-urssaf-2026/"
-  "/blog/prise-renforcee-connectee-vs-wallbox-comparatif-2026/"
   "/cas/camping/"
   "/cas/collaborateurs/"
   "/cas/collectivite/"
@@ -106,6 +98,41 @@ for page in "${PAGES[@]}"; do
     fetch "http://$HOST:$PORT${page}?lang=$lang" "$lang_out" || fail=1
   done
 done
+
+echo "── build-static: rendu des articles de blog (dynamique, table posts) ──"
+# Les articles vivent dans Supabase (table posts) et sont rendus via
+# blog/post.php?slug=X — on récupère la liste des slugs publiés puis on
+# écrit chacun au chemin propre /blog/<slug>/ comme pour les pages statiques.
+ENV_FILE="$ROOT/.env"
+SB_URL=""
+SB_KEY=""
+if [ -f "$ENV_FILE" ]; then
+  SB_URL=$(grep -E '^SUPABASE_URL=' "$ENV_FILE" | head -1 | cut -d= -f2- | tr -d '"'"'"'')
+  SB_KEY=$(grep -E '^SUPABASE_ANON_KEY=' "$ENV_FILE" | head -1 | cut -d= -f2- | tr -d '"'"'"'')
+else
+  SB_URL="${SUPABASE_URL:-}"
+  SB_KEY="${SUPABASE_ANON_KEY:-}"
+fi
+
+if [ -z "$SB_URL" ] || [ -z "$SB_KEY" ]; then
+  echo "  ⚠️  SUPABASE_URL/SUPABASE_ANON_KEY introuvables — aucun article rendu" >&2
+  fail=1
+else
+  slugs=$(curl -s -H "apikey: $SB_KEY" -H "Authorization: Bearer $SB_KEY" \
+    "$SB_URL/rest/v1/posts?select=slug&status=eq.published" | \
+    php -r '$d=json_decode(stream_get_contents(STDIN),true); foreach(($d?:[]) as $r){echo $r["slug"]."\n";}')
+
+  n_posts=0
+  while IFS= read -r slug; do
+    [ -z "$slug" ] && continue
+    n_posts=$((n_posts+1))
+    fetch "http://$HOST:$PORT/blog/post.php?slug=$slug" "$DIST/blog/$slug/index.html" || fail=1
+    for lang in "${LANGS[@]}"; do
+      fetch "http://$HOST:$PORT/blog/post.php?slug=$slug&lang=$lang" "$DIST/_i18n/$lang/blog/$slug/index.html" || fail=1
+    done
+  done <<< "$slugs"
+  echo "  → $n_posts article(s) publié(s) rendu(s)"
+fi
 
 echo "── build-static: rendu 404 ─────────────────────────────────"
 # 404.php renvoie volontairement le code HTTP 404 — c'est le comportement attendu.

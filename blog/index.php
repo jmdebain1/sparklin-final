@@ -249,86 +249,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="section-label">Blog</span>
     <h1 style="font-family:var(--font-display);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:800;color:var(--dark);margin-bottom:48px;" data-i18n="blog.h1"><?= tr('blog.h1') ?></h1>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;">
-      <a href="/blog/load-balancing-recharge-electrique/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+      <?php foreach (getPublishedPosts() as $p): ?>
+      <a href="/blog/<?= htmlspecialchars($p['slug']) ?>/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+        <?php if (!empty($p['hero_image'])): ?>
+        <div style="height:180px;overflow:hidden;position:relative;background:#1a1a2e;">
+          <img src="<?= htmlspecialchars($p['hero_image']) ?>" alt="<?= htmlspecialchars($p['hero_image_alt'] ?: $p['title']) ?>" style="width:100%;height:100%;object-fit:cover;opacity:.7;"/>
+        </div>
+        <?php else: ?>
         <div style="height:180px;background:linear-gradient(135deg,var(--dark),#2d2d48);display:flex;align-items:center;justify-content:center;font-size:48px;">⚡</div>
+        <?php endif; ?>
         <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat1"><?= tr('blog.cat1') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art1.title"><?= tr('blog.art1.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art1.excerpt"><?= tr('blog.art1.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;"><?= htmlspecialchars($p['category']) ?></div>
+          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;"><?= htmlspecialchars($p['title']) ?></h2>
+          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;"><?= htmlspecialchars($p['excerpt']) ?></p>
+          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);"><?= tr('ui.read_more') ?></div>
         </div>
       </a>
-      <a href="/blog/irve-reglementation-lom-2024/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;background:linear-gradient(135deg,#2d4a6b,#1a2d44);display:flex;align-items:center;justify-content:center;font-size:48px;">📋</div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat2"><?= tr('blog.cat2') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art2.title"><?= tr('blog.art2.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art2.excerpt"><?= tr('blog.art2.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/remboursement-recharge-domicile-urssaf/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;background:linear-gradient(135deg,#2d4a2d,#1a3d1a);display:flex;align-items:center;justify-content:center;font-size:48px;">💰</div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat3"><?= tr('blog.cat3') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art3.title"><?= tr('blog.art3.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art3.excerpt"><?= tr('blog.art3.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/gireve-interoperabilite-bornes/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;background:linear-gradient(135deg,#4a2d6b,#2d1a44);display:flex;align-items:center;justify-content:center;font-size:48px;">🔗</div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat4"><?= tr('blog.cat4') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art4.title"><?= tr('blog.art4.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art4.excerpt"><?= tr('blog.art4.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/loi-lom-2026-obligations-entreprise-sanctions/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;overflow:hidden;position:relative;background:#1a1a2e;">
-          <img src="/assets/images/parking-right-web.png" alt="Parking d'entreprise équipé de bornes conformes à la Loi LOM" style="width:100%;height:100%;object-fit:cover;opacity:.7;"/>
-        </div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat5"><?= tr('blog.cat5') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art5.title"><?= tr('blog.art5.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art5.excerpt"><?= tr('blog.art5.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/load-balancing-irve-economies-facture-electrique/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;overflow:hidden;position:relative;background:#1a1a2e;">
-          <img src="/assets/images/parking-left-web.png" alt="Parking 80 places équipé de 20 bornes Spark Plus pilotées" style="width:100%;height:100%;object-fit:cover;opacity:.7;"/>
-        </div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat6"><?= tr('blog.cat6') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art6.title"><?= tr('blog.art6.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art6.excerpt"><?= tr('blog.art6.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/remboursement-recharge-domicile-salaries-urssaf-2026/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;overflow:hidden;position:relative;background:#1a1a2e;">
-          <img src="/assets/images/spark1-potelet-hd.jpg" alt="Salarié rechargeant à domicile avec une prise connectée Sparklin" style="width:100%;height:100%;object-fit:cover;opacity:.7;"/>
-        </div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat7"><?= tr('blog.cat7') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art7.title"><?= tr('blog.art7.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art7.excerpt"><?= tr('blog.art7.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
-      <a href="/blog/prise-renforcee-connectee-vs-wallbox-comparatif-2026/" style="text-decoration:none;display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,26,46,.1)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="height:180px;overflow:hidden;position:relative;background:#1a1a2e;">
-          <img src="/assets/images/spark1-render-hd.png" alt="Comparatif prise renforcée connectée Spark 1 et wallbox Spark Plus" style="width:100%;height:100%;object-fit:cover;opacity:.7;"/>
-        </div>
-        <div style="padding:20px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:8px;" data-i18n="blog.cat8"><?= tr('blog.cat8') ?></div>
-          <h2 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;" data-i18n="blog.art8.title"><?= tr('blog.art8.title') ?></h2>
-          <p style="font-size:12px;color:var(--text-mid);line-height:1.6;" data-i18n="blog.art8.excerpt"><?= tr('blog.art8.excerpt') ?></p>
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--orange);" data-i18n="ui.read_more"><?= tr('ui.read_more') ?></div>
-        </div>
-      </a>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

@@ -80,5 +80,34 @@ export default async (req) => {
   // 3. Inscription liste "Livre blanc" (best-effort)
   await brevoAddContact(email, process.env.BREVO_LIST_LIVREBLANC_ID || 0, { PRENOM: name });
 
+  // 4. Notification à l'équipe (best-effort, ne bloque pas la réponse au visiteur)
+  if (brevoKey) {
+    const toEmail = process.env.CONTACT_TO_EMAIL || "contact@sparklin.io";
+    const notifTpl = parseInt(process.env.BREVO_TEMPLATE_LIVREBLANC_NOTIF_ID || "3", 10);
+    const notifPayload = notifTpl
+      ? {
+          templateId: notifTpl,
+          to: [{ email: toEmail }],
+          replyTo: { email, name: name || email },
+          subject: `📥 Nouveau téléchargement du livre blanc${company ? ` — ${company}` : ""}${name ? ` (${name})` : ""}`,
+          params: { NAME: name || "—", EMAIL: email, COMPANY: company || "—" },
+        }
+      : {
+          sender: {
+            name: process.env.BREVO_FROM_NAME || "Sparklin",
+            email: process.env.BREVO_FROM_EMAIL || "jean-mael.debain@sparklin.io",
+          },
+          to: [{ email: toEmail }],
+          replyTo: { email, name: name || email },
+          subject: `Téléchargement livre blanc${company ? ` — ${company}` : ""}${name ? ` (${name})` : ""}`,
+          htmlContent:
+            `<h2>Nouveau téléchargement du livre blanc</h2>` +
+            `<p><strong>Email :</strong> ${email}</p>` +
+            `<p><strong>Prénom :</strong> ${name || "—"}</p>` +
+            `<p><strong>Entreprise :</strong> ${company || "—"}</p>`,
+        };
+    await brevoSendEmail(notifPayload);
+  }
+
   return json(200, { ok: true });
 };

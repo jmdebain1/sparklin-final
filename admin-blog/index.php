@@ -765,16 +765,16 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
   </div>
   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
     <div class="filters" id="art-filters">
-      <button class="fpill active" data-f="all" onclick="setFilter('all',this)">Tous <span style="opacity:.6">(7)</span></button>
+      <button class="fpill active" data-f="all" onclick="setFilter('all',this)">Tous <span style="opacity:.6" id="fc-all">(0)</span></button>
       <!-- lang filters -->
       <div style="width:1px;height:16px;background:var(--border);margin:0 4px;align-self:center;"></div>
       <button class="fpill" data-f="lang-fr" onclick="setLangFilter('fr',this)" title="Français">🇫🇷</button>
       <button class="fpill" data-f="lang-en" onclick="setLangFilter('en',this)" title="English">🇬🇧</button>
       <button class="fpill" data-f="lang-de" onclick="setLangFilter('de',this)" title="Deutsch">🇩🇪</button>
       <button class="fpill" data-f="lang-es" onclick="setLangFilter('es',this)" title="Español">🇪🇸</button>
-      <button class="fpill" data-f="published" onclick="setFilter('published',this)">Publiés <span style="opacity:.6">(4)</span></button>
-      <button class="fpill" data-f="draft" onclick="setFilter('draft',this)">Brouillons <span style="opacity:.6">(2)</span></button>
-      <button class="fpill" data-f="scheduled" onclick="setFilter('scheduled',this)">Planifiés <span style="opacity:.6">(1)</span></button>
+      <button class="fpill" data-f="published" onclick="setFilter('published',this)">Publiés <span style="opacity:.6" id="fc-published">(0)</span></button>
+      <button class="fpill" data-f="draft" onclick="setFilter('draft',this)">Brouillons <span style="opacity:.6" id="fc-draft">(0)</span></button>
+      <button class="fpill" data-f="scheduled" onclick="setFilter('scheduled',this)">Planifiés <span style="opacity:.6" id="fc-scheduled">(0)</span></button>
     </div>
     <div style="display:flex;gap:6px">
       <button class="sort-btn" onclick="sortBy('date')">
@@ -887,7 +887,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
           <div class="pub-meta">
             <div class="pub-row"><span class="pub-row-l">Statut</span><span id="pub-status" class="status s-draft">Brouillon</span></div>
             <div class="pub-row"><span class="pub-row-l">Visibilité</span><span class="pub-row-r">Public</span></div>
-            <div class="pub-row"><span class="pub-row-l">Auteur</span><span class="pub-row-r">Admin Sparklin</span></div>
+            <div class="pub-row"><span class="pub-row-l">Auteur</span><span class="pub-row-r">Mhaia</span></div>
           </div>
           <div class="pub-url" id="pub-url-preview">sparklin.io/<span class="pub-url-lang" id="pub-url-lang-prefix">fr</span>/blog/<span id="pub-slug-preview">…</span></div>
           <input type="datetime-local" id="schedule-dt" class="schedule-input" onchange="onScheduleChange(this.value)"/>
@@ -918,6 +918,10 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
       <div class="panel-section">
         <div class="panel-label">SEO</div>
         <div class="panel-card" style="display:flex;flex-direction:column;gap:10px">
+          <div class="field-row">
+            <label>Extrait (résumé public)</label>
+            <textarea id="ed-excerpt" rows="2" placeholder="Court résumé affiché dans la liste des articles…"></textarea>
+          </div>
           <div class="field-row">
             <label>Méta description</label>
             <textarea id="ed-meta" rows="3" placeholder="120–160 caractères…" oninput="onMeta(this.value)"></textarea>
@@ -997,13 +1001,15 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
           <div class="field-row">
             <label>Catégorie</label>
             <select id="ed-cat">
-              <option value="">— Sélectionner —</option>
-              <option value="reglementation">Réglementation IRVE</option>
-              <option value="technique">Guide technique</option>
-              <option value="finance">Finance & Remboursement</option>
-              <option value="produit">Nos produits</option>
-              <option value="cas">Cas client</option>
-              <option value="news">Actualité</option>
+              <option value="Actualité">Actualité</option>
+              <option value="Réglementation">Réglementation</option>
+              <option value="Technique">Technique</option>
+              <option value="Technique & finance">Technique & finance</option>
+              <option value="Finance">Finance</option>
+              <option value="RH & fiscalité">RH & fiscalité</option>
+              <option value="Achat & installation">Achat & installation</option>
+              <option value="Cas client">Cas client</option>
+              <option value="Produit">Produit</option>
             </select>
           </div>
           <div class="field-row">
@@ -1011,17 +1017,12 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
             <input type="text" id="ed-tags" placeholder="IRVE, LOM, load balancing…"/>
           </div>
           <div class="field-row">
-            <label>Image de couverture</label>
-            <div class="img-drop" id="img-drop-zone" onclick="document.getElementById('cover-input').click()" ondragover="e=>{e.preventDefault();this.classList.add('over')}" ondragleave="this.classList.remove('over')" ondrop="handleDrop(event)">
-              <div id="img-drop-content">
-                <div class="img-drop-icon" style="display:flex;justify-content:center">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                </div>
-                <p>Cliquer ou glisser une image</p>
-                <small>JPG, PNG, WebP · Max 5 MB</small>
-              </div>
-            </div>
-            <input type="file" id="cover-input" accept="image/*" style="display:none" onchange="handleCover(this)"/>
+            <label>Image de couverture (URL)</label>
+            <input type="text" id="ed-hero" placeholder="/assets/images/mon-image.jpg"/>
+          </div>
+          <div class="field-row">
+            <label>Texte alternatif de l'image</label>
+            <input type="text" id="ed-hero-alt" placeholder="Description de l'image pour le SEO/accessibilité"/>
           </div>
           <div class="field-row">
             <label>Objectif mots</label>
@@ -1308,15 +1309,23 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 /* ═══════════════════════════════════════════════════════════
    DATA
 ═══════════════════════════════════════════════════════════ */
-var ARTICLES=[
-  {id:1,lang:'fr',title:'Load balancing IRVE : comment Sparklin déploie 140 bornes sans renforcement EDF',slug:'load-balancing-irve-sparklin',cat:'technique',status:'published',date:'24 avr. 2026',views:1240,readTime:'6 min',words:1180},
-  {id:2,lang:'fr',title:'Réglementation LOM 2025 : obligations des entreprises de plus de 20 salariés',slug:'reglementation-lom-2025',cat:'reglementation',status:'published',date:'18 avr. 2026',views:873,readTime:'8 min',words:1620},
-  {id:3,lang:'fr',title:'Remboursement URSSAF recharge domicile : le guide complet pour les RH',slug:'remboursement-urssaf-recharge-domicile',cat:'finance',status:'published',date:'10 avr. 2026',views:654,readTime:'7 min',words:1380},
-  {id:4,lang:'fr',title:'GIREVE et l\'interopérabilité OCPP : fonctionnement et enjeux pour votre parc',slug:'gireve-interoperabilite-ocpp',cat:'technique',status:'published',date:'2 avr. 2026',views:517,readTime:'5 min',words:970},
-  {id:5,lang:'fr',title:'Choisir entre une borne 3,7 kW et 22 kW : guide décisionnel complet',slug:'choisir-borne-37-22kw',cat:'technique',status:'draft',date:'Hier',views:0,readTime:'—',words:420},
-  {id:6,lang:'de',title:'Réglementation IRVE 2025 : nouvelles obligations et calendrier détaillé',slug:'reglementation-irve-2025',cat:'reglementation',status:'draft',date:'Il y a 2j',views:0,readTime:'—',words:230},
-  {id:7,lang:'en',title:'Guide URSSAF 2025 : nouveaux plafonds de remboursement',slug:'guide-urssaf-2025',cat:'finance',status:'scheduled',date:'1er mai 2026',views:0,readTime:'~6 min',words:0},
-];
+var ARTICLES=[];
+var articlesLoaded=false;
+function fmtDateFr(iso){
+  if(!iso)return '—';
+  var d=new Date(iso);
+  if(isNaN(d.getTime()))return '—';
+  return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+}
+function postToArticleRow(p){
+  var words=(p.body_html||'').replace(/<[^>]*>/g,' ').trim().split(/\s+/).filter(Boolean).length;
+  return {
+    id:p.id,lang:'fr',title:p.title,slug:p.slug,cat:p.category||'Actualité',
+    status:p.status,date:fmtDateFr(p.published_at||p.created_at),
+    views:p.views||0,readTime:p.read_time||(words?Math.max(1,Math.ceil(words/200))+' min':'—'),
+    words:words,raw:p
+  };
+}
 var CAT={technique:{label:'Technique',color:'#1D4ED8',bg:'#EFF6FF'},reglementation:{label:'Réglementation',color:'#7C3AED',bg:'#F5F3FF'},finance:{label:'Finance',color:'#15803D',bg:'#F0FDF4'},produit:{label:'Produit',color:'#E8563A',bg:'#FFF7F5'},cas:{label:'Cas client',color:'#B45309',bg:'#FFFBEB'},news:{label:'Actualité',color:'#0891B2',bg:'#ECFEFF'}};
 var WEEK=[180,240,195,320,290,410,380];
 var MONTH=[60,80,45,120,90,140,100,160,130,180,200,160,190,220,180,250,210,240,280,260,300,280,310,290,330,300,350,380,410,380];
@@ -1353,10 +1362,17 @@ function openEditor(id){
   if(id){
     var a=ARTICLES.find(x=>x.id===id);
     if(a){
+      var p=a.raw||{};
       document.getElementById('ed-title').value=a.title;
       document.getElementById('ed-slug').value=a.slug;
       document.getElementById('pub-slug-preview').textContent=a.slug;
       document.getElementById('ed-cat').value=a.cat;
+      document.getElementById('ed-excerpt').value=p.excerpt||'';
+      document.getElementById('ed-meta').value=p.meta_desc||'';
+      document.getElementById('ed-focus-kw').value=p.keywords||'';
+      document.getElementById('ed-hero').value=p.hero_image||'';
+      document.getElementById('ed-hero-alt').value=p.hero_image_alt||'';
+      document.getElementById('rte-editor').innerHTML=p.body_html||'';
       document.getElementById('pub-status').className='status '+(a.status==='published'?'s-published':a.status==='scheduled'?'s-scheduled':'s-draft');
       document.getElementById('pub-status').textContent=a.status==='published'?'Publié':a.status==='scheduled'?'Planifié':'Brouillon';
       currentEditId=id;
@@ -1365,8 +1381,12 @@ function openEditor(id){
     document.getElementById('ed-title').value='';
     document.getElementById('ed-slug').value='';
     document.getElementById('rte-editor').innerHTML='';
+    document.getElementById('ed-excerpt').value='';
     document.getElementById('ed-meta').value='';
     document.getElementById('ed-focus-kw').value='';
+    document.getElementById('ed-hero').value='';
+    document.getElementById('ed-hero-alt').value='';
+    document.getElementById('ed-cat').value='Actualité';
     document.getElementById('pub-slug-preview').textContent='…';
     document.getElementById('pub-status').className='status s-draft';
     document.getElementById('pub-status').textContent='Brouillon';
@@ -1419,12 +1439,16 @@ function renderDash(){
    ARTICLES LIST
 ═══════════════════════════════════════════════════════════ */
 function statusLabel(s){return{published:'Publié',draft:'Brouillon',scheduled:'Planifié',review:'Révision'}[s]||s;}
-function catPill(c){var d=CAT[c];if(!d)return'';return`<span class="cat-pill" style="background:${d.bg};color:${d.color}">${d.label}</span>`;}
+function catPill(c){if(!c)return'';var d=CAT[c]||{label:c,color:'#7C5B45',bg:'#F5F0EA'};return`<span class="cat-pill" style="background:${d.bg};color:${d.color}">${d.label}</span>`;}
 
 function renderArts(filter){
   var list=filter==='all'?ARTICLES:ARTICLES.filter(a=>a.status===filter);
   if(currentSort==='views') list=[...list].sort((a,b)=>b.views-a.views);
   document.getElementById('art-count-sub').textContent=list.length+' article'+(list.length>1?'s':'');
+  document.getElementById('fc-all').textContent='('+ARTICLES.length+')';
+  document.getElementById('fc-published').textContent='('+ARTICLES.filter(a=>a.status==='published').length+')';
+  document.getElementById('fc-draft').textContent='('+ARTICLES.filter(a=>a.status==='draft').length+')';
+  document.getElementById('fc-scheduled').textContent='('+ARTICLES.filter(a=>a.status==='scheduled').length+')';
   var tbody=document.getElementById('art-tbody');
   if(!list.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:40px 20px;color:var(--text3);font-size:13px">Aucun article dans cette catégorie</td></tr>';return;}
   tbody.innerHTML=list.map((a,i)=>`
@@ -1432,7 +1456,7 @@ function renderArts(filter){
       <td><input type="checkbox" class="art-check" onclick="e=>{e.stopPropagation();toggleSel(${a.id},e.target.checked)}" ${selectedIds.has(a.id)?'checked':''}/></td>
       <td>
         <div class="art-title-cell">${a.title}</div>
-        <div class="art-slug">/${a.lang||'fr'}/blog/${a.slug}${a.words?' · '+a.words+' mots':''}</div>
+        <div class="art-slug">/blog/${a.slug}/${a.words?' · '+a.words+' mots':''}</div>
       </td>
       <td>${catPill(a.cat)}</td>
       <td><span class="status s-${a.status}">${statusLabel(a.status)}</span></td>
@@ -1472,26 +1496,34 @@ function updateBatchBtn(){
   btn.style.display=n?'inline-flex':'none';
   document.getElementById('batch-count').textContent=n;
 }
-function batchAction(){
+async function batchAction(){
   if(!selectedIds.size)return;
-  if(confirm('Supprimer les '+selectedIds.size+' articles sélectionnés ?')){
-    ARTICLES=ARTICLES.filter(a=>!selectedIds.has(a.id));
-    selectedIds.clear();updateBatchBtn();renderArts(currentFilter);
-    updateMetrics();toast('Articles supprimés','red');
-  }
+  if(!confirm('Supprimer les '+selectedIds.size+' articles sélectionnés ?'))return;
+  var ids=[...selectedIds];
+  for(var i=0;i<ids.length;i++){ await window.adminPostsCall('DELETE',null,ids[i]); }
+  selectedIds.clear();updateBatchBtn();
+  await loadArticles();
+  toast('Articles supprimés','red');
 }
-function duplicateArt(id){
+async function duplicateArt(id){
   var a=ARTICLES.find(x=>x.id===id);if(!a)return;
-  var copy={...a,id:Date.now(),title:'Copie de '+a.title,slug:a.slug+'-copie',status:'draft',date:'À l\'instant',views:0};
-  ARTICLES.unshift(copy);renderArts(currentFilter);updateMetrics();
+  var p=a.raw||{};
+  var res=await window.adminPostsCall('POST',{
+    title:'Copie de '+a.title,slug:a.slug+'-copie-'+Date.now(),category:a.cat,status:'draft',
+    excerpt:p.excerpt,meta_title:p.meta_title,meta_desc:p.meta_desc,keywords:p.keywords,
+    hero_image:p.hero_image,hero_image_alt:p.hero_image_alt,body_html:p.body_html,read_time:p.read_time,
+  });
+  if(!res)return;
+  await loadArticles();
   toast('Article dupliqué en brouillon','green');
 }
-function deleteArt(id){
+async function deleteArt(id){
   var a=ARTICLES.find(x=>x.id===id);if(!a)return;
-  if(confirm('Supprimer "'+a.title.substring(0,50)+'…" ?')){
-    ARTICLES=ARTICLES.filter(x=>x.id!==id);
-    renderArts(currentFilter);updateMetrics();toast('Article supprimé','red');
-  }
+  if(!confirm('Supprimer "'+a.title.substring(0,50)+'…" ?'))return;
+  var res=await window.adminPostsCall('DELETE',null,id);
+  if(!res)return;
+  await loadArticles();
+  toast('Article supprimé','red');
 }
 function updateMetrics(){
   document.getElementById('m-pub').textContent=ARTICLES.filter(a=>a.status==='published').length;
@@ -1676,32 +1708,60 @@ function setPubTab(t,btn){
   mainBtn.textContent=t==='sched'?'Planifier':t==='draft'?'Sauver':'Publier';
   mainBtn.onclick=t==='sched'?schedulePub:t==='draft'?saveDraft:publishNow;
 }
-function publishNow(){
-  var t=document.getElementById('ed-title').value;
-  if(!t.trim()){toast('Titre requis pour publier','red');return;}
+function collectPostPayload(){
+  return {
+    title:document.getElementById('ed-title').value.trim(),
+    slug:document.getElementById('ed-slug').value.trim(),
+    category:document.getElementById('ed-cat').value,
+    excerpt:document.getElementById('ed-excerpt').value,
+    meta_desc:document.getElementById('ed-meta').value,
+    keywords:document.getElementById('ed-focus-kw').value,
+    hero_image:document.getElementById('ed-hero').value,
+    hero_image_alt:document.getElementById('ed-hero-alt').value,
+    body_html:document.getElementById('rte-editor').innerHTML,
+  };
+}
+async function savePost(status,publishedAt){
+  var payload=collectPostPayload();
+  if(!payload.title){toast('Titre requis','red');return null;}
+  payload.status=status;
+  if(publishedAt!==undefined)payload.published_at=publishedAt;
+  var res;
+  if(currentEditId){
+    payload.id=currentEditId;
+    res=await window.adminPostsCall('PATCH',payload);
+  } else {
+    res=await window.adminPostsCall('POST',payload);
+    if(res&&res.post)currentEditId=res.post.id;
+  }
+  return res;
+}
+async function publishNow(){
+  var res=await savePost('published',new Date().toISOString());
+  if(!res)return;
   document.getElementById('pub-status').className='status s-published';
   document.getElementById('pub-status').textContent='Publié';
-  if(currentEditId){var a=ARTICLES.find(x=>x.id===currentEditId);if(a)a.status='published';}
-  else{
-    ARTICLES.unshift({id:Date.now(),title:t,slug:document.getElementById('ed-slug').value,cat:document.getElementById('ed-cat').value,status:'published',date:'À l\'instant',views:0,readTime:'—',words:0});
-  }
-  updateMetrics();
+  await loadArticles();
   toast('Article publié sur le blog !','green');
 }
-function saveDraft(){
-  var t=document.getElementById('ed-title').value;
-  if(!t.trim()){toast('Ajoutez un titre','amber');return;}
+async function saveDraft(){
+  var res=await savePost('draft');
+  if(!res)return;
   document.getElementById('pub-status').className='status s-draft';
   document.getElementById('pub-status').textContent='Brouillon';
   saveVersion();
+  await loadArticles();
   toast('Brouillon sauvegardé','green');
 }
-function schedulePub(){
+async function schedulePub(){
   var dt=document.getElementById('schedule-dt').value;
   if(!dt){toast('Choisissez une date de publication','amber');return;}
+  var d=new Date(dt);
+  var res=await savePost('scheduled',d.toISOString());
+  if(!res)return;
   document.getElementById('pub-status').className='status s-scheduled';
   document.getElementById('pub-status').textContent='Planifié';
-  var d=new Date(dt);
+  await loadArticles();
   toast('Planifié pour le '+d.toLocaleDateString('fr-FR',{day:'2-digit',month:'long'}),'green');
 }
 function onScheduleChange(v){
@@ -1893,10 +1953,10 @@ function toast(msg,type){
 ═══════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded',()=>{
   renderDash();
-  updateMetrics();
   updateWordGoal(wordGoal);
   updateSeo();
   renderVersions();
+  if(window.loadArticles) window.loadArticles(); else setTimeout(()=>window.loadArticles&&window.loadArticles(),0);
   // Autosave loop
   setInterval(()=>{
     if(document.getElementById('view-editor').classList.contains('active')){
@@ -2607,6 +2667,31 @@ function renderArtsFiltered() {
     });
   }
   function escapeAttr(s) { return escapeHtml(s); }
+
+  /* ── ARTICLES (posts) ── */
+  window.loadArticles = async function() {
+    var rows = await sbSelect('posts', 'select=*&order=sort_order.asc,published_at.desc,id.desc');
+    window.ARTICLES = rows.map(postToArticleRow);
+    articlesLoaded = true;
+    if (document.getElementById('view-dashboard').classList.contains('active')) renderDash();
+    if (document.getElementById('view-articles').classList.contains('active')) renderArts(currentFilter);
+    updateMetrics();
+    document.getElementById('sb-count').textContent = window.ARTICLES.length;
+  };
+
+  // POST/PATCH/DELETE sur admin-posts — DELETE passe l'id en query string, pas en body
+  window.adminPostsCall = async function(method, body, deleteId) {
+    if (method === 'DELETE') {
+      var token = await accessToken();
+      if (!token) { toast('Session expirée, reconnectez-vous', 'red'); return null; }
+      var resp = await fetch('/.netlify/functions/admin-posts?id=' + deleteId, { method: 'DELETE', headers: { Authorization: 'Bearer ' + token } });
+      var data = null;
+      try { data = await resp.json(); } catch (e) {}
+      if (!resp.ok) { toast((data && data.error) || 'Erreur', 'red'); return null; }
+      return data;
+    }
+    return adminCall('admin-posts', method, body);
+  };
 
   // Fallback si toast() n'existe pas déjà ailleurs dans le dashboard
   if (typeof window.toast !== 'function') {
