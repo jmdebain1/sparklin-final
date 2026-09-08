@@ -303,21 +303,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <td>Jusqu'à 13 mois</td>
           <td>Oui</td>
         </tr>
-        <tr>
-          <td>Crisp (messagerie d'assistance)</td>
-          <td>Maintien de la session de chat en ligne avec l'équipe Sparklin</td>
-          <td>Durée de la session / quelques mois selon le cookie</td>
-          <td>Oui</td>
-        </tr>
       </tbody>
     </table>
-    <p>Les cookies de mesure d'audience (Google Analytics) et l'outil de messagerie d'assistance (Crisp) ne sont chargés qu'après acceptation via le bandeau prévu à cet effet. Le détail du traitement réalisé par Google est décrit dans la section «&nbsp;Statistiques et analyses d'audience&nbsp;» des <a href="/mentions-legales/">Mentions légales</a>.</p>
+    <p>Les cookies de mesure d'audience (Google Analytics) ne sont chargés qu'après acceptation via le bandeau prévu à cet effet. Le détail du traitement réalisé par Google est décrit dans la section «&nbsp;Statistiques et analyses d'audience&nbsp;» des <a href="/mentions-legales/">Mentions légales</a>.</p>
 
     <h2 id="tiers">Cookies émis par des tiers</h2>
-    <p>Certains contenus ou outils intégrés au Site (mesure d'audience, messagerie d'assistance) sont fournis par des prestataires tiers qui peuvent déposer leurs propres cookies. Sparklin n'a pas le contrôle direct sur ces cookies&nbsp;; nous vous invitons à consulter les politiques de confidentialité de ces prestataires pour plus d'information&nbsp;:</p>
+    <p>Certains contenus ou outils intégrés au Site (mesure d'audience) sont fournis par des prestataires tiers qui peuvent déposer leurs propres cookies. Sparklin n'a pas le contrôle direct sur ces cookies&nbsp;; nous vous invitons à consulter les politiques de confidentialité de ces prestataires pour plus d'information&nbsp;:</p>
     <ul>
       <li>Google — <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener">politique cookies de Google</a></li>
-      <li>Crisp — <a href="https://crisp.chat/en/privacy/" target="_blank" rel="noopener">politique de confidentialité de Crisp</a></li>
     </ul>
 
     <h2 id="donnees-personnelles">Données personnelles</h2>
@@ -455,33 +448,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   window.toggleMega = toggleMega;
 })();
 </script>
-
-
-
-
-
-<!-- ══ CRISP LIVECHAT ══════════════════════════════════════════
-     Module: modules/addon/crisp
-     Website ID: 326a0f31-24a5-4709-9538-ff5f4aa65f71
-     ══════════════════════════════════════════════════════════ -->
-<script type="text/javascript">
-  // Ne se charge qu'apres consentement cookies (voir skCookieChoice / skCookieInit
-  // plus bas) : window.skLoadCrisp() est l'unique point d'entree, protege contre
-  // un double chargement.
-  window.skLoadCrisp = function(){
-    if (window.$crisp) return; // deja charge
-    window.$crisp=[];
-    window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
-    var d=document;
-    var s=d.createElement("script");
-    s.src="https://client.crisp.chat/l.js";
-    s.async=1;
-    d.getElementsByTagName("head")[0].appendChild(s);
-  };
-</script>
-<!-- ══ /CRISP ════════════════════════════════════════════════ -->
-
-
 <script>
 function toggleMobileNav() {
   var btn = document.getElementById('nav-hamburger');
@@ -609,14 +575,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (accepted) {
       // Ici : activer analytique (GA, etc.) si besoin
-      if (window.skLoadCrisp) window.skLoadCrisp();
     }
   }
   window.skCookieChoice = skCookieChoice;
   function skCookieInit() {
     try {
       var consent = localStorage.getItem(COOKIE_KEY);
-      if (consent === 'accepted' && window.skLoadCrisp) window.skLoadCrisp();
       if (consent) return; // déjà répondu
     } catch(e){}
     var banner = document.getElementById('sk-cookie-banner');

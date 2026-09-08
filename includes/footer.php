@@ -106,18 +106,6 @@
   window.toggleMega = toggleMega;
 })();
 </script>
-<script type="text/javascript">
-  window.skLoadCrisp = function(){
-    if (window.$crisp) return;
-    window.$crisp=[];
-    window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
-    var d=document;
-    var s=d.createElement("script");
-    s.src="https://client.crisp.chat/l.js";
-    s.async=1;
-    d.getElementsByTagName("head")[0].appendChild(s);
-  };
-</script>
 <script>
 function toggleMobileNav() {
   var btn = document.getElementById('nav-hamburger');
@@ -177,14 +165,12 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(function(){ banner.style.display = 'none'; }, 240);
     }
     if (accepted) {
-      if (window.skLoadCrisp) window.skLoadCrisp();
     }
   }
   window.skCookieChoice = skCookieChoice;
   function skCookieInit() {
     try {
       var consent = localStorage.getItem(COOKIE_KEY);
-      if (consent === 'accepted' && window.skLoadCrisp) window.skLoadCrisp();
       if (consent) return;
     } catch(e){}
     var banner = document.getElementById('sk-cookie-banner');

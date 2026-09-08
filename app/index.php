@@ -352,6 +352,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
+  <!-- APERÇU DE L'APPLICATION — captures d'écran réelles -->
+  <section class="app-screens-section" style="padding:80px clamp(20px,5vw,80px);background:var(--bg-off);">
+    <div class="sk-wrap">
+      <span class="section-label" data-i18n="app.screens.h2"><?= tr('app.screens.h2') ?></span>
+      <h2 class="section-title" data-i18n="app.screens.sub"><?= tr('app.screens.sub') ?></h2>
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-top:40px;">
+        <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,46,.08);">
+          <img src="/assets/images/app-onboarding.jpg" alt="Écran de connexion de l'application Sparklin par numéro de téléphone" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+        </div>
+        <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,46,.08);">
+          <img src="/assets/images/app-charging-session.jpg" alt="Suivi en temps réel d'une session de charge dans l'application Sparklin — énergie, puissance et temps restant" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+        </div>
+        <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,46,.08);">
+          <img src="/assets/images/app-pay-parking.jpg" alt="Paiement d'une session de recharge via Google Pay depuis l'application Sparklin sur un parking" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- GESTIONNAIRE vs UTILISATEUR -->
   <section class="specs-section" style="background:var(--bg-off);">
     <div class="sk-wrap">
@@ -436,7 +455,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="pilot-screens reveal">
         <div class="pilot-screen"><img src="/assets/images/app-mobile-payment.jpg" alt="Application Sparklin — &eacute;cran principal de suivi de charge"/></div>
-        <div class="pilot-screen"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — tableau de bord gestionnaire"/></div>
+        <div class="pilot-screen"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — fiche détaillée d'une borne avec géolocalisation sur carte"/></div>
       </div>
     </div>
   </section>
@@ -596,33 +615,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   window.toggleMega = toggleMega;
 })();
 </script>
-
-
-
-
-
-<!-- ══ CRISP LIVECHAT ══════════════════════════════════════════
-     Module: modules/addon/crisp
-     Website ID: 326a0f31-24a5-4709-9538-ff5f4aa65f71
-     ══════════════════════════════════════════════════════════ -->
-<script type="text/javascript">
-  // Ne se charge qu'apres consentement cookies (voir skCookieChoice / skCookieInit
-  // plus bas) : window.skLoadCrisp() est l'unique point d'entree, protege contre
-  // un double chargement.
-  window.skLoadCrisp = function(){
-    if (window.$crisp) return; // deja charge
-    window.$crisp=[];
-    window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
-    var d=document;
-    var s=d.createElement("script");
-    s.src="https://client.crisp.chat/l.js";
-    s.async=1;
-    d.getElementsByTagName("head")[0].appendChild(s);
-  };
-</script>
-<!-- ══ /CRISP ════════════════════════════════════════════════ -->
-
-
 <script>
 function toggleMobileNav() {
   var btn = document.getElementById('nav-hamburger');
@@ -750,14 +742,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (accepted) {
       // Ici : activer analytique (GA, etc.) si besoin
-      if (window.skLoadCrisp) window.skLoadCrisp();
     }
   }
   window.skCookieChoice = skCookieChoice;
   function skCookieInit() {
     try {
       var consent = localStorage.getItem(COOKIE_KEY);
-      if (consent === 'accepted' && window.skLoadCrisp) window.skLoadCrisp();
       if (consent) return; // déjà répondu
     } catch(e){}
     var banner = document.getElementById('sk-cookie-banner');

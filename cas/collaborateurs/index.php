@@ -354,7 +354,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
       <div class="pilot-screens reveal">
-        <div class="pilot-screen"><img src="/assets/images/dashboard-imac.jpg" alt="Dashboard Spark Pilot — gestion flotte domicile, remboursements et consommations"/></div>
+        <div class="pilot-screen"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — fiche détaillée d'une borne à domicile avec géolocalisation"/></div>
         <div class="pilot-screen"><img src="/assets/images/app-mobile-payment.jpg" alt="Application Sparklin mobile — suivi session de charge domicile"/></div>
       </div>
     </div>
@@ -573,33 +573,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   window.toggleMega = toggleMega;
 })();
 </script>
-
-
-
-
-
-<!-- ══ CRISP LIVECHAT ══════════════════════════════════════════
-     Module: modules/addon/crisp
-     Website ID: 326a0f31-24a5-4709-9538-ff5f4aa65f71
-     ══════════════════════════════════════════════════════════ -->
-<script type="text/javascript">
-  // Ne se charge qu'apres consentement cookies (voir skCookieChoice / skCookieInit
-  // plus bas) : window.skLoadCrisp() est l'unique point d'entree, protege contre
-  // un double chargement.
-  window.skLoadCrisp = function(){
-    if (window.$crisp) return; // deja charge
-    window.$crisp=[];
-    window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
-    var d=document;
-    var s=d.createElement("script");
-    s.src="https://client.crisp.chat/l.js";
-    s.async=1;
-    d.getElementsByTagName("head")[0].appendChild(s);
-  };
-</script>
-<!-- ══ /CRISP ════════════════════════════════════════════════ -->
-
-
 <script>
 function toggleMobileNav() {
   var btn = document.getElementById('nav-hamburger');
@@ -727,14 +700,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (accepted) {
       // Ici : activer analytique (GA, etc.) si besoin
-      if (window.skLoadCrisp) window.skLoadCrisp();
     }
   }
   window.skCookieChoice = skCookieChoice;
   function skCookieInit() {
     try {
       var consent = localStorage.getItem(COOKIE_KEY);
-      if (consent === 'accepted' && window.skLoadCrisp) window.skLoadCrisp();
       if (consent) return; // déjà répondu
     } catch(e){}
     var banner = document.getElementById('sk-cookie-banner');

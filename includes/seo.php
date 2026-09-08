@@ -55,7 +55,7 @@ if (!function_exists('sk_seo_head')) {
 
         $langs = ['fr','en','de','es','th','ms','id'];
         $cur   = function_exists('lang') ? lang() : 'fr';
-        $img   = $opts['image'] ?? (sk_seo_base() . '/assets/images/dashboard-imac.jpg');
+        $img   = $opts['image'] ?? (sk_seo_base() . '/assets/images/dashboard-laptop.jpg');
         $type  = $opts['type'] ?? 'website';
         $esc   = fn($s) => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 

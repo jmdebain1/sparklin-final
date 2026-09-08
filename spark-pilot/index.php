@@ -267,7 +267,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
   <div class="hero-visual">
-    <img class="hero-img-main" src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — Tableau de bord de supervision IRVE" style="object-fit:contain;border-radius:16px;"/>
+    <img class="hero-img-main" src="/assets/images/dashboard-laptop.jpg" alt="Spark Pilot — Tableau de bord de supervision IRVE" style="object-fit:contain;border-radius:16px;"/>
   </div>
 </header>
 
@@ -276,8 +276,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="sk-wrap">
     <div class="pilot-layout">
       <div class="pilot-screens">
-        <div class="pilot-screen"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — iMac dashboard" loading="lazy"/></div>
-        <div class="pilot-screen"><img src="/assets/images/dashboard-laptop.jpg" alt="Spark Pilot — MacBook dashboard" loading="lazy"/></div>
+        <div class="pilot-screen"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — fiche détaillée d'une borne avec géolocalisation sur carte" loading="lazy"/></div>
+        <div class="pilot-screen"><img src="/assets/images/dashboard-laptop.jpg" alt="Spark Pilot — tableau de bord de supervision" loading="lazy"/></div>
       </div>
       <div class="pilot-features">
         <span class="section-label" data-i18n="pilot.dash.h2"><?= tr('pilot.dash.h2') ?></span>
@@ -501,33 +501,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   window.toggleMega = toggleMega;
 })();
 </script>
-
-
-
-
-
-<!-- ══ CRISP LIVECHAT ══════════════════════════════════════════
-     Module: modules/addon/crisp
-     Website ID: 326a0f31-24a5-4709-9538-ff5f4aa65f71
-     ══════════════════════════════════════════════════════════ -->
-<script type="text/javascript">
-  // Ne se charge qu'apres consentement cookies (voir skCookieChoice / skCookieInit
-  // plus bas) : window.skLoadCrisp() est l'unique point d'entree, protege contre
-  // un double chargement.
-  window.skLoadCrisp = function(){
-    if (window.$crisp) return; // deja charge
-    window.$crisp=[];
-    window.CRISP_WEBSITE_ID="326a0f31-24a5-4709-9538-ff5f4aa65f71";
-    var d=document;
-    var s=d.createElement("script");
-    s.src="https://client.crisp.chat/l.js";
-    s.async=1;
-    d.getElementsByTagName("head")[0].appendChild(s);
-  };
-</script>
-<!-- ══ /CRISP ════════════════════════════════════════════════ -->
-
-
 <script>
 function toggleMobileNav() {
   var btn = document.getElementById('nav-hamburger');
@@ -655,14 +628,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (accepted) {
       // Ici : activer analytique (GA, etc.) si besoin
-      if (window.skLoadCrisp) window.skLoadCrisp();
     }
   }
   window.skCookieChoice = skCookieChoice;
   function skCookieInit() {
     try {
       var consent = localStorage.getItem(COOKIE_KEY);
-      if (consent === 'accepted' && window.skLoadCrisp) window.skLoadCrisp();
       if (consent) return; // déjà répondu
     } catch(e){}
     var banner = document.getElementById('sk-cookie-banner');
