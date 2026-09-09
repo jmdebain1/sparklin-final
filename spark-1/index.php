@@ -343,9 +343,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="pilot-section" style="padding:80px clamp(20px,5vw,80px);background:var(--bg-off);">
   <div class="sk-wrap">
     <div class="pilot-layout">
-      <div class="pilot-screens">
-        <div class="pilot-screen"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — fiche détaillée d'une borne avec géolocalisation sur carte" loading="lazy"/></div>
-        <div class="pilot-screen"><img src="/assets/images/dashboard-laptop.jpg" alt="Spark Pilot — supervision MacBook" loading="lazy"/></div>
+      <div class="pilot-screens" style="align-self:center;width:100%;">
+        <div class="pilot-screen" style="height:340px !important;max-height:340px !important;"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — fiche détaillée d'une borne avec géolocalisation sur carte" loading="lazy"/></div>
       </div>
       <div class="pilot-features">
         <span class="section-label" data-i18n="s1.pilot.label"><?= tr('s1.pilot.label') ?></span>

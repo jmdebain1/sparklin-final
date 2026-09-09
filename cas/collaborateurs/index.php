@@ -253,7 +253,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
     <div style="width:100%;min-height:400px;max-height:520px;overflow:hidden;border-radius:20px;">
-      <img src="/assets/images/parking-left.jpg" alt="Spark Plus installée au domicile d'un collaborateur — recharge véhicule électrique de fonction" style="width:100%;height:100%;object-fit:cover;object-position:center 10%;border-radius:20px;" loading="lazy"/>
+      <img src="/assets/images/parking-left.jpg" alt="Spark Plus installée au domicile d'un collaborateur — recharge véhicule électrique de fonction" style="width:100%;height:100%;object-fit:cover;object-position:center 88%;border-radius:20px;" loading="lazy"/>
     </div>
   </section>
 
@@ -353,9 +353,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
       </div>
-      <div class="pilot-screens reveal">
-        <div class="pilot-screen"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — fiche détaillée d'une borne à domicile avec géolocalisation"/></div>
-        <div class="pilot-screen"><img src="/assets/images/app-mobile-payment.jpg" alt="Application Sparklin mobile — suivi session de charge domicile"/></div>
+      <div class="pilot-screens reveal" style="align-self:center;width:100%;">
+        <div class="pilot-screen" style="height:340px !important;max-height:340px !important;"><img src="/assets/images/dashboard-imac.jpg" alt="Spark Pilot — fiche détaillée d'une borne à domicile avec géolocalisation"/></div>
       </div>
     </div>
   </section>

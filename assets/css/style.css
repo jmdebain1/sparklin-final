@@ -454,7 +454,7 @@ section.intro-section.img-left .intro-image { order: 1; }
 .pilot-feature-text h4 { font-size: 15px; font-weight: 500; color: var(--dark); margin-bottom: 5px; }
 .pilot-feature-text p { font-size: 14px; color: var(--text-mid); line-height: 1.65; font-weight: 300; }
 .pilot-screens { display: flex !important; flex-direction: column !important; gap: 16px !important; }
-.pilot-screen { overflow: hidden !important; border-radius: 14px !important; max-height: 260px !important; }
+.pilot-screen { overflow: hidden !important; border-radius: 14px !important; height: 260px !important; max-height: 260px !important; }
 .pilot-screen img { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; }
 
 
@@ -538,7 +538,7 @@ section.cas-hero {
   background: var(--bg-white) !important;
 }
 section.cas-hero > div:first-child { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
-section.cas-hero > div:last-child { overflow: hidden; border-radius: 20px; max-height: 480px; min-height: 320px; }
+section.cas-hero > div:last-child { overflow: hidden; border-radius: 20px; height: 420px; max-height: 480px; min-height: 320px; }
 section.cas-hero > div:last-child img {
   width: 100% !important; height: 100% !important; min-height: 320px;
   object-fit: cover !important; border-radius: 20px !important;
@@ -978,7 +978,7 @@ a.home-cas-card, a.home-cas-card:hover, a.home-cas-card:visited { text-decoratio
   section.cas-hero {
     grid-template-columns: 1fr !important; padding-top: 140px !important; gap: 36px !important;
   }
-  section.cas-hero > div:last-child { max-height: 280px !important; min-height: 200px; }
+  section.cas-hero > div:last-child { height: 240px !important; max-height: 280px !important; min-height: 200px; }
 
   .hero { grid-template-columns: 1fr; }
   .hero-visual { order: -1; max-height: 280px; overflow: hidden; display: flex; align-items: center; justify-content: center; }

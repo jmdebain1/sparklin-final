@@ -282,7 +282,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p data-i18n="app.intro.p3"><?= tr('app.intro.p3') ?></p>
     </div>
     <div class="intro-image reveal" style="min-height:300px;aspect-ratio:4/3;">
-      <img src="/assets/images/app-communities.jpg" alt="Utilisateur de l&rsquo;application Sparklin — gestion de sa session de recharge sur smartphone"/>
+      <img src="/assets/images/app-charging-session.jpg" alt="Utilisateur de l&rsquo;application Sparklin — suivi en temps réel d'une session de recharge sur smartphone" style="width:100%;height:100%;object-fit:cover;display:block;"/>
     </div>
   </section>
 
@@ -358,14 +358,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="section-label" data-i18n="app.screens.h2"><?= tr('app.screens.h2') ?></span>
       <h2 class="section-title" data-i18n="app.screens.sub"><?= tr('app.screens.sub') ?></h2>
       <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-top:40px;">
-        <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,46,.08);">
-          <img src="/assets/images/app-onboarding.jpg" alt="Écran de connexion de l'application Sparklin par numéro de téléphone" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+        <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,46,.08);aspect-ratio:3/4;">
+          <img src="/assets/images/app-onboarding.jpg" alt="Écran de connexion de l'application Sparklin par numéro de téléphone" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
         </div>
-        <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,46,.08);">
-          <img src="/assets/images/app-charging-session.jpg" alt="Suivi en temps réel d'une session de charge dans l'application Sparklin — énergie, puissance et temps restant" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+        <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,46,.08);aspect-ratio:3/4;">
+          <img src="/assets/images/app-charging-session.jpg" alt="Suivi en temps réel d'une session de charge dans l'application Sparklin — énergie, puissance et temps restant" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
         </div>
-        <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,46,.08);">
-          <img src="/assets/images/app-pay-parking.jpg" alt="Paiement d'une session de recharge via Google Pay depuis l'application Sparklin sur un parking" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+        <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,46,.08);aspect-ratio:3/4;">
+          <img src="/assets/images/app-pay-parking.jpg" alt="Paiement d'une session de recharge via Google Pay depuis l'application Sparklin sur un parking" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;"/>
         </div>
       </div>
     </div>

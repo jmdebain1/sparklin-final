@@ -250,7 +250,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="/contact/" class="btn-primary" data-i18n="pilot.hero.cta1"><?= tr('pilot.hero.cta1') ?></a><a href="#camping-chiffres" class="btn-outline" data-i18n="ui.see_figures"><?= tr('ui.see_figures') ?></a></div>
     </div>
     <div style="width:100%;min-height:400px;max-height:520px;overflow:hidden;border-radius:20px;">
-      <img src="/assets/images/spark1-potelet.jpg" alt="Borne Sparklin sur potelet — camping et hébergement" style="width:100%;height:100%;object-fit:cover;object-position:center 5%;border-radius:20px;" loading="lazy"/>
+      <img src="/assets/images/spark-plus-onsite-hd.jpg" alt="Borne Spark Plus installée en extérieur sur un camping, avec écran de paiement QR code" style="width:100%;height:100%;object-fit:cover;object-position:center 65%;border-radius:20px;" loading="lazy"/>
     </div>
   </section>
 

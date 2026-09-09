@@ -307,7 +307,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </ul>
   </div>
   <div class="intro-image reveal">
-    <img src="/assets/images/dashboard-laptop.jpg" alt="Spark Pilot — supervision load balancing" loading="lazy"/>
+    <img src="/assets/images/app-communities.jpg" alt="Sparklin — créez vos communautés de charge et gérez la tarification de chaque groupe d'utilisateurs" loading="lazy"/>
   </div>
 </section>
 
