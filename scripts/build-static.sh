@@ -37,6 +37,7 @@ PAGES=(
   "/cgu/"
   "/cgu-app/"
   "/contact/"
+  "/contact/merci/"
   "/evenements/"
   "/livre-blanc/"
   "/livre-blanc/merci/"

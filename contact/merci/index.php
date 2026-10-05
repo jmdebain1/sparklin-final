@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../includes/env.php';
-require_once __DIR__ . '/../includes/supabase.php';
-require_once __DIR__ . '/../includes/i18n.php';
-loadEnv(__DIR__ . '/../.env');
+require_once __DIR__ . '/../../includes/env.php';
+require_once __DIR__ . '/../../includes/supabase.php';
+require_once __DIR__ . '/../../includes/i18n.php';
+loadEnv(__DIR__ . '/../../.env');
 $lang = initI18n();
 ?>
 <!DOCTYPE html>
@@ -10,8 +10,8 @@ $lang = initI18n();
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title><?= tr('meta.contact.title') ?></title>
-  <meta name="description" content="<?= tr('meta.contact.desc') ?>" data-i18n-meta="meta.contact.desc"/>
+  <title>Merci pour votre demande — Sparklin</title>
+  <meta name="description" content="Votre demande de contact a bien été envoyée à l'équipe Sparklin."/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png"/>
@@ -20,7 +20,7 @@ $lang = initI18n();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/assets/css/style.css">
-  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>tr('meta.contact.title'),'desc'=>tr('meta.contact.desc')]); ?>
+  <?php require_once $_SERVER['DOCUMENT_ROOT'].'/includes/seo.php'; sk_seo_head(['title'=>'Merci pour votre demande — Sparklin','desc'=>"Votre demande de contact a bien été envoyée à l'équipe Sparklin.",'noindex'=>true]); ?>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -242,97 +242,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </div>
 <main style="padding-top:64px;">
-<section class="contact-section" style="padding:80px clamp(20px,5vw,80px);">
-  <div class="sk-wrap contact-layout" style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:64px;align-items:start;">
-    <div>
-      <span class="section-label" data-i18n="footer.lnk.contact"><?= tr('footer.lnk.contact') ?></span>
-      <h1 style="font-family:var(--font-display);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:800;color:var(--dark);margin-bottom:12px;" data-i18n="contact.h1"><?= tr('contact.h1') ?></h1>
-      <p style="color:var(--text-mid);margin-bottom:40px;font-size:15px;line-height:1.75;" data-i18n="contact.intro"><?= tr('contact.intro') ?></p>
-      <form name="contact" id="contact-form" method="POST" action="/contact/" onsubmit="return handleContactSubmit(event)" style="display:flex;flex-direction:column;gap:20px;">
-        <input type="hidden" name="form-name" value="contact"/>
-        <div class="contact-form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.f.name"><?= tr('contact.f.name') ?></label><input required type="text" name="nom" placeholder="Jean Dupont" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"/></div>
-          <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.f.email"><?= tr('contact.f.email') ?></label><input required type="email" name="email" placeholder="jean@entreprise.fr" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"/></div>
-        </div>
-        <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.f.company"><?= tr('contact.f.company') ?></label><input type="text" name="entreprise" placeholder="<?= t('contact.ph.company') ?>" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"/></div>
-        <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.form.type"><?= tr('contact.form.type') ?></label><select name="type_besoin" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;background:#fff;"><option value="" data-i18n="contact.f.select"><?= tr('contact.f.select') ?></option><option data-i18n="contact.f.type0"><?= tr('contact.f.type0') ?></option><option data-i18n="contact.f.type1"><?= tr('contact.f.type1') ?></option><option data-i18n="contact.f.type2"><?= tr('contact.f.type2') ?></option><option data-i18n="contact.f.type3"><?= tr('contact.f.type3') ?></option><option data-i18n="contact.f.type_other"><?= tr('contact.f.type_other') ?></option></select></div>
-        <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.form.stations"><?= tr('contact.form.stations') ?></label><input type="text" name="nb_bornes" placeholder="<?= t('contact.ph.stations') ?>" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"/></div>
-        <div><label style="display:block;font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="contact.form.message"><?= tr('contact.form.message') ?></label><textarea name="message" rows="4" placeholder="<?= t('contact.ph.message') ?>" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;outline:none;resize:vertical;transition:border .15s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'"></textarea></div>
-        <div id="contact-status" style="display:none;font-size:14px;padding:12px 16px;border-radius:10px;"></div>
-        <p style="font-size:11px;color:var(--text-light);">Les informations transmises via ce formulaire sont utilisées par Sparklin pour traiter votre demande. Voir notre <a href="/politique-confidentialite/" style="color:var(--orange);">politique de confidentialité</a>.</p>
-        <button type="submit" id="contact-btn" style="background:var(--orange);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#c94b31'" onmouseout="this.style.background='var(--orange)'" data-i18n="ui.send_request"><?= tr('ui.send_request') ?></button>
-      </form>
-      <?php $rcSite = $_ENV['RECAPTCHA_SITE_KEY'] ?? ''; ?>
-      <?php if ($rcSite): ?><script src="https://www.google.com/recaptcha/api.js?render=<?= htmlspecialchars($rcSite, ENT_QUOTES) ?>"></script><?php endif; ?>
-      <script>
-      function skRecaptcha(action){
-        var k = <?= json_encode($rcSite) ?>;
-        if(!k || typeof grecaptcha==='undefined') return Promise.resolve('');
-        return new Promise(function(res){ try{ grecaptcha.ready(function(){ grecaptcha.execute(k,{action:action}).then(res).catch(function(){res('');}); }); }catch(e){ res(''); } });
-      }
-      async function handleContactSubmit(e){
-        e.preventDefault();
-        var form = document.getElementById('contact-form');
-        var btn  = document.getElementById('contact-btn');
-        var box  = document.getElementById('contact-status');
-        var data = Object.fromEntries(new FormData(form).entries());
-        if(!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)){
-          box.style.display='block'; box.style.background='#fde8e3'; box.style.color='#b3361c';
-          box.textContent = <?= json_encode(tr('contact.js.invalid_email')) ?>; return false;
-        }
-        var label = btn.innerHTML; btn.disabled = true; btn.style.opacity='.7';
-        btn.innerHTML = <?= json_encode(tr('contact.js.sending')) ?>;
-        box.style.display='none';
-        data.recaptcha_token = await skRecaptcha('contact');
-        try{
-          var resp = await fetch('/api/send-contact.php', {
-            method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
-          });
-          var respData = {}; try{ respData = await resp.json(); }catch(e){}
-          if(!resp.ok){
-            box.style.display='block'; box.style.background='#fde8e3'; box.style.color='#b3361c';
-            box.textContent = '['+resp.status+'] '+(respData.error || <?= json_encode(tr('contact.js.error')) ?>);
-            return false;
-          }
-          form.reset();
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({event:'form_submission', form_name:'contact', type_besoin: data.type_besoin || ''});
-          if (typeof gtag === 'function') {
-            gtag('event', 'lead_form_submit', { form_name: 'contact', type_besoin: data.type_besoin || '', transport_type: 'beacon' });
-          }
-          // Redirection vers la page de confirmation dediee (conservant la langue courante) :
-          // c'est CETTE page /contact/merci/ qui sert de signal de conversion Google Ads
-          // (suivi par visite de page, plus fiable qu'un event JS seul).
-          var ctLangMatch = /[?&]lang=([a-z]{2})(?:&|$)/.exec(window.location.search);
-          window.location.href = '/contact/merci/' + (ctLangMatch ? '?lang=' + ctLangMatch[1] : '');
-          return false;
-        }catch(err){
-          box.style.display='block'; box.style.background='#fde8e3'; box.style.color='#b3361c';
-          box.textContent = <?= json_encode(tr('contact.js.error')) ?> + ' (reseau: '+err+')';
-        }finally{
-          btn.disabled=false; btn.style.opacity='1'; btn.innerHTML=label;
-        }
-        return false;
-      }
-      </script>
-    </div>
-    <div style="position:sticky;top:100px;">
-      <div style="background:var(--dark);border-radius:20px;padding:32px;color:#fff;margin-bottom:24px;">
-        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--orange);margin-bottom:16px;" data-i18n="contact.direct"><?= tr('contact.direct') ?></div>
-        <div style="margin-bottom:12px;"><div style="font-size:12px;color:rgba(255,255,255,.5);">Email</div><a href="mailto:contact@sparklin.io" style="color:#fff;font-weight:600;text-decoration:none;">contact@sparklin.io</a></div>
-        <div style="margin-bottom:12px;"><div style="font-size:12px;color:rgba(255,255,255,.5);" data-i18n="contact.address"><?= tr('contact.address') ?></div><div style="color:rgba(255,255,255,.8);">Nantes, Pays de la Loire, France</div></div>
-        <div><div style="font-size:12px;color:rgba(255,255,255,.5);" data-i18n="contact.response"><?= tr('contact.response') ?></div><div style="color:rgba(255,255,255,.8);" data-i18n="contact.response_time"><?= tr('contact.response_time') ?></div></div>
-      </div>
-      <div style="background:var(--bg-off);border:1px solid var(--border);border-radius:16px;padding:24px;">
-        <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:12px;" data-i18n="contact.certs"><?= tr('contact.certs') ?></div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:12px;color:var(--text-mid);" data-i18n="contact.cert1"><?= tr('contact.cert1') ?></div>
-          <div style="font-size:12px;color:var(--text-mid);" data-i18n="contact.cert2"><?= tr('contact.cert2') ?></div>
-          <div style="font-size:12px;color:var(--text-mid);" data-i18n="contact.cert3"><?= tr('contact.cert3') ?></div>
-          <div style="font-size:12px;color:var(--text-mid);" data-i18n="contact.cert4"><?= tr('contact.cert4') ?></div>
-        </div>
-      </div>
-    </div>
+<section style="padding:100px clamp(20px,5vw,80px);min-height:60vh;display:flex;align-items:center;justify-content:center;">
+  <div style="max-width:520px;text-align:center;">
+    <div style="font-size:56px;margin-bottom:20px;">✅</div>
+    <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;color:var(--dark);margin-bottom:16px;line-height:1.15;">Votre demande a bien été envoyée</h1>
+    <p style="font-size:15px;color:var(--text-mid);line-height:1.75;margin-bottom:32px;font-weight:300;">Merci de nous avoir contactés. Un membre de l'équipe Sparklin reviendra vers vous sous 48h ouvrées pour échanger sur votre projet.</p>
+    <a href="/" style="display:inline-flex;align-items:center;gap:6px;background:var(--orange);color:#fff;font-size:14px;font-weight:700;text-decoration:none;padding:12px 24px;border-radius:8px;">← Retour à l'accueil</a>
   </div>
 </section>
 </main>
