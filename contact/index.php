@@ -270,6 +270,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         if(!k || typeof grecaptcha==='undefined') return Promise.resolve('');
         return new Promise(function(res){ try{ grecaptcha.ready(function(){ grecaptcha.execute(k,{action:action}).then(res).catch(function(){res('');}); }); }catch(e){ res(''); } });
       }
+      // Event snippet for "Envoi de formulaire" conversion (Google Ads).
+      function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        if (typeof gtag !== 'function') { callback(); return false; }
+        gtag('event', 'conversion', {
+            'send_to': 'AW-18111265049/FmLaCKnE6ZEdEJnyj7xD',
+            'value': 1.0,
+            'currency': 'EUR',
+            'event_callback': callback
+        });
+        return false;
+      }
       async function handleContactSubmit(e){
         e.preventDefault();
         var form = document.getElementById('contact-form');
@@ -300,12 +316,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           if (typeof gtag === 'function') {
             gtag('event', 'lead_form_submit', { form_name: 'contact', type_besoin: data.type_besoin || '', transport_type: 'beacon' });
           }
-          // Redirection vers la page de confirmation dediee (conservant la langue courante) :
-          // c'est CETTE page /contact/merci/ qui sert de signal de conversion Google Ads
-          // (suivi par visite de page, plus fiable qu'un event JS seul).
+          // Redirection vers la page de confirmation dediee (conservant la langue courante),
+          // via l'event "conversion" Google Ads (send_to avec label dedie) : le callback
+          // navigue vers /contact/merci/ une fois le hit envoye (ou apres timeout).
           var ctLangMatch = /[?&]lang=([a-z]{2})(?:&|$)/.exec(window.location.search);
-          window.location.href = '/contact/merci/' + (ctLangMatch ? '?lang=' + ctLangMatch[1] : '');
-          return false;
+          return gtag_report_conversion('/contact/merci/' + (ctLangMatch ? '?lang=' + ctLangMatch[1] : ''));
         }catch(err){
           box.style.display='block'; box.style.background='#fde8e3'; box.style.color='#b3361c';
           box.textContent = <?= json_encode(tr('contact.js.error')) ?> + ' (reseau: '+err+')';
