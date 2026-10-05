@@ -299,6 +299,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           box.textContent = <?= json_encode(tr('contact.js.success')) ?>;
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({event:'form_submission', form_name:'contact', type_besoin: data.type_besoin || ''});
+          if (typeof gtag === 'function') {
+            gtag('event', 'lead_form_submit', { form_name: 'contact', type_besoin: data.type_besoin || '', transport_type: 'beacon' });
+          }
         }catch(err){
           box.style.display='block'; box.style.background='#fde8e3'; box.style.color='#b3361c';
           box.textContent = <?= json_encode(tr('contact.js.error')) ?> + ' (reseau: '+err+')';
