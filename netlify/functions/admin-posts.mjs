@@ -22,6 +22,21 @@ async function triggerRebuild() {
   }
 }
 
+// IndexNow : notifie Bing/Yandex/Seznam/Naver qu'une URL est nouvelle ou mise
+// à jour, sans attendre leur prochain crawl du sitemap. Le fichier de
+// vérification (<key>.txt) est copié à la racine par build-static.sh.
+async function triggerIndexNow(url) {
+  const key = process.env.INDEXNOW_KEY;
+  if (!key || !url) return;
+  try {
+    const keyLocation = `https://sparklin.io/${key}.txt`;
+    const endpoint = `https://api.indexnow.org/indexnow?url=${encodeURIComponent(url)}&key=${key}&keyLocation=${encodeURIComponent(keyLocation)}`;
+    await fetch(endpoint);
+  } catch {
+    // Best-effort, ne doit pas faire échouer l'enregistrement du post.
+  }
+}
+
 function slugify(str) {
   return String(str || "")
     .toLowerCase()
@@ -73,7 +88,10 @@ export default async (req) => {
         return json(502, { error: "Échec de création", detail });
       }
       const created = (await resp.json())[0];
-      if (row.status === "published") await triggerRebuild();
+      if (row.status === "published") {
+        await triggerRebuild();
+        await triggerIndexNow(`https://sparklin.io/blog/${row.slug}/`);
+      }
       return json(201, { ok: true, post: created });
     }
 
@@ -109,7 +127,10 @@ export default async (req) => {
       const updated = (await resp.json())[0];
       // Rebuild si le statut a été changé explicitement (publication/dépublication/
       // planification) ou si un post déjà publié vient d'être modifié.
-      if (patch.status !== undefined || updated.status === "published") await triggerRebuild();
+      if (patch.status !== undefined || updated.status === "published") {
+        await triggerRebuild();
+        if (updated.status === "published") await triggerIndexNow(`https://sparklin.io/blog/${updated.slug}/`);
+      }
       return json(200, { ok: true, post: updated });
     }
 

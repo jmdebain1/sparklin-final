@@ -9,6 +9,21 @@ import { requireAdmin, supabaseAdminHeaders, supabaseUrl } from "./lib/adminAuth
 const json = (status, obj) =>
   new Response(JSON.stringify(obj), { status, headers: { "Content-Type": "application/json" } });
 
+// Le site est pré-rendu statiquement (scripts/build-static.sh) : /evenements/
+// affiche la liste via getEvents() côté PHP au moment du build. Une écriture
+// Supabase seule ne suffit pas à la mettre à jour — on déclenche un rebuild.
+// Contrairement aux posts, un event n'a pas d'état "brouillon" (upcoming/past
+// sont tous deux affichés) : toute écriture impacte donc la page publique.
+async function triggerRebuild() {
+  const hook = process.env.NETLIFY_BUILD_HOOK_URL;
+  if (!hook) return;
+  try {
+    await fetch(hook, { method: "POST" });
+  } catch {
+    // Un échec de déclenchement ne doit pas faire échouer l'enregistrement.
+  }
+}
+
 export default async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204 });
 
@@ -38,7 +53,9 @@ export default async (req) => {
         body: JSON.stringify(row),
       });
       if (!resp.ok) return json(502, { error: "Échec de création", detail: await resp.text() });
-      return json(201, { ok: true, event: (await resp.json())[0] });
+      const created = (await resp.json())[0];
+      await triggerRebuild();
+      return json(201, { ok: true, event: created });
     }
 
     if (req.method === "PATCH") {
@@ -61,7 +78,9 @@ export default async (req) => {
         body: JSON.stringify(patch),
       });
       if (!resp.ok) return json(502, { error: "Échec de mise à jour", detail: await resp.text() });
-      return json(200, { ok: true, event: (await resp.json())[0] });
+      const updated = (await resp.json())[0];
+      await triggerRebuild();
+      return json(200, { ok: true, event: updated });
     }
 
     if (req.method === "DELETE") {
@@ -74,6 +93,7 @@ export default async (req) => {
         headers: supabaseAdminHeaders(),
       });
       if (!resp.ok) return json(502, { error: "Échec de suppression" });
+      await triggerRebuild();
       return json(200, { ok: true });
     }
 

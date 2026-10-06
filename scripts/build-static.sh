@@ -118,6 +118,7 @@ fi
 if [ -z "$SB_URL" ] || [ -z "$SB_KEY" ]; then
   echo "  ⚠️  SUPABASE_URL/SUPABASE_ANON_KEY introuvables — aucun article rendu" >&2
   fail=1
+  cp "$ROOT/sitemap.xml" "$DIST/sitemap.xml"
 else
   slugs=$(curl -s -H "apikey: $SB_KEY" -H "Authorization: Bearer $SB_KEY" \
     "$SB_URL/rest/v1/posts?select=slug&status=eq.published" | \
@@ -133,6 +134,46 @@ else
     done
   done <<< "$slugs"
   echo "  → $n_posts article(s) publié(s) rendu(s)"
+
+  echo "── build-static: génération du sitemap (articles de blog) ──"
+  # sitemap.xml (source) ne liste QUE les pages statiques ; les entrées par
+  # article sont injectées ici à partir des slugs publiés, juste après le
+  # bloc <url> de /blog/ — pour que chaque nouvel article soit automatiquement
+  # dans le sitemap livré, sans édition manuelle du fichier source.
+  php -r '
+    $template = file_get_contents($argv[1]);
+    $slugsRaw = trim($argv[2]);
+    $slugs = $slugsRaw === "" ? [] : explode("\n", $slugsRaw);
+    $langs = ["en","de","es","th","ms","id"];
+
+    $frag = "";
+    foreach ($slugs as $slug) {
+      $slug = trim($slug);
+      if ($slug === "") continue;
+      $base = "https://sparklin.io/blog/$slug/";
+      $frag .= "  <url>\n";
+      $frag .= "    <loc>$base</loc>\n";
+      $frag .= "    <xhtml:link rel=\"alternate\" hreflang=\"fr\" href=\"$base\"/>\n";
+      foreach ($langs as $l) {
+        $frag .= "    <xhtml:link rel=\"alternate\" hreflang=\"$l\" href=\"{$base}?lang=$l\"/>\n";
+      }
+      $frag .= "    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"$base\"/>\n";
+      $frag .= "    <changefreq>monthly</changefreq>\n";
+      $frag .= "    <priority>0.7</priority>\n";
+      $frag .= "  </url>\n";
+    }
+
+    $marker = "<loc>https://sparklin.io/blog/</loc>";
+    $pos = strpos($template, $marker);
+    if ($pos === false) {
+      fwrite(STDERR, "  ⚠️  sitemap: marqueur /blog/ introuvable, articles non injectés\n");
+      echo $template;
+      exit;
+    }
+    $closePos = strpos($template, "</url>", $pos);
+    $insertAt = $closePos + strlen("</url>") + 1;
+    echo substr($template, 0, $insertAt) . $frag . substr($template, $insertAt);
+  ' "$ROOT/sitemap.xml" "$slugs" > "$DIST/sitemap.xml"
 fi
 
 echo "── build-static: rendu 404 ─────────────────────────────────"
@@ -155,7 +196,12 @@ echo "── build-static: copie des assets statiques ────────�
 cp -R "$ROOT/assets" "$DIST/assets"
 cp "$ROOT/favicon.ico" "$DIST/favicon.ico"
 cp "$ROOT/robots.txt" "$DIST/robots.txt"
-cp "$ROOT/sitemap.xml" "$DIST/sitemap.xml"
+# Fichier de vérification IndexNow (Bing/Yandex/Seznam/Naver) — doit être
+# servi tel quel à la racine pour que la clé envoyée par admin-posts.mjs
+# soit validée par le endpoint IndexNow.
+cp "$ROOT/ced7f4760d3517996401f90273cbf70e.txt" "$DIST/ced7f4760d3517996401f90273cbf70e.txt"
+# sitemap.xml est déjà écrit dans $DIST plus haut (génération dynamique des
+# articles de blog, cf. section "rendu des articles de blog").
 
 n_html=$(find "$DIST" -name "*.html" | wc -l | tr -d ' ')
 echo "── build-static: terminé — $n_html fichiers HTML générés dans dist/ ──"
