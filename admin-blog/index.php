@@ -1742,7 +1742,7 @@ async function publishNow(){
   document.getElementById('pub-status').className='status s-published';
   document.getElementById('pub-status').textContent='Publié';
   await loadArticles();
-  toast('Article publié sur le blog !','green');
+  toast('Article publié — en ligne sur sparklin.io dans 1 à 2 min','green');
 }
 async function saveDraft(){
   var res=await savePost('draft');

@@ -9,6 +9,19 @@ import { requireAdmin, supabaseAdminHeaders, supabaseUrl } from "./lib/adminAuth
 const json = (status, obj) =>
   new Response(JSON.stringify(obj), { status, headers: { "Content-Type": "application/json" } });
 
+// Le site est pré-rendu statiquement (scripts/build-static.sh) : une écriture
+// Supabase seule ne suffit pas à mettre à jour sparklin.io. On déclenche donc
+// un rebuild Netlify à chaque création/modification/suppression d'article.
+async function triggerRebuild() {
+  const hook = process.env.NETLIFY_BUILD_HOOK_URL;
+  if (!hook) return;
+  try {
+    await fetch(hook, { method: "POST" });
+  } catch {
+    // Un échec de déclenchement ne doit pas faire échouer l'enregistrement du post.
+  }
+}
+
 function slugify(str) {
   return String(str || "")
     .toLowerCase()
@@ -59,7 +72,9 @@ export default async (req) => {
         if (resp.status === 409 || detail.includes("duplicate")) return json(409, { error: "Ce slug existe déjà" });
         return json(502, { error: "Échec de création", detail });
       }
-      return json(201, { ok: true, post: (await resp.json())[0] });
+      const created = (await resp.json())[0];
+      if (row.status === "published") await triggerRebuild();
+      return json(201, { ok: true, post: created });
     }
 
     if (req.method === "PATCH") {
@@ -91,7 +106,11 @@ export default async (req) => {
         if (resp.status === 409 || detail.includes("duplicate")) return json(409, { error: "Ce slug existe déjà" });
         return json(502, { error: "Échec de mise à jour", detail });
       }
-      return json(200, { ok: true, post: (await resp.json())[0] });
+      const updated = (await resp.json())[0];
+      // Rebuild si le statut a été changé explicitement (publication/dépublication/
+      // planification) ou si un post déjà publié vient d'être modifié.
+      if (patch.status !== undefined || updated.status === "published") await triggerRebuild();
+      return json(200, { ok: true, post: updated });
     }
 
     if (req.method === "DELETE") {
@@ -104,6 +123,11 @@ export default async (req) => {
         headers: supabaseAdminHeaders(),
       });
       if (!resp.ok) return json(502, { error: "Échec de suppression" });
+      // On ne sait pas ici si le post supprimé était publié (donc déjà présent
+      // dans dist/) sans lecture préalable — on rebuild systématiquement par
+      // sécurité, le coût d'un build superflu est négligeable face au risque
+      // de laisser une page supprimée visible en production.
+      await triggerRebuild();
       return json(200, { ok: true });
     }
 
