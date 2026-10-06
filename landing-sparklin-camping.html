@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<script>/* GTM snippet here */</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bornes de recharge pour camping & hébergement — Sparklin</title>
+<meta name="description" content="Accueillez les voyageurs en véhicule électrique et monétisez chaque kWh. Paiement anonyme par QR code, revenus hors saison, installation sans renforcement Enedis. Devis gratuit en 48h.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Bornes de recharge pour camping & hébergement — Sparklin">
+<meta property="og:description" content="Paiement anonyme par QR code, revenus hors saison, installation sans renforcement Enedis. Devis gratuit en 48h.">
+<meta property="og:url" content="https://sparklin.io/recharge-camping">
+<link rel="canonical" href="https://sparklin.io/recharge-camping">
+<style>
+  /* Charte Sparklin (assets/css/style.css) — polices système en remplacement de
+     Wix Madefor pour respecter la contrainte zéro-dépendance externe de cette page.
+     Photos : assets/images/ du site (pas de CDN externe). */
+  :root{
+    --orange:#E8563A;
+    --orange-light:#FF6B4A;
+    --dark:#1A1A2E;
+    --text-mid:#4A4A6A;
+    --text-light:#6B6B8A;
+    --bg-white:#FFFFFF;
+    --bg-off:#F7F6F3;
+    --bg-light:#F2F1EE;
+    --border:#E8E6E0;
+    --border-dark:#D4D0C8;
+    --font-display:-apple-system,system-ui,sans-serif;
+    --font-body:-apple-system,system-ui,sans-serif;
+    --radius:8px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font-body);
+    background:var(--bg-white);
+    color:var(--dark);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{display:block;max-width:100%}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.is-visible{opacity:1;transform:translateY(0)}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+
+  /* ───────── sticky bar ───────── */
+  .stickybar{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    height:48px;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 16px;
+    transform:translateY(-100%);transition:transform .25s ease;
+  }
+  .stickybar.is-shown{transform:translateY(0)}
+  .stickybar strong{font-size:13px;font-weight:700;color:var(--dark)}
+  .stickybar span{color:var(--text-mid);font-weight:400}
+  .stickybar button{
+    background:var(--orange);color:#fff;border:none;border-radius:6px;
+    font-size:12px;font-weight:600;padding:8px 14px;cursor:pointer;white-space:nowrap;
+    box-shadow:0 4px 16px rgba(232,86,58,.25);
+  }
+  .stickybar button:hover{background:var(--orange-light)}
+
+  /* ───────── hero ───────── */
+  .hero{
+    display:flex;align-items:center;
+    padding:112px 0 72px;
+    background:var(--bg-white);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;width:100%;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(232,86,58,.08);border:1px solid rgba(232,86,58,.25);
+    color:var(--orange);font-size:12px;font-weight:600;letter-spacing:.04em;
+    padding:6px 14px;border-radius:100px;margin-bottom:22px;
+  }
+  .badge::before{content:'';width:6px;height:6px;background:var(--orange);border-radius:50%;flex-shrink:0}
+  .hero h1{
+    font-family:var(--font-display);font-size:clamp(1.9rem,4vw,3rem);font-weight:800;line-height:1.12;
+    letter-spacing:-.025em;margin-bottom:18px;color:var(--dark);text-wrap:balance;
+  }
+  .hero h1 em{color:var(--orange);font-style:normal}
+  .hero p.lead{
+    font-size:clamp(.98rem,1.4vw,1.05rem);font-weight:300;color:var(--text-mid);
+    max-width:48ch;line-height:1.75;margin-bottom:32px;
+  }
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:28px}
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#fff;
+    font-family:var(--font-body);font-size:15px;font-weight:500;padding:14px 26px;
+    border-radius:var(--radius);text-decoration:none;border:none;cursor:pointer;
+    box-shadow:0 4px 20px rgba(232,86,58,.25);transition:background .2s,transform .15s,box-shadow .2s;
+  }
+  .btn-primary:hover{background:var(--orange-light);transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,86,58,.35)}
+  .btn-outline{
+    display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--dark);
+    border:1.5px solid var(--border-dark);font-family:var(--font-body);font-size:15px;
+    padding:13px 24px;border-radius:var(--radius);text-decoration:none;cursor:pointer;
+    transition:border-color .2s,color .2s;
+  }
+  .btn-outline:hover{border-color:var(--orange);color:var(--orange)}
+  .hero-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--bg-off);border:1px solid var(--border);
+    color:var(--text-mid);padding:5px 12px;border-radius:100px;font-size:12px;
+  }
+  .chip-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);flex-shrink:0}
+  .hero-visual{display:flex;justify-content:center;align-items:center}
+  .hero-visual img{
+    width:100%;max-width:460px;aspect-ratio:1/1;object-fit:cover;
+    border-radius:20px;box-shadow:0 24px 80px rgba(26,26,46,.14);
+  }
+
+  /* ───────── stats (simulation ROI) ───────── */
+  .stats{background:var(--bg-off);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 0}
+  .stats-label{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:22px}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
+  .stats-grid strong{display:block;font-family:var(--font-display);font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:800;color:var(--orange)}
+  .stats-grid span{font-size:13px;color:var(--text-mid);display:block;margin-top:4px}
+  .stats-grid em{font-style:normal;font-size:11px;color:var(--text-light);display:block;margin-top:2px}
+
+  /* ───────── section generic ───────── */
+  section{padding:72px 0}
+  .section-head{max-width:620px;margin-bottom:40px}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+  .section-head h2{font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.3rem);font-weight:800;letter-spacing:-.02em;color:var(--dark);text-wrap:balance;line-height:1.15}
+  .section-head p{font-size:15px;color:var(--text-mid);line-height:1.7;font-weight:300;margin-top:14px;max-width:62ch}
+
+  /* context (problème) */
+  .context{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .context img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:85% center;border-radius:20px;box-shadow:0 24px 80px rgba(26,26,46,.1)}
+  .context p{font-size:15px;color:var(--text-mid);line-height:1.75;font-weight:300;margin-bottom:14px}
+  .context p:last-child{margin-bottom:0}
+
+  /* why grid */
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .why-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;transition:border-color .2s,transform .2s}
+  .why-card:hover{border-color:var(--orange)}
+  .why-card .icon{color:var(--orange);margin-bottom:14px}
+  .why-card h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:8px;color:var(--dark)}
+  .why-card p{font-size:13px;color:var(--text-mid);line-height:1.65;font-weight:300}
+
+  /* produit recommandé */
+  .product-feature{
+    display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;
+    background:var(--bg-off);border:1px solid var(--border);border-radius:20px;padding:40px;
+  }
+  .product-feature .gallery-main{width:100%;max-width:300px;aspect-ratio:524/1014;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 24px 80px rgba(26,26,46,.1);padding:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 auto}
+  .product-feature .gallery-main img{width:100%;height:100%;object-fit:contain}
+  .product-feature .power{font-size:13px;color:var(--orange);font-weight:600;margin-bottom:10px}
+  .product-feature h3{font-family:var(--font-display);font-size:clamp(1.3rem,2.4vw,1.7rem);font-weight:800;color:var(--dark);margin-bottom:14px;letter-spacing:-.01em}
+  .product-feature p{font-size:14.5px;color:var(--text-mid);line-height:1.75;font-weight:300;margin-bottom:20px}
+  .spec-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+  .spec-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--dark);list-style:none}
+  .spec-list svg{color:var(--orange);flex-shrink:0;margin-top:2px}
+
+  /* process */
+  .process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .process-step .num{font-family:var(--font-display);font-size:13px;font-weight:800;color:var(--text-light);letter-spacing:.04em;margin-bottom:10px}
+  .process-step .icon{color:var(--orange);margin-bottom:14px}
+  .process-step h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:8px;color:var(--dark)}
+  .process-step p{font-size:13px;color:var(--text-mid);line-height:1.65;font-weight:300}
+
+  /* final cta */
+  .cta-final{background:var(--dark);color:#fff;text-align:center}
+  .cta-final h2{font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:800;margin-bottom:12px;text-wrap:balance}
+  .cta-final p{color:rgba(255,255,255,.6);max-width:460px;margin:0 auto 28px;font-size:15px;font-weight:300}
+  .cta-final a{
+    display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#fff;
+    font-weight:500;font-size:15px;padding:14px 28px;border-radius:var(--radius);text-decoration:none;
+    box-shadow:0 4px 20px rgba(232,86,58,.3);transition:background .2s,transform .15s;
+  }
+  .cta-final a:hover{background:var(--orange-light);transform:translateY(-2px)}
+
+  /* ───────── form section ───────── */
+  .form-section{background:var(--bg-off)}
+  .form-section .wrap{max-width:620px}
+  .form-card{
+    background:#fff;border:1px solid var(--border);
+    border-radius:16px;padding:32px;
+    box-shadow:0 24px 80px rgba(26,26,46,.08);
+  }
+  .form-card .section-head{margin-bottom:24px;max-width:none;text-align:center}
+  .form-card .section-head .eyebrow{text-align:center}
+  .form-card .section-head p{text-align:center;margin-left:auto;margin-right:auto}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .field{margin-bottom:14px}
+  .field label{
+    display:block;font-size:12px;font-weight:600;color:var(--text-mid);
+    margin-bottom:6px;letter-spacing:.01em;
+  }
+  .field input,.field textarea,.field select{
+    width:100%;background:#fff;border:1.5px solid var(--border-dark);
+    color:var(--dark);border-radius:var(--radius);padding:11px 12px;font-size:14px;
+    font-family:var(--font-body);
+  }
+  .field input:focus,.field textarea:focus,.field select:focus{
+    outline:none;border-color:var(--orange);
+  }
+  .field textarea{resize:vertical;min-height:64px}
+  .field.has-error input{border-color:#C0392B}
+  .error-msg{display:none;color:#C0392B;font-size:12px;margin-top:6px}
+  .field.has-error .error-msg{display:block}
+  .btn-submit{
+    width:100%;background:var(--orange);color:#fff;border:none;
+    border-radius:var(--radius);font-size:15px;font-weight:500;padding:14px 18px;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+    transition:background .2s ease,transform .15s ease,box-shadow .2s ease;
+    box-shadow:0 4px 20px rgba(232,86,58,.25);
+    font-family:var(--font-body);
+  }
+  .btn-submit:hover{background:var(--orange-light);transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,86,58,.35)}
+  .btn-submit:disabled{opacity:.7;cursor:not-allowed;transform:none}
+  .btn-submit svg{animation:spin 0.8s linear infinite}
+  .btn-submit:not(.is-loading) svg.spinner{display:none}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .rgpd{font-size:11px;color:var(--text-light);margin-top:12px;line-height:1.5;text-align:center}
+  .success-box{
+    display:none;background:rgba(232,86,58,.08);border:1px solid rgba(232,86,58,.25);
+    border-radius:var(--radius);padding:16px;font-size:14px;color:var(--orange);
+    align-items:center;gap:10px;font-weight:500;
+  }
+  .success-box.is-shown{display:flex}
+  .form-card form.is-hidden{display:none}
+
+  /* footer */
+  footer{padding:40px 0;border-top:1px solid var(--border);background:var(--bg-off)}
+  footer .foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+  footer .brand-logo{height:30px;width:auto}
+  footer .tagline{font-size:12px;color:var(--text-mid);margin-top:6px}
+  footer .tagline a{color:var(--text-mid);text-decoration:underline}
+  footer .legal{font-size:11px;color:var(--text-light)}
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:36px}
+    .hero-visual{order:-1}
+    .hero-visual img{max-width:360px}
+    .context{grid-template-columns:1fr;gap:28px}
+    .context .wrap-img{order:-1}
+    .why-grid{grid-template-columns:1fr 1fr}
+    .product-feature{grid-template-columns:1fr;padding:28px}
+    .process-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:640px){
+    .hero{padding:88px 0 48px}
+    .field-row{grid-template-columns:1fr}
+    .why-grid{grid-template-columns:1fr}
+    .stats-grid{gap:12px}
+    .stats-grid strong{font-size:1.4rem}
+    section{padding:52px 0}
+    .form-card{padding:24px}
+    footer .foot-grid{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<div class="stickybar" id="stickybar">
+  <strong>Sparklin <span>— Recharge pour camping & hébergement</span></strong>
+  <button type="button" data-scroll-target="#contact-form">Demander un devis</button>
+</div>
+
+<main>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="badge">Solution recharge pour campings & hébergements</span>
+        <h1>Accueillez les voyageurs en VE et <em>monétisez chaque kWh</em></h1>
+        <p class="lead">Les campings et hébergements de plein air accueillent de plus en plus de voyageurs en véhicule électrique. Installez des bornes accessibles en autonomie, facturées automatiquement — sans borne d'accueil ni intervention sur place.</p>
+        <div class="hero-actions">
+          <a href="#contact-form" class="btn-primary" data-scroll-target="#contact-form">Demander un devis →</a>
+          <a href="#simulation" class="btn-outline" data-scroll-target="#simulation">Voir la simulation</a>
+        </div>
+        <div class="hero-chips">
+          <span class="chip"><span class="chip-dot"></span>Paiement anonyme QR code</span>
+          <span class="chip"><span class="chip-dot"></span>Revenus hors saison</span>
+          <span class="chip"><span class="chip-dot"></span>Sans renforcement Enedis</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="assets/images/camping-caravane-sparklin.jpg" alt="Borne de recharge Sparklin installée sur un emplacement caravane, en camping" width="700" height="466" fetchpriority="high">
+      </div>
+    </div>
+  </header>
+
+  <!-- SIMULATION / ROI -->
+  <section class="stats" id="simulation">
+    <div class="wrap">
+      <div class="stats-label">Simulation · Camping 3 étoiles · 120 emplacements · 10 bornes Spark Plus</div>
+      <div class="stats-grid">
+        <div>
+          <strong>3 000 €</strong>
+          <span>CAPEX total</span>
+          <em>10 Spark Plus installées · sans renforcement</em>
+        </div>
+        <div>
+          <strong>5 600 €</strong>
+          <span>Revenus saison estimés</span>
+          <em>90 nuits · 70% taux d'usage · 0,35 €/kWh</em>
+        </div>
+        <div>
+          <strong>+900 €</strong>
+          <span>Revenus hors saison</span>
+          <em>Accès public via QR code</em>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEXTE -->
+  <section>
+    <div class="wrap context">
+      <div>
+        <div class="eyebrow">Le contexte</div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(1.4rem,2.6vw,1.9rem);font-weight:800;color:var(--dark);margin-bottom:16px;letter-spacing:-.02em;line-height:1.2;">Le campeur électrique : une clientèle en forte croissance</h2>
+        <p>Les ventes de véhicules électriques progressent chaque année, et une part croissante de leurs propriétaires sont aussi des campeurs. Sur les plateformes de réservation, la présence de bornes devient un critère de recherche au même titre que la piscine ou le wifi.</p>
+        <p>Bonne nouvelle : le camping est l'un des usages pour lesquels la charge lente est parfaitement adaptée. Un campeur qui arrive le soir et repart le lendemain dispose de 8 à 10h de charge — de quoi récupérer 200 à 250 km d'autonomie, sans jamais avoir besoin de charge rapide.</p>
+      </div>
+      <div class="wrap-img">
+        <img src="assets/images/camping-tente-sparklin.jpg" alt="Voyageur rechargeant son véhicule électrique sur une borne Sparklin, emplacement tente" width="700" height="393" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- POURQUOI SPARKLIN -->
+  <section style="background:var(--bg-off);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Ce que Sparklin apporte</div>
+        <h2>Un service de recharge qui fonctionne en saison et hors saison</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          <h3>Paiement anonyme, zéro friction</h3>
+          <p>Le campeur branche, scanne le QR code et paie avec Google Pay ou Apple Pay — avec ou sans compte.</p>
+        </div>
+        <div class="why-card reveal">
+          <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+          <h3>Revenus hors saison</h3>
+          <p>Gardez vos bornes accessibles au public même camping fermé. Les revenus sont reversés automatiquement.</p>
+        </div>
+        <div class="why-card reveal">
+          <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.59 2.59 20 10l-10 10-7.41-7.41A2 2 0 0 1 2 11.17V4a2 2 0 0 1 2-2h7.17a2 2 0 0 1 1.42.59Z"/><circle cx="7.5" cy="7.5" r="1.3" fill="currentColor" stroke="none"/></svg>
+          <h3>Tarification flexible</h3>
+          <p>Tarif préférentiel pour vos campeurs, tarif public pour les visiteurs — forfait nuit ou au kWh, à votre main.</p>
+        </div>
+        <div class="why-card reveal">
+          <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 3 20h18L12 3Z"/><path d="M8.5 20 12 12l3.5 8"/></svg>
+          <h3>Argument de réservation</h3>
+          <p>Affichez vos bornes sur les plateformes de réservation et différenciez-vous dès la recherche.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUIT RECOMMANDÉ -->
+  <section id="produit">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Produit recommandé</div>
+        <h2>Spark Plus, pensée pour la charge de nuit</h2>
+      </div>
+      <div class="product-feature reveal">
+        <div class="gallery-main">
+          <img src="assets/images/spark-plus-render-produit-zoom.webp" alt="Rendu produit de la borne de recharge double Spark Plus sur potelet" width="524" height="1014" loading="lazy">
+        </div>
+        <div>
+          <div class="power">Triphasée · 3,7 kW · Écran &amp; QR code</div>
+          <h3>La puissance qu'il faut, pour un investissement accessible</h3>
+          <p>Un séjour en camping laisse largement le temps de recharger : la Spark Plus est calibrée pour une charge lente et sûre, sans surdimensionner votre installation électrique ni votre budget.</p>
+          <ul class="spec-list">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Installation sans renforcement Enedis sur la majorité des sites</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Écran + QR code pour un paiement 100% autonome</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Pilotage et tarification à distance depuis Spark Pilot</li>
+          </ul>
+          <a href="#contact-form" class="btn-primary" data-scroll-target="#contact-form">Demander un devis →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMENT ÇA MARCHE -->
+  <section style="background:var(--bg-off);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Processus</div>
+        <h2>Comment ça marche pour vos campeurs</h2>
+      </div>
+      <div class="process-grid">
+        <div class="process-step reveal">
+          <div class="num">01</div>
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2v6M15 2v6"/><path d="M6 8h12v4a6 6 0 0 1-12 0V8Z"/><path d="M12 18v4"/></svg>
+          <h3>Il branche son véhicule</h3>
+          <p>Aucune inscription ni application à télécharger au préalable.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="num">02</div>
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>
+          <h3>Il scanne le QR code et paie</h3>
+          <p>Google Pay ou Apple Pay, paiement immédiat et anonyme.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="num">03</div>
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18M7 20V10M12 20V4M17 20v6"/></svg>
+          <h3>Vous suivez tout depuis Spark Pilot</h3>
+          <p>Sessions, revenus et tarification pilotés à distance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final reveal">
+    <div class="wrap">
+      <h2>Prêt à équiper votre camping ?</h2>
+      <p>Remplissez le formulaire ci-dessous : un conseiller Sparklin vous recontacte sous 24h ouvrées avec un devis adapté à votre nombre d'emplacements.</p>
+      <a href="#contact-form" data-scroll-target="#contact-form">Remplir le formulaire ↓</a>
+    </div>
+  </section>
+
+  <!-- FORMULAIRE -->
+  <section class="form-section">
+    <div class="wrap">
+      <div class="form-card">
+        <div class="section-head">
+          <div class="eyebrow">Demande de devis</div>
+          <h2>Équiper mon camping ou mon hébergement</h2>
+          <p>Réponse sous 24h ouvrées.</p>
+        </div>
+
+        <div class="success-box" id="success-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>Merci ! Votre demande a été envoyée. Nous vous recontactons sous 24h.</span>
+        </div>
+
+        <form id="contact-form" novalidate action="https://sparklin.io/contact" method="POST">
+          <div class="field-row">
+            <div class="field">
+              <label for="f-prenom">Prénom</label>
+              <input type="text" id="f-prenom" name="prenom" required autocomplete="given-name">
+            </div>
+            <div class="field">
+              <label for="f-nom">Nom</label>
+              <input type="text" id="f-nom" name="nom" required autocomplete="family-name">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-etablissement">Nom de l'établissement</label>
+            <input type="text" id="f-etablissement" name="etablissement" required autocomplete="organization">
+          </div>
+
+          <div class="field-row">
+            <div class="field" id="field-email">
+              <label for="f-email">Email professionnel</label>
+              <input type="email" id="f-email" name="email" required autocomplete="email" pattern="[^\s@]+@[^\s@]+\.[^\s@]+">
+              <div class="error-msg">Merci de renseigner une adresse email valide.</div>
+            </div>
+            <div class="field">
+              <label for="f-tel">Téléphone</label>
+              <input type="tel" id="f-tel" name="telephone" required autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-emplacements">Nombre d'emplacements (optionnel)</label>
+            <input type="number" id="f-emplacements" name="emplacements" min="1" inputmode="numeric" placeholder="Ex. 80">
+          </div>
+
+          <div class="field">
+            <label for="f-message">Message (optionnel)</label>
+            <textarea id="f-message" name="message" rows="3"></textarea>
+          </div>
+
+          <!-- champs hidden UTM / tracking -->
+          <input type="hidden" name="utm_source" id="h-utm_source">
+          <input type="hidden" name="utm_medium" id="h-utm_medium">
+          <input type="hidden" name="utm_campaign" id="h-utm_campaign">
+          <input type="hidden" name="utm_term" id="h-utm_term">
+          <input type="hidden" name="utm_content" id="h-utm_content">
+          <input type="hidden" name="gclid" id="h-gclid">
+          <input type="hidden" name="page_url" id="h-page_url">
+          <input type="hidden" name="segment" value="camping">
+
+          <button type="submit" class="btn-submit" id="submit-btn">
+            <svg class="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="9" opacity=".25"/><path d="M21 12a9 9 0 0 0-9-9"/></svg>
+            <span class="btn-label">Demander un devis →</span>
+          </button>
+          <p class="rgpd">Vos données sont utilisées uniquement pour traiter votre demande. Aucune revente à des tiers. Conformément au RGPD, vous pouvez demander leur suppression à tout moment.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 242.5 78.07"><defs><style>.cls-1{fill:#ff6f49;}.cls-2{fill:#ed6e4f;}</style></defs><path class="cls-1" d="M182,13a4.74,4.74,0,1,0,4.74,4.74A4.74,4.74,0,0,0,182,13Z"/><path class="cls-2" d="M50.88,26.79h6.94L58,29.55A12.54,12.54,0,0,1,72.77,28c3.75,2.3,6,6.45,6,11.56a14.15,14.15,0,0,1-1.6,6.81,12.36,12.36,0,0,1-19,3.42V65.06H50.88Zm7.35,12.76c0,4,2.73,6.89,6.48,6.89s6.48-2.94,6.48-6.89-2.73-6.89-6.48-6.89S58.23,35.59,58.23,39.55Z"/><path class="cls-2" d="M83.26,32.76a12,12,0,0,1,10.8-6.43,11.79,11.79,0,0,1,8.36,3.27l.18-2.73h6.92V52.3h-6.13l-.53-2.73a13.94,13.94,0,0,1-8.8,3.24,11.9,11.9,0,0,1-6.38-1.71c-3.75-2.27-6.05-6.42-6.05-11.53A14.11,14.11,0,0,1,83.26,32.76ZM95.71,46.49c3.76,0,6.49-2.94,6.49-6.92s-2.73-6.86-6.49-6.86-6.48,3-6.48,6.86S92,46.49,95.71,46.49Zm6.46-5.16"/><path class="cls-2" d="M113.77,52.3V26.79h6.43l.35,3.65a8.76,8.76,0,0,1,7.66-4.16,12.78,12.78,0,0,1,3.42.51l-1,6.35a9.23,9.23,0,0,0-2.91-.48c-4,0-6.59,3-6.59,8.39V52.3Z"/><path class="cls-2" d="M134.8,52.3V14h7.35V37.25a43.48,43.48,0,0,1,3.7-4.75l5-5.71h8L149,38.25l11.64,14h-9l-7.3-8.62-2.22,2.6v6Z"/><path class="cls-2" d="M171.9,13V52.3h-7.35V13Z"/><path class="cls-2" d="M192.24,52.3V26.79h6.43L199,29.9a10.6,10.6,0,0,1,8.24-3.62c5.94,0,9.77,4.13,9.77,11.15V52.3h-7.38V38.86c0-4.14-1.55-6.2-4.64-6.2s-5.38,2.45-5.38,6.71V52.3Z"/><path class="cls-2" d="M25.49,49.37,29,43.76a32.43,32.43,0,0,0,4.1,2.34,8.12,8.12,0,0,0,3.35.87,3.06,3.06,0,0,0,1.84-.52A1.57,1.57,0,0,0,39,45.13a2.16,2.16,0,0,0-1.3-1.89,30.71,30.71,0,0,0-3-1.42c-1.21-.5-2.42-1.06-3.64-1.69A9.68,9.68,0,0,1,28,37.68a5.91,5.91,0,0,1-1.23-3.88,6.68,6.68,0,0,1,2.6-5.4c1.73-1.41,4.19-2.12,7.36-2.12a22.14,22.14,0,0,1,4.9.58,15.38,15.38,0,0,1,4.69,1.88L43,34.4a12.29,12.29,0,0,0-3-1.33A10.46,10.46,0,0,0,37,32.49a4.79,4.79,0,0,0-1.59.29,1.15,1.15,0,0,0-.87,1.15,1.82,1.82,0,0,0,1.2,1.58,28.88,28.88,0,0,0,2.86,1.27c1.19.46,2.41,1,3.67,1.64a9.89,9.89,0,0,1,3.2,2.51,6.18,6.18,0,0,1,1.3,4.1,7,7,0,0,1-1.39,4.37,8.89,8.89,0,0,1-3.73,2.8,13.15,13.15,0,0,1-5.14,1A17.86,17.86,0,0,1,31,52.24,18.87,18.87,0,0,1,25.49,49.37Z"/><path class="cls-2" d="M182,27.54a9.76,9.76,0,0,1-3.67-.73V52.3h7.35V26.81A9.78,9.78,0,0,1,182,27.54Z"/></svg>
+      <div class="tagline">Infrastructure de recharge IRVE — <a href="https://sparklin.io">sparklin.io</a></div>
+    </div>
+    <div class="legal">Sparklin SAS — Tous droits réservés.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ───────── capture UTM / gclid ───────── */
+  var params = new URLSearchParams(window.location.search);
+  var tracked = ["utm_source","utm_medium","utm_campaign","utm_term","utm_content","gclid"];
+  var captured = {};
+  tracked.forEach(function(key){
+    var val = params.get(key);
+    if(val){
+      captured[key] = val;
+      try{ sessionStorage.setItem(key, val); }catch(e){}
+    } else {
+      try{ var stored = sessionStorage.getItem(key); if(stored) captured[key] = stored; }catch(e){}
+    }
+  });
+
+  tracked.forEach(function(key){
+    var input = document.getElementById("h-" + key);
+    if(input) input.value = captured[key] || "";
+  });
+  var pageUrlInput = document.getElementById("h-page_url");
+  if(pageUrlInput) pageUrlInput.value = window.location.href;
+
+  /* ───────── scroll-to-anchor buttons ───────── */
+  document.querySelectorAll("[data-scroll-target]").forEach(function(el){
+    el.addEventListener("click", function(e){
+      var target = document.querySelector(el.getAttribute("data-scroll-target"));
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({behavior:"smooth", block:"center"});
+      }
+    });
+  });
+
+  /* ───────── sticky bar on scroll ───────── */
+  var stickybar = document.getElementById("stickybar");
+  var lastShown = false;
+  window.addEventListener("scroll", function(){
+    var shouldShow = window.scrollY > 300;
+    if(shouldShow !== lastShown){
+      stickybar.classList.toggle("is-shown", shouldShow);
+      lastShown = shouldShow;
+    }
+  }, {passive:true});
+
+  /* ───────── scroll reveal ───────── */
+  var revealEls = document.querySelectorAll(".reveal");
+  if("IntersectionObserver" in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.15});
+    revealEls.forEach(function(el){ observer.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add("is-visible"); });
+  }
+
+  /* ───────── form submit ───────── */
+  var form = document.getElementById("contact-form");
+  var emailField = document.getElementById("field-email");
+  var emailInput = document.getElementById("f-email");
+  var submitBtn = document.getElementById("submit-btn");
+  var successBox = document.getElementById("success-box");
+  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    var emailValid = emailPattern.test(emailInput.value.trim());
+    emailField.classList.toggle("has-error", !emailValid);
+    if(!emailValid){
+      emailInput.focus();
+      return;
+    }
+    if(!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.classList.add("is-loading");
+
+    window.dataLayer = window.dataLayer || [];
+    dataLayer.push({ event: "lead_form_submit", source: captured.utm_source || "", segment: "camping" });
+
+    var evt = new CustomEvent("form_submit", { detail: { source: captured.utm_source || "", segment: "camping" } });
+    window.dispatchEvent(evt);
+
+    /* Pas d'endpoint fonctionnel en démo : simulation d'envoi + message de succès inline. */
+    setTimeout(function(){
+      submitBtn.disabled = false;
+      submitBtn.classList.remove("is-loading");
+      form.classList.add("is-hidden");
+      successBox.classList.add("is-shown");
+    }, 700);
+  });
+})();
+</script>
+
+</body>
+</html>
