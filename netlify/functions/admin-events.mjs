@@ -15,7 +15,7 @@ const json = (status, obj) =>
 // Contrairement aux posts, un event n'a pas d'état "brouillon" (upcoming/past
 // sont tous deux affichés) : toute écriture impacte donc la page publique.
 async function triggerRebuild() {
-  const hook = process.env.NETLIFY_BUILD_HOOK_URL;
+  const hook = process.env.BUILD_HOOK_URL;
   if (!hook) return;
   try {
     await fetch(hook, { method: "POST" });

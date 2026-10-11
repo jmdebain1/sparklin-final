@@ -13,7 +13,7 @@ const json = (status, obj) =>
 // Supabase seule ne suffit pas à mettre à jour sparklin.io. On déclenche donc
 // un rebuild Netlify à chaque création/modification/suppression d'article.
 async function triggerRebuild() {
-  const hook = process.env.NETLIFY_BUILD_HOOK_URL;
+  const hook = process.env.BUILD_HOOK_URL;
   if (!hook) return;
   try {
     await fetch(hook, { method: "POST" });
