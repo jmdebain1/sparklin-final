@@ -4,6 +4,10 @@
 <script>/* GTM snippet here */</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png"/>
 <title>Programme Partenaire IRVE — Sparklin</title>
 <meta name="description" content="Rejoignez le réseau d'installateurs IRVE certifiés Sparklin. Leads qualifiés, support technique, marges attractives. Devis gratuit en 48h.">
 <meta name="robots" content="noindex, nofollow">
@@ -166,8 +170,37 @@
   .process-step h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:8px;color:var(--dark)}
   .process-step p{font-size:13px;color:var(--text-mid);line-height:1.65;font-weight:300}
 
+  /* eligibility */
+  .elig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .elig-card{background:var(--bg-off);border:1px solid var(--border);border-radius:14px;padding:24px}
+  .elig-card .icon{color:var(--orange);margin-bottom:14px}
+  .elig-card h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:8px;color:var(--dark)}
+  .elig-card p{font-size:13px;color:var(--text-mid);line-height:1.65;font-weight:300}
+  .elig-note{display:flex;align-items:flex-start;gap:10px;margin-top:28px;padding:16px 18px;background:rgba(232,86,58,.06);border:1px solid rgba(232,86,58,.2);border-radius:10px;font-size:13px;color:var(--text-mid);line-height:1.6}
+  .elig-note svg{color:var(--orange);flex-shrink:0;margin-top:2px}
+
+  /* tiers */
+  .tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .tier-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:28px;position:relative}
+  .tier-card.featured{border-color:var(--orange);box-shadow:0 16px 48px rgba(232,86,58,.12)}
+  .tier-card .tier-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:100px;letter-spacing:.03em;white-space:nowrap}
+  .tier-card .tier-name{font-family:var(--font-display);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--orange);margin-bottom:6px}
+  .tier-card .tier-vol{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--dark);margin-bottom:18px}
+  .tier-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .tier-card li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text-mid);line-height:1.5}
+  .tier-card li svg{color:var(--orange);flex-shrink:0;margin-top:2px}
+
+  /* faq */
+  .faq-list{display:flex;flex-direction:column;gap:12px;max-width:760px}
+  .faq-item{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .faq-item summary{list-style:none;cursor:pointer;padding:18px 20px;font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--dark);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:'+';font-size:20px;font-weight:400;color:var(--orange);flex-shrink:0;transition:transform .2s}
+  .faq-item[open] summary::after{transform:rotate(45deg)}
+  .faq-item p{padding:0 20px 18px;font-size:14px;color:var(--text-mid);line-height:1.7;font-weight:300}
+
   /* testimonials */
-  .testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   .testi-card{background:var(--bg-off);border:1px solid var(--border);border-radius:14px;padding:24px}
   .testi-card p.quote{font-size:15px;line-height:1.65;margin-bottom:18px;color:var(--dark);font-weight:400}
   .testi-card p.quote::before{content:"\201C"}
@@ -202,12 +235,13 @@
     display:block;font-size:12px;font-weight:600;color:var(--text-mid);
     margin-bottom:6px;letter-spacing:.01em;
   }
-  .field input,.field textarea{
+  .field input,.field textarea,.field select{
     width:100%;background:#fff;border:1.5px solid var(--border-dark);
     color:var(--dark);border-radius:var(--radius);padding:11px 12px;font-size:14px;
     font-family:var(--font-body);
   }
-  .field input:focus,.field textarea:focus{
+  .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A4A6A' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:38px}
+  .field input:focus,.field textarea:focus,.field select:focus{
     outline:none;border-color:var(--orange);
   }
   .field textarea{resize:vertical;min-height:64px}
@@ -248,14 +282,15 @@
     .hero-grid{grid-template-columns:1fr;gap:36px}
     .hero-visual{order:-1}
     .hero-visual img{max-width:360px}
-    .why-grid{grid-template-columns:1fr 1fr}
+    .why-grid,.elig-grid{grid-template-columns:1fr 1fr}
     .product-grid,.testi-grid{grid-template-columns:1fr}
-    .process-grid{grid-template-columns:1fr}
+    .process-grid,.tier-grid{grid-template-columns:1fr}
+    .tier-card.featured{order:-1}
   }
   @media (max-width:640px){
     .hero{padding:88px 0 48px}
     .field-row{grid-template-columns:1fr}
-    .why-grid{grid-template-columns:1fr}
+    .why-grid,.elig-grid{grid-template-columns:1fr}
     .stats-grid{gap:12px}
     .stats-grid strong{font-size:1.5rem}
     section{padding:52px 0}
@@ -336,6 +371,37 @@
     </div>
   </section>
 
+  <!-- SECTION 3.5 — CRITÈRES D'ÉLIGIBILITÉ -->
+  <section style="background:var(--bg-off);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Qui peut candidater</div>
+        <h2>Un réseau réservé aux professionnels qualifiés</h2>
+      </div>
+      <div class="elig-grid">
+        <div class="elig-card reveal">
+          <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 12l10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>
+          <h3>Certification RGE IRVE</h3>
+          <p>Qualification IRVE en cours de validité (Qualifelec, Qualit-EnR ou équivalent), conforme aux exigences du bonus de prime à la mise en charge.</p>
+        </div>
+        <div class="elig-card reveal">
+          <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+          <h3>Assurance décennale</h3>
+          <p>Couverture professionnelle à jour pour les travaux d'installation électrique basse tension, exigée avant toute signature de partenariat.</p>
+        </div>
+        <div class="elig-card reveal">
+          <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/><path d="M9 9v11"/></svg>
+          <h3>Expérience électricité BT</h3>
+          <p>Électricien ou entreprise du bâtiment avec une pratique établie des installations basse tension, idéalement déjà engagée sur l'IRVE.</p>
+        </div>
+      </div>
+      <div class="elig-note reveal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>Pas encore certifié RGE IRVE ? Nos équipes peuvent vous orienter vers un parcours de qualification avant intégration au réseau — indiquez-le dans le formulaire ci-dessous.</span>
+      </div>
+    </div>
+  </section>
+
   <!-- SECTION 4 — PRODUITS -->
   <section id="produits" style="background:var(--bg-off);">
     <div class="wrap">
@@ -365,6 +431,48 @@
             <p class="usage">Pensée pour les entreprises et les flottes avec des besoins de recharge rapide et intensive.</p>
             <a href="#contact-form" class="btn-ghost" data-scroll-target="#contact-form">En savoir plus</a>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4.5 — PALIERS PARTENAIRES -->
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Programme partenaire</div>
+        <h2>Trois paliers, une marge qui grandit avec votre activité</h2>
+      </div>
+      <div class="tier-grid">
+        <div class="tier-card reveal">
+          <div class="tier-name">Argent</div>
+          <div class="tier-vol">Jusqu'à 5 install./mois</div>
+          <ul>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Tarifs partenaires sur toute la gamme Spark</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Accès à la hotline technique</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Leads qualifiés selon disponibilité</li>
+          </ul>
+        </div>
+        <div class="tier-card featured reveal">
+          <div class="tier-badge">Le plus choisi</div>
+          <div class="tier-name">Or</div>
+          <div class="tier-vol">6 à 15 install./mois</div>
+          <ul>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Remise supplémentaire sur volume</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Flux de leads prioritaire sur votre zone</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Formation technique certifiante incluse</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Outils co-brandés (devis, brochures)</li>
+          </ul>
+        </div>
+        <div class="tier-card reveal">
+          <div class="tier-name">Platine</div>
+          <div class="tier-vol">15+ install./mois</div>
+          <ul>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Meilleure remise du programme</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Référencement prioritaire « installateur certifié »</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Interlocuteur dédié chez Sparklin</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Accès anticipé aux nouvelles gammes</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -400,6 +508,38 @@
     </div>
   </section>
 
+  <!-- SECTION 5.5 — FAQ -->
+  <section style="background:var(--bg-off);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Questions fréquentes</div>
+        <h2>Tout ce que les installateurs nous demandent</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary>Dois-je être certifié RGE IRVE pour rejoindre le programme ?</summary>
+          <p>Oui, c'est le prérequis principal — il garantit à vos clients l'éligibilité aux aides publiques et à Sparklin la qualité du réseau. Si votre certification est en cours d'obtention, contactez-nous quand même : nous pouvons étudier votre dossier en amont.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Comment sont attribués les leads ?</summary>
+          <p>Chaque demande entrante est qualifiée puis orientée vers le partenaire disponible le plus proche géographiquement. Les paliers Or et Platine bénéficient d'une priorité d'attribution sur leur zone.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Quel est le délai entre la commande et la livraison du matériel ?</summary>
+          <p>Les bornes Spark 1 et Spark Plus sont assemblées en France et expédiées sous 5 à 10 jours ouvrés selon les volumes commandés. Un stock de dépannage est disponible pour les partenaires Or et Platine.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Y a-t-il une exclusivité territoriale ?</summary>
+          <p>Non, le réseau n'est pas fermé par zone, mais l'attribution des leads tient compte de la densité de partenaires déjà actifs sur chaque secteur pour éviter la sursaturation.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>La formation technique est-elle obligatoire ?</summary>
+          <p>Elle est incluse et vivement recommandée dès le palier Or : une demi-journée, à distance ou dans nos locaux à Nantes, pour maîtriser la mise en service, le SAV et l'app de supervision Spark Pilot.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- SECTION 6 — TÉMOIGNAGES -->
   <section style="background:var(--bg-off);">
     <div class="wrap">
@@ -415,6 +555,10 @@
         <div class="testi-card reveal">
           <p class="quote">Le support technique et les leads fournis font vraiment la différence.</p>
           <div class="who"><strong>Marie D.</strong>Société ELEC+, Auvergne-Rhône-Alpes</div>
+        </div>
+        <div class="testi-card reveal">
+          <p class="quote">Passer au palier Or a changé la donne : formation incluse, leads prioritaires, et une vraie marge de manœuvre sur les devis.</p>
+          <div class="who"><strong>Karim B.</strong>KB Électricité, Nouvelle-Aquitaine</div>
         </div>
       </div>
     </div>
@@ -469,6 +613,16 @@
           <div class="field">
             <label for="f-tel">Téléphone</label>
             <input type="tel" id="f-tel" name="telephone" required autocomplete="tel">
+          </div>
+
+          <div class="field">
+            <label for="f-rge">Certification RGE IRVE</label>
+            <select id="f-rge" name="certification_rge" required>
+              <option value="">Sélectionnez votre situation</option>
+              <option value="certifie">Certifié RGE IRVE</option>
+              <option value="en_cours">Certification en cours d'obtention</option>
+              <option value="non_certifie">Pas encore certifié</option>
+            </select>
           </div>
 
           <div class="field">
