@@ -209,5 +209,29 @@ for landing in "$ROOT"/landing-sparklin-*.html; do
   [ -f "$landing" ] && cp "$landing" "$DIST/$(basename "$landing")"
 done
 
+echo "── build-static: génération du manifeste d'images (admin-blog) ──"
+# Liste des photos de contenu dans assets/images/, utilisée par le sélecteur
+# d'image de l'éditeur d'articles (admin-blog) pour piocher dans la base
+# existante au lieu de taper une URL à la main. Exclut les favicons/logo
+# système qui ne sont pas des images de couverture d'article.
+php -r '
+  $dir = $argv[1];
+  $exts = ["jpg","jpeg","png","webp","gif","avif"];
+  $exclude = ["favicon-16","favicon-32","favicon-192","favicon-512","apple-touch-icon","logo"];
+  $files = [];
+  foreach (scandir($dir) as $f) {
+    if ($f === "." || $f === "..") continue;
+    $ext = strtolower(pathinfo($f, PATHINFO_EXTENSION));
+    if (!in_array($ext, $exts)) continue;
+    $base = pathinfo($f, PATHINFO_FILENAME);
+    if (in_array($base, $exclude)) continue;
+    $files[] = ["name" => $f, "path" => "/assets/images/" . $f];
+  }
+  sort($files);
+  echo json_encode($files, JSON_UNESCAPED_SLASHES);
+' "$ROOT/assets/images" > "$DIST/assets/images/manifest.json"
+n_imgs=$(php -r 'echo count(json_decode(file_get_contents($argv[1]), true));' "$DIST/assets/images/manifest.json")
+echo "  → $n_imgs image(s) listée(s) dans manifest.json"
+
 n_html=$(find "$DIST" -name "*.html" | wc -l | tr -d ' ')
 echo "── build-static: terminé — $n_html fichiers HTML générés dans dist/ ──"

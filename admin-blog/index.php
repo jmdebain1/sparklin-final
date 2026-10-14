@@ -83,6 +83,7 @@ html,body{height:100%;font-family:var(--fb);font-size:14px;line-height:1.6;color
 .sb-item svg{flex-shrink:0;opacity:.65}
 .sb-item.active svg{opacity:1}
 .sb-badge{margin-left:auto;font-size:10px;font-family:var(--fm);background:var(--bg2);color:var(--text3);padding:1px 5px;border-radius:4px}
+.sb-badge-beta{margin-left:auto;font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-family:var(--fm);background:var(--orange-bg);color:var(--orange);padding:2px 6px;border-radius:4px}
 .sb-badge.new{background:var(--orange-bg2);color:var(--orange)}
 .sb-divider{height:1px;background:var(--border);margin:8px 4px}
 .sb-new-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;border-radius:var(--r2);background:var(--orange);color:#fff;font-size:13px;font-weight:600;cursor:pointer;border:none;width:100%;font-family:var(--fb);transition:background .15s;margin-bottom:8px}
@@ -116,7 +117,7 @@ html,body{height:100%;font-family:var(--fb);font-size:14px;line-height:1.6;color
 .s-review{background:var(--amber-bg);color:var(--amber)}.s-review::before{background:var(--amber)}
 
 /* ── METRICS ── */
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .metric{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow);transition:box-shadow .2s}
 .metric:hover{box-shadow:var(--shadow2)}
 .metric-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -339,6 +340,11 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 .modal-bg.open .modal{transform:none}
 .modal-title{font-family:var(--fd);font-size:17px;font-weight:700;margin-bottom:4px}
 .modal-sub{font-size:13px;color:var(--text3);margin-bottom:18px}
+.imgpick-item{border:1.5px solid var(--border);border-radius:var(--r2);overflow:hidden;cursor:pointer;background:var(--bg2);transition:border-color .15s,transform .1s;text-align:left}
+.imgpick-item:hover{border-color:var(--orange);transform:translateY(-1px)}
+.imgpick-thumb{width:100%;height:84px;object-fit:cover;display:block;background:var(--bg2)}
+.imgpick-name{font-size:10px;font-family:var(--fm);color:var(--text3);padding:5px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.imgpick-empty{grid-column:1/-1;text-align:center;color:var(--text3);font-size:13px;padding:30px 0}
 
 /* ── MISC ── */
 .tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 7px;border-radius:100px;background:var(--bg2);color:var(--text3);border:1px solid var(--border)}
@@ -612,7 +618,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
   <div class="tb-brand">
     <div class="tb-brand-dot"></div>
     sparklin
-    <span class="tb-badge">Rédaction</span>
+    <span class="tb-badge" id="tb-badge-label">Rédaction</span>
   </div>
   <div class="tb-center">
     <div class="tb-search">
@@ -625,8 +631,6 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
     <div class="tb-ui-lang" id="tb-ui-lang" title="Langue de l'interface">
       <button class="tb-ui-lang-btn active" data-ui-lang="fr" onclick="setUiLang('fr',this)">FR</button>
       <button class="tb-ui-lang-btn" data-ui-lang="en" onclick="setUiLang('en',this)">EN</button>
-      <button class="tb-ui-lang-btn" data-ui-lang="de" onclick="setUiLang('de',this)">DE</button>
-      <button class="tb-ui-lang-btn" data-ui-lang="es" onclick="setUiLang('es',this)">ES</button>
     </div>
     <div class="tb-save" id="autosave-indicator">
       <div class="save-dot"></div>
@@ -635,12 +639,12 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
     <button class="btn btn-ghost btn-sm" onclick="showView('settings')">
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </button>
-    <a class="btn btn-ghost btn-sm" href="/blog/" target="_blank">
+    <a class="btn btn-ghost btn-sm" href="/blog/" target="_blank" id="btn-view-blog">
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       Voir le blog
     </a>
     <div class="avatar" title="Admin Sparklin" id="user-avatar-label">A</div>
-    <button class="btn btn-ghost btn-sm" onclick="adminLogout()" title="Déconnexion" style="font-size:12px;padding:5px 10px;">
+    <button class="btn btn-ghost btn-sm" id="btn-logout" onclick="adminLogout()" title="Déconnexion" style="font-size:12px;padding:5px 10px;">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
     </button>
   </div>
@@ -677,11 +681,12 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
     Presse
     <span class="sb-badge" id="sb-press-count">—</span>
   </button>
-  <button class="sb-item" id="nav-analytics" id="nav-analytics" onclick="showView('analytics')">
+  <button class="sb-item" id="nav-analytics" onclick="showView('analytics')">
     <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
     Analytiques
+    <span class="sb-badge-beta">Beta</span>
   </button>
-  <button class="sb-item" id="nav-settings" id="nav-settings" onclick="showView('settings')">
+  <button class="sb-item" id="nav-settings" onclick="showView('settings')">
     <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     Paramètres
   </button>
@@ -693,8 +698,8 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 <!-- ─── DASHBOARD ────────────────────────────────────────────── -->
 <div class="view active" id="view-dashboard">
   <div class="ph">
-    <div><div class="ph-title">Tableau de bord</div><div class="ph-sub" id="dash-date"></div></div>
-    <button class="btn btn-primary btn-sm" onclick="openEditor()">
+    <div><div class="ph-title" id="dash-ph-title">Tableau de bord</div><div class="ph-sub" id="dash-date"></div></div>
+    <button class="btn btn-primary btn-sm" id="dash-new-btn" onclick="openEditor()">
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
       Nouvel article
     </button>
@@ -702,20 +707,16 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
   <div class="metrics">
     <div class="metric">
-      <div class="metric-row"><div class="metric-icon" style="background:var(--green-bg)"><svg width="15" height="15" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="metric-trend t-up">+2 mois</span></div>
-      <div class="metric-val" id="m-pub">4</div><div class="metric-lbl">Publiés</div>
+      <div class="metric-row"><div class="metric-icon" style="background:var(--green-bg)"><svg width="15" height="15" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="metric-trend t-up" id="m-pub-trend">+2 mois</span></div>
+      <div class="metric-val" id="m-pub">4</div><div class="metric-lbl" id="m-pub-lbl">Publiés</div>
     </div>
     <div class="metric">
-      <div class="metric-row"><div class="metric-icon" style="background:var(--bg2)"><svg width="15" height="15" fill="none" stroke="var(--text3)" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4L18.5 2.5z"/></svg></div><span class="metric-trend t-flat">Stable</span></div>
-      <div class="metric-val" id="m-draft">2</div><div class="metric-lbl">Brouillons</div>
+      <div class="metric-row"><div class="metric-icon" style="background:var(--bg2)"><svg width="15" height="15" fill="none" stroke="var(--text3)" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4L18.5 2.5z"/></svg></div><span class="metric-trend t-flat" id="m-draft-trend">Stable</span></div>
+      <div class="metric-val" id="m-draft">2</div><div class="metric-lbl" id="m-draft-lbl">Brouillons</div>
     </div>
     <div class="metric">
-      <div class="metric-row"><div class="metric-icon" style="background:var(--blue-bg)"><svg width="15" height="15" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="metric-trend t-flat">1 prévu</span></div>
-      <div class="metric-val" id="m-sched">1</div><div class="metric-lbl">Planifiés</div>
-    </div>
-    <div class="metric">
-      <div class="metric-row"><div class="metric-icon" style="background:var(--orange-bg)"><svg width="15" height="15" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><span class="metric-trend t-up">+18 %</span></div>
-      <div class="metric-val">3 284</div><div class="metric-lbl">Vues ce mois</div>
+      <div class="metric-row"><div class="metric-icon" style="background:var(--blue-bg)"><svg width="15" height="15" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="metric-trend t-flat" id="m-sched-trend">1 prévu</span></div>
+      <div class="metric-val" id="m-sched">1</div><div class="metric-lbl" id="m-sched-lbl">Planifiés</div>
     </div>
   </div>
 
@@ -723,24 +724,17 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
     <div class="card">
       <div class="card-inner" style="padding-bottom:0">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-          <div style="font-size:14px;font-weight:700;color:var(--text)">Articles récents</div>
-          <button class="btn btn-ghost btn-sm" onclick="showView('articles')">Tous →</button>
+          <div style="font-size:14px;font-weight:700;color:var(--text)" id="dash-recent-title">Articles récents</div>
+          <button class="btn btn-ghost btn-sm" id="dash-all-btn" onclick="showView('articles')">Tous →</button>
         </div>
       </div>
-      <table class="art-table" id="dash-table"><thead><tr><th style="width:40px"><input type="checkbox" class="art-check" onchange="toggleAll(this)"/></th><th>Titre</th><th>Statut</th><th>Vues</th><th></th></tr></thead><tbody id="dash-tbody"></tbody></table>
+      <table class="art-table" id="dash-table"><thead><tr><th style="width:40px"><input type="checkbox" class="art-check" onchange="toggleAll(this)"/></th><th id="th-dash-title">Titre</th><th id="th-dash-status">Statut</th><th></th></tr></thead><tbody id="dash-tbody"></tbody></table>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="card">
         <div class="card-inner">
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:14px">Vues · 7 jours</div>
-          <div class="chart-container" id="dash-chart"></div>
-          <div class="chart-labels"><span>Lun</span><span>Dim</span></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-inner">
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px">Activité</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px" id="dash-activity-title">Activité</div>
           <div id="dash-activity"></div>
         </div>
       </div>
@@ -751,13 +745,13 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 <!-- ─── ARTICLES LIST ─────────────────────────────────────────── -->
 <div class="view" id="view-articles">
   <div class="ph">
-    <div><div class="ph-title">Articles</div><div class="ph-sub" id="art-count-sub">7 articles</div></div>
+    <div><div class="ph-title" id="art-ph-title">Articles</div><div class="ph-sub" id="art-count-sub">7 articles</div></div>
     <div style="display:flex;gap:8px">
       <button class="btn btn-secondary btn-sm" id="batch-btn" style="display:none" onclick="batchAction()">
         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        Action (<span id="batch-count">0</span>)
+        <span id="batch-label">Action</span> (<span id="batch-count">0</span>)
       </button>
-      <button class="btn btn-primary btn-sm" onclick="openEditor()">
+      <button class="btn btn-primary btn-sm" id="art-new-btn" onclick="openEditor()">
         <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
         Nouveau
       </button>
@@ -765,23 +759,23 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
   </div>
   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
     <div class="filters" id="art-filters">
-      <button class="fpill active" data-f="all" onclick="setFilter('all',this)">Tous <span style="opacity:.6" id="fc-all">(0)</span></button>
+      <button class="fpill active" data-f="all" id="filter-all-btn" onclick="setFilter('all',this)">Tous <span style="opacity:.6" id="fc-all">(0)</span></button>
       <!-- lang filters -->
       <div style="width:1px;height:16px;background:var(--border);margin:0 4px;align-self:center;"></div>
       <button class="fpill" data-f="lang-fr" onclick="setLangFilter('fr',this)" title="Français">🇫🇷</button>
       <button class="fpill" data-f="lang-en" onclick="setLangFilter('en',this)" title="English">🇬🇧</button>
       <button class="fpill" data-f="lang-de" onclick="setLangFilter('de',this)" title="Deutsch">🇩🇪</button>
       <button class="fpill" data-f="lang-es" onclick="setLangFilter('es',this)" title="Español">🇪🇸</button>
-      <button class="fpill" data-f="published" onclick="setFilter('published',this)">Publiés <span style="opacity:.6" id="fc-published">(0)</span></button>
-      <button class="fpill" data-f="draft" onclick="setFilter('draft',this)">Brouillons <span style="opacity:.6" id="fc-draft">(0)</span></button>
-      <button class="fpill" data-f="scheduled" onclick="setFilter('scheduled',this)">Planifiés <span style="opacity:.6" id="fc-scheduled">(0)</span></button>
+      <button class="fpill" data-f="published" id="filter-published-btn" onclick="setFilter('published',this)">Publiés <span style="opacity:.6" id="fc-published">(0)</span></button>
+      <button class="fpill" data-f="draft" id="filter-draft-btn" onclick="setFilter('draft',this)">Brouillons <span style="opacity:.6" id="fc-draft">(0)</span></button>
+      <button class="fpill" data-f="scheduled" id="filter-scheduled-btn" onclick="setFilter('scheduled',this)">Planifiés <span style="opacity:.6" id="fc-scheduled">(0)</span></button>
     </div>
     <div style="display:flex;gap:6px">
-      <button class="sort-btn" onclick="sortBy('date')">
+      <button class="sort-btn" id="sort-date-btn" onclick="sortBy('date')">
         <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         Date
       </button>
-      <button class="sort-btn" onclick="sortBy('views')">Vues</button>
+      <button class="sort-btn" id="sort-views-btn" onclick="sortBy('views')">Vues</button>
     </div>
   </div>
   <div class="card" style="overflow:hidden;padding:0">
@@ -789,12 +783,12 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
       <thead>
         <tr>
           <th style="width:40px"><input type="checkbox" class="art-check" onchange="toggleAll(this)"/></th>
-          <th>Titre</th>
+          <th id="th-art-title">Titre</th>
           <th style="width:60px" id="col-lang-header">Langue</th>
-          <th style="width:110px">Catégorie</th>
-          <th style="width:100px">Statut</th>
-          <th style="width:90px">Date</th>
-          <th style="width:80px;text-align:right">Vues</th>
+          <th style="width:110px" id="th-art-category">Catégorie</th>
+          <th style="width:100px" id="th-art-status">Statut</th>
+          <th style="width:90px" id="th-art-date">Date</th>
+          <th style="width:80px;text-align:right" id="th-art-views">Vues</th>
           <th style="width:80px"></th>
         </tr>
       </thead>
@@ -809,40 +803,40 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
     <!-- TOOLBAR -->
     <div class="editor-body">
       <div class="editor-topbar">
-        <button class="btn btn-ghost btn-sm" onclick="showView('articles')" style="padding:5px 8px">
+        <button class="btn btn-ghost btn-sm" id="editor-back-btn" onclick="showView('articles')" style="padding:5px 8px">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
           Articles
         </button>
         <div class="divider" style="width:1px;height:20px;margin:0 4px;background:var(--border)"></div>
         <div class="rte-bar" id="rte-toolbar">
-          <button class="rte-btn" title="Gras (Ctrl+B)" onmousedown="e=>{e.preventDefault();fmt('bold')}"><b>B</b></button>
-          <button class="rte-btn" title="Italique (Ctrl+I)" onmousedown="e=>{e.preventDefault();fmt('italic')}"><i>I</i></button>
-          <button class="rte-btn" title="Souligné" onmousedown="e=>{e.preventDefault();fmt('underline')}"><u>U</u></button>
-          <button class="rte-btn" title="Barré" onmousedown="e=>{e.preventDefault();fmt('strikeThrough')}"><s>S</s></button>
-          <button class="rte-btn" title="Code" onmousedown="e=>{e.preventDefault();wrapCode()}">{ }</button>
+          <button class="rte-btn" id="rte-bold" title="Gras (Ctrl+B)" onmousedown="e=>{e.preventDefault();fmt('bold')}"><b>B</b></button>
+          <button class="rte-btn" id="rte-italic" title="Italique (Ctrl+I)" onmousedown="e=>{e.preventDefault();fmt('italic')}"><i>I</i></button>
+          <button class="rte-btn" id="rte-underline" title="Souligné" onmousedown="e=>{e.preventDefault();fmt('underline')}"><u>U</u></button>
+          <button class="rte-btn" id="rte-strike" title="Barré" onmousedown="e=>{e.preventDefault();fmt('strikeThrough')}"><s>S</s></button>
+          <button class="rte-btn" id="rte-code" title="Code" onmousedown="e=>{e.preventDefault();wrapCode()}">{ }</button>
           <div class="rte-sep"></div>
-          <button class="rte-btn" title="Titre H2" onmousedown="e=>{e.preventDefault();fmt('formatBlock','h2')}">H2</button>
-          <button class="rte-btn" title="Titre H3" onmousedown="e=>{e.preventDefault();fmt('formatBlock','h3')}">H3</button>
-          <button class="rte-btn" title="Paragraphe" onmousedown="e=>{e.preventDefault();fmt('formatBlock','p')}">¶</button>
+          <button class="rte-btn" id="rte-h2" title="Titre H2" onmousedown="e=>{e.preventDefault();fmt('formatBlock','h2')}">H2</button>
+          <button class="rte-btn" id="rte-h3" title="Titre H3" onmousedown="e=>{e.preventDefault();fmt('formatBlock','h3')}">H3</button>
+          <button class="rte-btn" id="rte-p" title="Paragraphe" onmousedown="e=>{e.preventDefault();fmt('formatBlock','p')}">¶</button>
           <div class="rte-sep"></div>
-          <button class="rte-btn" title="Liste à puces" onmousedown="e=>{e.preventDefault();fmt('insertUnorderedList')}">•—</button>
-          <button class="rte-btn" title="Liste numérotée" onmousedown="e=>{e.preventDefault();fmt('insertOrderedList')}">1.</button>
-          <button class="rte-btn" title="Citation" onmousedown="e=>{e.preventDefault();fmt('formatBlock','blockquote')}">"</button>
-          <button class="rte-btn" title="Séparateur" onmousedown="e=>{e.preventDefault();insertHR()}">—</button>
+          <button class="rte-btn" id="rte-ul" title="Liste à puces" onmousedown="e=>{e.preventDefault();fmt('insertUnorderedList')}">•—</button>
+          <button class="rte-btn" id="rte-ol" title="Liste numérotée" onmousedown="e=>{e.preventDefault();fmt('insertOrderedList')}">1.</button>
+          <button class="rte-btn" id="rte-quote" title="Citation" onmousedown="e=>{e.preventDefault();fmt('formatBlock','blockquote')}">"</button>
+          <button class="rte-btn" id="rte-hr" title="Séparateur" onmousedown="e=>{e.preventDefault();insertHR()}">—</button>
           <div class="rte-sep"></div>
-          <button class="rte-btn" title="Lien" onmousedown="e=>{e.preventDefault();insertLink()}">🔗</button>
-          <button class="rte-btn" title="Image" onmousedown="e=>{e.preventDefault();document.getElementById('rte-img-input').click()}">🖼</button>
+          <button class="rte-btn" id="rte-link" title="Lien" onmousedown="e=>{e.preventDefault();insertLink()}">🔗</button>
+          <button class="rte-btn" id="rte-img" title="Image" onmousedown="e=>{e.preventDefault();document.getElementById('rte-img-input').click()}">🖼</button>
           <input type="file" id="rte-img-input" accept="image/*" style="display:none" onchange="insertImage(this)"/>
           <div class="rte-sep"></div>
-          <button class="rte-btn" title="Annuler (Ctrl+Z)" onmousedown="e=>{e.preventDefault();fmt('undo')}">↩</button>
-          <button class="rte-btn" title="Rétablir (Ctrl+Y)" onmousedown="e=>{e.preventDefault();fmt('redo')}">↪</button>
+          <button class="rte-btn" id="rte-undo" title="Annuler (Ctrl+Z)" onmousedown="e=>{e.preventDefault();fmt('undo')}">↩</button>
+          <button class="rte-btn" id="rte-redo" title="Rétablir (Ctrl+Y)" onmousedown="e=>{e.preventDefault();fmt('redo')}">↪</button>
         </div>
         <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
           <div class="tb-save show" id="editor-save-status">
             <div class="save-dot"></div>
             <span id="editor-save-text">Brouillon</span>
           </div>
-          <button class="btn btn-ghost btn-sm" onclick="toggleFocusMode()" title="Mode focus (F11)">
+          <button class="btn btn-ghost btn-sm" id="btn-focus-mode" onclick="toggleFocusMode()" title="Mode focus (F11)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
           </button>
         </div>
@@ -854,7 +848,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
         <div class="editor-slug-row">
           <span class="editor-slug-base">sparklin.io/blog/</span>
           <input id="ed-slug" class="editor-slug-input" value="" placeholder="slug-url" oninput="onSlug(this.value)" size="30"/>
-          <button class="link-icon-btn" title="Copier l'URL" onclick="copySlug()">
+          <button class="link-icon-btn" id="btn-copy-slug" title="Copier l'URL" onclick="copySlug()">
             <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
         </div>
@@ -902,7 +896,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
             </div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-            <button class="btn btn-secondary btn-sm" style="justify-content:center" onclick="saveDraft()">
+            <button class="btn btn-secondary btn-sm" id="btn-save-draft" style="justify-content:center" onclick="saveDraft()">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13"/><polyline points="7 3 7 8 15 8"/></svg>
               Brouillon
             </button>
@@ -916,19 +910,19 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
       <!-- META / SEO -->
       <div class="panel-section">
-        <div class="panel-label">SEO</div>
+        <div class="panel-label" id="lbl-seo">SEO</div>
         <div class="panel-card" style="display:flex;flex-direction:column;gap:10px">
           <div class="field-row">
-            <label>Extrait (résumé public)</label>
+            <label id="lbl-excerpt">Extrait (résumé public)</label>
             <textarea id="ed-excerpt" rows="2" placeholder="Court résumé affiché dans la liste des articles…"></textarea>
           </div>
           <div class="field-row">
-            <label>Méta description</label>
+            <label id="lbl-meta-desc">Méta description</label>
             <textarea id="ed-meta" rows="3" placeholder="120–160 caractères…" oninput="onMeta(this.value)"></textarea>
             <div class="char-hint" id="meta-hint">0 / 160</div>
           </div>
           <div class="field-row">
-            <label>Mot-clé principal</label>
+            <label id="lbl-focus-kw">Mot-clé principal</label>
             <input type="text" id="ed-focus-kw" placeholder="Ex : recharge IRVE entreprise" oninput="updateSeo()"/>
           </div>
           <div class="seo-ring-wrap">
@@ -939,7 +933,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
               </svg>
               <div class="seo-ring-val" id="seo-score-val">—</div>
             </div>
-            <div style="font-size:12px;color:var(--text3);line-height:1.5">Score SEO<br><strong id="seo-label" style="color:var(--text2)">En attente</strong></div>
+            <div style="font-size:12px;color:var(--text3);line-height:1.5"><span id="lbl-seo-score">Score SEO</span><br><strong id="seo-label" style="color:var(--text2)">En attente</strong></div>
           </div>
           <div class="seo-items" id="seo-checks"></div>
         </div>
@@ -996,10 +990,10 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
       <!-- SETTINGS -->
       <div class="panel-section">
-        <div class="panel-label">Paramètres article</div>
+        <div class="panel-label" id="lbl-article-settings">Paramètres article</div>
         <div class="panel-card" style="display:flex;flex-direction:column;gap:10px">
           <div class="field-row">
-            <label>Catégorie</label>
+            <label id="lbl-category">Catégorie</label>
             <select id="ed-cat">
               <option value="Actualité">Actualité</option>
               <option value="Réglementation">Réglementation</option>
@@ -1013,19 +1007,26 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
             </select>
           </div>
           <div class="field-row">
-            <label>Tags</label>
+            <label id="lbl-tags">Tags</label>
             <input type="text" id="ed-tags" placeholder="IRVE, LOM, load balancing…"/>
           </div>
           <div class="field-row">
-            <label>Image de couverture (URL)</label>
-            <input type="text" id="ed-hero" placeholder="/assets/images/mon-image.jpg"/>
+            <label id="lbl-cover-image">Image de couverture</label>
+            <div style="display:flex;gap:6px;align-items:stretch">
+              <input type="text" id="ed-hero" placeholder="/assets/images/mon-image.jpg" style="flex:1" oninput="onHeroInput()"/>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-pick-image" onclick="openImagePicker()" style="white-space:nowrap">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span id="btn-pick-image-label">Choisir</span>
+              </button>
+            </div>
+            <img id="ed-hero-preview" src="" alt="" style="display:none;margin-top:8px;width:100%;max-height:120px;border-radius:8px;border:1px solid var(--border);object-fit:cover"/>
           </div>
           <div class="field-row">
-            <label>Texte alternatif de l'image</label>
+            <label id="lbl-hero-alt">Texte alternatif de l'image</label>
             <input type="text" id="ed-hero-alt" placeholder="Description de l'image pour le SEO/accessibilité"/>
           </div>
           <div class="field-row">
-            <label>Objectif mots</label>
+            <label id="lbl-word-goal">Objectif mots</label>
             <select id="ed-wordgoal" onchange="updateWordGoal(this.value)">
               <option value="0">Pas d'objectif</option>
               <option value="300">Court — 300 mots</option>
@@ -1039,11 +1040,11 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
       <!-- AI PANEL -->
       <div class="panel-section">
-        <div class="panel-label">Intelligence artificielle</div>
+        <div class="panel-label" id="lbl-ai">Intelligence artificielle</div>
         <div class="ai-panel">
           <div class="ai-header">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="m12 2-3.5 7H3l5.5 4-2 7L12 16l5.5 4-2-7L21 9h-5.5L12 2z"/></svg>
-            Générer avec l'IA
+            <span id="lbl-ai-generate">Générer avec l'IA</span>
           </div>
           <div class="ai-modes">
             <div class="ai-mode sel" id="ai-full" onclick="setAiMode('full')"><div class="ai-mode-name">Article complet</div><div class="ai-mode-sub">Intro + corps + conclusion</div></div>
@@ -1051,19 +1052,19 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
             <div class="ai-mode" id="ai-outline" onclick="setAiMode('outline')"><div class="ai-mode-name">Plan</div><div class="ai-mode-sub">H2 + structure</div></div>
             <div class="ai-mode" id="ai-meta" onclick="setAiMode('meta')"><div class="ai-mode-name">SEO auto</div><div class="ai-mode-sub">Titre + méta</div></div>
           </div>
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#7C3AED;margin-bottom:6px">Ton</div>
+          <div id="lbl-ai-tone" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#7C3AED;margin-bottom:6px">Ton</div>
           <div class="ai-tones">
             <button class="ai-tone active" data-t="expert" onclick="setTone(this)">Expert</button>
             <button class="ai-tone" data-t="simple" onclick="setTone(this)">Accessible</button>
             <button class="ai-tone" data-t="commercial" onclick="setTone(this)">Commercial</button>
             <button class="ai-tone" data-t="edu" onclick="setTone(this)">Pédagogique</button>
           </div>
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#7C3AED;margin:8px 0 6px">Mots-clés</div>
+          <div id="lbl-ai-keywords" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#7C3AED;margin:8px 0 6px">Mots-clés</div>
           <div class="ai-kw" id="ai-kw-list">
             <span class="ai-chip" onclick="rmKw(this)">IRVE <span style="opacity:.5">×</span></span>
             <span class="ai-chip" onclick="rmKw(this)">Sparklin <span style="opacity:.5">×</span></span>
             <span class="ai-chip" onclick="rmKw(this)">recharge entreprise <span style="opacity:.5">×</span></span>
-            <span class="ai-chip" style="background:none;border-color:#C4B5FD;color:#7C3AED;cursor:pointer" onclick="addKw()">+ Ajouter</span>
+            <span class="ai-chip" id="btn-add-kw" style="background:none;border-color:#C4B5FD;color:#7C3AED;cursor:pointer" onclick="addKw()">+ Ajouter</span>
           </div>
           <div id="gen-wrap" style="display:none">
             <div class="gen-prog"><div class="gen-prog-bar" id="gen-bar" style="width:0%"></div></div>
@@ -1078,7 +1079,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
       <!-- VERSIONS -->
       <div class="panel-section">
-        <div class="panel-label">Historique</div>
+        <div class="panel-label" id="lbl-history">Historique</div>
         <div class="panel-card">
           <div id="versions-list"></div>
         </div>
@@ -1091,16 +1092,16 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 <!-- ─── ÉVÉNEMENTS ───────────────────────────────────────────── -->
 <div class="view" id="view-events">
   <div class="ph">
-    <div><div class="ph-title">Événements</div><div class="ph-sub" id="ev-count-sub">Chargement…</div></div>
-    <button class="btn btn-primary btn-sm" onclick="openEventForm()">
+    <div><div class="ph-title" id="ev-ph-title">Événements</div><div class="ph-sub" id="ev-count-sub">Chargement…</div></div>
+    <button class="btn btn-primary btn-sm" id="ev-new-btn" onclick="openEventForm()">
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
       Nouvel événement
     </button>
   </div>
   <div class="filters" id="ev-filters">
-    <button class="fpill active" data-f="all" onclick="setEventFilter('all',this)">Tous</button>
-    <button class="fpill" data-f="upcoming" onclick="setEventFilter('upcoming',this)">À venir</button>
-    <button class="fpill" data-f="past" onclick="setEventFilter('past',this)">Passés</button>
+    <button class="fpill active" data-f="all" id="ev-filter-all" onclick="setEventFilter('all',this)">Tous</button>
+    <button class="fpill" data-f="upcoming" id="ev-filter-upcoming" onclick="setEventFilter('upcoming',this)">À venir</button>
+    <button class="fpill" data-f="past" id="ev-filter-past" onclick="setEventFilter('past',this)">Passés</button>
   </div>
 
   <!-- Form (create/edit) -->
@@ -1110,48 +1111,48 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
       <input type="hidden" id="ev-f-id"/>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div>
-          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Statut</label>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-ev-status">Statut</label>
           <select id="ev-f-status" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;">
-            <option value="upcoming">À venir</option>
-            <option value="past">Passé</option>
+            <option value="upcoming" id="ev-opt-upcoming">À venir</option>
+            <option value="past" id="ev-opt-past">Passé</option>
           </select>
         </div>
         <div>
-          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Badge (ex. « Juin 2026 »)</label>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-ev-badge">Badge (ex. « Juin 2026 »)</label>
           <input id="ev-f-badge" placeholder="Juin 2026" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div>
-          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Titre</label>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-ev-title">Titre</label>
           <input id="ev-f-title" placeholder="Nom du salon / événement" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
         </div>
         <div>
-          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Icône (emoji)</label>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-ev-icon">Icône (emoji)</label>
           <input id="ev-f-icon" placeholder="⚡" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
         </div>
       </div>
       <div>
-        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Description</label>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-ev-desc">Description</label>
         <textarea id="ev-f-desc" rows="2" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;resize:vertical;"></textarea>
       </div>
       <div>
-        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Points clés (un par ligne)</label>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-ev-highlights">Points clés (un par ligne)</label>
         <textarea id="ev-f-highlights" rows="3" placeholder="🤝 Contacts qualifiés&#10;🔌 Démo live des bornes" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;resize:vertical;"></textarea>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div>
-          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Lien (optionnel)</label>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-ev-link">Lien (optionnel)</label>
           <input id="ev-f-link" placeholder="https://…" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
         </div>
         <div>
-          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Libellé du lien</label>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-ev-link-label">Libellé du lien</label>
           <input id="ev-f-link-label" placeholder="Site officiel" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
         </div>
       </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;">
-        <button class="btn btn-secondary btn-sm" onclick="closeEventForm()">Annuler</button>
-        <button class="btn btn-primary btn-sm" onclick="submitEventForm()">Enregistrer</button>
+        <button class="btn btn-secondary btn-sm" id="btn-ev-cancel" onclick="closeEventForm()">Annuler</button>
+        <button class="btn btn-primary btn-sm" id="btn-ev-save" onclick="submitEventForm()">Enregistrer</button>
       </div>
     </div>
   </div>
@@ -1162,42 +1163,42 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 <!-- ─── PRESSE ───────────────────────────────────────────────── -->
 <div class="view" id="view-press">
   <div class="ph">
-    <div><div class="ph-title">Presse</div><div class="ph-sub" id="press-count-sub">Chargement…</div></div>
-    <button class="btn btn-primary btn-sm" onclick="openPressForm()">
+    <div><div class="ph-title" id="press-ph-title">Presse</div><div class="ph-sub" id="press-count-sub">Chargement…</div></div>
+    <button class="btn btn-primary btn-sm" id="press-new-btn" onclick="openPressForm()">
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
       Ajouter un lien
     </button>
   </div>
-  <p style="font-size:12px;color:var(--text3);margin-top:-8px;">Les liens ci-dessous s'affichent dans la section « Ils parlent de nous » en bas de la page <a href="/blog/" target="_blank" style="color:var(--orange);">/blog/</a>.</p>
+  <p style="font-size:12px;color:var(--text3);margin-top:-8px;" id="press-helper-text">Les liens ci-dessous s'affichent dans la section « Ils parlent de nous » en bas de la page <a href="/blog/" target="_blank" style="color:var(--orange);">/blog/</a>.</p>
 
   <div class="card" id="press-form-card" style="display:none;">
     <div class="card-inner" style="display:flex;flex-direction:column;gap:12px;">
-      <div style="font-weight:700;font-size:14px;">Nouveau lien presse</div>
+      <div style="font-weight:700;font-size:14px;" id="press-form-title">Nouveau lien presse</div>
       <div>
-        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Titre de l'article</label>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-press-title">Titre de l'article</label>
         <input id="press-f-title" placeholder="Titre tel qu'affiché" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div>
-          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Média</label>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-press-source">Média</label>
           <input id="press-f-source" placeholder="Automobile Propre" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
         </div>
         <div>
-          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Date (optionnel)</label>
+          <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-press-date">Date (optionnel)</label>
           <input id="press-f-date" placeholder="Décembre 2021" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
         </div>
       </div>
       <div>
-        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">URL de l'article</label>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-press-url">URL de l'article</label>
         <input id="press-f-url" placeholder="https://…" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
       </div>
       <div>
-        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;">Image (optionnel — récupérée automatiquement depuis l'article sinon)</label>
+        <label style="font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;" id="lbl-press-image">Image (optionnel — récupérée automatiquement depuis l'article sinon)</label>
         <input id="press-f-image" placeholder="https://…jpg" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;"/>
       </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;">
-        <button class="btn btn-secondary btn-sm" onclick="closePressForm()">Annuler</button>
-        <button class="btn btn-primary btn-sm" onclick="submitPressForm()">Ajouter</button>
+        <button class="btn btn-secondary btn-sm" id="btn-press-cancel" onclick="closePressForm()">Annuler</button>
+        <button class="btn btn-primary btn-sm" id="btn-press-add" onclick="submitPressForm()">Ajouter</button>
       </div>
     </div>
   </div>
@@ -1207,7 +1208,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
 <!-- ─── ANALYTICS ────────────────────────────────────────────── -->
 <div class="view" id="view-analytics">
-  <div class="ph"><div><div class="ph-title">Analytiques</div><div class="ph-sub">30 derniers jours</div></div></div>
+  <div class="ph"><div><div class="ph-title">Analytiques <span class="sb-badge-beta" style="margin-left:8px;vertical-align:middle">Beta</span></div><div class="ph-sub">30 derniers jours — données de démonstration, en cours de connexion</div></div></div>
   <div class="metrics">
     <div class="metric"><div class="metric-row"><div class="metric-icon" style="background:var(--orange-bg)"><svg width="15" height="15" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><span class="metric-trend t-up">+18 %</span></div><div class="metric-val">3 284</div><div class="metric-lbl">Vues totales</div></div>
     <div class="metric"><div class="metric-row"><div class="metric-icon" style="background:var(--blue-bg)"><svg width="15" height="15" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><span class="metric-trend t-up">+7 %</span></div><div class="metric-val">1 841</div><div class="metric-lbl">Visiteurs uniques</div></div>
@@ -1229,56 +1230,56 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
 <!-- ─── SETTINGS ─────────────────────────────────────────────── -->
 <div class="view" id="view-settings">
-  <div class="ph"><div><div class="ph-title">Paramètres</div><div class="ph-sub">Configuration du blog Sparklin</div></div></div>
+  <div class="ph"><div><div class="ph-title" id="settings-ph-title">Paramètres</div><div class="ph-sub" id="settings-ph-sub">Configuration du blog Sparklin</div></div></div>
   <div class="card"><div class="card-inner">
         <div style="font-size:14px;font-weight:700;margin-bottom:16px" id="settings-lang-title">Langues</div>
         <div style="font-size:12px;color:var(--text3);margin-bottom:12px" id="settings-lang-desc">Définissez les marchés géographiques actifs pour le blog Sparklin.</div>
         <div style="display:flex;flex-direction:column;gap:8px" id="settings-lang-list">
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇫🇷 Français — sparklin.io/fr/blog/</div><div class="setting-desc">Marché principal — France</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇬🇧 English — sparklin.io/en/blog/</div><div class="setting-desc">International — English-speaking markets</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇩🇪 Deutsch — sparklin.io/de/blog/</div><div class="setting-desc">Marché Allemagne · Autriche · Suisse</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇪🇸 Español — sparklin.io/es/blog/</div><div class="setting-desc">Marché Espagne · Amérique latine</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇹🇭 ภาษาไทย — sparklin.io/th/blog/</div><div class="setting-desc">Marché Thaïlande</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇲🇾 Melayu — sparklin.io/ms/blog/</div><div class="setting-desc">Marché Malaisie</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇮🇩 Indonesia — sparklin.io/id/blog/</div><div class="setting-desc">Marché Indonésie</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇫🇷 Français — sparklin.io/fr/blog/</div><div class="setting-desc" id="li-desc-fr">Marché principal — France</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇬🇧 English — sparklin.io/en/blog/</div><div class="setting-desc" id="li-desc-en">International — English-speaking markets</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇩🇪 Deutsch — sparklin.io/de/blog/</div><div class="setting-desc" id="li-desc-de">Marché Allemagne · Autriche · Suisse</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇪🇸 Español — sparklin.io/es/blog/</div><div class="setting-desc" id="li-desc-es">Marché Espagne · Amérique latine</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇹🇭 ภาษาไทย — sparklin.io/th/blog/</div><div class="setting-desc" id="li-desc-th">Marché Thaïlande</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇲🇾 Melayu — sparklin.io/ms/blog/</div><div class="setting-desc" id="li-desc-ms">Marché Malaisie</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇮🇩 Indonesia — sparklin.io/id/blog/</div><div class="setting-desc" id="li-desc-id">Marché Indonésie</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
         </div>
       </div></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="card"><div class="card-inner">
-        <div style="font-size:14px;font-weight:700;margin-bottom:16px">Général</div>
-        <div class="field-row" style="margin-bottom:12px"><label>Nom du blog</label><input type="text" value="Blog IRVE Sparklin"/></div>
-        <div class="field-row" style="margin-bottom:12px"><label>URL de base</label><input type="text" id="base-url-input" value=""/></div>
-        <div class="field-row" style="margin-bottom:12px"><label>Auteur par défaut</label><input type="text" value="Équipe Sparklin"/></div>
-        <div class="field-row"><label>Méta description globale</label><textarea rows="2">Solutions de recharge IRVE connectées pour entreprises, collectivités et hôtels.</textarea></div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:16px" id="lbl-settings-general">Général</div>
+        <div class="field-row" style="margin-bottom:12px"><label id="lbl-blog-name">Nom du blog</label><input type="text" value="Blog IRVE Sparklin"/></div>
+        <div class="field-row" style="margin-bottom:12px"><label id="lbl-base-url">URL de base</label><input type="text" id="base-url-input" value=""/></div>
+        <div class="field-row" style="margin-bottom:12px"><label id="lbl-default-author">Auteur par défaut</label><input type="text" value="Équipe Sparklin"/></div>
+        <div class="field-row"><label id="lbl-global-meta">Méta description globale</label><textarea rows="2">Solutions de recharge IRVE connectées pour entreprises, collectivités et hôtels.</textarea></div>
       </div></div>
       <div class="card"><div class="card-inner">
-        <div style="font-size:14px;font-weight:700;margin-bottom:16px">SEO & Réseaux sociaux</div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">Sitemap automatique</div><div class="setting-desc">Régénère le sitemap.xml à chaque publication</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">Open Graph images</div><div class="setting-desc">Génère une image OG par article</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">Partage LinkedIn automatique</div><div class="setting-desc">Publie un extrait à la publication</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:16px" id="lbl-settings-seo">SEO & Réseaux sociaux</div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label" id="lbl-sitemap">Sitemap automatique</div><div class="setting-desc" id="desc-sitemap">Régénère le sitemap.xml à chaque publication</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label">Open Graph images</div><div class="setting-desc" id="desc-og">Génère une image OG par article</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label" id="lbl-linkedin">Partage LinkedIn automatique</div><div class="setting-desc" id="desc-linkedin">Publie un extrait à la publication</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
       </div></div>
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="card"><div class="card-inner">
-        <div style="font-size:14px;font-weight:700;margin-bottom:16px">Éditeur</div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">Sauvegarde automatique</div><div class="setting-desc">Toutes les 30 secondes</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">Aperçu temps réel</div><div class="setting-desc">Prévisualisation OG synchronisée</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">Mode focus par défaut</div><div class="setting-desc">Masque la barre latérale en édition</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">Compte de mots</div><div class="setting-desc">Affiche les statistiques de lecture</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:16px" id="lbl-settings-editor">Éditeur</div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label" id="lbl-autosave">Sauvegarde automatique</div><div class="setting-desc" id="desc-autosave">Toutes les 30 secondes</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label" id="lbl-live-preview">Aperçu temps réel</div><div class="setting-desc" id="desc-live-preview">Prévisualisation OG synchronisée</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label" id="lbl-default-focus">Mode focus par défaut</div><div class="setting-desc" id="desc-default-focus">Masque la barre latérale en édition</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label" id="lbl-word-count">Compte de mots</div><div class="setting-desc" id="desc-word-count">Affiche les statistiques de lecture</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
       </div></div>
       <div class="card"><div class="card-inner">
-        <div style="font-size:14px;font-weight:700;margin-bottom:16px">Intégrations</div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">Google Analytics</div><div class="setting-desc" id="ga-status" style="color:var(--green)">Connecté · UA-XXXXXX</div></div><button class="btn btn-secondary btn-sm">Configurer</button></div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">Netlify Forms</div><div class="setting-desc" style="color:var(--green)">Actif · 3 formulaires</div></div><button class="btn btn-secondary btn-sm">Gérer</button></div>
-        <div class="setting-row"><div class="setting-info"><div class="setting-label">API IA (Anthropic)</div><div class="setting-desc" style="color:var(--text3)">Non configurée — ajoutez votre clé</div></div><button class="btn btn-primary btn-sm">Connecter</button></div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:16px" id="lbl-settings-integrations">Intégrations</div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label">Google Analytics</div><div class="setting-desc" id="ga-status" style="color:var(--green)">Connecté · UA-XXXXXX</div></div><button class="btn btn-secondary btn-sm" id="btn-ga-configure">Configurer</button></div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label">Netlify Forms</div><div class="setting-desc" style="color:var(--green)">Actif · 3 formulaires</div></div><button class="btn btn-secondary btn-sm" id="btn-netlify-manage">Gérer</button></div>
+        <div class="setting-row"><div class="setting-info"><div class="setting-label">API IA (Anthropic)</div><div class="setting-desc" id="desc-ai-api" style="color:var(--text3)">Non configurée — ajoutez votre clé</div></div><button class="btn btn-primary btn-sm" id="btn-ai-connect">Connecter</button></div>
       </div></div>
       <div class="card"><div class="card-inner">
-        <div style="font-size:14px;font-weight:700;margin-bottom:4px">Danger zone</div>
-        <div style="font-size:12px;color:var(--text3);margin-bottom:14px">Ces actions sont irréversibles</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px" id="lbl-danger-zone">Danger zone</div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:14px" id="lbl-danger-sub">Ces actions sont irréversibles</div>
         <div style="display:flex;flex-direction:column;gap:8px">
-          <button class="btn btn-danger btn-sm" style="justify-content:flex-start">Supprimer tous les brouillons</button>
-          <button class="btn btn-danger btn-sm" style="justify-content:flex-start">Réinitialiser les analytiques</button>
+          <button class="btn btn-danger btn-sm" id="btn-delete-drafts" style="justify-content:flex-start">Supprimer tous les brouillons</button>
+          <button class="btn btn-danger btn-sm" id="btn-reset-analytics" style="justify-content:flex-start">Réinitialiser les analytiques</button>
         </div>
       </div></div>
     </div>
@@ -1294,13 +1295,27 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 <!-- ══ LINK MODAL ═════════════════════════════════════════════ -->
 <div class="modal-bg" id="link-modal">
   <div class="modal">
-    <div class="modal-title">Insérer un lien</div>
-    <div class="modal-sub">Entrez l'URL de destination</div>
-    <div class="field-row"><label>Texte du lien</label><input type="text" id="link-text" placeholder="Texte affiché" style="margin-bottom:8px"/></div>
-    <div class="field-row"><label>URL</label><input type="url" id="link-url" placeholder="https://…"/></div>
+    <div class="modal-title" id="lbl-link-modal-title">Insérer un lien</div>
+    <div class="modal-sub" id="lbl-link-modal-sub">Entrez l'URL de destination</div>
+    <div class="field-row"><label id="lbl-link-text">Texte du lien</label><input type="text" id="link-text" placeholder="Texte affiché" style="margin-bottom:8px"/></div>
+    <div class="field-row"><label id="lbl-link-url">URL</label><input type="url" id="link-url" placeholder="https://…"/></div>
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
-      <button class="btn btn-secondary" onclick="closeLinkModal()">Annuler</button>
-      <button class="btn btn-primary" onclick="confirmLink()">Insérer</button>
+      <button class="btn btn-secondary" id="btn-link-cancel" onclick="closeLinkModal()">Annuler</button>
+      <button class="btn btn-primary" id="btn-link-insert" onclick="confirmLink()">Insérer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ IMAGE PICKER MODAL ═════════════════════════════════════ -->
+<div class="modal-bg" id="image-picker-modal">
+  <div class="modal" style="max-width:720px">
+    <div class="modal-title" id="lbl-imgpick-title">Choisir une image</div>
+    <div class="modal-sub" id="lbl-imgpick-sub">Images déjà disponibles dans la base Sparklin (assets/images)</div>
+    <input type="text" id="imgpick-search" placeholder="Rechercher…" oninput="filterImagePicker(this.value)" style="width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:var(--r2);font-family:var(--fb);font-size:13px;margin-bottom:14px"/>
+    <div id="imgpick-status" style="font-size:12px;color:var(--text3);margin-bottom:10px"></div>
+    <div id="imgpick-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;max-height:420px;overflow-y:auto;padding-right:4px"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+      <button class="btn btn-secondary" id="btn-imgpick-cancel" onclick="closeImagePicker()">Annuler</button>
     </div>
   </div>
 </div>
@@ -1372,6 +1387,7 @@ function openEditor(id){
       document.getElementById('ed-focus-kw').value=p.keywords||'';
       document.getElementById('ed-hero').value=p.hero_image||'';
       document.getElementById('ed-hero-alt').value=p.hero_image_alt||'';
+      onHeroInput();
       document.getElementById('rte-editor').innerHTML=p.body_html||'';
       document.getElementById('pub-status').className='status '+(a.status==='published'?'s-published':a.status==='scheduled'?'s-scheduled':'s-draft');
       document.getElementById('pub-status').textContent=a.status==='published'?'Publié':a.status==='scheduled'?'Planifié':'Brouillon';
@@ -1386,6 +1402,7 @@ function openEditor(id){
     document.getElementById('ed-focus-kw').value='';
     document.getElementById('ed-hero').value='';
     document.getElementById('ed-hero-alt').value='';
+    onHeroInput();
     document.getElementById('ed-cat').value='Actualité';
     document.getElementById('pub-slug-preview').textContent='…';
     document.getElementById('pub-status').className='status s-draft';
@@ -1414,11 +1431,8 @@ function renderDash(){
       <td><input type="checkbox" class="art-check" onclick="e=>e.stopPropagation()"/></td>
       <td><div class="art-title-cell">${a.title}</div><div class="art-slug">/blog/${a.slug}</div></td>
       <td><span class="status s-${a.status}">${statusLabel(a.status)}</span></td>
-      <td style="font-size:12px;font-family:var(--fm);color:var(--text2);text-align:right">${a.views?a.views.toLocaleString('fr-FR'):'—'}</td>
       <td><div class="art-actions"><button class="btn btn-ghost btn-icon btn-sm link-icon-btn" onclick="event.stopPropagation();openEditor(${a.id})" title="Modifier"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4L18.5 2.5z"/></svg></button></div></td>
     </tr>`).join('');
-
-  renderChart('dash-chart',WEEK,7);
 
   // Activity
   var acts=[
@@ -1578,6 +1592,79 @@ function confirmLink(){
   document.execCommand('insertHTML',false,`<a href="${url}">${txt||url}</a>`);
   closeLinkModal();
 }
+
+/* ── IMAGE PICKER (base d'images Sparklin) ──
+   Liste assets/images/manifest.json, genere par scripts/build-static.sh a
+   chaque build (cf. section "generation du manifeste d'images"). Permet de
+   choisir l'image de couverture d'un article sans taper une URL a la main. */
+var IMAGE_MANIFEST = null;
+function onHeroInput(){
+  var val = (document.getElementById('ed-hero')||{}).value || '';
+  var prev = document.getElementById('ed-hero-preview');
+  if(!prev) return;
+  if(val.trim()){
+    prev.src = val.trim();
+    prev.style.display = 'block';
+  } else {
+    prev.style.display = 'none';
+    prev.removeAttribute('src');
+  }
+}
+function openImagePicker(){
+  document.getElementById('image-picker-modal').classList.add('open');
+  document.getElementById('imgpick-search').value = '';
+  if(IMAGE_MANIFEST){
+    renderImagePickerGrid(IMAGE_MANIFEST);
+  } else {
+    var s = UI_STRINGS[currentUiLang] || UI_STRINGS.fr;
+    document.getElementById('imgpick-status').textContent = s.imgpickLoading;
+    document.getElementById('imgpick-grid').innerHTML = '';
+    fetch('/assets/images/manifest.json').then(r=>{
+      if(!r.ok) throw new Error('manifest not found');
+      return r.json();
+    }).then(list=>{
+      IMAGE_MANIFEST = list;
+      document.getElementById('imgpick-status').textContent = '';
+      renderImagePickerGrid(IMAGE_MANIFEST);
+    }).catch(()=>{
+      var s2 = UI_STRINGS[currentUiLang] || UI_STRINGS.fr;
+      document.getElementById('imgpick-status').textContent = s2.imgpickError;
+      document.getElementById('imgpick-grid').innerHTML = '';
+    });
+  }
+  setTimeout(()=>document.getElementById('imgpick-search').focus(),100);
+}
+function closeImagePicker(){
+  document.getElementById('image-picker-modal').classList.remove('open');
+}
+function filterImagePicker(query){
+  if(!IMAGE_MANIFEST) return;
+  var q = query.trim().toLowerCase();
+  var list = q ? IMAGE_MANIFEST.filter(f=>f.name.toLowerCase().includes(q)) : IMAGE_MANIFEST;
+  renderImagePickerGrid(list);
+}
+function renderImagePickerGrid(list){
+  var grid = document.getElementById('imgpick-grid');
+  var s = UI_STRINGS[currentUiLang] || UI_STRINGS.fr;
+  if(!list.length){
+    grid.innerHTML = `<div class="imgpick-empty">${s.imgpickEmpty}</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(f=>`
+    <button type="button" class="imgpick-item" onclick="selectImagePickerImage('${f.path.replace(/'/g,"\\'")}')">
+      <img class="imgpick-thumb" src="${f.path}" alt="" loading="lazy"/>
+      <div class="imgpick-name">${f.name}</div>
+    </button>`).join('');
+}
+function selectImagePickerImage(path){
+  var input = document.getElementById('ed-hero');
+  if(input){
+    input.value = path;
+    onHeroInput();
+  }
+  closeImagePicker();
+}
+
 function insertImage(input){
   var f=input.files[0];if(!f)return;
   var r=new FileReader();
@@ -1663,10 +1750,11 @@ function updateSeo(){
 function scheduleAutosave(){
   clearTimeout(autosaveTimer);
   var el=document.getElementById('editor-save-text');
-  if(el)el.textContent='Modification…';
+  var s=UI_STRINGS[currentUiLang]||UI_STRINGS.fr;
+  if(el)el.textContent=(currentUiLang==='en'?'Editing…':'Modification…');
   autosaveTimer=setTimeout(()=>{
     saveVersion();
-    if(el)el.textContent='Sauvegardé';
+    if(el)el.textContent=s.savedLabel;
   },2000);
 }
 function saveVersion(){
@@ -1932,8 +2020,10 @@ document.addEventListener('keydown',e=>{
   if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();document.getElementById('search-input').focus();}
   if(e.key==='Escape'&&document.activeElement===document.getElementById('search-input')){document.getElementById('search-input').value='';document.getElementById('search-input').blur();}
   if(e.key==='Escape'&&document.getElementById('link-modal').classList.contains('open'))closeLinkModal();
+  if(e.key==='Escape'&&document.getElementById('image-picker-modal').classList.contains('open'))closeImagePicker();
 });
 document.getElementById('link-modal').addEventListener('click',e=>{if(e.target===document.getElementById('link-modal'))closeLinkModal();});
+document.getElementById('image-picker-modal').addEventListener('click',e=>{if(e.target===document.getElementById('image-picker-modal'))closeImagePicker();});
 
 /* ═══════════════════════════════════════════════════════════
    TOAST
@@ -2026,6 +2116,113 @@ var UI_STRINGS = {
     date:             'Date',
     langue:           'Langue',
     titre:            'Titre',
+    viewBlog:         'Voir le blog',
+    logout:           'Déconnexion',
+    focusMode:        'Mode focus (F11)',
+    publication:      'Publication',
+    seo:              'SEO',
+    excerpt:          'Extrait (résumé public)',
+    excerptPlaceholder:'Court résumé affiché dans la liste des articles…',
+    artSettings:      'Paramètres article',
+    pickImage:        'Choisir',
+    heroAlt:          "Texte alternatif de l'image",
+    heroAltPlaceholder:"Description de l'image pour le SEO/accessibilité",
+    aiTitle:          'Intelligence artificielle',
+    aiGenerate:       "Générer avec l'IA",
+    tone:             'Ton',
+    keywords:         'Mots-clés',
+    addKw:            '+ Ajouter',
+    history:          'Historique',
+    cancel:           'Annuler',
+    save:             'Enregistrer',
+    add:              'Ajouter',
+    insert:           'Insérer',
+    loading:          'Chargement…',
+    edit:             'Modifier',
+    delete:           'Supprimer',
+    markUpcoming:     '↩ Marquer à venir',
+    markPast:         '✓ Marquer passé',
+    noEvents:         'Aucun événement.',
+    noPress:          'Aucun lien presse.',
+    eventCount:       (n,up) => `${n} événement${n>1?'s':''} · ${up} à venir`,
+    aiModes: [
+      { name: 'Article complet', sub: 'Intro + corps + conclusion' },
+      { name: 'Introduction',    sub: 'Accroche seule' },
+      { name: 'Plan',            sub: 'H2 + structure' },
+      { name: 'SEO auto',        sub: 'Titre + méta' },
+    ],
+    aiTones:   ['Expert','Accessible','Commercial','Pédagogique'],
+    categoryOptions: {
+      'Actualité':'Actualité','Réglementation':'Réglementation','Technique':'Technique',
+      'Technique & finance':'Technique & finance','Finance':'Finance','RH & fiscalité':'RH & fiscalité',
+      'Achat & installation':'Achat & installation','Cas client':'Cas client','Produit':'Produit',
+    },
+    wordGoalOptions: ["Pas d'objectif",'Court — 300 mots','Moyen — 600 mots','Long — 1 200 mots','Article complet — 2 000 mots'],
+    events:           'Événements',
+    newEvent:         'Nouvel événement',
+    editEvent:        "Modifier l'événement",
+    evFilters:        ['Tous','À venir','Passés'],
+    evStatusOptions:  ['À venir','Passé'],
+    evBadge:          'Badge (ex. « Juin 2026 »)',
+    evBadgePlaceholder:'Juin 2026',
+    evIcon:           'Icône (emoji)',
+    evDesc:           'Description',
+    evHighlights:     'Points clés (un par ligne)',
+    evHighlightsPlaceholder:"🤝 Contacts qualifiés\n🔌 Démo live des bornes",
+    evLink:           'Lien (optionnel)',
+    evLinkLabel:      'Libellé du lien',
+    evLinkLabelPlaceholder:'Site officiel',
+    urlPlaceholder:   'https://…',
+    press:            'Presse',
+    addPressLink:     'Ajouter un lien',
+    newPressLink:     'Nouveau lien presse',
+    pressHelper:      'Les liens ci-dessous s\'affichent dans la section « Ils parlent de nous » en bas de la page ',
+    pressTitle:       "Titre de l'article",
+    pressTitlePlaceholder:'Titre tel qu\'affiché',
+    pressSource:      'Média',
+    pressSourcePlaceholder:'Automobile Propre',
+    pressDate:        'Date (optionnel)',
+    pressDatePlaceholder:'Décembre 2021',
+    pressUrl:         "URL de l'article",
+    pressImage:       'Image (optionnel — récupérée automatiquement depuis l\'article sinon)',
+    pressImagePlaceholder:'https://…jpg',
+    settingsGeneral:  'Général',
+    blogName:         'Nom du blog',
+    baseUrl:          'URL de base',
+    defaultAuthor:    'Auteur par défaut',
+    globalMeta:       'Méta description globale',
+    settingsSeo:      'SEO & Réseaux sociaux',
+    sitemapAuto:      'Sitemap automatique',
+    sitemapAutoDesc:  'Régénère le sitemap.xml à chaque publication',
+    linkedinAuto:     'Partage LinkedIn automatique',
+    linkedinAutoDesc: 'Publie un extrait à la publication',
+    settingsEditor:   'Éditeur',
+    autosaveLabel:    'Sauvegarde automatique',
+    autosaveDesc:     'Toutes les 30 secondes',
+    livePreview:      'Aperçu temps réel',
+    livePreviewDesc:  'Prévisualisation OG synchronisée',
+    defaultFocus:     'Mode focus par défaut',
+    defaultFocusDesc: "Masque la barre latérale en édition",
+    wordCount:        'Compte de mots',
+    wordCountDesc:    'Affiche les statistiques de lecture',
+    settingsIntegrations:'Intégrations',
+    configure:        'Configurer',
+    manage:           'Gérer',
+    connect:          'Connecter',
+    aiApiDesc:        'Non configurée — ajoutez votre clé',
+    dangerZone:       'Danger zone',
+    dangerZoneSub:    'Ces actions sont irréversibles',
+    deleteDrafts:     'Supprimer tous les brouillons',
+    resetAnalytics:   'Réinitialiser les analytiques',
+    insertLink:       'Insérer un lien',
+    insertLinkSub:    "Entrez l'URL de destination",
+    linkText:         'Texte du lien',
+    linkTextPlaceholder:'Texte affiché',
+    pickImageTitle:   'Choisir une image',
+    pickImageSub:     'Images déjà disponibles dans la base Sparklin (assets/images)',
+    imgpickLoading:   'Chargement des images…',
+    imgpickError:     'Impossible de charger les images.',
+    imgpickEmpty:     'Aucune image trouvée.',
   },
   en: {
     newArticle:     'New article',
@@ -2068,98 +2265,121 @@ var UI_STRINGS = {
     date:             'Date',
     langue:           'Language',
     titre:            'Title',
+    viewBlog:         'View blog',
+    logout:           'Log out',
+    focusMode:        'Focus mode (F11)',
+    publication:      'Publication',
+    publication:      'Publication',
+    seo:              'SEO',
+    excerpt:          'Excerpt (public summary)',
+    excerptPlaceholder:'Short summary shown in the articles list…',
+    artSettings:      'Article settings',
+    pickImage:        'Choose',
+    heroAlt:          'Image alt text',
+    heroAltPlaceholder:'Image description for SEO/accessibility',
+    aiTitle:          'Artificial intelligence',
+    aiGenerate:       'Generate with AI',
+    tone:             'Tone',
+    keywords:         'Keywords',
+    addKw:            '+ Add',
+    history:          'History',
+    cancel:           'Cancel',
+    save:             'Save',
+    add:              'Add',
+    insert:           'Insert',
+    loading:          'Loading…',
+    edit:             'Edit',
+    delete:           'Delete',
+    markUpcoming:     '↩ Mark upcoming',
+    markPast:         '✓ Mark past',
+    noEvents:         'No events.',
+    noPress:          'No press links.',
+    eventCount:       (n,up) => `${n} event${n>1?'s':''} · ${up} upcoming`,
+    aiModes: [
+      { name: 'Full article', sub: 'Intro + body + conclusion' },
+      { name: 'Introduction', sub: 'Hook only' },
+      { name: 'Outline',      sub: 'H2s + structure' },
+      { name: 'Auto SEO',     sub: 'Title + meta' },
+    ],
+    aiTones:   ['Expert','Accessible','Commercial','Educational'],
+    categoryOptions: {
+      'Actualité':'News','Réglementation':'Regulation','Technique':'Technical',
+      'Technique & finance':'Technical & finance','Finance':'Finance','RH & fiscalité':'HR & tax',
+      'Achat & installation':'Purchase & installation','Cas client':'Case study','Produit':'Product',
+    },
+    wordGoalOptions: ['No goal','Short — 300 words','Medium — 600 words','Long — 1,200 words','Full article — 2,000 words'],
+    events:           'Events',
+    newEvent:         'New event',
+    editEvent:        'Edit event',
+    evFilters:        ['All','Upcoming','Past'],
+    evStatusOptions:  ['Upcoming','Past'],
+    evBadge:          'Badge (e.g. "June 2026")',
+    evBadgePlaceholder:'June 2026',
+    evIcon:           'Icon (emoji)',
+    evDesc:           'Description',
+    evHighlights:     'Highlights (one per line)',
+    evHighlightsPlaceholder:'🤝 Qualified leads\n🔌 Live charger demo',
+    evLink:           'Link (optional)',
+    evLinkLabel:      'Link label',
+    evLinkLabelPlaceholder:'Official site',
+    urlPlaceholder:   'https://…',
+    press:            'Press',
+    addPressLink:     'Add a link',
+    newPressLink:     'New press link',
+    pressHelper:      'The links below are shown in the "They talk about us" section at the bottom of the ',
+    pressTitle:       'Article title',
+    pressTitlePlaceholder:'Title as displayed',
+    pressSource:      'Outlet',
+    pressSourcePlaceholder:'Automobile Propre',
+    pressDate:        'Date (optional)',
+    pressDatePlaceholder:'December 2021',
+    pressUrl:         'Article URL',
+    pressImage:       'Image (optional — otherwise fetched automatically from the article)',
+    pressImagePlaceholder:'https://…jpg',
+    settingsGeneral:  'General',
+    blogName:         'Blog name',
+    baseUrl:          'Base URL',
+    defaultAuthor:    'Default author',
+    globalMeta:       'Global meta description',
+    settingsSeo:      'SEO & social networks',
+    sitemapAuto:      'Automatic sitemap',
+    sitemapAutoDesc:  'Regenerates sitemap.xml on every publish',
+    linkedinAuto:     'Automatic LinkedIn sharing',
+    linkedinAutoDesc: 'Publishes an excerpt on publication',
+    settingsEditor:   'Editor',
+    autosaveLabel:    'Autosave',
+    autosaveDesc:     'Every 30 seconds',
+    livePreview:      'Live preview',
+    livePreviewDesc:  'Synced OG preview',
+    defaultFocus:     'Focus mode by default',
+    defaultFocusDesc: 'Hides the sidebar while editing',
+    wordCount:        'Word count',
+    wordCountDesc:    'Shows reading statistics',
+    settingsIntegrations:'Integrations',
+    configure:        'Configure',
+    manage:           'Manage',
+    connect:          'Connect',
+    aiApiDesc:        'Not configured — add your key',
+    dangerZone:       'Danger zone',
+    dangerZoneSub:    'These actions are irreversible',
+    deleteDrafts:     'Delete all drafts',
+    resetAnalytics:   'Reset analytics',
+    insertLink:       'Insert a link',
+    insertLinkSub:    'Enter the destination URL',
+    linkText:         'Link text',
+    linkTextPlaceholder:'Displayed text',
+    pickImageTitle:   'Choose an image',
+    pickImageSub:     'Images already available in the Sparklin library (assets/images)',
+    imgpickLoading:   'Loading images…',
+    imgpickError:     'Could not load images.',
+    imgpickEmpty:     'No images found.',
   },
-  de: {
-    newArticle:     'Neuer Artikel',
-    dashboard:      'Dashboard',
-    articles:       'Artikel',
-    analytics:      'Statistiken',
-    settings:       'Einstellungen',
-    publish:        'Veröffentlichen',
-    draft:          'Entwurf',
-    schedule:       'Planen',
-    now:            'Jetzt',
-    published:      'Veröffentlicht',
-    scheduled:      'Geplant',
-    status:         'Status',
-    visibility:     'Sichtbarkeit',
-    author:         'Autor',
-    public:         'Öffentlich',
-    category:       'Kategorie',
-    tags:           'Tags',
-    coverImage:     'Titelbild',
-    wordGoal:       'Wortziel',
-    metaDesc:       'Meta-Beschreibung',
-    focusKw:        'Fokus-Keyword',
-    seoScore:       'SEO-Score',
-    pending:        'Ausstehend',
-    artLang:        'Artikelsprache',
-    publishedOn:    'Veröffentlicht auf',
-    interfaceLang:  'Oberflächensprache',
-    titlePlaceholder: 'Artikeltitel…',
-    metaPlaceholder:  '120–160 Zeichen…',
-    kwPlaceholder:    'z.B. EVSE Unternehmen',
-    searchPlaceholder:'Suchen…',
-    selectCat:        '— Auswählen —',
-    tagsPlaceholder:  'IRVE, LOM, Lastmanagement…',
-    savedLabel:       'Gespeichert',
-    saving:           'Speichern…',
-    wordStats:        (w,m) => `${w} Wort${w>1?'e':''} · ${m} Min.`,
-    langInfo:         (path, geo) => `Auf sparklin.io/${path}/blog/ · Region: ${geo}`,
-    views:            'Aufrufe',
-    date:             'Datum',
-    langue:           'Sprache',
-    titre:            'Titel',
-  },
-  es: {
-    newArticle:     'Nuevo artículo',
-    dashboard:      'Panel de control',
-    articles:       'Artículos',
-    analytics:      'Estadísticas',
-    settings:       'Configuración',
-    publish:        'Publicar',
-    draft:          'Borrador',
-    schedule:       'Programar',
-    now:            'Ahora',
-    published:      'Publicado',
-    scheduled:      'Programado',
-    status:         'Estado',
-    visibility:     'Visibilidad',
-    author:         'Autor',
-    public:         'Público',
-    category:       'Categoría',
-    tags:           'Etiquetas',
-    coverImage:     'Imagen de portada',
-    wordGoal:       'Objetivo de palabras',
-    metaDesc:       'Meta descripción',
-    focusKw:        'Palabra clave',
-    seoScore:       'Puntuación SEO',
-    pending:        'Pendiente',
-    artLang:        'Idioma del artículo',
-    publishedOn:    'Publicado en',
-    interfaceLang:  'Idioma de la interfaz',
-    titlePlaceholder: 'Título del artículo…',
-    metaPlaceholder:  '120–160 caracteres…',
-    kwPlaceholder:    'Ej: recarga IRVE empresa',
-    searchPlaceholder:'Buscar…',
-    selectCat:        '— Seleccionar —',
-    tagsPlaceholder:  'IRVE, LOM, load balancing…',
-    savedLabel:       'Guardado',
-    saving:           'Guardando…',
-    wordStats:        (w,m) => `${w} palabra${w>1?'s':''} · ${m} min`,
-    langInfo:         (path, geo) => `Publicado en sparklin.io/${path}/blog/ · Región: ${geo}`,
-    views:            'Vistas',
-    date:             'Fecha',
-    langue:           'Idioma',
-    titre:            'Título',
-  }
 };
-/* Add minimal stubs for TH/MS/ID (UI stays in English if not FR/EN/DE/ES) */
-['th','ms','id'].forEach(lc => {
-  UI_STRINGS[lc] = Object.assign({}, UI_STRINGS.en, {
-    artLang: UI_STRINGS.en.artLang,
-    interfaceLang: UI_STRINGS.en.interfaceLang
-  });
+/* L'interface admin ne propose que FR/EN (cf. tb-ui-lang) ; les autres langues
+   du site (DE/ES/TH/MS/ID) restent gerees via les onglets de contenu d'article
+   (LANGS ci-dessus) et retombent toujours sur l'anglais pour le chrome admin. */
+['de','es','th','ms','id'].forEach(lc => {
+  UI_STRINGS[lc] = UI_STRINGS.en;
 });
 
 /* ── State ── */
@@ -2188,9 +2408,61 @@ function applyUiLang() {
   setText('nav-analytics',   s.analytics);
   setText('nav-settings',    s.settings);
 
+  /* topbar */
+  setLabel('btn-view-blog', s.viewBlog);
+  var btnLogout = document.getElementById('btn-logout');
+  if (btnLogout) btnLogout.title = s.logout;
+  var btnFocus = document.getElementById('btn-focus-mode');
+  if (btnFocus) btnFocus.title = s.focusMode;
+
   /* editor panel labels */
   setLabel('lbl-article-lang', s.artLang);
-  setLabel('lbl-pub-label',    'Publication');  /* keep for now */
+  setLabel('lbl-pub-label',    s.publication);
+  setLabel('lbl-seo',          s.seo);
+  setLabel('lbl-excerpt',      s.excerpt);
+  setLabel('lbl-meta-desc',    s.metaDesc);
+  setLabel('lbl-focus-kw',     s.focusKw);
+  setLabel('lbl-seo-score',    s.seoScore);
+  setLabel('lbl-article-settings', s.artSettings);
+  setLabel('lbl-category',     s.category);
+  setLabel('lbl-tags',         s.tags);
+  setLabel('lbl-cover-image',  s.coverImage);
+  setLabel('btn-pick-image-label', s.pickImage);
+  setLabel('lbl-hero-alt',     s.heroAlt);
+  setLabel('lbl-word-goal',    s.wordGoal);
+  setLabel('lbl-ai',           s.aiTitle);
+  setLabel('lbl-ai-generate',  s.aiGenerate);
+  setLabel('lbl-ai-tone',      s.tone);
+  setLabel('lbl-ai-keywords',  s.keywords);
+  setLabel('btn-add-kw',       s.addKw);
+  setLabel('lbl-history',      s.history);
+
+  var seoLabel = document.getElementById('seo-label');
+  if (seoLabel && (seoLabel.textContent === 'En attente' || seoLabel.textContent === 'Pending')) seoLabel.textContent = s.pending;
+
+  /* excerpt / hero-alt placeholders */
+  var edExcerpt = document.getElementById('ed-excerpt');
+  if (edExcerpt) edExcerpt.placeholder = s.excerptPlaceholder;
+  var edHeroAlt = document.getElementById('ed-hero-alt');
+  if (edHeroAlt) edHeroAlt.placeholder = s.heroAltPlaceholder;
+
+  /* category <option> text only — values stay canonical French (written to DB) */
+  var edCat = document.getElementById('ed-cat');
+  if (edCat) Array.from(edCat.options).forEach(o => { if (s.categoryOptions[o.value]) o.textContent = s.categoryOptions[o.value]; });
+
+  /* word-goal <option> text only — values stay numeric */
+  var edWg = document.getElementById('ed-wordgoal');
+  if (edWg) Array.from(edWg.options).forEach((o,i) => { if (s.wordGoalOptions[i]) o.textContent = s.wordGoalOptions[i]; });
+
+  /* AI panel: mode names/subs + tone buttons */
+  ['ai-full','ai-intro','ai-outline','ai-meta'].forEach((id,i) => {
+    var el = document.getElementById(id);
+    if (!el || !s.aiModes[i]) return;
+    var nameEl = el.querySelector('.ai-mode-name'), subEl = el.querySelector('.ai-mode-sub');
+    if (nameEl) nameEl.textContent = s.aiModes[i].name;
+    if (subEl) subEl.textContent = s.aiModes[i].sub;
+  });
+  document.querySelectorAll('.ai-tone').forEach((btn,i) => { if (s.aiTones[i]) btn.textContent = s.aiTones[i]; });
 
   /* publication panel buttons */
   var pubBtns = document.querySelectorAll('.pub-tab');
@@ -2201,6 +2473,7 @@ function applyUiLang() {
   }
   var pubMainBtn = document.getElementById('pub-main-btn');
   if (pubMainBtn) { pubMainBtn.childNodes[pubMainBtn.childNodes.length-1].textContent = ' ' + s.publish; }
+  setText('btn-save-draft', s.draft);
 
   /* pub meta labels */
   var pubRows = document.querySelectorAll('.pub-row .pub-row-l');
@@ -2210,15 +2483,6 @@ function applyUiLang() {
   var pubRowsR = document.querySelectorAll('.pub-row .pub-row-r');
   if (pubRowsR[0]) pubRowsR[0].textContent = s.public;
 
-  /* right panel section labels */
-  var panelLabels = document.querySelectorAll('.panel-label');
-  if (panelLabels[1]) panelLabels[1].textContent = 'SEO';
-  if (panelLabels[2]) panelLabels[2].textContent = s.artLang;
-  if (panelLabels[3]) panelLabels[3].textContent = (currentUiLang==='fr'?'Paramètres article':
-                                                      currentUiLang==='de'?'Artikeleinstellungen':
-                                                      currentUiLang==='es'?'Parámetros del artículo':
-                                                      'Article settings');
-
   /* editor placeholders */
   var edTitle = document.getElementById('ed-title');
   if (edTitle) edTitle.placeholder = s.titlePlaceholder;
@@ -2226,19 +2490,122 @@ function applyUiLang() {
   if (edMeta) edMeta.placeholder = s.metaPlaceholder;
   var edKw = document.getElementById('ed-focus-kw');
   if (edKw) edKw.placeholder = s.kwPlaceholder;
+  var edTags = document.getElementById('ed-tags');
+  if (edTags) edTags.placeholder = s.tagsPlaceholder;
   var searchInput = document.getElementById('search-input');
   if (searchInput) searchInput.placeholder = s.searchPlaceholder;
+  var imgpickSearch = document.getElementById('imgpick-search');
+  if (imgpickSearch) imgpickSearch.placeholder = s.searchPlaceholder;
 
   /* rte placeholder */
   var rte = document.getElementById('rte-editor');
-  if (rte) rte.dataset.ph = (currentUiLang==='en'?'Start writing your article…':
-                               currentUiLang==='de'?'Beginnen Sie Ihren Artikel zu schreiben…':
-                               currentUiLang==='es'?'Comience a escribir su artículo…':
-                               'Commencez à écrire votre article…');
+  if (rte) rte.dataset.ph = (currentUiLang === 'en' ? 'Start writing your article…' : 'Commencez à écrire votre article…');
 
   /* saved indicator */
   var saveText = document.querySelector('.tb-save');
   if (saveText && saveText.childNodes[1]) saveText.childNodes[1].textContent = ' ' + s.savedLabel;
+
+  /* events view */
+  setText('ev-ph-title', s.events);
+  setLabel('ev-count-sub', s.loading);
+  setText('ev-new-btn', s.newEvent);
+  setLabel('ev-filter-all', s.evFilters[0]);
+  setLabel('ev-filter-upcoming', s.evFilters[1]);
+  setLabel('ev-filter-past', s.evFilters[2]);
+  setLabel('lbl-ev-status', s.status);
+  setLabel('ev-opt-upcoming', s.evStatusOptions[0]);
+  setLabel('ev-opt-past', s.evStatusOptions[1]);
+  setLabel('lbl-ev-badge', s.evBadge);
+  var evFBadge = document.getElementById('ev-f-badge');
+  if (evFBadge) evFBadge.placeholder = s.evBadgePlaceholder;
+  setLabel('lbl-ev-title', s.titre);
+  setLabel('lbl-ev-icon', s.evIcon);
+  setLabel('lbl-ev-desc', s.evDesc);
+  setLabel('lbl-ev-highlights', s.evHighlights);
+  var evFHighlights = document.getElementById('ev-f-highlights');
+  if (evFHighlights) evFHighlights.placeholder = s.evHighlightsPlaceholder;
+  setLabel('lbl-ev-link', s.evLink);
+  var evFLink = document.getElementById('ev-f-link');
+  if (evFLink) evFLink.placeholder = s.urlPlaceholder;
+  setLabel('lbl-ev-link-label', s.evLinkLabel);
+  var evFLinkLabel = document.getElementById('ev-f-link-label');
+  if (evFLinkLabel) evFLinkLabel.placeholder = s.evLinkLabelPlaceholder;
+  setLabel('btn-ev-cancel', s.cancel);
+  setLabel('btn-ev-save', s.save);
+  var evFormCard = document.getElementById('ev-form-card');
+  var evFormTitle = document.getElementById('ev-form-title');
+  if (evFormTitle && evFormCard) evFormTitle.textContent = document.getElementById('ev-f-id').value ? s.editEvent : s.newEvent;
+
+  /* press view */
+  setText('press-ph-title', s.press);
+  setLabel('press-count-sub', s.loading);
+  setText('press-new-btn', s.addPressLink);
+  setLabel('press-form-title', s.newPressLink);
+  var pressHelper = document.getElementById('press-helper-text');
+  if (pressHelper) pressHelper.innerHTML = s.pressHelper + '<a href="/blog/" target="_blank" style="color:var(--orange);">/blog/</a>.';
+  setLabel('lbl-press-title', s.pressTitle);
+  var pressFTitle = document.getElementById('press-f-title');
+  if (pressFTitle) pressFTitle.placeholder = s.pressTitlePlaceholder;
+  setLabel('lbl-press-source', s.pressSource);
+  var pressFSource = document.getElementById('press-f-source');
+  if (pressFSource) pressFSource.placeholder = s.pressSourcePlaceholder;
+  setLabel('lbl-press-date', s.pressDate);
+  var pressFDate = document.getElementById('press-f-date');
+  if (pressFDate) pressFDate.placeholder = s.pressDatePlaceholder;
+  setLabel('lbl-press-url', s.pressUrl);
+  var pressFUrl = document.getElementById('press-f-url');
+  if (pressFUrl) pressFUrl.placeholder = s.urlPlaceholder;
+  setLabel('lbl-press-image', s.pressImage);
+  var pressFImage = document.getElementById('press-f-image');
+  if (pressFImage) pressFImage.placeholder = s.pressImagePlaceholder;
+  setLabel('btn-press-cancel', s.cancel);
+  setLabel('btn-press-add', s.add);
+
+  /* settings view */
+  setLabel('lbl-settings-general', s.settingsGeneral);
+  setLabel('lbl-blog-name', s.blogName);
+  setLabel('lbl-base-url', s.baseUrl);
+  setLabel('lbl-default-author', s.defaultAuthor);
+  setLabel('lbl-global-meta', s.globalMeta);
+  setLabel('lbl-settings-seo', s.settingsSeo);
+  setLabel('lbl-sitemap', s.sitemapAuto);
+  setLabel('desc-sitemap', s.sitemapAutoDesc);
+  setLabel('lbl-linkedin', s.linkedinAuto);
+  setLabel('desc-linkedin', s.linkedinAutoDesc);
+  setLabel('lbl-settings-editor', s.settingsEditor);
+  setLabel('lbl-autosave', s.autosaveLabel);
+  setLabel('desc-autosave', s.autosaveDesc);
+  setLabel('lbl-live-preview', s.livePreview);
+  setLabel('desc-live-preview', s.livePreviewDesc);
+  setLabel('lbl-default-focus', s.defaultFocus);
+  setLabel('desc-default-focus', s.defaultFocusDesc);
+  setLabel('lbl-word-count', s.wordCount);
+  setLabel('desc-word-count', s.wordCountDesc);
+  setLabel('lbl-settings-integrations', s.settingsIntegrations);
+  setLabel('btn-ga-configure', s.configure);
+  setLabel('btn-netlify-manage', s.manage);
+  setLabel('desc-ai-api', s.aiApiDesc);
+  setLabel('btn-ai-connect', s.connect);
+  setLabel('lbl-danger-zone', s.dangerZone);
+  setLabel('lbl-danger-sub', s.dangerZoneSub);
+  setLabel('btn-delete-drafts', s.deleteDrafts);
+  setLabel('btn-reset-analytics', s.resetAnalytics);
+
+  /* link modal */
+  setLabel('lbl-link-modal-title', s.insertLink);
+  setLabel('lbl-link-modal-sub', s.insertLinkSub);
+  setLabel('lbl-link-text', s.linkText);
+  var linkText = document.getElementById('link-text');
+  if (linkText) linkText.placeholder = s.linkTextPlaceholder;
+  var linkUrl = document.getElementById('link-url');
+  if (linkUrl) linkUrl.placeholder = s.urlPlaceholder;
+  setLabel('btn-link-cancel', s.cancel);
+  setLabel('btn-link-insert', s.insert);
+
+  /* image picker modal */
+  setLabel('lbl-imgpick-title', s.pickImageTitle);
+  setLabel('lbl-imgpick-sub', s.pickImageSub);
+  setLabel('btn-imgpick-cancel', s.cancel);
 
   /* article lang info update */
   updateArtLangInfo();
@@ -2246,6 +2613,12 @@ function applyUiLang() {
   /* re-render articles list if visible */
   if (document.getElementById('view-articles').classList.contains('active')) {
     renderArts(currentFilter);
+  }
+  if (document.getElementById('view-events').classList.contains('active') && window.renderEvents) {
+    window.renderEvents();
+  }
+  if (document.getElementById('view-press').classList.contains('active') && window.renderPress) {
+    window.renderPress();
   }
 }
 
@@ -2461,6 +2834,8 @@ function renderArtsFiltered() {
   var eventsCache = [];
   var pressCache  = [];
   var eventFilter = 'all';
+  window.renderEvents = function() { renderEvents(); };
+  window.renderPress  = function() { renderPress(); };
 
   async function accessToken() {
     try {
@@ -2508,11 +2883,11 @@ function renderArtsFiltered() {
   };
 
   function renderEvents() {
+    var s = UI_STRINGS[currentUiLang] || UI_STRINGS.fr;
     var list = eventFilter === 'all' ? eventsCache : eventsCache.filter(function(e){ return e.status === eventFilter; });
-    document.getElementById('ev-count-sub').textContent = eventsCache.length + ' événement' + (eventsCache.length > 1 ? 's' : '') +
-      ' · ' + eventsCache.filter(function(e){return e.status==='upcoming';}).length + ' à venir';
+    document.getElementById('ev-count-sub').textContent = s.eventCount(eventsCache.length, eventsCache.filter(function(e){return e.status==='upcoming';}).length);
     if (!list.length) {
-      document.getElementById('ev-list').innerHTML = '<p style="font-size:13px;color:var(--text3);padding:20px;text-align:center;">Aucun événement.</p>';
+      document.getElementById('ev-list').innerHTML = '<p style="font-size:13px;color:var(--text3);padding:20px;text-align:center;">' + s.noEvents + '</p>';
       return;
     }
     document.getElementById('ev-list').innerHTML = list.map(function(e) {
@@ -2521,7 +2896,7 @@ function renderArtsFiltered() {
         '<div style="width:44px;height:44px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;background:' + (e.icon_gradient || '#ccc') + ';">' + escapeHtml(e.icon || '⚡') + '</div>' +
         '<div style="flex:1;min-width:0;">' +
           '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">' +
-            '<span class="status ' + (e.status === 'past' ? 's-draft' : 's-published') + '">' + (e.status === 'past' ? 'Passé' : 'À venir') + '</span>' +
+            '<span class="status ' + (e.status === 'past' ? 's-draft' : 's-published') + '">' + (e.status === 'past' ? s.evStatusOptions[1] : s.evStatusOptions[0]) + '</span>' +
             (e.badge ? '<span class="sb-badge">' + escapeHtml(e.badge) + '</span>' : '') +
           '</div>' +
           '<div style="font-weight:700;font-size:14px;color:var(--text);">' + escapeHtml(e.title) + '</div>' +
@@ -2529,16 +2904,16 @@ function renderArtsFiltered() {
           (highlights ? '<ul style="margin:0;padding-left:16px;display:flex;flex-direction:column;gap:2px;">' + highlights + '</ul>' : '') +
         '</div>' +
         '<div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">' +
-          '<button class="btn btn-secondary btn-sm" onclick="toggleEventStatus(' + e.id + ',\'' + e.status + '\')">' + (e.status === 'past' ? '↩ Marquer à venir' : '✓ Marquer passé') + '</button>' +
-          '<button class="btn btn-secondary btn-sm" onclick="editEvent(' + e.id + ')">Modifier</button>' +
-          '<button class="btn btn-danger btn-sm" onclick="deleteEvent(' + e.id + ')">Supprimer</button>' +
+          '<button class="btn btn-secondary btn-sm" onclick="toggleEventStatus(' + e.id + ',\'' + e.status + '\')">' + (e.status === 'past' ? s.markUpcoming : s.markPast) + '</button>' +
+          '<button class="btn btn-secondary btn-sm" onclick="editEvent(' + e.id + ')">' + s.edit + '</button>' +
+          '<button class="btn btn-danger btn-sm" onclick="deleteEvent(' + e.id + ')">' + s.delete + '</button>' +
         '</div>' +
       '</div></div>';
     }).join('');
   }
 
   window.openEventForm = function() {
-    document.getElementById('ev-form-title').textContent = 'Nouvel événement';
+    document.getElementById('ev-form-title').textContent = (UI_STRINGS[currentUiLang]||UI_STRINGS.fr).newEvent;
     ['ev-f-id','ev-f-badge','ev-f-title','ev-f-desc','ev-f-highlights','ev-f-link','ev-f-link-label'].forEach(function(id){ document.getElementById(id).value = ''; });
     document.getElementById('ev-f-status').value = 'upcoming';
     document.getElementById('ev-f-icon').value = '⚡';
@@ -2550,7 +2925,7 @@ function renderArtsFiltered() {
   window.editEvent = function(id) {
     var e = eventsCache.find(function(x){ return x.id === id; });
     if (!e) return;
-    document.getElementById('ev-form-title').textContent = 'Modifier l\'événement';
+    document.getElementById('ev-form-title').textContent = (UI_STRINGS[currentUiLang]||UI_STRINGS.fr).editEvent;
     document.getElementById('ev-f-id').value = e.id;
     document.getElementById('ev-f-status').value = e.status;
     document.getElementById('ev-f-badge').value = e.badge || '';
@@ -2609,8 +2984,9 @@ function renderArtsFiltered() {
   };
 
   function renderPress() {
+    var s = UI_STRINGS[currentUiLang] || UI_STRINGS.fr;
     if (!pressCache.length) {
-      document.getElementById('press-list').innerHTML = '<p style="font-size:13px;color:var(--text3);padding:20px;text-align:center;grid-column:1/-1;">Aucun lien presse.</p>';
+      document.getElementById('press-list').innerHTML = '<p style="font-size:13px;color:var(--text3);padding:20px;text-align:center;grid-column:1/-1;">' + s.noPress + '</p>';
       return;
     }
     document.getElementById('press-list').innerHTML = pressCache.map(function(p) {
@@ -2622,7 +2998,7 @@ function renderArtsFiltered() {
         '<div style="padding:12px 14px;">' +
           '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--orange);margin-bottom:4px;">' + escapeHtml(p.source_name) + (p.published_label ? ' · ' + escapeHtml(p.published_label) : '') + '</div>' +
           '<a href="' + escapeAttr(p.url) + '" target="_blank" rel="noopener" style="display:block;color:var(--text);text-decoration:none;font-weight:600;font-size:13px;line-height:1.4;margin-bottom:10px;">' + escapeHtml(p.title) + '</a>' +
-          '<button class="btn btn-danger btn-sm" style="width:100%;justify-content:center;" onclick="deletePress(' + p.id + ')">Supprimer</button>' +
+          '<button class="btn btn-danger btn-sm" style="width:100%;justify-content:center;" onclick="deletePress(' + p.id + ')">' + s.delete + '</button>' +
         '</div>' +
       '</div>';
     }).join('');
