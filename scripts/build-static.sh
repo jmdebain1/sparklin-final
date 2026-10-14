@@ -203,5 +203,11 @@ cp "$ROOT/ced7f4760d3517996401f90273cbf70e.txt" "$DIST/ced7f4760d3517996401f9027
 # sitemap.xml est déjà écrit dans $DIST plus haut (génération dynamique des
 # articles de blog, cf. section "rendu des articles de blog").
 
+# Landing pages single-file (campagnes Google Ads) — fichiers HTML autonomes
+# à la racine du repo, hors pipeline PHP/i18n : on les copie telles quelles.
+for landing in "$ROOT"/landing-sparklin-*.html; do
+  [ -f "$landing" ] && cp "$landing" "$DIST/$(basename "$landing")"
+done
+
 n_html=$(find "$DIST" -name "*.html" | wc -l | tr -d ' ')
 echo "── build-static: terminé — $n_html fichiers HTML générés dans dist/ ──"
