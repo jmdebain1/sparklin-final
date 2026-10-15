@@ -1371,6 +1371,7 @@ function showView(v){
   if(v==='analytics'){renderAnalytics();}
   if(v==='events'){loadEvents();}
   if(v==='press'){loadPress();}
+  if(v==='settings'){checkAiStatus();}
   window.scrollTo(0,0);
 }
 function openEditor(id){
@@ -1887,12 +1888,21 @@ function toggleFocusMode(){
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&focusMode){focusMode=false;document.body.classList.remove('focus-mode');}});
 
 /* ── AI ── */
-var AI_SAMPLES={
-  full:`<h2>Introduction : la recharge électrique professionnelle en 2026</h2><p>Le déploiement de bornes de recharge pour véhicules électriques représente aujourd'hui un enjeu stratégique majeur pour les entreprises françaises. Qu'il s'agisse de répondre aux obligations légales issues de la Loi d'Orientation des Mobilités (LOM) ou d'optimiser les coûts liés à la mobilité professionnelle, la question du dimensionnement et de la supervision de l'infrastructure IRVE est devenue centrale.</p><h2>Pourquoi le load balancing change tout</h2><p>Le load balancing dynamique permet de répartir intelligemment la puissance électrique disponible entre l'ensemble des bornes d'un site. Contrairement aux installations traditionnelles où chaque borne consomme indépendamment sa puissance nominale, un système intégré comme Spark Pilot garantit que la puissance totale consommée ne dépasse jamais le plafond EDF.</p><blockquote>«&thinsp;Avec Sparklin, nous avons déployé 140 bornes sur notre campus sans renégocier une seule fois notre abonnement EDF. Le load balancing s'occupe de tout.&thinsp;»<br>— Responsable Mobilité, Groupe SFR</blockquote><h2>Les avantages concrets</h2><ul><li>Aucun renforcement du raccordement électrique dans 90 % des cas</li><li>Réduction des coûts d'installation de 30 à 50 %</li><li>Scalabilité totale : ajoutez des bornes sans revoir l'architecture</li><li>Conformité LOM garantie avec traçabilité complète</li></ul><h2>Conclusion</h2><p>Avec les bons outils — notamment une plateforme de supervision intégrant le load balancing natif — la recharge professionnelle devient simple à déployer, à gérer et à rentabiliser. Sparklin accompagne plus de 50 entreprises dans cette transition.</p>`,
-  intro:`<p>La recharge de véhicules électriques en entreprise est souvent perçue comme complexe et coûteuse. Pourtant, avec les bons outils, c'est l'un des leviers les plus efficaces pour réduire l'empreinte carbone de votre flotte tout en offrant un service apprécié de vos collaborateurs. Découvrez comment le load balancing dynamique de Sparklin transforme cette infrastructure en atout compétitif.</p>`,
-  outline:`<h2>1. Contexte réglementaire et obligations LOM</h2><p><em>À compléter : seuils d'obligation selon la taille du parking, calendrier 2025–2027…</em></p><h2>2. Les enjeux techniques du déploiement IRVE</h2><p><em>À compléter : puissance disponible, PDL, raccordement Enedis…</em></p><h2>3. La solution load balancing de Sparklin</h2><p><em>À compléter : fonctionnement, Spark Pilot, résultats mesurés…</em></p><h2>4. ROI et cas client</h2><p><em>À compléter : étude de cas SFR, calcul économique type…</em></p><h2>5. Comment démarrer</h2><p><em>À compléter : étapes de déploiement, audit gratuit, contact…</em></p>`,
-  meta:`<p><em>Suggestion de titre :</em><br><strong>Load balancing IRVE 2026 : déployez 140 bornes sans renforcement EDF — Guide Sparklin</strong></p><p><em>Méta description (147 caractères) :</em><br>Découvrez comment Sparklin déploie jusqu'à 140 bornes IRVE sans renforcement EDF grâce au load balancing dynamique. Guide complet pour entreprises.</p>`
-};
+async function checkAiStatus(){
+  var desc=document.getElementById('desc-ai-api');
+  var btn=document.getElementById('btn-ai-connect');
+  if(!desc||!btn)return;
+  var result=await window.adminCall('admin-ai-generate','POST',{ping:true});
+  if(result && result.configured){
+    desc.textContent='Configurée — prête à générer du contenu';
+    desc.style.color='var(--green)';
+    btn.style.display='none';
+  }else{
+    desc.textContent='Non configurée — définissez ANTHROPIC_API_KEY dans les variables Netlify';
+    desc.style.color='var(--text3)';
+    btn.style.display='none';
+  }
+}
 var GEN_STEPS=['Analyse du titre et des mots-clés…','Structuration du plan éditorial…','Rédaction du contenu principal…','Optimisation SEO et lisibilité…','Relecture et finalisation…'];
 
 function setAiMode(m){
@@ -1915,7 +1925,7 @@ function addKw(){
   list.insertBefore(chip,list.lastElementChild);
 }
 
-function runAI(){
+async function runAI(){
   if(aiRunning)return;
   var title=document.getElementById('ed-title').value;
   if(!title.trim()){toast('Ajoutez un titre pour générer','amber');return;}
@@ -1929,37 +1939,45 @@ function runAI(){
   stepsEl.innerHTML=GEN_STEPS.map((s,i)=>`<div class="gen-step" id="gs${i}">${s}</div>`).join('');
   var bar=document.getElementById('gen-bar');
 
-  var delays=[0,700,1500,2500,3600];
-  var pcts=[15,35,60,82,100];
-  GEN_STEPS.forEach((_,i)=>{
-    setTimeout(()=>{
-      if(i>0){var prev=document.getElementById('gs'+(i-1));if(prev){prev.classList.remove('on');prev.classList.add('done');}}
-      var cur=document.getElementById('gs'+i);if(cur)cur.classList.add('on');
-      bar.style.width=pcts[i]+'%';
-    },delays[i]);
+  var delays=[0,700,1500,2500];
+  var pcts=[15,35,60,82];
+  var progressTimers=GEN_STEPS.slice(0,-1).map((_,i)=>setTimeout(()=>{
+    if(i>0){var prev=document.getElementById('gs'+(i-1));if(prev){prev.classList.remove('on');prev.classList.add('done');}}
+    var cur=document.getElementById('gs'+i);if(cur)cur.classList.add('on');
+    bar.style.width=pcts[i]+'%';
+  },delays[i]));
+
+  var keywords=Array.from(document.querySelectorAll('#ai-kw-list .ai-chip')).filter(el=>el.id!=='btn-add-kw').map(el=>el.textContent.replace('×','').trim());
+  var wordGoal=document.getElementById('ed-wordgoal').value;
+
+  var result=await window.adminCall('admin-ai-generate','POST',{
+    mode:aiMode, tone:aiTone, title:title, keywords:keywords, wordGoal:wordGoal, lang:currentArtLang
   });
 
-  setTimeout(()=>{
-    var lastStep=document.getElementById('gs'+(GEN_STEPS.length-1));
-    if(lastStep){lastStep.classList.remove('on');lastStep.classList.add('done');}
-    var content=AI_SAMPLES[aiMode]||AI_SAMPLES.full;
-    document.getElementById('rte-editor').innerHTML=content;
-    if(aiMode==='meta'){
-      var metaMatch=content.match(/[\d]+ caractères\):<\/em><br>(.*?)<\/p>/);
-      if(!document.getElementById('ed-meta').value)
-        document.getElementById('ed-meta').value='Découvrez comment Sparklin déploie jusqu\'à 140 bornes IRVE sans renforcement EDF grâce au load balancing dynamique. Guide complet pour entreprises.';
-      onMeta(document.getElementById('ed-meta').value);
-    }
+  progressTimers.forEach(t=>clearTimeout(t));
+  GEN_STEPS.forEach((_,i)=>{var el=document.getElementById('gs'+i);if(el){el.classList.remove('on');el.classList.add('done');}});
+  bar.style.width='100%';
+
+  if(result){
+    if(result.title && aiMode!=='meta') document.getElementById('ed-title').value=result.title;
+    if(result.excerpt) document.getElementById('ed-excerpt').value=result.excerpt;
+    if(result.metaDescription){ document.getElementById('ed-meta').value=result.metaDescription; onMeta(result.metaDescription); }
+    if(result.focusKeyword) document.getElementById('ed-focus-kw').value=result.focusKeyword;
+    if(result.bodyHtml && aiMode!=='meta') document.getElementById('rte-editor').innerHTML=result.bodyHtml;
+    if(result.heroImage){ document.getElementById('ed-hero').value=result.heroImage; onHeroInput(); }
+    if(result.heroAlt) document.getElementById('ed-hero-alt').value=result.heroAlt;
+    if(Array.isArray(result.tags) && result.tags.length) document.getElementById('ed-tags').value=result.tags.join(', ');
     updateWords();updateSeo();saveVersion();
-    setTimeout(()=>{
-      wrap.style.display='none';
-      bar.style.width='0%';
-      GEN_STEPS.forEach((_,i)=>{var el=document.getElementById('gs'+i);if(el){el.classList.remove('on','done');}});
-      aiRunning=false;btn.disabled=false;
-      btn.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="m12 2-3.5 7H3l5.5 4-2 7L12 16l5.5 4-2-7L21 9h-5.5L12 2z"/></svg> Regénérer';
-      toast('Contenu généré avec succès !','green');
-    },300);
-  },4200);
+    toast('Contenu généré avec succès !','green');
+  }
+
+  setTimeout(()=>{
+    wrap.style.display='none';
+    bar.style.width='0%';
+    GEN_STEPS.forEach((_,i)=>{var el=document.getElementById('gs'+i);if(el){el.classList.remove('on','done');}});
+    aiRunning=false;btn.disabled=false;
+    btn.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="m12 2-3.5 7H3l5.5 4-2 7L12 16l5.5 4-2-7L21 9h-5.5L12 2z"/></svg> Regénérer';
+  },300);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -2836,6 +2854,7 @@ function renderArtsFiltered() {
   var eventFilter = 'all';
   window.renderEvents = function() { renderEvents(); };
   window.renderPress  = function() { renderPress(); };
+  window.adminCall = function(fn, method, body) { return adminCall(fn, method, body); };
 
   async function accessToken() {
     try {
