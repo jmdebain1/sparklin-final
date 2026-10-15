@@ -58,7 +58,19 @@ async function fetchImageCandidates() {
 function buildPrompt({ mode, tone, title, keywords, wordGoal, lang, internalLinks, images }) {
   const modeDesc = MODES[mode] || MODES.full;
   const toneDesc = TONES[tone] || TONES.expert;
-  const wordTarget = Number(wordGoal) > 0 ? `Vise environ ${wordGoal} mots pour le corps de l'article.` : "Pas de contrainte stricte de longueur.";
+  const goal = Number(wordGoal) || 0;
+  // "Vise environ X mots" seul est une consigne trop faible : le modèle
+  // produit un texte bien plus court (observé : 127 mots pour un objectif de
+  // 1200). On force un plan de sections avec un budget de mots par section,
+  // ce qui donne de bien meilleurs résultats de longueur sur les LLM.
+  let wordTarget = "Pas de contrainte stricte de longueur — un texte concis convient.";
+  if (mode === "full" && goal > 0) {
+    const nSections = goal >= 1500 ? 6 : goal >= 900 ? 5 : goal >= 500 ? 4 : 3;
+    const perSection = Math.round(goal / nSections);
+    wordTarget = `EXIGENCE DE LONGUEUR STRICTE : le corps (bodyHtml, hors introduction/conclusion) doit faire environ ${goal} mots au total (tolérance ${Math.round(goal * 0.85)}-${Math.round(goal * 1.15)} mots) — PAS MOINS. Un article de ${Math.round(goal / 5)} mots serait un échec de la consigne. Structure-le en ${nSections} sections H2 développées, chacune avec ~${perSection} mots répartis sur plusieurs paragraphes complets (jamais une section d'une seule phrase) : contexte concret, mécanisme/explication technique, exemple ou chiffre, implication pour le lecteur. Développe réellement chaque idée plutôt que de l'évoquer en une ligne.`;
+  } else if (goal > 0) {
+    wordTarget = `Vise environ ${goal} mots pour le corps de l'article.`;
+  }
 
   return `Rédige ${modeDesc} pour le blog IRVE de Sparklin, en langue "${lang || "fr"}".
 
