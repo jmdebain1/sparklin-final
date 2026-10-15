@@ -106,55 +106,73 @@ export default async (req) => {
   const mode = Object.keys(MODES).includes(body.mode) ? body.mode : "full";
   const tone = Object.keys(TONES).includes(body.tone) ? body.tone : "expert";
 
-  const [internalLinks, images] = await Promise.all([fetchInternalLinkCandidates(), fetchImageCandidates()]);
-
-  const prompt = buildPrompt({
-    mode,
-    tone,
-    title: body.title,
-    keywords: Array.isArray(body.keywords) ? body.keywords : [],
-    wordGoal: body.wordGoal,
-    lang: body.lang,
-    internalLinks,
-    images,
-  });
-
-  let resp;
+  // Tout ce qui suit peut échouer de façons imprévues (réseau, timeout,
+  // réponse malformée) : on garantit que l'appelant reçoit toujours du JSON
+  // avec une clé "error" exploitable, jamais une 500 brute non parsable.
   try {
-    resp = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-5",
-        max_tokens: 4096,
-        system: SPARKLIN_KNOWLEDGE,
-        messages: [{ role: "user", content: prompt }],
-      }),
+    const [internalLinks, images] = await Promise.all([fetchInternalLinkCandidates(), fetchImageCandidates()]);
+
+    const prompt = buildPrompt({
+      mode,
+      tone,
+      title: body.title,
+      keywords: Array.isArray(body.keywords) ? body.keywords : [],
+      wordGoal: body.wordGoal,
+      lang: body.lang,
+      internalLinks,
+      images,
     });
-  } catch {
-    return json(502, { error: "Impossible de contacter l'API Anthropic" });
+
+    let resp;
+    try {
+      resp = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-5",
+          max_tokens: 4096,
+          system: SPARKLIN_KNOWLEDGE,
+          messages: [{ role: "user", content: prompt }],
+        }),
+      });
+    } catch (e) {
+      console.error("admin-ai-generate: fetch Anthropic a échoué", e);
+      return json(502, { error: "Impossible de contacter l'API Anthropic" });
+    }
+
+    if (!resp.ok) {
+      const errText = await resp.text().catch(() => "");
+      console.error("admin-ai-generate: réponse Anthropic non-ok", resp.status, errText.slice(0, 1000));
+      return json(502, { error: `Erreur API Anthropic (HTTP ${resp.status})`, detail: errText.slice(0, 500) });
+    }
+
+    let data;
+    try {
+      data = await resp.json();
+    } catch (e) {
+      console.error("admin-ai-generate: réponse Anthropic non-JSON", e);
+      return json(502, { error: "Réponse Anthropic illisible" });
+    }
+
+    const text = (data.content || []).map((b) => b.text || "").join("").trim();
+
+    let parsed;
+    try {
+      const jsonStart = text.indexOf("{");
+      const jsonEnd = text.lastIndexOf("}");
+      parsed = JSON.parse(text.slice(jsonStart, jsonEnd + 1));
+    } catch (e) {
+      console.error("admin-ai-generate: JSON du modèle non interprétable", e, text.slice(0, 500));
+      return json(502, { error: "Réponse IA non interprétable", raw: text.slice(0, 1000) });
+    }
+
+    return json(200, parsed);
+  } catch (e) {
+    console.error("admin-ai-generate: erreur inattendue", e);
+    return json(500, { error: "Erreur interne inattendue", detail: String((e && e.message) || e).slice(0, 500) });
   }
-
-  if (!resp.ok) {
-    const errText = await resp.text().catch(() => "");
-    return json(resp.status, { error: "Erreur API Anthropic", detail: errText.slice(0, 500) });
-  }
-
-  const data = await resp.json();
-  const text = (data.content || []).map((b) => b.text || "").join("").trim();
-
-  let parsed;
-  try {
-    const jsonStart = text.indexOf("{");
-    const jsonEnd = text.lastIndexOf("}");
-    parsed = JSON.parse(text.slice(jsonStart, jsonEnd + 1));
-  } catch {
-    return json(502, { error: "Réponse IA non interprétable", raw: text.slice(0, 1000) });
-  }
-
-  return json(200, parsed);
 };
