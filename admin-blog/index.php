@@ -836,6 +836,10 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
             <div class="save-dot"></div>
             <span id="editor-save-text">Brouillon</span>
           </div>
+          <button class="btn btn-ghost btn-sm" id="btn-preview-article" onclick="openArticlePreview()" title="Aperçu de l'article">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="btn-preview-article-label">Aperçu</span>
+          </button>
           <button class="btn btn-ghost btn-sm" id="btn-focus-mode" onclick="toggleFocusMode()" title="Mode focus (F11)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
           </button>
@@ -1320,6 +1324,17 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
   </div>
 </div>
 
+<!-- ══ ARTICLE PREVIEW MODAL ══════════════════════════════════ -->
+<div class="modal-bg" id="article-preview-modal">
+  <div class="modal" style="max-width:860px;width:92vw;padding:0;overflow:hidden;display:flex;flex-direction:column;max-height:90vh">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <div class="modal-title" id="lbl-preview-title" style="margin:0">Aperçu de l'article</div>
+      <button class="btn btn-ghost btn-sm" id="btn-preview-close" onclick="closeArticlePreview()">✕</button>
+    </div>
+    <iframe id="article-preview-frame" style="flex:1;width:100%;border:0;background:#fff" title="Aperçu de l'article"></iframe>
+  </div>
+</div>
+
 <script>
 /* ═══════════════════════════════════════════════════════════
    DATA
@@ -1637,6 +1652,53 @@ function openImagePicker(){
 }
 function closeImagePicker(){
   document.getElementById('image-picker-modal').classList.remove('open');
+}
+
+/* ── Aperçu de l'article (rendu client, l'admin ne tourne pas sur PHP) ── */
+function openArticlePreview(){
+  var title=document.getElementById('ed-title').value.trim()||'(Sans titre)';
+  var hero=document.getElementById('ed-hero').value.trim();
+  var heroAlt=document.getElementById('ed-hero-alt').value.trim()||title;
+  var category=document.getElementById('ed-cat').options[document.getElementById('ed-cat').selectedIndex]?.text||'';
+  var excerpt=document.getElementById('ed-excerpt').value.trim();
+  var body=document.getElementById('rte-editor').innerHTML;
+  var heroUrl=hero;
+  var now=new Date();
+  var dateLabel=now.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+
+  var heroBlock=heroUrl?`<div style="height:340px;background:#1a1a2e;display:flex;align-items:flex-end;padding:0;position:relative;overflow:hidden;">
+    <img src="${heroUrl}" alt="${heroAlt.replace(/"/g,'&quot;')}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,26,46,.2) 0%,rgba(26,26,46,.85) 100%);"></div>
+  </div>`:'';
+
+  var doc=`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/assets/css/style.css"/>
+    <style>body{padding-top:0}.sk-nav,.sk-footer{display:none!important}</style>
+    </head><body>
+    <main style="padding-top:24px;">
+    ${heroBlock}
+    <article style="padding:40px clamp(20px,5vw,80px);">
+      <div class="sk-wrap sk-wrap--narrow blog-body">
+        <div style="background:#FFF3E0;color:#B45309;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;display:inline-block;margin-bottom:16px;">APERÇU — non publié</div>
+        ${category?`<div style="font-size:12px;font-weight:600;color:var(--text-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;">${category}</div>`:''}
+        <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:20px;">${title}</h1>
+        <div class="blog-byline"><div class="blog-byline-avatar">S</div><span>Par <strong>Équipe Sparklin</strong></span><span class="blog-byline-dot"></span><span>${dateLabel}</span></div>
+        ${excerpt?`<div style="margin-bottom:32px;">${excerpt}</div>`:''}
+        ${body}
+      </div>
+    </article>
+    </main>
+    </body></html>`;
+
+  var frame=document.getElementById('article-preview-frame');
+  frame.srcdoc=doc;
+  document.getElementById('article-preview-modal').classList.add('open');
+}
+function closeArticlePreview(){
+  document.getElementById('article-preview-modal').classList.remove('open');
 }
 function filterImagePicker(query){
   if(!IMAGE_MANIFEST) return;
@@ -2062,9 +2124,11 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&document.activeElement===document.getElementById('search-input')){document.getElementById('search-input').value='';document.getElementById('search-input').blur();}
   if(e.key==='Escape'&&document.getElementById('link-modal').classList.contains('open'))closeLinkModal();
   if(e.key==='Escape'&&document.getElementById('image-picker-modal').classList.contains('open'))closeImagePicker();
+  if(e.key==='Escape'&&document.getElementById('article-preview-modal').classList.contains('open'))closeArticlePreview();
 });
 document.getElementById('link-modal').addEventListener('click',e=>{if(e.target===document.getElementById('link-modal'))closeLinkModal();});
 document.getElementById('image-picker-modal').addEventListener('click',e=>{if(e.target===document.getElementById('image-picker-modal'))closeImagePicker();});
+document.getElementById('article-preview-modal').addEventListener('click',e=>{if(e.target===document.getElementById('article-preview-modal'))closeArticlePreview();});
 
 /* ═══════════════════════════════════════════════════════════
    TOAST
@@ -2264,6 +2328,8 @@ var UI_STRINGS = {
     imgpickLoading:   'Chargement des images…',
     imgpickError:     'Impossible de charger les images.',
     imgpickEmpty:     'Aucune image trouvée.',
+    preview:          'Aperçu',
+    previewTitle:     "Aperçu de l'article",
   },
   en: {
     newArticle:     'New article',
@@ -2414,6 +2480,8 @@ var UI_STRINGS = {
     imgpickLoading:   'Loading images…',
     imgpickError:     'Could not load images.',
     imgpickEmpty:     'No images found.',
+    preview:          'Preview',
+    previewTitle:     'Article preview',
   },
 };
 /* L'interface admin ne propose que FR/EN (cf. tb-ui-lang) ; les autres langues
@@ -2644,6 +2712,8 @@ function applyUiLang() {
   setLabel('btn-link-insert', s.insert);
 
   /* image picker modal */
+  setLabel('btn-preview-article-label', s.preview);
+  setLabel('lbl-preview-title', s.previewTitle);
   setLabel('lbl-imgpick-title', s.pickImageTitle);
   setLabel('lbl-imgpick-sub', s.pickImageSub);
   setLabel('btn-imgpick-cancel', s.cancel);
