@@ -19,6 +19,17 @@ const MODES = {
   meta: "uniquement un titre SEO et une méta description, sans rédiger le corps de l'article",
 };
 
+// Budget de tokens par mode : un article complet avec balisage HTML dépasse
+// largement 4096 tokens et se faisait tronquer en plein JSON (SyntaxError
+// "Unexpected end of JSON input"). Les modes plus courts n'ont pas besoin
+// d'un budget aussi large.
+const MAX_TOKENS = {
+  full: 5500,
+  intro: 1024,
+  outline: 2048,
+  meta: 512,
+};
+
 const TONES = {
   expert: "expert et technique, assume que le lecteur connaît déjà les bases IRVE",
   simple: "accessible, pédagogique, évite le jargon ou l'explique immédiatement",
@@ -51,7 +62,13 @@ async function fetchImageCandidates() {
 function buildPrompt({ mode, tone, title, keywords, wordGoal, lang, internalLinks, images }) {
   const modeDesc = MODES[mode] || MODES.full;
   const toneDesc = TONES[tone] || TONES.expert;
-  const wordTarget = Number(wordGoal) > 0 ? `Vise environ ${wordGoal} mots pour le corps de l'article.` : "Pas de contrainte stricte de longueur.";
+  // Les fonctions Netlify synchrones sont limitées à 60s d'exécution. Un
+  // article "complet" de 1200-2000 mots + balisage HTML dépasse ce budget de
+  // temps avant même d'atteindre la limite de tokens (c'est la cause réelle
+  // de la troncature observée, pas seulement max_tokens). On plafonne donc
+  // la longueur demandée pour le mode "full" à 900 mots.
+  const effectiveWordGoal = mode === "full" ? Math.min(Number(wordGoal) || 900, 900) : wordGoal;
+  const wordTarget = Number(effectiveWordGoal) > 0 ? `Vise environ ${effectiveWordGoal} mots pour le corps de l'article.` : "Pas de contrainte stricte de longueur.";
 
   return `Rédige ${modeDesc} pour le blog IRVE de Sparklin, en langue "${lang || "fr"}".
 
@@ -134,7 +151,7 @@ export default async (req) => {
         },
         body: JSON.stringify({
           model: "claude-sonnet-5",
-          max_tokens: 4096,
+          max_tokens: MAX_TOKENS[mode] || MAX_TOKENS.full,
           system: SPARKLIN_KNOWLEDGE,
           messages: [{ role: "user", content: prompt }],
         }),
