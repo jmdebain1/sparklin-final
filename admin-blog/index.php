@@ -1892,7 +1892,7 @@ async function checkAiStatus(){
   var desc=document.getElementById('desc-ai-api');
   var btn=document.getElementById('btn-ai-connect');
   if(!desc||!btn)return;
-  var result=await window.adminCall('admin-ai-generate','POST',{ping:true});
+  var result=await window.adminCall('admin-ai-ping','POST',{});
   if(result && result.configured){
     desc.textContent='Configurée — prête à générer du contenu';
     desc.style.color='var(--green)';
@@ -1939,23 +1939,37 @@ async function runAI(){
   stepsEl.innerHTML=GEN_STEPS.map((s,i)=>`<div class="gen-step" id="gs${i}">${s}</div>`).join('');
   var bar=document.getElementById('gen-bar');
 
-  var delays=[0,700,1500,2500];
-  var pcts=[15,35,60,82];
-  var progressTimers=GEN_STEPS.slice(0,-1).map((_,i)=>setTimeout(()=>{
-    if(i>0){var prev=document.getElementById('gs'+(i-1));if(prev){prev.classList.remove('on');prev.classList.add('done');}}
-    var cur=document.getElementById('gs'+i);if(cur)cur.classList.add('on');
-    bar.style.width=pcts[i]+'%';
-  },delays[i]));
+  var stepIdx=-1;
+  var stepTimer=setInterval(()=>{
+    document.querySelectorAll('.gen-step').forEach(el=>el.classList.remove('on'));
+    stepIdx=(stepIdx+1)%GEN_STEPS.length;
+    var cur=document.getElementById('gs'+stepIdx);if(cur)cur.classList.add('on');
+    bar.style.width=Math.min(90,20+stepIdx*15)+'%';
+  },3500);
 
   var keywords=Array.from(document.querySelectorAll('#ai-kw-list .ai-chip')).filter(el=>el.id!=='btn-add-kw').map(el=>el.textContent.replace('×','').trim());
   var wordGoal=document.getElementById('ed-wordgoal').value;
+  var jobId=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now()+'-'+Math.random().toString(16).slice(2));
 
   try{
-    var result=await window.adminCall('admin-ai-generate','POST',{
-      mode:aiMode, tone:aiTone, title:title, keywords:keywords, wordGoal:wordGoal, lang:currentArtLang
+    // admin-ai-generate tourne en arrière-plan (jusqu'à 15 min côté Netlify) :
+    // cet appel démarre juste le job et revient immédiatement, le vrai
+    // résultat est récupéré par sondage ci-dessous.
+    await window.adminCall('admin-ai-generate','POST',{
+      jobId:jobId, mode:aiMode, tone:aiTone, title:title, keywords:keywords, wordGoal:wordGoal, lang:currentArtLang
     });
 
-    progressTimers.forEach(t=>clearTimeout(t));
+    var result=null, errMsg=null, waited=0, interval=2500, maxWait=180000;
+    while(waited<maxWait){
+      await new Promise(r=>setTimeout(r,interval));
+      waited+=interval;
+      var status=await window.adminCall('admin-ai-generate-status?jobId='+encodeURIComponent(jobId),'GET',null);
+      if(status && status.status==='done'){ result=status.result; break; }
+      if(status && status.status==='error'){ errMsg=status.error||'Erreur pendant la génération'; break; }
+      // sinon status 'pending' (ou appel raté) : on continue de sonder
+    }
+
+    clearInterval(stepTimer);
     GEN_STEPS.forEach((_,i)=>{var el=document.getElementById('gs'+i);if(el){el.classList.remove('on');el.classList.add('done');}});
     bar.style.width='100%';
 
@@ -1970,9 +1984,13 @@ async function runAI(){
       if(Array.isArray(result.tags) && result.tags.length) document.getElementById('ed-tags').value=result.tags.join(', ');
       updateWords();updateSeo();saveVersion();
       toast('Contenu généré avec succès !','green');
+    }else if(errMsg){
+      toast(errMsg,'red');
+    }else{
+      toast('La génération prend plus de temps que prévu — réessayez dans une minute','amber');
     }
   }catch(e){
-    progressTimers.forEach(t=>clearTimeout(t));
+    clearInterval(stepTimer);
     toast('Erreur inattendue pendant la génération','red');
   }finally{
     setTimeout(()=>{
