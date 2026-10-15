@@ -24,7 +24,7 @@ const MODES = {
 // "Unexpected end of JSON input"). Les modes plus courts n'ont pas besoin
 // d'un budget aussi large.
 const MAX_TOKENS = {
-  full: 5500,
+  full: 3800,
   intro: 1024,
   outline: 2048,
   meta: 512,
@@ -66,8 +66,10 @@ function buildPrompt({ mode, tone, title, keywords, wordGoal, lang, internalLink
   // article "complet" de 1200-2000 mots + balisage HTML dépasse ce budget de
   // temps avant même d'atteindre la limite de tokens (c'est la cause réelle
   // de la troncature observée, pas seulement max_tokens). On plafonne donc
-  // la longueur demandée pour le mode "full" à 900 mots.
-  const effectiveWordGoal = mode === "full" ? Math.min(Number(wordGoal) || 900, 900) : wordGoal;
+  // la longueur demandée pour le mode "full" à 600 mots (marge de sécurité
+  // supplémentaire : une génération à 900 mots a pris ~56s, trop proche de
+  // la limite de 60s et d'éventuels timeouts réseau/proxy intermédiaires).
+  const effectiveWordGoal = mode === "full" ? Math.min(Number(wordGoal) || 600, 600) : wordGoal;
   const wordTarget = Number(effectiveWordGoal) > 0 ? `Vise environ ${effectiveWordGoal} mots pour le corps de l'article.` : "Pas de contrainte stricte de longueur.";
 
   return `Rédige ${modeDesc} pour le blog IRVE de Sparklin, en langue "${lang || "fr"}".

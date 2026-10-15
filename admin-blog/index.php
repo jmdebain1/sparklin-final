@@ -1950,34 +1950,39 @@ async function runAI(){
   var keywords=Array.from(document.querySelectorAll('#ai-kw-list .ai-chip')).filter(el=>el.id!=='btn-add-kw').map(el=>el.textContent.replace('×','').trim());
   var wordGoal=document.getElementById('ed-wordgoal').value;
 
-  var result=await window.adminCall('admin-ai-generate','POST',{
-    mode:aiMode, tone:aiTone, title:title, keywords:keywords, wordGoal:wordGoal, lang:currentArtLang
-  });
+  try{
+    var result=await window.adminCall('admin-ai-generate','POST',{
+      mode:aiMode, tone:aiTone, title:title, keywords:keywords, wordGoal:wordGoal, lang:currentArtLang
+    });
 
-  progressTimers.forEach(t=>clearTimeout(t));
-  GEN_STEPS.forEach((_,i)=>{var el=document.getElementById('gs'+i);if(el){el.classList.remove('on');el.classList.add('done');}});
-  bar.style.width='100%';
+    progressTimers.forEach(t=>clearTimeout(t));
+    GEN_STEPS.forEach((_,i)=>{var el=document.getElementById('gs'+i);if(el){el.classList.remove('on');el.classList.add('done');}});
+    bar.style.width='100%';
 
-  if(result){
-    if(result.title && aiMode!=='meta') document.getElementById('ed-title').value=result.title;
-    if(result.excerpt) document.getElementById('ed-excerpt').value=result.excerpt;
-    if(result.metaDescription){ document.getElementById('ed-meta').value=result.metaDescription; onMeta(result.metaDescription); }
-    if(result.focusKeyword) document.getElementById('ed-focus-kw').value=result.focusKeyword;
-    if(result.bodyHtml && aiMode!=='meta') document.getElementById('rte-editor').innerHTML=result.bodyHtml;
-    if(result.heroImage){ document.getElementById('ed-hero').value=result.heroImage; onHeroInput(); }
-    if(result.heroAlt) document.getElementById('ed-hero-alt').value=result.heroAlt;
-    if(Array.isArray(result.tags) && result.tags.length) document.getElementById('ed-tags').value=result.tags.join(', ');
-    updateWords();updateSeo();saveVersion();
-    toast('Contenu généré avec succès !','green');
+    if(result){
+      if(result.title && aiMode!=='meta') document.getElementById('ed-title').value=result.title;
+      if(result.excerpt) document.getElementById('ed-excerpt').value=result.excerpt;
+      if(result.metaDescription){ document.getElementById('ed-meta').value=result.metaDescription; onMeta(result.metaDescription); }
+      if(result.focusKeyword) document.getElementById('ed-focus-kw').value=result.focusKeyword;
+      if(result.bodyHtml && aiMode!=='meta') document.getElementById('rte-editor').innerHTML=result.bodyHtml;
+      if(result.heroImage){ document.getElementById('ed-hero').value=result.heroImage; onHeroInput(); }
+      if(result.heroAlt) document.getElementById('ed-hero-alt').value=result.heroAlt;
+      if(Array.isArray(result.tags) && result.tags.length) document.getElementById('ed-tags').value=result.tags.join(', ');
+      updateWords();updateSeo();saveVersion();
+      toast('Contenu généré avec succès !','green');
+    }
+  }catch(e){
+    progressTimers.forEach(t=>clearTimeout(t));
+    toast('Erreur inattendue pendant la génération','red');
+  }finally{
+    setTimeout(()=>{
+      wrap.style.display='none';
+      bar.style.width='0%';
+      GEN_STEPS.forEach((_,i)=>{var el=document.getElementById('gs'+i);if(el){el.classList.remove('on','done');}});
+      aiRunning=false;btn.disabled=false;
+      btn.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="m12 2-3.5 7H3l5.5 4-2 7L12 16l5.5 4-2-7L21 9h-5.5L12 2z"/></svg> Regénérer';
+    },300);
   }
-
-  setTimeout(()=>{
-    wrap.style.display='none';
-    bar.style.width='0%';
-    GEN_STEPS.forEach((_,i)=>{var el=document.getElementById('gs'+i);if(el){el.classList.remove('on','done');}});
-    aiRunning=false;btn.disabled=false;
-    btn.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="m12 2-3.5 7H3l5.5 4-2 7L12 16l5.5 4-2-7L21 9h-5.5L12 2z"/></svg> Regénérer';
-  },300);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -2879,7 +2884,13 @@ function renderArtsFiltered() {
     if (!token) { toast('Session expirée, reconnectez-vous', 'red'); return null; }
     var opts = { method: method, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } };
     if (body) opts.body = JSON.stringify(body);
-    var resp = await fetch('/.netlify/functions/' + fn, opts);
+    var resp;
+    try {
+      resp = await fetch('/.netlify/functions/' + fn, opts);
+    } catch (e) {
+      toast('Connexion interrompue (requête trop longue ou réseau coupé)', 'red');
+      return null;
+    }
     var data = null;
     try { data = await resp.json(); } catch (e) {}
     if (!resp.ok) { toast((data && data.error) || 'Erreur', 'red'); return null; }
