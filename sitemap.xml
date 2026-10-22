@@ -209,6 +209,19 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://sparklin.io/support/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sparklin.io/support/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sparklin.io/support/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sparklin.io/support/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sparklin.io/support/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://sparklin.io/support/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://sparklin.io/support/?lang=ms"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://sparklin.io/support/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sparklin.io/support/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://sparklin.io/mentions-legales/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
