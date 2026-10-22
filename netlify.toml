@@ -55,6 +55,178 @@
   to = "/.netlify/functions/send-livre-blanc"
   status = 200
 
+# ── Nettoyage SEO : anciennes URLs de l'ancien site (indexées par Google,
+#    404 depuis la refonte — cf. rapport Couverture Search Console du
+#    2026-10-22) redirigées en 301 vers l'équivalent actuel le plus proche,
+#    pour récupérer le maillage/SEO historique plutôt que de laisser
+#    trainer des 404. ──
+[[redirects]]
+  from = "/fr"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/en"
+  to = "/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/en/"
+  to = "/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/notre-société"
+  to = "/a-propos/"
+  status = 301
+
+[[redirects]]
+  from = "/en/notre-société"
+  to = "/a-propos/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/application-gestion-bornes-de-recharge-electrique-et-autres-irve"
+  to = "/app/"
+  status = 301
+
+[[redirects]]
+  from = "/en/application-gestion-bornes-de-recharge-electrique-et-autres-irve"
+  to = "/app/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/forfait-sparklin-gestion-bornes-de-recharge"
+  to = "/spark-pilot/"
+  status = 301
+
+[[redirects]]
+  from = "/en/forfait-sparklin-gestion-bornes-de-recharge"
+  to = "/spark-pilot/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/gerer-vos-bornes-de-recharge-electrique-installation-irve"
+  to = "/spark-pilot/"
+  status = 301
+
+[[redirects]]
+  from = "/load-balancing-gestion-vos-irve-bornes-et-prises-de-recharge-electrique"
+  to = "/spark-pilot/"
+  status = 301
+
+[[redirects]]
+  from = "/borne-de-recharge-connectée-triphasée-et-renforcée"
+  to = "/spark-plus/"
+  status = 301
+
+[[redirects]]
+  from = "/borne-de-recharge-connectée-monophasée-et-renforcée"
+  to = "/spark-1/"
+  status = 301
+
+[[redirects]]
+  from = "/en/borne-de-recharge-connectée-monophasée-et-renforcée"
+  to = "/spark-1/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/prise-de-recharge-lente-connectée-et-renforcée"
+  to = "/spark-1/"
+  status = 301
+
+[[redirects]]
+  from = "/en/norme-mid-borne-de-recharge-electrique-charging-station"
+  to = "/spark-plus/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/en/qr-code"
+  to = "/spark-plus/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/notre-offre-produits-et-services-irve"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/en/notre-offre-produits-et-services-irve"
+  to = "/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/nos-solutions-de-recharge-electrique-et-autres-irve"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/en/nos-solutions-de-recharge-electrique-et-autres-irve"
+  to = "/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/nos-solutions-de-recharge"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/nos-produits"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/creer-mon-compte"
+  to = "/contact/"
+  status = 301
+
+[[redirects]]
+  from = "/blog-sparklin-irve-mobilite-experts"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/categories/*"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/post/*"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/en/post/*"
+  to = "/blog/?lang=en"
+  status = 301
+
+[[redirects]]
+  from = "/blog/post.php"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/sparklin-chain"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/job-offer-*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/en/job-offer-*"
+  to = "/?lang=en"
+  status = 301
+
+# Filet de sécurité pour toute autre ancienne URL /en/... non mappée
+# explicitement ci-dessus (ancien préfixe de langue, remplacé par ?lang=en).
+[[redirects]]
+  from = "/en/*"
+  to = "/?lang=en"
+  status = 301
+
 # ── 404 personnalisée (doit rester la DERNIÈRE règle) ──
 [[redirects]]
   from = "/*"
