@@ -15,6 +15,7 @@
 <meta property="og:description" content="Leads qualifiés, support technique, marges attractives. Devis gratuit en 48h.">
 <meta property="og:url" content="https://sparklin.io/partenaires-irve">
 <link rel="canonical" href="https://sparklin.io/partenaires-irve">
+<script src="https://www.google.com/recaptcha/api.js?render=6LeFJj8tAAAAAFSwfpgeMx5IFgtTHVboSkcejS6M"></script>
 <style>
   /* Charte Sparklin (assets/css/style.css) — polices système en remplacement de
      Wix Madefor pour respecter la contrainte zéro-dépendance externe de cette page.
@@ -270,6 +271,11 @@
   }
   .success-box.is-shown{display:flex}
   .form-card form.is-hidden{display:none}
+  .submit-error{
+    display:none;background:#FDEDEB;border:1px solid rgba(192,57,43,.3);
+    border-radius:var(--radius);padding:12px 16px;font-size:13px;color:#C0392B;margin-top:14px;
+  }
+  .submit-error.is-shown{display:block}
 
   /* footer */
   footer{padding:40px 0;border-top:1px solid var(--border);background:var(--bg-off)}
@@ -679,6 +685,7 @@
             <svg class="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="9" opacity=".25"/><path d="M21 12a9 9 0 0 0-9-9"/></svg>
             <span class="btn-label">Devenir partenaire Sparklin →</span>
           </button>
+          <div class="submit-error" id="submit-error">Une erreur est survenue lors de l'envoi. Merci de réessayer, ou écrivez-nous directement à contact@sparklin.io.</div>
           <p class="rgpd">Vos données sont utilisées uniquement pour traiter votre demande partenaire. Aucune revente à des tiers. Conformément au RGPD, vous pouvez demander leur suppression à tout moment.</p>
         </form>
       </div>
@@ -766,7 +773,17 @@
   var emailInput = document.getElementById("f-email");
   var submitBtn = document.getElementById("submit-btn");
   var successBox = document.getElementById("success-box");
+  var submitError = document.getElementById("submit-error");
   var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function skRecaptcha(action){
+    var k = "6LeFJj8tAAAAAFSwfpgeMx5IFgtTHVboSkcejS6M";
+    if(typeof grecaptcha === "undefined") return Promise.resolve("");
+    return new Promise(function(res){
+      try{ grecaptcha.ready(function(){ grecaptcha.execute(k, {action:action}).then(res).catch(function(){ res(""); }); }); }
+      catch(e){ res(""); }
+    });
+  }
 
   form.addEventListener("submit", function(e){
     e.preventDefault();
@@ -784,6 +801,7 @@
 
     submitBtn.disabled = true;
     submitBtn.classList.add("is-loading");
+    submitError.classList.remove("is-shown");
 
     window.dataLayer = window.dataLayer || [];
     dataLayer.push({ event: "lead_form_submit", source: captured.utm_source || "" });
@@ -791,13 +809,37 @@
     var evt = new CustomEvent("form_submit", { detail: { source: captured.utm_source || "" } });
     window.dispatchEvent(evt);
 
-    /* Pas d'endpoint fonctionnel en démo : simulation d'envoi + message de succès inline. */
-    setTimeout(function(){
+    var data = Object.fromEntries(new FormData(form).entries());
+    var payload = {
+      email: data.email,
+      nom: [data.prenom, data.nom].filter(Boolean).join(" "),
+      entreprise: data.entreprise,
+      type_besoin: "Partenaire installateur — " + (data.certification_rge || ""),
+      message: [data.telephone ? ("Téléphone : " + data.telephone) : "", data.message || ""].filter(Boolean).join("\n"),
+      source: "partenaires",
+      page_url: data.page_url,
+      utm_source: data.utm_source, utm_medium: data.utm_medium, utm_campaign: data.utm_campaign,
+      utm_term: data.utm_term, utm_content: data.utm_content, gclid: data.gclid
+    };
+
+    skRecaptcha("partenaires").then(function(token){
+      payload.recaptcha_token = token;
+      return fetch("/.netlify/functions/send-contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+    }).then(function(resp){
+      if(!resp.ok) throw new Error("http_" + resp.status);
       submitBtn.disabled = false;
       submitBtn.classList.remove("is-loading");
       form.classList.add("is-hidden");
       successBox.classList.add("is-shown");
-    }, 700);
+    }).catch(function(){
+      submitBtn.disabled = false;
+      submitBtn.classList.remove("is-loading");
+      submitError.classList.add("is-shown");
+    });
   });
 })();
 </script>

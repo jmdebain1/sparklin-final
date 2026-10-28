@@ -29,12 +29,12 @@ export default async (req) => {
   const type = clean(body.type_besoin);
   const bornes = clean(body.nb_bornes);
   const message = clean(body.message);
-  const source = ["contact", "support"].includes(body.source) ? body.source : "contact";
+  const source = ["contact", "support", "partenaires"].includes(body.source) ? body.source : "contact";
 
   if (!email) return json(400, { error: "Email invalide" });
 
   // Anti-abus reCAPTCHA v3
-  const captchaOk = await recaptchaVerify(body.recaptcha_token, "contact");
+  const captchaOk = await recaptchaVerify(body.recaptcha_token, source);
   if (!captchaOk) return json(429, { error: "Vérification anti-robot échouée" });
 
   // 1. Lead Supabase (best-effort)
@@ -70,8 +70,11 @@ export default async (req) => {
   });
 
   if (code >= 200 && code < 300) {
-    // Inscription liste "Contact & Support" (best-effort)
-    await brevoAddContact(email, process.env.BREVO_LIST_CONTACT_ID || 0, { NOM: nom });
+    // Inscription liste Brevo (best-effort) — liste dédiée "Formulaire Devenir
+    // Installateurs Partenaires" (id 8) pour les candidatures partenaires,
+    // liste "Contact & Support" pour le reste.
+    const listId = source === "partenaires" ? 8 : (process.env.BREVO_LIST_CONTACT_ID || 0);
+    await brevoAddContact(email, listId, { NOM: nom });
 
     // Accusé de réception visiteur (best-effort, via template Brevo)
     const ackTpl = parseInt(process.env.BREVO_TEMPLATE_CONTACT_ACK_ID || "0", 10);
