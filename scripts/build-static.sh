@@ -21,7 +21,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST="$ROOT/dist"
 PORT=8099
 HOST="127.0.0.1"
-LANGS=(fr en de es th ms id)
+LANGS=(fr en de es th ms id tr vi fil)
 
 # Pages publiques : chemin relatif (avec slash final) tel qu'exposé en prod.
 PAGES=(
@@ -144,7 +144,7 @@ else
     $template = file_get_contents($argv[1]);
     $slugsRaw = trim($argv[2]);
     $slugs = $slugsRaw === "" ? [] : explode("\n", $slugsRaw);
-    $langs = ["en","de","es","th","ms","id"];
+    $langs = ["en","de","es","th","ms","id","tr","vi","fil"];
 
     $frag = "";
     foreach ($slugs as $slug) {

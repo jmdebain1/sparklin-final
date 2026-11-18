@@ -15,14 +15,7 @@ if (!$post || $post['status'] !== 'published') {
     exit;
 }
 
-$MOIS_FR = [1=>'janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-function sk_format_date_fr(?string $iso, array $mois): string {
-    if (!$iso) return '';
-    $ts = strtotime($iso);
-    if (!$ts) return '';
-    return date('j', $ts) . ' ' . $mois[(int)date('n', $ts)] . ' ' . date('Y', $ts);
-}
-$publishedLabel = sk_format_date_fr($post['published_at'] ?? null, $MOIS_FR);
+$publishedLabel = sk_format_date($post['published_at'] ?? null);
 $authorInitial  = mb_strtoupper(mb_substr($post['author'] ?: 'M', 0, 1));
 $pageTitle      = $post['meta_title'] ?: $post['title'];
 $pageDesc       = $post['meta_desc'] ?: $post['excerpt'];
@@ -53,6 +46,7 @@ $heroImage      = $post['hero_image']
     '@context' => 'https://schema.org',
     '@type' => 'BlogPosting',
     'headline' => $post['title'],
+    'inLanguage' => lang(),
     'description' => $pageDesc,
     'image' => $heroImage ?: 'https://sparklin.io/assets/images/apple-touch-icon.png',
     'datePublished' => $post['published_at'],
@@ -89,7 +83,7 @@ $heroImage      = $post['hero_image']
     <?php endif; ?>
 
     <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:20px;"><?= htmlspecialchars($post['title']) ?></h1>
-    <div class="blog-byline"><div class="blog-byline-avatar"><?= htmlspecialchars($authorInitial) ?></div><span>Par <strong><?= htmlspecialchars($post['author']) ?></strong></span><?php if ($publishedLabel): ?><span class="blog-byline-dot"></span><span><?= htmlspecialchars($publishedLabel) ?></span><?php endif; ?></div>
+    <div class="blog-byline"><div class="blog-byline-avatar"><?= htmlspecialchars($authorInitial) ?></div><span><?= t('blog.by') ?> <strong><?= htmlspecialchars($post['author']) ?></strong></span><?php if ($publishedLabel): ?><span class="blog-byline-dot"></span><span><?= htmlspecialchars($publishedLabel) ?></span><?php endif; ?></div>
     <?php if (!empty($post['excerpt'])): ?>
     <div style="margin-bottom:32px;"><?= htmlspecialchars($post['excerpt']) ?></div>
     <?php endif; ?>

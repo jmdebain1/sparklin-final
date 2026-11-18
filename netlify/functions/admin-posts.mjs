@@ -37,6 +37,22 @@ async function triggerIndexNow(url) {
   }
 }
 
+// Les articles sont rédigés en français : on lance la traduction dans toutes
+// les langues du site (fonction en arrière-plan, relance elle-même un build
+// à la fin). Sans cela, les pages ?lang=xx afficheraient l'article en français.
+async function triggerTranslate(req, id) {
+  try {
+    const url = new URL("/.netlify/functions/admin-posts-translate", req.url);
+    await fetch(url, {
+      method: "POST",
+      headers: { Authorization: req.headers.get("authorization") || "", "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+  } catch {
+    // Best-effort : ne doit pas faire échouer l'enregistrement du post.
+  }
+}
+
 function slugify(str) {
   return String(str || "")
     .toLowerCase()
@@ -91,6 +107,7 @@ export default async (req) => {
       if (row.status === "published") {
         await triggerRebuild();
         await triggerIndexNow(`https://sparklin.io/blog/${row.slug}/`);
+        await triggerTranslate(req, created.id);
       }
       return json(201, { ok: true, post: created });
     }
@@ -129,7 +146,10 @@ export default async (req) => {
       // planification) ou si un post déjà publié vient d'être modifié.
       if (patch.status !== undefined || updated.status === "published") {
         await triggerRebuild();
-        if (updated.status === "published") await triggerIndexNow(`https://sparklin.io/blog/${updated.slug}/`);
+        if (updated.status === "published") {
+          await triggerIndexNow(`https://sparklin.io/blog/${updated.slug}/`);
+          await triggerTranslate(req, updated.id);
+        }
       }
       return json(200, { ok: true, post: updated });
     }

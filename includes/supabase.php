@@ -42,6 +42,7 @@ function fetchTranslations(string $lang = 'fr'): array {
     $colMap = [
         'fr' => 'fr', 'en' => 'en', 'de' => 'de',
         'es' => 'es', 'th' => 'th', 'ms' => 'ms', 'id' => 'id_lang',
+        'tr' => 'tr', 'vi' => 'vi', 'fil' => 'fil',
     ];
     $col = $colMap[$lang] ?? 'fr';
     $fallback = 'fr';

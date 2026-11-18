@@ -8,7 +8,7 @@ Run locally: `php -S localhost:8080 -t .` (or `preview_start` with `.claude/laun
 
 ## Architecture notes
 
-- **i18n** — 7 languages (`fr en de es th ms id`) via Supabase table `public.sparklin_i18n`
+- **i18n** — 10 languages (`fr en de es th ms id tr vi fil`) via Supabase table `public.sparklin_i18n`
   (project `szzkzqszaorszytizgzf`). Columns: `key`, `category` (generated), one per language
   (Indonesian column is **`id_lang`**, not `id`).
   - `includes/i18n.php`: `t('key')` → HTML-escaped, `tr('key')` → raw (use for values containing
@@ -29,6 +29,19 @@ Run locally: `php -S localhost:8080 -t .` (or `preview_start` with `.claude/laun
   (SEO).
 
 ## Modifications
+
+### 2026-11-18
+- **Blog translated in every language.** Articles live in Supabase `posts` (French only), so only the page
+  chrome used to translate. New table `post_translations (post_id, lang, title, excerpt, category, meta_*,
+  hero_image_alt, read_time, body_html)`; `includes/content.php` overlays the current language and falls back to
+  French field by field. New articles are translated automatically: `admin-posts.mjs` calls the background
+  function `admin-posts-translate.mjs` (Anthropic API, `lib/translatePost.mjs`) on publish/update, which then
+  triggers a rebuild.
+- **3 new languages: Turkish `tr`, Vietnamese `vi`, Filipino `fil`.** Columns `tr`/`vi`/`fil` added to
+  `sparklin_i18n` (all UI keys in use translated); added to `includes/i18n.php`, `supabase.php`, `seo.php`
+  (hreflang + og:locale), `scripts/build-static.sh`, `sitemap.xml`, every language menu, and the 2-letter
+  `?lang=` regexes (now 2-3 letters). Date formatting per language: `sk_format_date()` in `includes/i18n.php`.
+  Still French by design: footer chrome, cookie banner, legal pages.
 
 ### 2026-06-25
 - **Full body-content translation (7 languages)** of every page: homepage, Spark Pilot, Sparklin

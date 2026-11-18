@@ -7,7 +7,7 @@ $GLOBALS['_i18n'] = [];
 $GLOBALS['_lang'] = 'fr';
 
 function initI18n(): string {
-    $allowed = ['fr', 'en', 'de', 'es', 'th', 'ms', 'id'];
+    $allowed = ['fr', 'en', 'de', 'es', 'th', 'ms', 'id', 'tr', 'vi', 'fil'];
     $lang = 'fr';
 
     // Priority: ?lang= > cookie > default
@@ -51,4 +51,32 @@ function tr(string $key): string {
  */
 function lang(): string {
     return $GLOBALS['_lang'];
+}
+
+/**
+ * sk_format_date('2026-10-28T…') — date longue dans la langue courante
+ * (mois écrits en toutes lettres ; pas d'extension intl requise au build).
+ */
+function sk_format_date(?string $iso, ?string $lang = null): string {
+    if (!$iso) return '';
+    $ts = strtotime($iso);
+    if (!$ts) return '';
+    $lang = $lang ?? lang();
+    $M = [
+        'fr'  => ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'],
+        'en'  => ['January','February','March','April','May','June','July','August','September','October','November','December'],
+        'de'  => ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+        'es'  => ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
+        'th'  => ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
+        'ms'  => ['Januari','Februari','Mac','April','Mei','Jun','Julai','Ogos','September','Oktober','November','Disember'],
+        'id'  => ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+        'tr'  => ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+        'vi'  => ['tháng 1','tháng 2','tháng 3','tháng 4','tháng 5','tháng 6','tháng 7','tháng 8','tháng 9','tháng 10','tháng 11','tháng 12'],
+        'fil' => ['Enero','Pebrero','Marso','Abril','Mayo','Hunyo','Hulyo','Agosto','Setyembre','Oktubre','Nobyembre','Disyembre'],
+    ];
+    $months = $M[$lang] ?? $M['fr'];
+    $d = (int)date('j', $ts); $m = $months[(int)date('n', $ts) - 1]; $y = date('Y', $ts);
+    if ($lang === 'en') return "$m $d, $y";
+    if ($lang === 'vi') return "$d $m, $y";
+    return "$d $m $y";
 }

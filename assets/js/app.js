@@ -113,7 +113,7 @@
      rewrites every same-origin path link on the page to carry the
      language of the CURRENT page, so it keeps propagating page to page. */
   function currentLang() {
-    var m = /[?&]lang=([a-z]{2})(?:&|$)/.exec(location.search);
+    var m = /[?&]lang=([a-z]{2,3})(?:&|$)/.exec(location.search);
     return m ? m[1] : null;
   }
   function persistLangInLinks() {

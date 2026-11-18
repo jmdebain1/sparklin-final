@@ -23,6 +23,9 @@
       <button class="sk-lang-opt sk-lang-opt-dark" data-lang="th"<?= lang()==='th'?' style="background:rgba(255,255,255,.10);font-weight:700;color:#fff;"':'' ?> href="?lang=th" title="ภาษาไทย"><span class="sk-lang-flag">🇹🇭</span><span>ภาษาไทย</span></button>
       <button class="sk-lang-opt sk-lang-opt-dark" data-lang="ms"<?= lang()==='ms'?' style="background:rgba(255,255,255,.10);font-weight:700;color:#fff;"':'' ?> href="?lang=ms" title="Bahasa Melayu"><span class="sk-lang-flag">🇲🇾</span><span>Bahasa Melayu</span></button>
       <button class="sk-lang-opt sk-lang-opt-dark" data-lang="id"<?= lang()==='id'?' style="background:rgba(255,255,255,.10);font-weight:700;color:#fff;"':'' ?> href="?lang=id" title="Bahasa Indonesia"><span class="sk-lang-flag">🇮🇩</span><span>Bahasa Indonesia</span></button>
+      <button class="sk-lang-opt sk-lang-opt-dark" data-lang="tr"<?= lang()==='tr'?' style="background:rgba(255,255,255,.10);font-weight:700;color:#fff;"':'' ?> href="?lang=tr" title="Türkçe"><span class="sk-lang-flag">🇹🇷</span><span>Türkçe</span></button>
+      <button class="sk-lang-opt sk-lang-opt-dark" data-lang="vi"<?= lang()==='vi'?' style="background:rgba(255,255,255,.10);font-weight:700;color:#fff;"':'' ?> href="?lang=vi" title="Tiếng Việt"><span class="sk-lang-flag">🇻🇳</span><span>Tiếng Việt</span></button>
+      <button class="sk-lang-opt sk-lang-opt-dark" data-lang="fil"<?= lang()==='fil'?' style="background:rgba(255,255,255,.10);font-weight:700;color:#fff;"':'' ?> href="?lang=fil" title="Filipino"><span class="sk-lang-flag">🇵🇭</span><span>Filipino</span></button>
       </div>
     </div>
     </div>

@@ -41,7 +41,43 @@ function getPressMentions(): array {
     return $rows;
 }
 
-function getPublishedPosts(): array {
+// Traductions d'articles (table post_translations) : une ligne par (post_id, lang).
+// Un champ vide ou absent retombe sur le français du post d'origine.
+function getPostTranslations(string $lang): array {
+    if ($lang === 'fr') return [];
+    $cacheDir  = sys_get_temp_dir() . '/sparklin_content';
+    $cacheFile = "$cacheDir/post_translations_" . preg_replace('/[^a-z]/', '', $lang) . ".json";
+    $ttl       = 300;
+
+    if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $ttl) {
+        $data = json_decode(file_get_contents($cacheFile), true);
+        if (is_array($data)) return $data;
+    }
+
+    $rows = supabaseGet('post_translations', 'select=*&lang=eq.' . urlencode($lang)) ?? [];
+    $byId = [];
+    foreach ($rows as $r) $byId[(string)$r['post_id']] = $r;
+
+    @mkdir($cacheDir, 0755, true);
+    file_put_contents($cacheFile, json_encode($byId, JSON_UNESCAPED_UNICODE));
+    return $byId;
+}
+
+function sk_apply_post_translation(array $post, string $lang): array {
+    $tr = getPostTranslations($lang)[(string)$post['id']] ?? null;
+    if (!$tr) return $post;
+    foreach (['title','excerpt','category','meta_title','meta_desc','hero_image_alt','read_time','body_html'] as $f) {
+        if (isset($tr[$f]) && trim((string)$tr[$f]) !== '') $post[$f] = $tr[$f];
+    }
+    return $post;
+}
+
+function getPublishedPosts(?string $lang = null): array {
+    $lang = $lang ?? (function_exists('lang') ? lang() : 'fr');
+    return array_map(fn($p) => sk_apply_post_translation($p, $lang), getPublishedPostsFr());
+}
+
+function getPublishedPostsFr(): array {
     $cacheDir  = sys_get_temp_dir() . '/sparklin_content';
     $cacheFile = "$cacheDir/posts_published.json";
     $ttl       = 300;
@@ -58,7 +94,13 @@ function getPublishedPosts(): array {
     return $rows;
 }
 
-function getPostBySlug(string $slug): ?array {
+function getPostBySlug(string $slug, ?string $lang = null): ?array {
+    $lang = $lang ?? (function_exists('lang') ? lang() : 'fr');
+    $post = getPostBySlugFr($slug);
+    return $post ? sk_apply_post_translation($post, $lang) : null;
+}
+
+function getPostBySlugFr(string $slug): ?array {
     $cacheDir  = sys_get_temp_dir() . '/sparklin_content';
     $cacheFile = "$cacheDir/post_" . preg_replace('/[^a-z0-9\-]/', '', $slug) . ".json";
     $ttl       = 300;

@@ -1,7 +1,7 @@
 <?php
 /**
  * SEO helpers — architecture multilingue "?lang= indexable"
- * Génère : canonical auto-référent par langue, hreflang (7 langues + x-default),
+ * Génère : canonical auto-référent par langue, hreflang (10 langues + x-default),
  * Open Graph / Twitter, et noindex automatique hors production.
  *
  * Usage dans le <head> de chaque page :
@@ -53,7 +53,7 @@ if (!function_exists('sk_seo_head')) {
         echo "  })(window,document,'script','dataLayer','GTM-MLZH6M32');</script>\n";
         echo "  <!-- End Google Tag Manager -->\n";
 
-        $langs = ['fr','en','de','es','th','ms','id'];
+        $langs = ['fr','en','de','es','th','ms','id','tr','vi','fil'];
         $cur   = function_exists('lang') ? lang() : 'fr';
         $img   = $opts['image'] ?? (sk_seo_base() . '/assets/images/dashboard-laptop.jpg');
         $type  = $opts['type'] ?? 'website';
@@ -79,7 +79,7 @@ if (!function_exists('sk_seo_head')) {
         echo '  <link rel="alternate" hreflang="x-default" href="' . $esc(sk_seo_url('fr')) . "\"/>\n";
 
         // Open Graph / Twitter
-        $loc = ['fr'=>'fr_FR','en'=>'en_US','de'=>'de_DE','es'=>'es_ES','th'=>'th_TH','ms'=>'ms_MY','id'=>'id_ID'];
+        $loc = ['fr'=>'fr_FR','en'=>'en_US','de'=>'de_DE','es'=>'es_ES','th'=>'th_TH','ms'=>'ms_MY','id'=>'id_ID','tr'=>'tr_TR','vi'=>'vi_VN','fil'=>'fil_PH'];
         echo '  <meta property="og:type" content="' . $esc($type) . "\"/>\n";
         echo '  <meta property="og:site_name" content="Sparklin"/>' . "\n";
         if (!empty($opts['title'])) {

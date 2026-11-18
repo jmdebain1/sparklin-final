@@ -97,6 +97,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a class="sk-lang-opt" data-lang="th"<?= lang()==='th'?' style="background:var(--bg-off);font-weight:700;color:var(--orange);border-radius:6px;"':'' ?> href="?lang=th" title="ภาษาไทย"><span>ภาษาไทย</span></a>
         <a class="sk-lang-opt" data-lang="ms"<?= lang()==='ms'?' style="background:var(--bg-off);font-weight:700;color:var(--orange);border-radius:6px;"':'' ?> href="?lang=ms" title="Bahasa Melayu"><span>Bahasa Melayu</span></a>
         <a class="sk-lang-opt" data-lang="id"<?= lang()==='id'?' style="background:var(--bg-off);font-weight:700;color:var(--orange);border-radius:6px;"':'' ?> href="?lang=id" title="Bahasa Indonesia"><span>Bahasa Indonesia</span></a>
+        <a class="sk-lang-opt" data-lang="tr"<?= lang()==='tr'?' style="background:var(--bg-off);font-weight:700;color:var(--orange);border-radius:6px;"':'' ?> href="?lang=tr" title="Türkçe"><span>Türkçe</span></a>
+        <a class="sk-lang-opt" data-lang="vi"<?= lang()==='vi'?' style="background:var(--bg-off);font-weight:700;color:var(--orange);border-radius:6px;"':'' ?> href="?lang=vi" title="Tiếng Việt"><span>Tiếng Việt</span></a>
+        <a class="sk-lang-opt" data-lang="fil"<?= lang()==='fil'?' style="background:var(--bg-off);font-weight:700;color:var(--orange);border-radius:6px;"':'' ?> href="?lang=fil" title="Filipino"><span>Filipino</span></a>
       </div>
     </div>
   </div>
@@ -133,6 +136,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="?lang=th" data-lang="th" class="nav-drawer-lang-opt<?= lang()==='th'?' active':'' ?>"><span>🇹🇭</span><span>ภาษาไทย</span></a>
       <a href="?lang=ms" data-lang="ms" class="nav-drawer-lang-opt<?= lang()==='ms'?' active':'' ?>"><span>🇲🇾</span><span>Bahasa Melayu</span></a>
       <a href="?lang=id" data-lang="id" class="nav-drawer-lang-opt<?= lang()==='id'?' active':'' ?>"><span>🇮🇩</span><span>Bahasa Indonesia</span></a>
+      <a href="?lang=tr" data-lang="tr" class="nav-drawer-lang-opt<?= lang()==='tr'?' active':'' ?>"><span>🇹🇷</span><span>Türkçe</span></a>
+      <a href="?lang=vi" data-lang="vi" class="nav-drawer-lang-opt<?= lang()==='vi'?' active':'' ?>"><span>🇻🇳</span><span>Tiếng Việt</span></a>
+      <a href="?lang=fil" data-lang="fil" class="nav-drawer-lang-opt<?= lang()==='fil'?' active':'' ?>"><span>🇵🇭</span><span>Filipino</span></a>
     </div>
   </div>
   <div class="nav-drawer-cta"><a href="/contact/" class="btn-primary"><?= t('nav.cta') ?> →</a></div>
