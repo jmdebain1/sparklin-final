@@ -24,8 +24,6 @@ const clean = (v) => String(v ?? "").trim();
 // Clé = valeur du champ "guide" envoyé par le formulaire. Un guide inconnu ou
 // absent = livre blanc « Entreprise » historique (comportement d'origine).
 // Liste Brevo : surchargée par BREVO_LIST_LB_<CLE> si défini.
-// null = pas encore de liste dédiée dans Brevo (le contact reçoit quand même
-// le mail et le lead est enregistré dans Supabase).
 const SITE = "https://sparklin.io";
 const common = (a, b) => [
   `📍&nbsp; ${a}`,
@@ -72,12 +70,12 @@ export const GUIDES = {
   },
   hotels: {
     label: "Hôtels", title: "Installer des bornes de recharge dans votre hôtel",
-    sector: "votre hôtel", list: null,
+    sector: "votre hôtel", list: 12,
     items: common("Pourquoi équiper votre hôtel&nbsp;? Booking, clientèle électrique, nuitée", "Modèles économiques et financement"),
   },
   restaurants: {
     label: "Restaurants", title: "Installer des bornes de recharge dans votre restaurant",
-    sector: "votre restaurant", list: null,
+    sector: "votre restaurant", list: 13,
     items: common("Pourquoi installer des bornes dans votre restaurant&nbsp;? Le temps d'un repas = une recharge", "Modèles économiques et financement"),
   },
 };
