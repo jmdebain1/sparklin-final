@@ -871,6 +871,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
       <!-- CONTENT AREA -->
       <div class="editor-content">
+        <div id="ed-en-note" style="display:none;font-size:12px;line-height:1.5;color:#B45309;background:#FFF3E0;border-radius:6px;padding:8px 12px;margin-bottom:10px;">Vous éditez le texte source en français. Utilisez Aperçu pour lire la traduction anglaise de l'article.</div>
         <textarea id="ed-title" class="editor-title-input" placeholder="Titre de l'article…" rows="2" oninput="onTitle(this.value)"></textarea>
         <div class="editor-slug-row">
           <span class="editor-slug-base">sparklin.io/blog/</span>
@@ -1437,7 +1438,7 @@ function renderDash(){
   tbody.innerHTML=ARTICLES.slice(0,5).map((a,i)=>`
     <tr class="art-row" onclick="openEditor(${a.id})">
       <td><input type="checkbox" class="art-check" onclick="e=>e.stopPropagation()"/></td>
-      <td><div class="art-title-cell">${a.title}</div><div class="art-slug">/blog/${a.slug}</div></td>
+      <td><div class="art-title-cell" data-tx>${a.title}</div><div class="art-slug">/blog/${a.slug}</div></td>
       <td><span class="status s-${a.status}">${statusLabel(a.status)}</span></td>
       <td><div class="art-actions"><button class="btn btn-ghost btn-icon btn-sm link-icon-btn" onclick="event.stopPropagation();openEditor(${a.id})" title="Modifier"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4L18.5 2.5z"/></svg></button></div></td>
     </tr>`).join('');
@@ -1478,7 +1479,7 @@ function renderArts(filter){
     <tr class="art-row" onclick="openEditor(${a.id})" data-id="${a.id}">
       <td><input type="checkbox" class="art-check" onclick="e=>{e.stopPropagation();toggleSel(${a.id},e.target.checked)}" ${selectedIds.has(a.id)?'checked':''}/></td>
       <td>
-        <div class="art-title-cell">${a.title}</div>
+        <div class="art-title-cell" data-tx>${a.title}</div>
         <div class="art-slug">/blog/${a.slug}/${a.words?' · '+a.words+' mots':''}</div>
       </td>
       <td>${catPill(a.cat)}</td>
@@ -1648,23 +1649,57 @@ function closeImagePicker(){
 }
 
 /* ── Aperçu de l'article (rendu client, l'admin ne tourne pas sur PHP) ── */
-function openArticlePreview(){
+/* Traduction anglaise de l'article en cours (interface EN) : celle déjà en base si le texte
+   n'a pas changé depuis, sinon traduction à la volée (brouillons, modifications non publiées). */
+async function getEnglishArticle(src){
+  var raw=(ARTICLES.find(x=>x.id===currentEditId)||{}).raw||null;
+  var unchanged=raw&&raw.title===src.title&&(raw.body_html||'')===src.body;
+  if(unchanged){
+    var rows=await window.sbSelect('post_translations','select=*&lang=eq.en&post_id=eq.'+currentEditId);
+    var t=rows&&rows[0];
+    if(t&&t.body_html)return {title:t.title||src.title,excerpt:t.excerpt||'',body:t.body_html,heroAlt:t.hero_image_alt||'',category:t.category||''};
+  }
+  toast('Translating to English…','blue');
+  var chunks=[],cur='';
+  src.body.split(/(?<=<\/(?:p|h2|h3|ul|ol|table|blockquote|div|figure)>)/).forEach(part=>{
+    if(cur&&(cur+part).length>3500){chunks.push(cur);cur='';}
+    cur+=part;
+  });
+  if(cur)chunks.push(cur);
+  var head=await window.adminCall('admin-translate','POST',{texts:[src.title,src.excerpt||'',src.heroAlt||'',src.category||'']});
+  if(!head)return null;
+  var body=[];
+  for(var i=0;i<chunks.length;i+=4){
+    var r=await window.adminCall('admin-translate','POST',{texts:chunks.slice(i,i+4),html:true});
+    if(!r)return null;
+    body=body.concat(r.translations);
+  }
+  return {title:head.translations[0],excerpt:head.translations[1],heroAlt:head.translations[2],category:head.translations[3],body:body.join('')};
+}
+
+async function openArticlePreview(){
   var title=document.getElementById('ed-title').value.trim()||'(Sans titre)';
   var hero=document.getElementById('ed-hero').value.trim();
   var heroAlt=document.getElementById('ed-hero-alt').value.trim()||title;
   var category=document.getElementById('ed-cat').options[document.getElementById('ed-cat').selectedIndex]?.text||'';
   var excerpt=document.getElementById('ed-excerpt').value.trim();
   var body=document.getElementById('rte-editor').innerHTML;
+  var en=currentUiLang==='en';
+  if(en){
+    var tr=await getEnglishArticle({title:title,excerpt:excerpt,body:body,heroAlt:document.getElementById('ed-hero-alt').value.trim(),category:document.getElementById('ed-cat').value});
+    if(tr){title=tr.title||title;excerpt=tr.excerpt||'';body=tr.body;heroAlt=tr.heroAlt||title;category=tr.category||category;}
+  }
+  var T=en?(s=>skAdminI18n.t(s)):(s=>s);
   var heroUrl=hero;
   var now=new Date();
-  var dateLabel=now.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  var dateLabel=now.toLocaleDateString(en?'en-GB':'fr-FR',{day:'numeric',month:'long',year:'numeric'});
 
   var heroBlock=heroUrl?`<div style="height:340px;background:#1a1a2e;display:flex;align-items:flex-end;padding:0;position:relative;overflow:hidden;">
     <img src="${heroUrl}" alt="${heroAlt.replace(/"/g,'&quot;')}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;"/>
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,26,46,.2) 0%,rgba(26,26,46,.85) 100%);"></div>
   </div>`:'';
 
-  var doc=`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/>
+  var doc=`<!DOCTYPE html><html lang="${en?'en':'fr'}"><head><meta charset="UTF-8"/>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -1675,10 +1710,10 @@ function openArticlePreview(){
     ${heroBlock}
     <article style="padding:40px clamp(20px,5vw,80px);">
       <div class="sk-wrap sk-wrap--narrow blog-body">
-        <div style="background:#FFF3E0;color:#B45309;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;display:inline-block;margin-bottom:16px;">APERÇU — non publié</div>
+        <div style="background:#FFF3E0;color:#B45309;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;display:inline-block;margin-bottom:16px;">${T('APERÇU — non publié')}${en?' · English translation':''}</div>
         ${category?`<div style="font-size:12px;font-weight:600;color:var(--text-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;">${category}</div>`:''}
         <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:20px;">${title}</h1>
-        <div class="blog-byline"><div class="blog-byline-avatar">S</div><span>Par <strong>Équipe Sparklin</strong></span><span class="blog-byline-dot"></span><span>${dateLabel}</span></div>
+        <div class="blog-byline"><div class="blog-byline-avatar">S</div><span>${T('Par')} <strong>${T('Équipe Sparklin')}</strong></span><span class="blog-byline-dot"></span><span>${dateLabel}</span></div>
         ${excerpt?`<div style="margin-bottom:32px;">${excerpt}</div>`:''}
         ${body}
       </div>
@@ -2070,7 +2105,7 @@ function renderAnalytics(){
     <div class="top-art">
       <div class="top-art-rank">${i+1}</div>
       <div class="top-art-info">
-        <div class="top-art-title">${a.title}</div>
+        <div class="top-art-title" data-tx>${a.title}</div>
         <div class="top-art-bar-wrap"><div class="top-art-bar" style="width:${Math.round(a.views/max*100)}%"></div></div>
       </div>
       <div class="top-art-views">${a.views.toLocaleString(uiLocale())}</div>
@@ -2747,6 +2782,8 @@ function applyUiLang() {
 
   /* article lang info update */
   updateArtLangInfo();
+  var edNote = document.getElementById('ed-en-note');
+  if (edNote) edNote.style.display = currentUiLang === 'en' ? 'block' : 'none';
 
   /* re-render articles list if visible */
   if (document.getElementById('view-articles').classList.contains('active')) {
@@ -2939,7 +2976,7 @@ function renderArtsFiltered() {
     <tr class="art-row" onclick="openEditor(${a.id})" data-id="${a.id}">
       <td><input type="checkbox" class="art-check" onclick="e=>{e.stopPropagation();toggleSel(${a.id},e.target.checked)}" ${selectedIds.has(a.id)?'checked':''}/></td>
       <td>
-        <div class="art-title-cell">${a.title}</div>
+        <div class="art-title-cell" data-tx>${a.title}</div>
         <div class="art-slug">/blog/${a.slug}${a.words?' · '+a.words+' mots':''}</div>
       </td>
       <td>${langBadge(a)}</td>
@@ -3000,6 +3037,7 @@ function renderArtsFiltered() {
   // Réutilise le même client Supabase que le auth-guard (évite d'en recréer un second)
   window.__sbAdmin = window.__sbAdmin || window.supabase.createClient(SB_URL, SB_ANON);
 
+  window.sbSelect = sbSelect;
   async function sbSelect(table, query) {
     var resp = await fetch(SB_URL.replace(/\/$/, '') + '/rest/v1/' + table + '?' + query, {
       headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON }
@@ -3050,16 +3088,16 @@ function renderArtsFiltered() {
       return;
     }
     document.getElementById('ev-list').innerHTML = list.map(function(e) {
-      var highlights = (e.highlights || []).map(function(h){ return '<li style="font-size:12px;color:var(--text2);">' + escapeHtml(h) + '</li>'; }).join('');
+      var highlights = (e.highlights || []).map(function(h){ return '<li data-tx style="font-size:12px;color:var(--text2);">' + escapeHtml(h) + '</li>'; }).join('');
       return '<div class="card"><div class="card-inner" style="display:flex;gap:16px;align-items:flex-start;">' +
         '<div style="width:44px;height:44px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;background:' + (e.icon_gradient || '#ccc') + ';">' + escapeHtml(e.icon || '⚡') + '</div>' +
         '<div style="flex:1;min-width:0;">' +
           '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">' +
             '<span class="status ' + (e.status === 'past' ? 's-draft' : 's-published') + '">' + (e.status === 'past' ? s.evStatusOptions[1] : s.evStatusOptions[0]) + '</span>' +
-            (e.badge ? '<span class="sb-badge">' + escapeHtml(e.badge) + '</span>' : '') +
+            (e.badge ? '<span class="sb-badge" data-tx>' + escapeHtml(e.badge) + '</span>' : '') +
           '</div>' +
-          '<div style="font-weight:700;font-size:14px;color:var(--text);">' + escapeHtml(e.title) + '</div>' +
-          (e.description ? '<p style="font-size:12.5px;color:var(--text3);margin:4px 0 8px;line-height:1.6;">' + escapeHtml(e.description) + '</p>' : '') +
+          '<div data-tx style="font-weight:700;font-size:14px;color:var(--text);">' + escapeHtml(e.title) + '</div>' +
+          (e.description ? '<p data-tx style="font-size:12.5px;color:var(--text3);margin:4px 0 8px;line-height:1.6;">' + escapeHtml(e.description) + '</p>' : '') +
           (highlights ? '<ul style="margin:0;padding-left:16px;display:flex;flex-direction:column;gap:2px;">' + highlights + '</ul>' : '') +
         '</div>' +
         '<div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">' +
@@ -3156,7 +3194,7 @@ function renderArtsFiltered() {
         img +
         '<div style="padding:12px 14px;">' +
           '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--orange);margin-bottom:4px;">' + escapeHtml(p.source_name) + (p.published_label ? ' · ' + escapeHtml(p.published_label) : '') + '</div>' +
-          '<a href="' + escapeAttr(p.url) + '" target="_blank" rel="noopener" style="display:block;color:var(--text);text-decoration:none;font-weight:600;font-size:13px;line-height:1.4;margin-bottom:10px;">' + escapeHtml(p.title) + '</a>' +
+          '<a data-tx href="' + escapeAttr(p.url) + '" target="_blank" rel="noopener" style="display:block;color:var(--text);text-decoration:none;font-weight:600;font-size:13px;line-height:1.4;margin-bottom:10px;">' + escapeHtml(p.title) + '</a>' +
           '<button class="btn btn-danger btn-sm" style="width:100%;justify-content:center;" onclick="deletePress(' + p.id + ')">' + s.delete + '</button>' +
         '</div>' +
       '</div>';
@@ -3208,6 +3246,13 @@ function renderArtsFiltered() {
     var rows = await sbSelect('posts', 'select=*&order=sort_order.asc,published_at.desc,id.desc');
     window.ARTICLES = rows.map(postToArticleRow);
     articlesLoaded = true;
+    /* traductions anglaises déjà en base : titres affichés tels quels en interface EN (sans appel IA) */
+    var enTitles = sbSelect('post_translations', 'select=post_id,title&lang=eq.en').then(function(tr) {
+      var fr = {}; window.ARTICLES.forEach(function(a){ fr[a.id] = a.title; });
+      var pairs = {}; (tr || []).forEach(function(r){ if (fr[r.post_id] && r.title) pairs[fr[r.post_id]] = r.title; });
+      if (window.skAdminI18n) skAdminI18n.preload(pairs);
+    }).catch(function(){});
+    if (window.skAdminI18n) skAdminI18n.hold(enTitles);
     if (document.getElementById('view-dashboard').classList.contains('active')) renderDash();
     if (document.getElementById('view-articles').classList.contains('active')) renderArts(currentFilter);
     updateMetrics();

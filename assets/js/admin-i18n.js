@@ -96,6 +96,8 @@
     'Fichier image requis': 'Image file required',
     '(Sans titre)': '(Untitled)',
     'APERÇU — non publié': 'PREVIEW — not published',
+    'Par': 'By',
+    "Vous éditez le texte source en français. Utilisez Aperçu pour lire la traduction anglaise de l'article.": 'You are editing the French source text. Use Preview to read the English translation of the article.',
     'Révision': 'Review',
     'Titre requis': 'Title required',
     "Le titre est requis": 'Title is required',
@@ -271,6 +273,97 @@
       if (n.nodeType === 3) processText(n);
       else for (var i = 0; i < ATTRS.length; i++) processAttr(n, ATTRS[i]);
     } while ((n = tw.nextNode()));
+    walkTx(root);
+  }
+
+  /* ── Contenu éditorial (titres d'articles, événements, presse…) ──
+     Les éléments marqués data-tx contiennent du texte saisi par les rédacteurs
+     (en français) : en EN on affiche sa traduction — d'abord depuis le cache /
+     les traductions déjà en base (preload), sinon via la fonction admin-translate. */
+  var TX = Object.create(null);
+  var TX_KEY = 'sk_admin_tx_en';
+  try { var saved = JSON.parse(localStorage.getItem(TX_KEY) || '{}'); Object.keys(saved).forEach(function (k) { TX[k] = saved[k]; }); } catch (e) {}
+  function persistTx() {
+    try {
+      var keys = Object.keys(TX);
+      var out = {};
+      keys.slice(-500).forEach(function (k) { out[k] = TX[k]; });
+      localStorage.setItem(TX_KEY, JSON.stringify(out));
+    } catch (e) {}
+  }
+  var txStore = new WeakMap();
+  var txPending = Object.create(null);
+  var txTimer = null;
+
+  function txApply(el, fr, en) {
+    if (!en || en === fr) return;
+    txStore.set(el, { fr: fr, en: en });
+    el.textContent = en;
+  }
+
+  function processTx(el) {
+    var rec = txStore.get(el);
+    if (lang === 'en') {
+      var cur = el.textContent;
+      if (rec && cur === rec.en) return;
+      var fr = cur.replace(/\s+/g, ' ').trim();
+      if (!fr) return;
+      if (TX[fr] !== undefined) { txApply(el, fr, TX[fr]); return; }
+      (txPending[fr] = txPending[fr] || []).push(el);
+      clearTimeout(txTimer);
+      txTimer = setTimeout(flushTx, 200);
+    } else if (rec && el.textContent === rec.en) {
+      el.textContent = rec.fr;
+    }
+  }
+
+  async function authToken() {
+    try {
+      var r = await window.__sbAdmin.auth.getSession();
+      return r && r.data && r.data.session ? r.data.session.access_token : null;
+    } catch (e) { return null; }
+  }
+
+  /* promesses à attendre avant d'appeler l'IA (ex. traductions déjà en base en cours de chargement) */
+  var holds = [];
+  function hold(promise) { holds.push(promise); }
+
+  async function flushTx() {
+    if (holds.length) { await Promise.all(holds.map(function (h) { return Promise.resolve(h).catch(function () {}); })); holds = []; }
+    var texts = Object.keys(txPending).filter(function (t) { return TX[t] === undefined; });
+    if (!texts.length) { txPending = Object.create(null); return; }
+    var batch = txPending; txPending = Object.create(null);
+    var token = await authToken();
+    if (!token) return;
+    for (var i = 0; i < texts.length; i += 25) {
+      var chunk = texts.slice(i, i + 25);
+      try {
+        var resp = await fetch('/.netlify/functions/admin-translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+          body: JSON.stringify({ texts: chunk })
+        });
+        if (!resp.ok) continue;
+        var data = await resp.json();
+        chunk.forEach(function (fr, j) {
+          var en = data.translations[j];
+          TX[fr] = en;
+          (batch[fr] || []).forEach(function (el) { if (lang === 'en' && el.textContent.replace(/\s+/g, ' ').trim() === fr) txApply(el, fr, en); });
+        });
+        persistTx();
+      } catch (e) { /* hors ligne / quota : on garde le français */ }
+    }
+  }
+
+  function walkTx(root) {
+    if (!root || root.nodeType !== 1) return;
+    if (root.matches('[data-tx]')) processTx(root);
+    root.querySelectorAll('[data-tx]').forEach(processTx);
+  }
+
+  function preload(pairs) {
+    Object.keys(pairs).forEach(function (fr) { if (pairs[fr]) TX[norm(fr)] = pairs[fr]; });
+    if (lang === 'en') walkTx(document.body);
   }
 
   var titleFr = null;
@@ -304,7 +397,7 @@
     setLang(saved === 'en' ? 'en' : 'fr');
   }
 
-  window.skAdminI18n = { setLang: setLang, extend: extend, t: tr, refresh: function () { walk(document.body); } };
+  window.skAdminI18n = { setLang: setLang, extend: extend, preload: preload, hold: hold, t: tr, refresh: function () { walk(document.body); } };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

@@ -31,6 +31,12 @@ Run locally: `php -S localhost:8080 -t .` (or `preview_start` with `.claude/laun
 ## Modifications
 
 ### 2026-11-25
+- **Admin in English also translates editorial content.** Elements marked `data-tx` (article titles in lists, event and
+  press cards) are translated on demand in EN mode: English titles already stored in `post_translations` are preloaded
+  (no AI call); anything else goes through the Netlify function `admin-translate.mjs` (Anthropic API, admin session
+  required) and is cached in `localStorage` (`sk_admin_tx_en`). The editor always edits the French source (a note says
+  so); in EN mode the Preview shows the English translation (stored one if the text is unchanged, otherwise translated
+  on the fly, e.g. drafts).
 - **Admin blog fully translatable to English.** `assets/js/admin-i18n.js` (loaded by `admin-blog/index.php` and
   `login.php`) translates every visible text node and placeholder/title/aria-label on the fly when the UI language
   is EN (also text injected later by JS: toasts, lists, confirm/prompt) and restores French on FR. Add new admin
