@@ -41,7 +41,6 @@ PAGES=(
   "/evenements/"
   "/livre-blanc/"
   "/livre-blanc/merci/"
-  "/livres-blancs/"
   "/mentions-legales/"
   "/politique-confidentialite/"
   "/politique-cookies/"

@@ -55,6 +55,17 @@
   to = "/.netlify/functions/send-livre-blanc"
   status = 200
 
+# ── Page livres blancs : l'ancienne URL pré-prod pointe vers /livre-blanc/ ──
+[[redirects]]
+  from = "/livres-blancs"
+  to = "/livre-blanc/"
+  status = 301
+
+[[redirects]]
+  from = "/livres-blancs/"
+  to = "/livre-blanc/"
+  status = 301
+
 # ── Nettoyage SEO : anciennes URLs de l'ancien site (indexées par Google,
 #    404 depuis la refonte — cf. rapport Couverture Search Console du
 #    2026-10-22) redirigées en 301 vers l'équivalent actuel le plus proche,

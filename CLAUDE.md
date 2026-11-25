@@ -31,8 +31,7 @@ Run locally: `php -S localhost:8080 -t .` (or `preview_start` with `.claude/laun
 ## Modifications
 
 ### 2026-11-25 (livres blancs sectoriels, pré-prod)
-- **Page pré-prod `/livres-blancs/`** (`livres-blancs/index.php`) : noindex, absente de `sitemap.xml` et de la navigation, mais construite par
-  `build-static.sh`. 5 guides (restaurants, hôtels, gîtes, golf, collectivités) : mockup + modale de formulaire (e-mail, prénom, établissement).
+- **Page `/livre-blanc/`** (`livre-blanc/index.php`, remplace l'ancienne page unique ; `/livres-blancs/` redirige en 301) : 6 guides  : mockup + modale de formulaire (e-mail, prénom, établissement).
   PDF dans `assets/livres-blancs/`, mockups dans `assets/images/livres-blancs/` (golf = mockup généré à partir de la couverture du PDF).
 - **`send-livre-blanc.mjs`** accepte `guide` : inscription dans la liste Brevo du guide (entreprises 4, golf 9, collectivités 10, gîtes 11, hôtels 12,
   restaurants 13 ; surcharge `BREVO_LIST_LB_<CLE>`), mail via le template Brevo **30** « Livre blanc sectoriel »
