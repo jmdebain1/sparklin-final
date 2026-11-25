@@ -30,6 +30,18 @@ Run locally: `php -S localhost:8080 -t .` (or `preview_start` with `.claude/laun
 
 ## Modifications
 
+### 2026-11-25
+- **Admin blog fully translatable to English.** `assets/js/admin-i18n.js` (loaded by `admin-blog/index.php` and
+  `login.php`) translates every visible text node and placeholder/title/aria-label on the fly when the UI language
+  is EN (also text injected later by JS: toasts, lists, confirm/prompt) and restores French on FR. Add new admin
+  strings to `EXACT`/`PATTERNS` there (the `UI_STRINGS` fr/en pairs are fed in automatically). Article content
+  (`#rte-editor`, titles) is never translated. Dates/numbers follow `uiLocale()`.
+- **Article languages are now a multi-select** (editor right panel; FR always on, default = all 10). Stored in
+  `posts.languages text[]` (NULL = all languages). `admin-posts.mjs` validates it; `translatePost.mjs` translates only
+  the selected languages and only when the French source changed (`post_translations.source_hash`);
+  `includes/content.php` (`sk_post_in_lang`) hides an article from the blog listing / translation overlay of
+  languages that are not selected.
+
 ### 2026-11-18
 - **Blog translated in every language.** Articles live in Supabase `posts` (French only), so only the page
   chrome used to translate. New table `post_translations (post_id, lang, title, excerpt, category, meta_*,

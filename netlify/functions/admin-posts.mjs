@@ -53,6 +53,17 @@ async function triggerTranslate(req, id) {
   }
 }
 
+const SITE_LANGS = ["fr", "en", "de", "es", "th", "ms", "id", "tr", "vi", "fil"];
+
+// Langues de publication d'un article : sous-ensemble des langues du site, "fr"
+// (langue source) toujours incluse. null = absent de la requête (ne rien changer).
+function cleanLanguages(v) {
+  if (!Array.isArray(v)) return null;
+  const set = new Set(v.filter((l) => SITE_LANGS.includes(l)));
+  set.add("fr");
+  return SITE_LANGS.filter((l) => set.has(l));
+}
+
 function slugify(str) {
   return String(str || "")
     .toLowerCase()
@@ -90,6 +101,7 @@ export default async (req) => {
         body_html: body.body_html ? String(body.body_html) : null,
         read_time: body.read_time ? String(body.read_time) : null,
         sort_order: Number.isFinite(body.sort_order) ? body.sort_order : 0,
+        languages: cleanLanguages(body.languages),
       };
       if (!row.slug) return json(400, { error: "Slug invalide" });
 
@@ -121,6 +133,7 @@ export default async (req) => {
       for (const k of ["title", "excerpt", "category", "status", "author", "meta_title", "meta_desc", "keywords", "hero_image", "hero_image_alt", "body_html", "read_time", "sort_order"]) {
         if (body[k] !== undefined) patch[k] = body[k];
       }
+      if (body.languages !== undefined) patch.languages = cleanLanguages(body.languages);
       if (body.slug !== undefined) {
         const s = slugify(body.slug);
         if (!s) return json(400, { error: "Slug invalide" });

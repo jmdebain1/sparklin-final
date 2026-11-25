@@ -63,7 +63,16 @@ function getPostTranslations(string $lang): array {
     return $byId;
 }
 
+// Un article n'est proposé dans une langue que si elle fait partie de ses
+// "languages" (choix fait dans l'admin) ; NULL = toutes les langues du site.
+function sk_post_in_lang(array $post, string $lang): bool {
+    if ($lang === 'fr') return true;
+    $l = $post['languages'] ?? null;
+    return !is_array($l) || in_array($lang, $l, true);
+}
+
 function sk_apply_post_translation(array $post, string $lang): array {
+    if (!sk_post_in_lang($post, $lang)) return $post;
     $tr = getPostTranslations($lang)[(string)$post['id']] ?? null;
     if (!$tr) return $post;
     foreach (['title','excerpt','category','meta_title','meta_desc','hero_image_alt','read_time','body_html'] as $f) {
@@ -74,7 +83,8 @@ function sk_apply_post_translation(array $post, string $lang): array {
 
 function getPublishedPosts(?string $lang = null): array {
     $lang = $lang ?? (function_exists('lang') ? lang() : 'fr');
-    return array_map(fn($p) => sk_apply_post_translation($p, $lang), getPublishedPostsFr());
+    $posts = array_filter(getPublishedPostsFr(), fn($p) => sk_post_in_lang($p, $lang));
+    return array_values(array_map(fn($p) => sk_apply_post_translation($p, $lang), $posts));
 }
 
 function getPublishedPostsFr(): array {

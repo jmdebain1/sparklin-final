@@ -12,6 +12,7 @@ $lang = initI18n();
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="robots" content="noindex,nofollow"/>
 <title>Sparklin — Espace Rédaction</title>
+<script src="/assets/js/admin-i18n.js"></script>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png"/>
@@ -439,6 +440,20 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 .art-lang-btn.selected .lang-code {
   color: var(--orange);
 }
+.art-lang-btn { position: relative; }
+.art-lang-btn.selected::after {
+  content: '✓';
+  position: absolute; top: 3px; right: 5px;
+  font-size: 9px; font-weight: 700; color: var(--orange);
+}
+.art-lang-btn.locked { cursor: default; }
+.art-lang-actions { display: flex; gap: 12px; }
+.art-lang-link {
+  background: none; border: none; padding: 0; cursor: pointer;
+  font-family: var(--fm); font-size: 11px; color: var(--text3);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.art-lang-link:hover { color: var(--orange); }
 
 /* ── Language badge in article list ── */
 .lang-badge {
@@ -455,6 +470,8 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
   letter-spacing: .03em;
 }
 .lang-badge .lbf { font-size: 12px; line-height: 1; }
+.lang-badges { display: inline-flex; flex-wrap: wrap; gap: 2px; max-width: 90px; font-size: 12px; line-height: 1.2; }
+.lang-badges .more { font-family: var(--fm); font-size: 10px; font-weight: 600; color: var(--text3); align-self: center; }
 
 /* ── URL preview with lang prefix ── */
 .pub-url-lang {
@@ -766,6 +783,12 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
       <button class="fpill" data-f="lang-en" onclick="setLangFilter('en',this)" title="English">🇬🇧</button>
       <button class="fpill" data-f="lang-de" onclick="setLangFilter('de',this)" title="Deutsch">🇩🇪</button>
       <button class="fpill" data-f="lang-es" onclick="setLangFilter('es',this)" title="Español">🇪🇸</button>
+      <button class="fpill" data-f="lang-th" onclick="setLangFilter('th',this)" title="ภาษาไทย">🇹🇭</button>
+      <button class="fpill" data-f="lang-ms" onclick="setLangFilter('ms',this)" title="Bahasa Melayu">🇲🇾</button>
+      <button class="fpill" data-f="lang-id" onclick="setLangFilter('id',this)" title="Bahasa Indonesia">🇮🇩</button>
+      <button class="fpill" data-f="lang-tr" onclick="setLangFilter('tr',this)" title="Türkçe">🇹🇷</button>
+      <button class="fpill" data-f="lang-vi" onclick="setLangFilter('vi',this)" title="Tiếng Việt">🇻🇳</button>
+      <button class="fpill" data-f="lang-fil" onclick="setLangFilter('fil',this)" title="Filipino">🇵🇭</button>
       <button class="fpill" data-f="published" id="filter-published-btn" onclick="setFilter('published',this)">Publiés <span style="opacity:.6" id="fc-published">(0)</span></button>
       <button class="fpill" data-f="draft" id="filter-draft-btn" onclick="setFilter('draft',this)">Brouillons <span style="opacity:.6" id="fc-draft">(0)</span></button>
       <button class="fpill" data-f="scheduled" id="filter-scheduled-btn" onclick="setFilter('scheduled',this)">Planifiés <span style="opacity:.6" id="fc-scheduled">(0)</span></button>
@@ -887,7 +910,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
             <div class="pub-row"><span class="pub-row-l">Visibilité</span><span class="pub-row-r">Public</span></div>
             <div class="pub-row"><span class="pub-row-l">Auteur</span><span class="pub-row-r">Mhaia</span></div>
           </div>
-          <div class="pub-url" id="pub-url-preview">sparklin.io/<span class="pub-url-lang" id="pub-url-lang-prefix">fr</span>/blog/<span id="pub-slug-preview">…</span></div>
+          <div class="pub-url" id="pub-url-preview">sparklin.io/blog/<span id="pub-slug-preview">…</span></div>
           <input type="datetime-local" id="schedule-dt" class="schedule-input" onchange="onScheduleChange(this.value)"/>
           <div class="og-preview">
             <div class="og-img">
@@ -945,49 +968,15 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
       <!-- ARTICLE LANGUAGE -->
       <div class="panel-section" id="panel-article-lang">
-        <div class="panel-label" id="lbl-article-lang">Langue de l'article</div>
+        <div class="panel-label" id="lbl-article-lang">Langues de l'article</div>
         <div class="panel-card">
           <div class="art-lang-selector">
-            <div class="art-lang-grid">
-              <button class="art-lang-btn selected" data-art-lang="fr" onclick="setArtLang('fr',this)">
-                <span class="lang-flag">🇫🇷</span>
-                <span class="lang-code">FR</span>
-                <span class="lang-label">Français</span>
-              </button>
-              <button class="art-lang-btn" data-art-lang="en" onclick="setArtLang('en',this)">
-                <span class="lang-flag">🇬🇧</span>
-                <span class="lang-code">EN</span>
-                <span class="lang-label">English</span>
-              </button>
-              <button class="art-lang-btn" data-art-lang="de" onclick="setArtLang('de',this)">
-                <span class="lang-flag">🇩🇪</span>
-                <span class="lang-code">DE</span>
-                <span class="lang-label">Deutsch</span>
-              </button>
-              <button class="art-lang-btn" data-art-lang="es" onclick="setArtLang('es',this)">
-                <span class="lang-flag">🇪🇸</span>
-                <span class="lang-code">ES</span>
-                <span class="lang-label">Español</span>
-              </button>
-              <button class="art-lang-btn" data-art-lang="th" onclick="setArtLang('th',this)">
-                <span class="lang-flag">🇹🇭</span>
-                <span class="lang-code">TH</span>
-                <span class="lang-label">ภาษาไทย</span>
-              </button>
-              <button class="art-lang-btn" data-art-lang="ms" onclick="setArtLang('ms',this)">
-                <span class="lang-flag">🇲🇾</span>
-                <span class="lang-code">MS</span>
-                <span class="lang-label">Melayu</span>
-              </button>
-              <button class="art-lang-btn" data-art-lang="id" onclick="setArtLang('id',this)">
-                <span class="lang-flag">🇮🇩</span>
-                <span class="lang-code">ID</span>
-                <span class="lang-label">Indonesia</span>
-              </button>
+            <div class="art-lang-grid" id="art-lang-grid"></div>
+            <div class="art-lang-actions">
+              <button type="button" class="art-lang-link" id="art-lang-all" onclick="setAllArtLangs(true)">Toutes les langues</button>
+              <button type="button" class="art-lang-link" id="art-lang-none" onclick="setAllArtLangs(false)">Français seul</button>
             </div>
-            <div id="art-lang-info" style="font-size:11px;color:var(--text3);line-height:1.5;padding:8px 10px;background:var(--bg2);border-radius:6px;">
-              Publié sur <strong id="art-lang-url-hint">sparklin.io/blog/</strong>
-            </div>
+            <div id="art-lang-info" style="font-size:11px;color:var(--text3);line-height:1.5;padding:8px 10px;background:var(--bg2);border-radius:6px;"></div>
           </div>
         </div>
       </div>
@@ -1239,13 +1228,16 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
         <div style="font-size:14px;font-weight:700;margin-bottom:16px" id="settings-lang-title">Langues</div>
         <div style="font-size:12px;color:var(--text3);margin-bottom:12px" id="settings-lang-desc">Définissez les marchés géographiques actifs pour le blog Sparklin.</div>
         <div style="display:flex;flex-direction:column;gap:8px" id="settings-lang-list">
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇫🇷 Français — sparklin.io/fr/blog/</div><div class="setting-desc" id="li-desc-fr">Marché principal — France</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇬🇧 English — sparklin.io/en/blog/</div><div class="setting-desc" id="li-desc-en">International — English-speaking markets</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇩🇪 Deutsch — sparklin.io/de/blog/</div><div class="setting-desc" id="li-desc-de">Marché Allemagne · Autriche · Suisse</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇪🇸 Español — sparklin.io/es/blog/</div><div class="setting-desc" id="li-desc-es">Marché Espagne · Amérique latine</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇹🇭 ภาษาไทย — sparklin.io/th/blog/</div><div class="setting-desc" id="li-desc-th">Marché Thaïlande</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇲🇾 Melayu — sparklin.io/ms/blog/</div><div class="setting-desc" id="li-desc-ms">Marché Malaisie</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
-          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇮🇩 Indonesia — sparklin.io/id/blog/</div><div class="setting-desc" id="li-desc-id">Marché Indonésie</div></div><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇫🇷 Français — sparklin.io/blog/</div><div class="setting-desc" id="li-desc-fr">Marché principal — France</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇬🇧 English — sparklin.io/blog/?lang=en</div><div class="setting-desc" id="li-desc-en">International — English-speaking markets</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇩🇪 Deutsch — sparklin.io/blog/?lang=de</div><div class="setting-desc" id="li-desc-de">Marché Allemagne · Autriche · Suisse</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇪🇸 Español — sparklin.io/blog/?lang=es</div><div class="setting-desc" id="li-desc-es">Marché Espagne · Amérique latine</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇹🇭 ภาษาไทย — sparklin.io/blog/?lang=th</div><div class="setting-desc" id="li-desc-th">Marché Thaïlande</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇲🇾 Melayu — sparklin.io/blog/?lang=ms</div><div class="setting-desc" id="li-desc-ms">Marché Malaisie</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇮🇩 Indonesia — sparklin.io/blog/?lang=id</div><div class="setting-desc" id="li-desc-id">Marché Indonésie</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇹🇷 Türkçe — sparklin.io/blog/?lang=tr</div><div class="setting-desc" id="li-desc-tr">Marché Turquie</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇻🇳 Tiếng Việt — sparklin.io/blog/?lang=vi</div><div class="setting-desc" id="li-desc-vi">Marché Vietnam</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="setting-row"><div class="setting-info"><div class="setting-label">🇵🇭 Filipino — sparklin.io/blog/?lang=fil</div><div class="setting-desc" id="li-desc-fil">Marché Philippines</div></div><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
         </div>
       </div></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
@@ -1345,7 +1337,7 @@ function fmtDateFr(iso){
   if(!iso)return '—';
   var d=new Date(iso);
   if(isNaN(d.getTime()))return '—';
-  return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+  return d.toLocaleDateString(uiLocale(),{day:'numeric',month:'short',year:'numeric'});
 }
 function postToArticleRow(p){
   var words=(p.body_html||'').replace(/<[^>]*>/g,' ').trim().split(/\s+/).filter(Boolean).length;
@@ -1438,7 +1430,7 @@ function openEditor(id){
 ═══════════════════════════════════════════════════════════ */
 function renderDash(){
   var today=new Date();
-  document.getElementById('dash-date').textContent='Mise à jour : '+today.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('dash-date').textContent='Mise à jour : '+today.toLocaleDateString(uiLocale(),{weekday:'long',day:'numeric',month:'long'});
   
   // Mini table
   var tbody=document.getElementById('dash-tbody');
@@ -1451,11 +1443,12 @@ function renderDash(){
     </tr>`).join('');
 
   // Activity
+  var en=currentUiLang==='en';
   var acts=[
-    {ico:'✓',color:CAT.technique.bg,tcolor:CAT.technique.color,text:'<strong>Load balancing IRVE</strong> publié — 1 240 vues',time:'2h'},
-    {ico:'✎',color:'var(--bg2)',tcolor:'var(--text3)',text:'Brouillon <strong>Réglementation 2025</strong> mis à jour',time:'Hier'},
-    {ico:'⏰',color:CAT.finance.bg,tcolor:CAT.finance.color,text:'<strong>Guide URSSAF 2025</strong> planifié pour le 1er mai',time:'2j'},
-    {ico:'👁',color:CAT.reglementation.bg,tcolor:CAT.reglementation.color,text:'<strong>LOM 2025</strong> atteint 800 vues ce mois',time:'3j'},
+    {ico:'✓',color:CAT.technique.bg,tcolor:CAT.technique.color,text:en?'<strong>EVSE load balancing</strong> published — 1,240 views':'<strong>Load balancing IRVE</strong> publié — 1 240 vues',time:en?'2h':'2h'},
+    {ico:'✎',color:'var(--bg2)',tcolor:'var(--text3)',text:en?'Draft <strong>Regulation 2025</strong> updated':'Brouillon <strong>Réglementation 2025</strong> mis à jour',time:en?'Yesterday':'Hier'},
+    {ico:'⏰',color:CAT.finance.bg,tcolor:CAT.finance.color,text:en?'<strong>URSSAF Guide 2025</strong> scheduled for 1 May':'<strong>Guide URSSAF 2025</strong> planifié pour le 1er mai',time:en?'2d':'2j'},
+    {ico:'👁',color:CAT.reglementation.bg,tcolor:CAT.reglementation.color,text:en?'<strong>LOM 2025</strong> reaches 800 views this month':'<strong>LOM 2025</strong> atteint 800 vues ce mois',time:en?'3d':'3j'},
   ];
   document.getElementById('dash-activity').innerHTML=acts.map(a=>`
     <div class="act-item">
@@ -1491,7 +1484,7 @@ function renderArts(filter){
       <td>${catPill(a.cat)}</td>
       <td><span class="status s-${a.status}">${statusLabel(a.status)}</span></td>
       <td style="font-size:11px;font-family:var(--fm);color:var(--text3)">${a.date}</td>
-      <td style="font-size:12px;font-family:var(--fm);color:var(--text2);text-align:right">${a.views?a.views.toLocaleString('fr-FR'):'—'}</td>
+      <td style="font-size:12px;font-family:var(--fm);color:var(--text2);text-align:right">${a.views?a.views.toLocaleString(uiLocale()):'—'}</td>
       <td>
         <div class="art-actions">
           <button class="btn btn-ghost btn-icon btn-sm link-icon-btn" title="Modifier" onclick="event.stopPropagation();openEditor(${a.id})"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4L18.5 2.5z"/></svg></button>
@@ -1758,7 +1751,7 @@ function updateWords(){
   var body=document.getElementById('rte-editor').innerText||'';
   var words=body.trim().split(/\s+/).filter(w=>w.length>0).length;
   var mins=Math.max(1,Math.ceil(words/200));
-  document.getElementById('rte-words').textContent=words.toLocaleString('fr-FR')+' mot'+(words>1?'s':'')+' · '+mins+' min';
+  document.getElementById('rte-words').textContent=words.toLocaleString(uiLocale())+' mot'+(words>1?'s':'')+' · '+mins+' min';
   // Reading level (rough)
   var level=words<100?'Début':words<400?'Court':words<800?'Moyen':words<1500?'Long':'Complet';
   document.getElementById('rte-level').textContent=level;
@@ -1825,7 +1818,7 @@ function saveVersion(){
   var words=(document.getElementById('rte-editor').innerText||'').trim().split(/\s+/).filter(w=>w.length>0).length;
   if(!words&&!versions.length)return;
   var now=new Date();
-  versions.unshift({time:now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),words:words,html:body});
+  versions.unshift({time:now.toLocaleTimeString(uiLocale(),{hour:'2-digit',minute:'2-digit'}),words:words,html:body});
   if(versions.length>5)versions.pop();
   renderVersions();
 }
@@ -1870,6 +1863,7 @@ function collectPostPayload(){
     hero_image:document.getElementById('ed-hero').value,
     hero_image_alt:document.getElementById('ed-hero-alt').value,
     body_html:document.getElementById('rte-editor').innerHTML,
+    languages:getArtLangs(),
   };
 }
 async function savePost(status,publishedAt){
@@ -1913,7 +1907,7 @@ async function schedulePub(){
   document.getElementById('pub-status').className='status s-scheduled';
   document.getElementById('pub-status').textContent='Planifié';
   await loadArticles();
-  toast('Planifié pour le '+d.toLocaleDateString('fr-FR',{day:'2-digit',month:'long'}),'green');
+  toast('Planifié pour le '+d.toLocaleDateString(uiLocale(),{day:'2-digit',month:'long'}),'green');
 }
 function onScheduleChange(v){
   if(v){var d=new Date(v);document.getElementById('pub-main-btn').textContent='Planifier';}
@@ -2018,7 +2012,7 @@ async function runAI(){
     // cet appel démarre juste le job et revient immédiatement, le vrai
     // résultat est récupéré par sondage ci-dessous.
     await window.adminCall('admin-ai-generate','POST',{
-      jobId:jobId, mode:aiMode, tone:aiTone, title:title, keywords:keywords, wordGoal:wordGoal, lang:currentArtLang
+      jobId:jobId, mode:aiMode, tone:aiTone, title:title, keywords:keywords, wordGoal:wordGoal, lang:'fr'
     });
 
     var result=null, errMsg=null, waited=0, interval=2500, maxWait=180000;
@@ -2079,7 +2073,7 @@ function renderAnalytics(){
         <div class="top-art-title">${a.title}</div>
         <div class="top-art-bar-wrap"><div class="top-art-bar" style="width:${Math.round(a.views/max*100)}%"></div></div>
       </div>
-      <div class="top-art-views">${a.views.toLocaleString('fr-FR')}</div>
+      <div class="top-art-views">${a.views.toLocaleString(uiLocale())}</div>
     </div>`).join('');
 }
 
@@ -2110,7 +2104,7 @@ function liveSearch(q){
         <td>${catPill(a.cat)}</td>
         <td><span class="status s-${a.status}">${statusLabel(a.status)}</span></td>
         <td style="font-size:11px;font-family:var(--fm);color:var(--text3)">${a.date}</td>
-        <td style="font-size:12px;font-family:var(--fm);color:var(--text2);text-align:right">${a.views?a.views.toLocaleString('fr-FR'):'—'}</td>
+        <td style="font-size:12px;font-family:var(--fm);color:var(--text2);text-align:right">${a.views?a.views.toLocaleString(uiLocale()):'—'}</td>
         <td></td>
       </tr>`).join('');
   }
@@ -2175,8 +2169,12 @@ var LANGS = {
   es: { flag:'🇪🇸', label:'Español',     code:'es', geo:'Espagne',      path:'es',   rtl:false },
   th: { flag:'🇹🇭', label:'ภาษาไทย',    code:'th', geo:'Thaïlande',    path:'th',   rtl:false },
   ms: { flag:'🇲🇾', label:'Melayu',      code:'ms', geo:'Malaisie',     path:'ms',   rtl:false },
-  id: { flag:'🇮🇩', label:'Indonesia',   code:'id', geo:'Indonésie',    path:'id',   rtl:false }
+  id: { flag:'🇮🇩', label:'Indonesia',   code:'id', geo:'Indonésie',    path:'id',   rtl:false },
+  tr: { flag:'🇹🇷', label:'Türkçe',      code:'tr', geo:'Turquie',      path:'tr',   rtl:false },
+  vi: { flag:'🇻🇳', label:'Tiếng Việt',  code:'vi', geo:'Vietnam',      path:'vi',   rtl:false },
+  fil:{ flag:'🇵🇭', label:'Filipino',    code:'fil',geo:'Philippines',  path:'fil',  rtl:false }
 };
+var ALL_LANG_CODES = Object.keys(LANGS);
 
 /* ── UI strings (interface translations) ── */
 var UI_STRINGS = {
@@ -2204,7 +2202,10 @@ var UI_STRINGS = {
     focusKw:        'Mot-clé principal',
     seoScore:       'Score SEO',
     pending:        'En attente',
-    artLang:        "Langue de l'article",
+    artLang:        "Langues de l'article",
+    artLangAll:     'Toutes les langues',
+    artLangFrOnly:  'Français seul',
+    artLangsInfo:   (n,t,list) => `Publié en <strong>${n} langue${n>1?'s':''}</strong> sur ${t} · ${list}<br>La traduction est générée à la publication.`,
     publishedOn:    'Publié sur',
     interfaceLang:  "Langue de l'interface",
     titlePlaceholder: "Titre de l'article…",
@@ -2355,7 +2356,10 @@ var UI_STRINGS = {
     focusKw:        'Focus keyword',
     seoScore:       'SEO Score',
     pending:        'Pending',
-    artLang:        'Article language',
+    artLang:        'Article languages',
+    artLangAll:     'All languages',
+    artLangFrOnly:  'French only',
+    artLangsInfo:   (n,t,list) => `Published in <strong>${n} language${n>1?'s':''}</strong> of ${t} · ${list}<br>Translations are generated on publish.`,
     publishedOn:    'Published on',
     interfaceLang:  'Interface language',
     titlePlaceholder: 'Article title…',
@@ -2487,13 +2491,26 @@ var UI_STRINGS = {
 /* L'interface admin ne propose que FR/EN (cf. tb-ui-lang) ; les autres langues
    du site (DE/ES/TH/MS/ID) restent gerees via les onglets de contenu d'article
    (LANGS ci-dessus) et retombent toujours sur l'anglais pour le chrome admin. */
-['de','es','th','ms','id'].forEach(lc => {
+['de','es','th','ms','id','tr','vi','fil'].forEach(lc => {
   UI_STRINGS[lc] = UI_STRINGS.en;
 });
 
+/* UI_STRINGS.fr → UI_STRINGS.en : donne au traducteur générique (assets/js/admin-i18n.js)
+   les mêmes équivalences que le mécanisme par identifiants ci-dessous. */
+(function () {
+  var pairs = {};
+  function walk(f, e) {
+    if (typeof f === 'string' && typeof e === 'string') { if (f !== e) pairs[f] = e; }
+    else if (Array.isArray(f)) f.forEach((x, i) => walk(x, e && e[i]));
+    else if (f && typeof f === 'object') Object.keys(f).forEach(k => walk(f[k], e && e[k]));
+  }
+  Object.keys(UI_STRINGS.fr).forEach(k => walk(UI_STRINGS.fr[k], UI_STRINGS.en[k]));
+  if (window.skAdminI18n) skAdminI18n.extend(pairs);
+})();
+
 /* ── State ── */
 var currentUiLang = localStorage.getItem('sk_admin_ui_lang') || 'fr';
-var currentArtLang = 'fr';
+function uiLocale() { return currentUiLang === 'en' ? 'en-GB' : 'fr-FR'; }
 
 /* ── UI (interface) language ── */
 function setUiLang(lang, btn) {
@@ -2504,6 +2521,16 @@ function setUiLang(lang, btn) {
   document.querySelectorAll('[data-ui-lang]').forEach(b => b.classList.toggle('active', b.dataset.uiLang === lang));
 
   applyUiLang();
+  refreshLocalizedData();
+  if (window.skAdminI18n) skAdminI18n.setLang(lang);
+}
+
+/* dates/nombres déjà formatés au chargement : on les recalcule dans la langue choisie */
+function refreshLocalizedData() {
+  if (window.ARTICLES) ARTICLES.forEach(a => { if (a.raw) a.date = fmtDateFr(a.raw.published_at || a.raw.created_at); });
+  var dash = document.getElementById('view-dashboard');
+  if (dash && typeof renderDash === 'function') renderDash();
+  if (document.getElementById('view-articles').classList.contains('active')) renderArts(currentFilter);
 }
 
 function applyUiLang() {
@@ -2747,66 +2774,79 @@ function setLabel(id, text) {
   if (el) el.textContent = text;
 }
 
-/* ── Article language ── */
-function setArtLang(lang, btn) {
-  currentArtLang = lang;
+/* ── Article languages (multi-select) ──
+   FR est la langue source (toujours incluse) ; les autres cases choisissent
+   les langues dans lesquelles l'article est publié (traduit à la publication). */
+var currentArtLangs = new Set(ALL_LANG_CODES);
 
-  /* update buttons */
-  document.querySelectorAll('[data-art-lang]').forEach(b => b.classList.toggle('selected', b.dataset.artLang === lang));
+function getArtLangs() { return ALL_LANG_CODES.filter(c => c === 'fr' || currentArtLangs.has(c)); }
 
-  /* update URL preview */
-  var prefix = document.getElementById('pub-url-lang-prefix');
-  if (prefix) prefix.textContent = lang;
+function renderArtLangGrid() {
+  var grid = document.getElementById('art-lang-grid');
+  if (!grid) return;
+  grid.innerHTML = ALL_LANG_CODES.map(c => {
+    var l = LANGS[c];
+    return '<button type="button" class="art-lang-btn' + (c === 'fr' ? ' locked' : '') + '" data-art-lang="' + c + '" aria-pressed="false" onclick="toggleArtLang(\'' + c + '\')">'
+      + '<span class="lang-flag">' + l.flag + '</span><span class="lang-code">' + l.code.toUpperCase() + '</span><span class="lang-label">' + l.label + '</span></button>';
+  }).join('');
+  refreshArtLangs();
+}
 
-  /* update slug base display */
-  var slugBase = document.querySelector('.editor-slug-base');
-  if (slugBase) slugBase.textContent = 'sparklin.io/' + lang + '/blog/';
+function toggleArtLang(c) {
+  if (c === 'fr') return;
+  if (currentArtLangs.has(c)) currentArtLangs.delete(c); else currentArtLangs.add(c);
+  refreshArtLangs();
+}
 
-  /* update info hint */
+function setAllArtLangs(all) {
+  currentArtLangs = new Set(all ? ALL_LANG_CODES : ['fr']);
+  refreshArtLangs();
+}
+
+function setArtLangs(list) {
+  currentArtLangs = new Set(['fr'].concat(Array.isArray(list) && list.length ? list : ALL_LANG_CODES));
+  refreshArtLangs();
+}
+
+function refreshArtLangs() {
+  currentArtLangs.add('fr');
+  document.querySelectorAll('[data-art-lang]').forEach(b => {
+    var on = currentArtLangs.has(b.dataset.artLang);
+    b.classList.toggle('selected', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
   updateArtLangInfo();
-
-  /* scroll article lang hint into view */
-  var info = document.getElementById('art-lang-info');
-  if (info) info.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function updateArtLangInfo() {
   var info = document.getElementById('art-lang-info');
   if (!info) return;
-  var l = LANGS[currentArtLang] || LANGS.fr;
   var s = UI_STRINGS[currentUiLang] || UI_STRINGS.fr;
-  var path = l.path;
-  info.innerHTML = l.flag + ' ' + l.label + ' &nbsp;·&nbsp; <strong>sparklin.io/' + path + '/blog/</strong> &nbsp;·&nbsp; Zone : ' + l.geo;
+  var langs = getArtLangs();
+  info.innerHTML = s.artLangsInfo(langs.length, ALL_LANG_CODES.length, langs.map(c => LANGS[c].flag).join(' '));
 }
 
-/* ── Language badge for article list ── */
-function langBadge(langCode) {
-  var l = LANGS[langCode] || LANGS.fr;
-  return '<span class="lang-badge"><span class="lbf">' + l.flag + '</span>' + l.code.toUpperCase() + '</span>';
+/* ── Language badges for the article list ── */
+function artLangsOf(a) {
+  var l = a && a.raw && a.raw.languages;
+  return Array.isArray(l) && l.length ? l : ALL_LANG_CODES;
+}
+function artHasLang(a, code) { return code === 'fr' || artLangsOf(a).indexOf(code) !== -1; }
+function langBadge(a) {
+  var langs = artLangsOf(a);
+  var shown = langs.slice(0, 4).map(c => (LANGS[c] || LANGS.fr).flag).join('');
+  var more = langs.length > 4 ? '<span class="more">+' + (langs.length - 4) + '</span>' : '';
+  var title = langs.map(c => (LANGS[c] || LANGS.fr).label).join(', ');
+  return '<span class="lang-badges" title="' + title + '">' + shown + more + '</span>';
 }
 
-/* ── Patch openEditor to restore article lang ── */
+/* ── Patch openEditor to restore the article languages ── */
 var _origOpenEditor = openEditor;
 openEditor = function(id) {
   _origOpenEditor(id);
-  if (id) {
-    var a = ARTICLES.find(x => x.id === id);
-    if (a && a.lang) {
-      /* set lang buttons */
-      document.querySelectorAll('[data-art-lang]').forEach(b => b.classList.toggle('selected', b.dataset.artLang === (a.lang || 'fr')));
-      currentArtLang = a.lang || 'fr';
-    }
-  } else {
-    /* new article: reset to FR */
-    currentArtLang = 'fr';
-    document.querySelectorAll('[data-art-lang]').forEach(b => b.classList.toggle('selected', b.dataset.artLang === 'fr'));
-  }
-  /* update URL and slug base */
-  var prefix = document.getElementById('pub-url-lang-prefix');
-  if (prefix) prefix.textContent = currentArtLang;
-  var slugBase = document.querySelector('.editor-slug-base');
-  if (slugBase) slugBase.textContent = 'sparklin.io/' + currentArtLang + '/blog/';
-  updateArtLangInfo();
+  var a = id ? ARTICLES.find(x => x.id === id) : null;
+  /* nouvel article : toutes les langues par défaut ; article existant : son choix */
+  setArtLangs(a && a.raw ? a.raw.languages : null);
 };
 
 /* ── Patch renderArts to show language column ── */
@@ -2831,7 +2871,7 @@ renderArts = function(filter) {
         langTd.style.width = '60px';
         tds[1].after(langTd);
       }
-      langTd.innerHTML = langBadge(art.lang || 'fr');
+      langTd.innerHTML = langBadge(art);
     }
   });
 };
@@ -2850,10 +2890,11 @@ document.addEventListener('DOMContentLoaded', function() {
   currentUiLang = savedUiLang;
   document.querySelectorAll('[data-ui-lang]').forEach(b => b.classList.toggle('active', b.dataset.uiLang === savedUiLang));
   applyUiLang();
+  refreshLocalizedData();
+  if (window.skAdminI18n) skAdminI18n.setLang(savedUiLang);
 
-  /* set default art lang */
-  updateArtLangInfo();
-  setArtLang('fr', null);
+  /* article languages selector */
+  renderArtLangGrid();
 });
 
 
@@ -2884,7 +2925,7 @@ function renderArtsFiltered() {
   var s = UI_STRINGS[currentUiLang] || UI_STRINGS.fr;
   ARTICLES.forEach(a => { if (!a.lang) a.lang = 'fr'; });
   var list = currentLangFilter
-    ? ARTICLES.filter(a => a.lang === currentLangFilter)
+    ? ARTICLES.filter(a => artHasLang(a, currentLangFilter))
     : ARTICLES;
   if (currentSort === 'views') list = [...list].sort((a,b) => b.views - a.views);
 
@@ -2899,13 +2940,13 @@ function renderArtsFiltered() {
       <td><input type="checkbox" class="art-check" onclick="e=>{e.stopPropagation();toggleSel(${a.id},e.target.checked)}" ${selectedIds.has(a.id)?'checked':''}/></td>
       <td>
         <div class="art-title-cell">${a.title}</div>
-        <div class="art-slug">/${a.lang}/blog/${a.slug}${a.words?' · '+a.words+' mots':''}</div>
+        <div class="art-slug">/blog/${a.slug}${a.words?' · '+a.words+' mots':''}</div>
       </td>
-      <td>${langBadge(a.lang||'fr')}</td>
+      <td>${langBadge(a)}</td>
       <td>${catPill(a.cat)}</td>
       <td><span class="status s-${a.status}">${statusLabel(a.status)}</span></td>
       <td style="font-size:11px;font-family:var(--fm);color:var(--text3)">${a.date}</td>
-      <td style="font-size:12px;font-family:var(--fm);color:var(--text2);text-align:right">${a.views?a.views.toLocaleString('fr-FR'):'—'}</td>
+      <td style="font-size:12px;font-family:var(--fm);color:var(--text2);text-align:right">${a.views?a.views.toLocaleString(uiLocale()):'—'}</td>
       <td>
         <div class="art-actions">
           <button class="btn btn-ghost btn-icon btn-sm link-icon-btn" title="Modifier" onclick="event.stopPropagation();openEditor(${a.id})"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4L18.5 2.5z"/></svg></button>
@@ -2919,7 +2960,7 @@ function renderArtsFiltered() {
     var art = ARTICLES.find(x => x.id === id);
     if (art) {
       var langTd = row.querySelector('td.lang-col');
-      if (langTd) langTd.innerHTML = langBadge(art.lang||'fr');
+      if (langTd) langTd.innerHTML = langBadge(art);
     }
   });
 }

@@ -3,6 +3,7 @@
  * langues du site et écrit le résultat dans post_translations.
  * Appelé en arrière-plan par admin-posts-translate.mjs.
  */
+import { createHash } from "node:crypto";
 import { supabaseAdminHeaders, supabaseUrl } from "./adminAuth.mjs";
 
 export const TARGET_LANGS = {
@@ -18,6 +19,14 @@ export const TARGET_LANGS = {
 };
 
 const FIELDS = ["title", "excerpt", "category", "meta_title", "meta_desc", "hero_image_alt", "read_time", "body_html"];
+
+// Empreinte du contenu source : une langue n'est retraduite que si elle manque
+// ou si le texte français a changé depuis la dernière traduction.
+export function sourceHash(post) {
+  const source = {};
+  for (const f of FIELDS) if (post[f]) source[f] = post[f];
+  return createHash("sha1").update(JSON.stringify(source)).digest("hex");
+}
 
 const tagsOf = (html) =>
   (String(html || "").replace(/\s(alt|title|aria-label|placeholder)="[^"]*"/g, "").match(/<[^>]+>/g) || []).map((t) => t.replace(/\s+/g, " ").trim());
@@ -58,8 +67,8 @@ ${JSON.stringify(source)}`;
   return out;
 }
 
-async function saveTranslation(postId, lang, out) {
-  const row = { post_id: postId, lang, updated_at: new Date().toISOString() };
+async function saveTranslation(postId, lang, out, hash) {
+  const row = { post_id: postId, lang, source_hash: hash, updated_at: new Date().toISOString() };
   for (const f of FIELDS) if (out[f]) row[f] = String(out[f]);
   const resp = await fetch(supabaseUrl("post_translations", "on_conflict=post_id,lang"), {
     method: "POST",
@@ -80,13 +89,19 @@ export async function translatePost(postId) {
 
   const ok = [];
   const failed = [];
-  const langs = Object.keys(TARGET_LANGS);
+  const hash = sourceHash(post);
+  const wanted = Array.isArray(post.languages) ? post.languages : null;
+  const existing = await fetch(supabaseUrl("post_translations", `select=lang,source_hash&post_id=eq.${post.id}`), { headers: supabaseAdminHeaders() })
+    .then((r) => (r.ok ? r.json() : []))
+    .catch(() => []);
+  const upToDate = new Set(existing.filter((r) => r.source_hash === hash).map((r) => r.lang));
+  const langs = Object.keys(TARGET_LANGS).filter((l) => (!wanted || wanted.includes(l)) && !upToDate.has(l));
   for (let i = 0; i < langs.length; i += 3) {
     await Promise.all(
       langs.slice(i, i + 3).map(async (lang) => {
         for (let attempt = 0; attempt < 2; attempt++) {
           try {
-            await saveTranslation(post.id, lang, await translateOne(post, lang, apiKey));
+            await saveTranslation(post.id, lang, await translateOne(post, lang, apiKey), hash);
             ok.push(lang);
             return;
           } catch (e) {

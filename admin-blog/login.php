@@ -341,6 +341,7 @@ input[type="email"]::placeholder{color:var(--text3)}
   .form-panel{padding:32px 24px;}
 }
 </style>
+<script src="/assets/js/admin-i18n.js"></script>
 </head>
 <body>
 
