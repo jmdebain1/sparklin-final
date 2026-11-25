@@ -30,6 +30,15 @@ Run locally: `php -S localhost:8080 -t .` (or `preview_start` with `.claude/laun
 
 ## Modifications
 
+### 2026-11-25 (livres blancs sectoriels, pré-prod)
+- **Page pré-prod `/livres-blancs/`** (`livres-blancs/index.php`) : noindex, absente de `sitemap.xml` et de la navigation, mais construite par
+  `build-static.sh`. 5 guides (restaurants, hôtels, gîtes, golf, collectivités) : mockup + modale de formulaire (e-mail, prénom, établissement).
+  PDF dans `assets/livres-blancs/`, mockups dans `assets/images/livres-blancs/` (golf = mockup généré à partir de la couverture du PDF).
+- **`send-livre-blanc.mjs`** accepte `guide` : inscription dans la liste Brevo du guide (gîtes 11, golf 9, collectivités 10 ; surcharge
+  `BREVO_LIST_LB_<CLE>` ; hôtels et restaurants n'ont **pas** encore de liste), mail via le template Brevo **30** « Livre blanc sectoriel »
+  (params NAME, PDF_URL, GUIDE_TITLE, SECTOR, COVER_URL, ITEMS ; surcharge `BREVO_TEMPLATE_LB_SECTOR_ID`), lead Supabase `livre-blanc-<guide>`,
+  notification équipe (template 3) avec le nom du guide. Sans `guide` : comportement « Entreprise » inchangé.
+
 ### 2026-11-25 (éditeur d'article)
 - **Barre d'outils de l'éditeur réparée et fixe.** Les boutons B/I/H2/H3… ne faisaient rien (`onmousedown="e=>{…}"` n'exécute jamais la
   fonction). Ils passent par `data-cmd` + un écouteur délégué (`rteRun`), avec états actifs (`selectionchange`), bascule H2/H3/citation/code,
