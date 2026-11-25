@@ -55,7 +55,7 @@ foreach ($guides as $g) {
     'sector' => html_entity_decode($g['sector']),
     'title'  => $g['title'],
     'pdf'    => '/assets/livres-blancs/livre-blanc-sparklin-' . $g['key'] . '-2026.pdf',
-    'cover'  => '/assets/images/livres-blancs/mockup-' . $g['key'] . '.webp',
+    'cover'  => '/assets/images/livres-blancs/mockup-' . $g['key'] . '.webp?v=2',
   ];
 }
 ?>
@@ -138,7 +138,7 @@ foreach ($guides as $g) {
       <div class="lbx-grid">
         <?php foreach ($guides as $g): ?>
         <article class="lbx-card" id="guide-<?= $g['key'] ?>">
-          <div class="lbx-visual"><img src="/assets/images/livres-blancs/mockup-<?= $g['key'] ?>.webp" alt="Couverture du livre blanc Sparklin — <?= strip_tags($g['sector']) ?>" width="640" height="640" loading="lazy"/></div>
+          <div class="lbx-visual"><img src="/assets/images/livres-blancs/mockup-<?= $g['key'] ?>.webp?v=2" alt="Couverture du livre blanc Sparklin — <?= strip_tags($g['sector']) ?>" width="640" height="640" loading="lazy"/></div>
           <div class="lbx-body">
             <span class="lbx-tag"><?= $g['sector'] ?></span>
             <h2><?= htmlspecialchars($g['title']) ?></h2>

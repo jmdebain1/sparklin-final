@@ -81,7 +81,7 @@ export const GUIDES = {
 };
 for (const [k, g] of Object.entries(GUIDES)) {
   g.pdf = `${SITE}/assets/livres-blancs/livre-blanc-sparklin-${k}-2026.pdf`;
-  g.cover = `${SITE}/assets/images/livres-blancs/mockup-${k}.webp`;
+  g.cover = `${SITE}/assets/images/livres-blancs/mockup-${k}.webp?v=2`;
 }
 
 export default async (req) => {
@@ -145,7 +145,8 @@ export default async (req) => {
             `<p><a href="${pdfUrl}">Télécharger le PDF</a></p>` +
             `<p>L'équipe Sparklin</p>`,
         };
-    await brevoSendEmail(payload);
+    const sendStatus = await brevoSendEmail(payload);
+    if (sendStatus < 200 || sendStatus >= 300) console.error(`send-livre-blanc: Brevo a refusé l'e-mail (HTTP ${sendStatus}, template ${templateId || "défaut"}, guide ${guideKey || "entreprise"})`);
   }
 
   // 3. Inscription liste "Livre blanc" (best-effort)
