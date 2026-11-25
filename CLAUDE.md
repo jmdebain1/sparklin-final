@@ -30,6 +30,17 @@ Run locally: `php -S localhost:8080 -t .` (or `preview_start` with `.claude/laun
 
 ## Modifications
 
+### 2026-11-25 (éditeur d'article)
+- **Barre d'outils de l'éditeur réparée et fixe.** Les boutons B/I/H2/H3… ne faisaient rien (`onmousedown="e=>{…}"` n'exécute jamais la
+  fonction). Ils passent par `data-cmd` + un écouteur délégué (`rteRun`), avec états actifs (`selectionchange`), bascule H2/H3/citation/code,
+  Ctrl+K lien, retirer le lien, effacer la mise en forme. `.editor-wrap` a une hauteur fixe et `.editor-body` défile en interne, donc
+  `.editor-topbar` (sticky) reste toujours visible (y compris en mode focus).
+- **Coller un article entier** (`onEditorPaste`) : HTML Word/Google Docs/web nettoyé (`sanitizePastedHtml`), Markdown ou texte brut converti,
+  un H1 de tête devient le titre. Puis `autoFillSeo()` remplit extrait, méta description, mot-clé : heuristique locale immédiate, puis
+  affinage IA via la fonction Netlify `admin-seo-fields.mjs`. Les champs retouchés à la main (`seoDirty`) ne sont pas écrasés ; bouton
+  « ✨ Générer auto » pour forcer.
+- **Aperçu** : modale pleine hauteur, bascule Ordinateur/Tablette/Mobile, aperçu Google (titre + méta), échappement du HTML, liens bloqués.
+
 ### 2026-11-25
 - **Admin in English also translates editorial content.** Elements marked `data-tx` (article titles in lists, event and
   press cards) are translated on demand in EN mode: English titles already stored in `post_translations` are preloaded

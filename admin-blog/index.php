@@ -160,9 +160,10 @@ html,body{height:100%;font-family:var(--fb);font-size:14px;line-height:1.6;color
 .sort-btn:hover{border-color:var(--border2);color:var(--text2)}
 
 /* ── EDITOR LAYOUT ── */
-.editor-wrap{display:grid;grid-template-columns:1fr 288px;gap:0;min-height:calc(100vh - var(--header));background:var(--white)}
-.editor-body{display:flex;flex-direction:column;overflow-y:auto;border-right:1px solid var(--border)}
-.editor-topbar{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--white);z-index:20}
+.editor-wrap{display:grid;grid-template-columns:1fr 288px;gap:0;height:calc(100vh - var(--header));background:var(--white);overflow:hidden}
+.editor-wrap.fm{grid-template-columns:1fr}
+.editor-body{display:flex;flex-direction:column;overflow-y:auto;border-right:1px solid var(--border);min-height:0}
+.editor-topbar{display:flex;align-items:center;gap:10px;padding:8px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--white);z-index:20;flex-shrink:0;box-shadow:0 1px 0 rgba(0,0,0,.02)}
 .editor-content{padding:40px 56px 80px;max-width:760px;margin:0 auto;width:100%}
 .editor-panel{overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
 
@@ -179,6 +180,14 @@ html,body{height:100%;font-family:var(--fb);font-size:14px;line-height:1.6;color
 .rte-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;background:none;cursor:pointer;border-radius:5px;color:var(--text2);font-family:var(--fm);font-size:12px;font-weight:600;transition:all .12s}
 .rte-btn:hover{background:var(--bg)}
 .rte-btn.on{background:var(--orange-bg);color:var(--orange)}
+.rte-btn:active{transform:scale(.94)}
+.rte-btn.txt{width:auto;min-width:28px;padding:0 6px}
+.seo-auto-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--orange);background:var(--orange-bg);border:none;border-radius:6px;padding:5px 9px;cursor:pointer;font-family:var(--fb)}
+.seo-auto-btn:hover{filter:brightness(.96)}
+.seo-auto-btn[disabled]{opacity:.6;cursor:wait}
+.pv-seg{display:inline-flex;border:1px solid var(--border);border-radius:7px;overflow:hidden}
+.pv-seg button{border:none;background:none;padding:5px 11px;font-size:12px;font-family:var(--fb);cursor:pointer;color:var(--text2)}
+.pv-seg button.on{background:var(--orange-bg);color:var(--orange);font-weight:600}
 .rte-sep{width:1px;height:18px;background:var(--border);margin:0 4px}
 .rte-body{font-family:var(--fb);font-size:15px;line-height:1.85;color:var(--text);min-height:400px;outline:none;caret-color:var(--orange)}
 .rte-body:empty::before{content:attr(data-ph);color:var(--border2);pointer-events:none}
@@ -202,7 +211,8 @@ html,body{height:100%;font-family:var(--fb);font-size:14px;line-height:1.6;color
 .word-goal-bar{height:100%;border-radius:100px;transition:width .5s,background .3s}
 
 /* ── FOCUS MODE ── */
-body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor-topbar{display:none}
+body.focus-mode .sidebar,body.focus-mode .editor-panel{display:none}
+body.focus-mode .shell{grid-template-columns:1fr}
 .focus-indicator{position:fixed;top:12px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;font-size:11px;font-family:var(--fm);padding:4px 12px;border-radius:100px;z-index:500;opacity:0;pointer-events:none;transition:opacity .3s}
 
 /* ── PANEL SECTIONS ── */
@@ -832,27 +842,29 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
         </button>
         <div class="divider" style="width:1px;height:20px;margin:0 4px;background:var(--border)"></div>
         <div class="rte-bar" id="rte-toolbar">
-          <button class="rte-btn" id="rte-bold" title="Gras (Ctrl+B)" onmousedown="e=>{e.preventDefault();fmt('bold')}"><b>B</b></button>
-          <button class="rte-btn" id="rte-italic" title="Italique (Ctrl+I)" onmousedown="e=>{e.preventDefault();fmt('italic')}"><i>I</i></button>
-          <button class="rte-btn" id="rte-underline" title="Souligné" onmousedown="e=>{e.preventDefault();fmt('underline')}"><u>U</u></button>
-          <button class="rte-btn" id="rte-strike" title="Barré" onmousedown="e=>{e.preventDefault();fmt('strikeThrough')}"><s>S</s></button>
-          <button class="rte-btn" id="rte-code" title="Code" onmousedown="e=>{e.preventDefault();wrapCode()}">{ }</button>
+          <button type="button" class="rte-btn" id="rte-bold" data-cmd="bold" title="Gras (Ctrl+B)"><b>B</b></button>
+          <button type="button" class="rte-btn" id="rte-italic" data-cmd="italic" title="Italique (Ctrl+I)"><i>I</i></button>
+          <button type="button" class="rte-btn" id="rte-underline" data-cmd="underline" title="Souligné (Ctrl+U)"><u>U</u></button>
+          <button type="button" class="rte-btn" id="rte-strike" data-cmd="strikeThrough" title="Barré"><s>S</s></button>
+          <button type="button" class="rte-btn" id="rte-code" data-cmd="code" title="Code">{ }</button>
           <div class="rte-sep"></div>
-          <button class="rte-btn" id="rte-h2" title="Titre H2" onmousedown="e=>{e.preventDefault();fmt('formatBlock','h2')}">H2</button>
-          <button class="rte-btn" id="rte-h3" title="Titre H3" onmousedown="e=>{e.preventDefault();fmt('formatBlock','h3')}">H3</button>
-          <button class="rte-btn" id="rte-p" title="Paragraphe" onmousedown="e=>{e.preventDefault();fmt('formatBlock','p')}">¶</button>
+          <button type="button" class="rte-btn" id="rte-h2" data-cmd="block" data-val="h2" title="Titre H2">H2</button>
+          <button type="button" class="rte-btn" id="rte-h3" data-cmd="block" data-val="h3" title="Titre H3">H3</button>
+          <button type="button" class="rte-btn" id="rte-p" data-cmd="block" data-val="p" title="Paragraphe">¶</button>
           <div class="rte-sep"></div>
-          <button class="rte-btn" id="rte-ul" title="Liste à puces" onmousedown="e=>{e.preventDefault();fmt('insertUnorderedList')}">•—</button>
-          <button class="rte-btn" id="rte-ol" title="Liste numérotée" onmousedown="e=>{e.preventDefault();fmt('insertOrderedList')}">1.</button>
-          <button class="rte-btn" id="rte-quote" title="Citation" onmousedown="e=>{e.preventDefault();fmt('formatBlock','blockquote')}">"</button>
-          <button class="rte-btn" id="rte-hr" title="Séparateur" onmousedown="e=>{e.preventDefault();insertHR()}">—</button>
+          <button type="button" class="rte-btn" id="rte-ul" data-cmd="insertUnorderedList" title="Liste à puces">•—</button>
+          <button type="button" class="rte-btn" id="rte-ol" data-cmd="insertOrderedList" title="Liste numérotée">1.</button>
+          <button type="button" class="rte-btn" id="rte-quote" data-cmd="block" data-val="blockquote" title="Citation">"</button>
+          <button type="button" class="rte-btn" id="rte-hr" data-cmd="hr" title="Séparateur">—</button>
           <div class="rte-sep"></div>
-          <button class="rte-btn" id="rte-link" title="Lien" onmousedown="e=>{e.preventDefault();insertLink()}">🔗</button>
-          <button class="rte-btn" id="rte-img" title="Image" onmousedown="e=>{e.preventDefault();document.getElementById('rte-img-input').click()}">🖼</button>
+          <button type="button" class="rte-btn" id="rte-link" data-cmd="link" title="Lien (Ctrl+K)">🔗</button>
+          <button type="button" class="rte-btn" id="rte-unlink" data-cmd="unlink" title="Retirer le lien">⛓</button>
+          <button type="button" class="rte-btn" id="rte-img" data-cmd="image" title="Image">🖼</button>
           <input type="file" id="rte-img-input" accept="image/*" style="display:none" onchange="insertImage(this)"/>
+          <button type="button" class="rte-btn" id="rte-clear" data-cmd="clean" title="Effacer la mise en forme">Tx</button>
           <div class="rte-sep"></div>
-          <button class="rte-btn" id="rte-undo" title="Annuler (Ctrl+Z)" onmousedown="e=>{e.preventDefault();fmt('undo')}">↩</button>
-          <button class="rte-btn" id="rte-redo" title="Rétablir (Ctrl+Y)" onmousedown="e=>{e.preventDefault();fmt('redo')}">↪</button>
+          <button type="button" class="rte-btn" id="rte-undo" data-cmd="undo" title="Annuler (Ctrl+Z)">↩</button>
+          <button type="button" class="rte-btn" id="rte-redo" data-cmd="redo" title="Rétablir (Ctrl+Shift+Z)">↪</button>
         </div>
         <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
           <div class="tb-save show" id="editor-save-status">
@@ -882,7 +894,7 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
         </div>
         <div id="rte-editor" class="rte-body" contenteditable="true"
           data-ph="Commencez à écrire votre article… Utilisez la barre d'outils ci-dessus ou le panneau IA à droite pour générer du contenu."
-          oninput="onEditorInput()" onkeydown="handleShortcuts(event)"></div>
+          oninput="onEditorInput()" onkeydown="handleShortcuts(event)" onpaste="onEditorPaste(event)"></div>
         <div class="rte-footer">
           <span class="rte-stat" id="rte-words">0 mot · 0 min</span>
           <div style="display:flex;align-items:center;gap:8px">
@@ -938,11 +950,11 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
       <!-- META / SEO -->
       <div class="panel-section">
-        <div class="panel-label" id="lbl-seo">SEO</div>
+        <div class="panel-label" id="lbl-seo" style="display:flex;align-items:center;justify-content:space-between">SEO <button type="button" class="seo-auto-btn" id="btn-seo-auto" onclick="autoFillSeo({force:true})" title="Génère extrait, méta description et mot-clé à partir de l'article">✨ Générer auto</button></div>
         <div class="panel-card" style="display:flex;flex-direction:column;gap:10px">
           <div class="field-row">
             <label id="lbl-excerpt">Extrait (résumé public)</label>
-            <textarea id="ed-excerpt" rows="2" placeholder="Court résumé affiché dans la liste des articles…"></textarea>
+            <textarea id="ed-excerpt" rows="3" placeholder="Court résumé affiché dans la liste des articles…"></textarea>
           </div>
           <div class="field-row">
             <label id="lbl-meta-desc">Méta description</label>
@@ -1319,12 +1331,19 @@ body.focus-mode .sidebar,.body.focus-mode .editor-panel,.body.focus-mode .editor
 
 <!-- ══ ARTICLE PREVIEW MODAL ══════════════════════════════════ -->
 <div class="modal-bg" id="article-preview-modal">
-  <div class="modal" style="max-width:860px;width:92vw;padding:0;overflow:hidden;display:flex;flex-direction:column;max-height:90vh">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);flex-shrink:0">
+  <div class="modal" id="article-preview-box" style="max-width:1040px;width:94vw;height:92vh;padding:0;overflow:hidden;display:flex;flex-direction:column">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border);flex-shrink:0">
       <div class="modal-title" id="lbl-preview-title" style="margin:0">Aperçu de l'article</div>
+      <div class="pv-seg" id="pv-seg">
+        <button type="button" class="on" data-pv="desktop" onclick="setPreviewDevice('desktop')">Ordinateur</button>
+        <button type="button" data-pv="tablet" onclick="setPreviewDevice('tablet')">Tablette</button>
+        <button type="button" data-pv="mobile" onclick="setPreviewDevice('mobile')">Mobile</button>
+      </div>
       <button class="btn btn-ghost btn-sm" id="btn-preview-close" onclick="closeArticlePreview()">✕</button>
     </div>
-    <iframe id="article-preview-frame" style="flex:1;width:100%;border:0;background:#fff" title="Aperçu de l'article"></iframe>
+    <div id="pv-stage" style="flex:1;min-height:0;background:var(--bg2);display:flex;justify-content:center;overflow:auto;padding:0">
+      <iframe id="article-preview-frame" style="width:100%;height:100%;border:0;background:#fff;transition:width .2s" title="Aperçu de l'article"></iframe>
+    </div>
   </div>
 </div>
 
@@ -1418,6 +1437,7 @@ function openEditor(id){
     document.getElementById('pub-status').textContent='Brouillon';
     currentEditId=null;
   }
+  seoDirty={excerpt:!!document.getElementById('ed-excerpt').value.trim(),meta:!!document.getElementById('ed-meta').value.trim(),kw:!!document.getElementById('ed-focus-kw').value.trim()};
   versions=[];renderVersions();
   updateSeo();updateWords();updateWordGoal(wordGoal);
   document.getElementById('og-title').textContent=document.getElementById('ed-title').value||'Titre de votre article';
@@ -1559,24 +1579,343 @@ function updateMetrics(){
 /* ═══════════════════════════════════════════════════════════
    EDITOR
 ═══════════════════════════════════════════════════════════ */
-function fmt(cmd,val){document.execCommand(cmd,false,val||null);}
-function handleShortcuts(e){
-  if(e.ctrlKey||e.metaKey){
-    if(e.key==='b'){e.preventDefault();fmt('bold');}
-    if(e.key==='i'){e.preventDefault();fmt('italic');}
-    if(e.key==='u'){e.preventDefault();fmt('underline');}
-    if(e.key==='s'){e.preventDefault();saveDraft();}
-  }
+function fmt(cmd,val){var ed=document.getElementById('rte-editor');if(document.activeElement!==ed)ed.focus();document.execCommand(cmd,false,val||null);onEditorInput();}
+var RTE_BLOCK_TAGS={H1:1,H2:1,H3:1,H4:1,P:1,BLOCKQUOTE:1,LI:1,PRE:1,DIV:1};
+function rteSelInEditor(){
+  var ed=document.getElementById('rte-editor');var sel=window.getSelection();
+  return sel&&sel.rangeCount&&ed.contains(sel.anchorNode);
+}
+function rteEnsureFocus(){
+  var ed=document.getElementById('rte-editor');
+  if(rteSelInEditor())return;
+  ed.focus();
+  if(rteLastRange){var sel=window.getSelection();sel.removeAllRanges();sel.addRange(rteLastRange);}
+  else{var r=document.createRange();r.selectNodeContents(ed);r.collapse(false);var s2=window.getSelection();s2.removeAllRanges();s2.addRange(r);}
+}
+var rteLastRange=null;
+function rteClosest(tagNames){
+  var sel=window.getSelection();if(!sel.rangeCount)return null;
+  var n=sel.anchorNode;var ed=document.getElementById('rte-editor');
+  while(n&&n!==ed){if(n.nodeType===1&&tagNames.indexOf(n.nodeName)>-1)return n;n=n.parentNode;}
+  return null;
+}
+function rteBlock(tag){
+  rteEnsureFocus();
+  var cur=rteClosest(['H1','H2','H3','H4','BLOCKQUOTE','P','PRE']);
+  var want=tag.toUpperCase();
+  // re-cliquer sur le style actif revient au paragraphe
+  if(cur&&cur.nodeName===want&&want!=='P')tag='p';
+  document.execCommand('formatBlock',false,'<'+tag+'>');
 }
 function wrapCode(){
+  rteEnsureFocus();
+  var inCode=rteClosest(['CODE']);
+  if(inCode){var t=document.createTextNode(inCode.textContent);inCode.parentNode.replaceChild(t,inCode);return;}
   var sel=window.getSelection();
-  if(!sel.rangeCount)return;
+  if(!sel.rangeCount||sel.isCollapsed){toast('Sélectionnez du texte à mettre en code','amber');return;}
   var range=sel.getRangeAt(0);
   var code=document.createElement('code');
-  range.surroundContents(code);
+  code.appendChild(range.extractContents());
+  range.insertNode(code);
+  sel.removeAllRanges();var r=document.createRange();r.selectNodeContents(code);sel.addRange(r);
+}
+function rteClean(){
+  rteEnsureFocus();
+  document.execCommand('removeFormat',false,null);
+  document.execCommand('unlink',false,null);
+}
+function rteRun(cmd,val){
+  var ed=document.getElementById('rte-editor');
+  switch(cmd){
+    case 'block':rteBlock(val);break;
+    case 'code':wrapCode();break;
+    case 'hr':rteEnsureFocus();insertHR();break;
+    case 'link':rteEnsureFocus();insertLink();return;
+    case 'unlink':rteEnsureFocus();document.execCommand('unlink',false,null);break;
+    case 'image':rteEnsureFocus();document.getElementById('rte-img-input').click();return;
+    case 'clean':rteClean();break;
+    default:rteEnsureFocus();document.execCommand(cmd,false,null);
+  }
+  onEditorInput();rteUpdateToolbar();
+}
+function rteUpdateToolbar(){
+  var tb=document.getElementById('rte-toolbar');if(!tb)return;
+  var on=rteSelInEditor();
+  var q=function(c){try{return on&&document.queryCommandState(c);}catch(e){return false;}};
+  var set=function(id,v){var b=document.getElementById(id);if(b)b.classList.toggle('on',!!v);};
+  set('rte-bold',q('bold'));set('rte-italic',q('italic'));set('rte-underline',q('underline'));set('rte-strike',q('strikeThrough'));
+  set('rte-ul',q('insertUnorderedList'));set('rte-ol',q('insertOrderedList'));
+  set('rte-code',on&&rteClosest(['CODE']));
+  set('rte-link',on&&rteClosest(['A']));
+  var blk=on?rteClosest(['H1','H2','H3','H4','BLOCKQUOTE','PRE','P']):null;
+  set('rte-h2',blk&&blk.nodeName==='H2');set('rte-h3',blk&&blk.nodeName==='H3');
+  set('rte-quote',blk&&blk.nodeName==='BLOCKQUOTE');
+  set('rte-p',blk&&blk.nodeName==='P');
+}
+(function initRte(){
+  var tb=document.getElementById('rte-toolbar');
+  // mousedown + preventDefault : le clic sur un bouton ne retire pas la sélection du texte
+  tb.addEventListener('mousedown',function(e){if(e.target.closest('.rte-btn'))e.preventDefault();});
+  tb.addEventListener('click',function(e){
+    var b=e.target.closest('.rte-btn');if(!b||!b.dataset.cmd)return;
+    e.preventDefault();rteRun(b.dataset.cmd,b.dataset.val);
+  });
+  document.addEventListener('selectionchange',function(){
+    if(rteSelInEditor()){var sel=window.getSelection();rteLastRange=sel.getRangeAt(0).cloneRange();}
+    rteUpdateToolbar();
+  });
+  try{document.execCommand('defaultParagraphSeparator',false,'p');document.execCommand('styleWithCSS',false,false);}catch(e){}
+})();
+function handleShortcuts(e){
+  if(e.ctrlKey||e.metaKey){
+    var k=e.key.toLowerCase();
+    if(k==='b'){e.preventDefault();rteRun('bold');}
+    else if(k==='i'){e.preventDefault();rteRun('italic');}
+    else if(k==='u'){e.preventDefault();rteRun('underline');}
+    else if(k==='k'){e.preventDefault();rteRun('link');}
+    else if(k==='s'){e.preventDefault();saveDraft();}
+    else if(e.altKey&&k==='2'){e.preventDefault();rteRun('block','h2');}
+    else if(e.altKey&&k==='3'){e.preventDefault();rteRun('block','h3');}
+  }
 }
 function insertHR(){
-  document.execCommand('insertHTML',false,'<hr/>');
+  document.execCommand('insertHTML',false,'<hr/><p><br></p>');
+}
+
+/* ═══ COLLAGE D'UN ARTICLE : nettoyage + champs SEO automatiques ═══ */
+var seoDirty={excerpt:false,meta:false,kw:false};
+(function(){
+  var map={'ed-excerpt':'excerpt','ed-meta':'meta','ed-focus-kw':'kw'};
+  Object.keys(map).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.addEventListener('input',function(ev){if(ev.isTrusted)seoDirty[map[id]]=!!el.value.trim();});
+  });
+})();
+function skEsc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function sanitizePastedHtml(html){
+  var doc=new DOMParser().parseFromString(html,'text/html');
+  var BLOCK={P:1,H1:1,H2:1,H3:1,H4:1,H5:1,H6:1,UL:1,OL:1,LI:1,BLOCKQUOTE:1,PRE:1,TABLE:1,HR:1,FIGURE:1,DIV:1,SECTION:1,ARTICLE:1};
+  function hasBlock(n){return !!n.querySelector&&!!n.querySelector('p,h1,h2,h3,h4,h5,h6,ul,ol,blockquote,pre,table,hr,figure');}
+  function inner(n){var o='';n.childNodes.forEach(function(c){o+=walk(c);});return o;}
+  function walk(n){
+    if(n.nodeType===3)return skEsc(n.nodeValue.replace(/\s+/g,' '));
+    if(n.nodeType!==1)return '';
+    var t=n.nodeName,st=(n.getAttribute('style')||'').toLowerCase(),c;
+    if(/^(SCRIPT|STYLE|META|LINK|HEAD|TITLE|NOSCRIPT|IFRAME|OBJECT|BUTTON|INPUT|SELECT|FORM|SVG)$/.test(t))return '';
+    c=inner(n);
+    if(/^H[1-6]$/.test(t))c=c.replace(/<\/?(strong|em)>/g,'').replace(/<br>/g,' ');
+    switch(t){
+      case 'H1':return c.trim()?'<h1>'+c.trim()+'</h1>':'';
+      case 'H2':return c.trim()?'<h2>'+c.trim()+'</h2>':'';
+      case 'H3':case 'H4':case 'H5':case 'H6':return c.trim()?'<h3>'+c.trim()+'</h3>':'';
+      case 'P':return c.replace(/<br>/g,'').trim()?'<p>'+c.trim()+'</p>':'';
+      case 'UL':case 'OL':return c.trim()?'<'+t.toLowerCase()+'>'+c+'</'+t.toLowerCase()+'>':'';
+      case 'LI':return '<li>'+c.replace(/^\s*<p>([\s\S]*?)<\/p>\s*$/,'$1').trim()+'</li>';
+      case 'BLOCKQUOTE':return c.trim()?'<blockquote>'+c.replace(/<\/?p>/g,' ').trim()+'</blockquote>':'';
+      case 'PRE':return '<pre>'+skEsc(n.textContent)+'</pre>';
+      case 'HR':return '<hr/>';
+      case 'BR':return '<br>';
+      case 'B':case 'STRONG':
+        if(/font-weight:\s*(normal|400)/.test(st))return c;
+        return c.trim()?'<strong>'+c+'</strong>':c;
+      case 'I':case 'EM':return c.trim()?'<em>'+c+'</em>':c;
+      case 'U':return c;
+      case 'CODE':return c.trim()?'<code>'+c+'</code>':c;
+      case 'A':var h=n.getAttribute('href')||'';
+        if(!/^(https?:|mailto:|tel:|\/|#)/i.test(h)||!c.trim())return c;
+        return '<a href="'+skEsc(h)+'">'+c+'</a>';
+      case 'IMG':var src=n.getAttribute('src')||'';
+        if(!/^(https?:|\/|data:image\/)/i.test(src))return '';
+        return '<img src="'+skEsc(src)+'" alt="'+skEsc(n.getAttribute('alt')||'')+'"/>';
+      case 'TABLE':case 'THEAD':case 'TBODY':case 'TR':case 'TH':case 'TD':
+        return '<'+t.toLowerCase()+'>'+c+'</'+t.toLowerCase()+'>';
+      case 'SPAN':case 'FONT':
+        if(/font-weight:\s*(700|bold|[6-9]00)/.test(st)&&c.trim())c='<strong>'+c+'</strong>';
+        if(/font-style:\s*italic/.test(st)&&c.trim())c='<em>'+c+'</em>';
+        return c;
+      case 'DIV':case 'SECTION':case 'ARTICLE':case 'FIGURE':case 'MAIN':
+        if(hasBlock(n))return c;
+        return c.replace(/<br>/g,'').trim()?'<p>'+c.trim()+'</p>':'';
+      default:return c;
+    }
+  }
+  var out=inner(doc.body);
+  // texte "nu" laissé entre deux blocs → paragraphe
+  out=out.replace(/(<\/(?:p|h[1-3]|ul|ol|blockquote|pre|table|hr)>|<hr\/>)\s*([^<\s][^<]*)(?=<(?:p|h[1-3]|ul|ol|blockquote|pre|table|hr))/g,function(m,a,b){return a+'<p>'+b.trim()+'</p>';});
+  if(!/<(p|h[1-3]|ul|ol|blockquote|pre|table)\b/.test(out)&&out.trim())out='<p>'+out.trim()+'</p>';
+  return out.replace(/<p>\s*(?:<br>)*\s*<\/p>/g,'').replace(/\s{2,}/g,' ');
+}
+function markdownToHtml(txt){
+  var inl=function(v){
+    return skEsc(v).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*\s][^*]*)\*(?!\*)/g,'$1<em>$2</em>')
+      .replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\[([^\]]+)\]\((https?:[^)\s]+|\/[^)\s]*)\)/g,'<a href="$2">$1</a>');
+  };
+  var lines=txt.replace(/\r\n?/g,'\n').split('\n'),out=[],para=[],list=null;
+  var flushP=function(){if(para.length){out.push('<p>'+para.map(inl).join('<br>')+'</p>');para=[];}};
+  var flushL=function(){if(list){out.push('<'+list.t+'>'+list.i.map(function(x){return '<li>'+inl(x)+'</li>';}).join('')+'</'+list.t+'>');list=null;}};
+  lines.forEach(function(raw){
+    var l=raw.trim(),m;
+    if(!l){flushP();flushL();return;}
+    if((m=l.match(/^(#{1,6})\s+(.+?)\s*#*$/))){flushP();flushL();var lv=m[1].length;out.push('<h'+(lv===1?1:lv===2?2:3)+'>'+inl(m[2])+'</h'+(lv===1?1:lv===2?2:3)+'>');return;}
+    if(/^(-{3,}|\*{3,}|_{3,})$/.test(l)){flushP();flushL();out.push('<hr/>');return;}
+    if((m=l.match(/^>\s?(.*)$/))){flushP();flushL();out.push('<blockquote>'+inl(m[1])+'</blockquote>');return;}
+    if((m=l.match(/^[-*•–]\s+(.+)$/))){flushP();if(!list||list.t!=='ul'){flushL();list={t:'ul',i:[]};}list.i.push(m[1]);return;}
+    if((m=l.match(/^\d+[.)]\s+(.+)$/))){flushP();if(!list||list.t!=='ol'){flushL();list={t:'ol',i:[]};}list.i.push(m[1]);return;}
+    flushL();para.push(l);
+  });
+  flushP();flushL();
+  return out.join('');
+}
+function plainToHtml(txt){
+  var t=txt.replace(/\r\n?/g,'\n').trim();
+  var md=/^(#{1,6}\s|[-*•]\s|\d+[.)]\s|>\s)/m.test(t)||/\*\*[^*]+\*\*/.test(t);
+  if(md)return markdownToHtml(t);
+  var blocks=t.split(/\n{2,}/);
+  // pas de ligne vide : chaque ligne est un paragraphe
+  if(blocks.length===1&&t.indexOf('\n')>-1)blocks=t.split('\n');
+  return blocks.map(function(b){b=b.trim();return b?'<p>'+skEsc(b).replace(/\n/g,'<br>')+'</p>':'';}).join('');
+}
+function textFromHtml(html){var d=document.createElement('div');d.innerHTML=html;return (d.innerText||d.textContent||'');}
+
+function onEditorPaste(e){
+  var cd=e.clipboardData||window.clipboardData;if(!cd)return;
+  var html=cd.getData('text/html'),txt=cd.getData('text/plain')||'';
+  if(!html&&!txt)return;
+  // image collée seule
+  if(!html&&!txt&&cd.files&&cd.files.length)return;
+  e.preventDefault();
+  var clean;
+  if(html&&/<(p|h[1-6]|ul|ol|li|blockquote|div|table|br|strong|b|em|i|a)\b/i.test(html))clean=sanitizePastedHtml(html);
+  else clean=plainToHtml(txt);
+  if(!clean||!clean.trim()){document.execCommand('insertText',false,txt);return;}
+  var big=txt.replace(/\s+/g,' ').trim().length>=500;
+  var ed=document.getElementById('rte-editor');
+  var wasEmpty=!(ed.innerText||'').trim();
+  // un titre H1 en tête d'un article complet = titre de l'article (pas répété dans le corps)
+  if(big){
+    var m=clean.match(/^\s*<h1>([\s\S]*?)<\/h1>/);
+    var titleEl=document.getElementById('ed-title');
+    if(m){
+      var h1txt=textFromHtml(m[1]).trim();
+      if(!titleEl.value.trim()){titleEl.value=h1txt;onTitle(h1txt);clean=clean.slice(m[0].length);}
+      else if(titleEl.value.trim().toLowerCase()===h1txt.toLowerCase())clean=clean.slice(m[0].length);
+    }
+  }
+  clean=clean.replace(/<h1>/g,'<h2>').replace(/<\/h1>/g,'</h2>');
+  document.execCommand('insertHTML',false,clean);
+  onEditorInput();
+  if(big){
+    toast('Article collé et nettoyé — génération de l\'extrait, de la méta description et du mot-clé…','green');
+    autoFillSeo({});
+  }
+}
+
+var STOP_FR=('le la les un une des de du d l au aux et ou mais donc or ni car ce cet cette ces se sa son ses leur leurs notre nos votre vos mon ma mes ton ta tes il elle ils elles on nous vous je tu qui que quoi dont où pour par sur sous dans avec sans chez entre vers selon comme plus moins très aussi encore déjà tout tous toute toutes est sont être avoir a ont fait faire peut peuvent doit doivent sera seront été en y ne pas non si the of and to in for with on at by from that this is are be as it or an your you our their can will not more also'.split(' '));
+function skSentences(t){return (t.replace(/\s+/g,' ').match(/[^.!?…]+[.!?…]+(?=\s|$)|[^.!?…]+$/g)||[]).map(function(x){return x.trim();}).filter(Boolean);}
+function skClip(t,max){
+  t=t.replace(/\s+/g,' ').trim();if(t.length<=max)return t;
+  var c=t.slice(0,max-1),i=c.lastIndexOf(' ');
+  return (i>max*0.6?c.slice(0,i):c).replace(/[\s,;:.\-–]+$/,'')+'…';
+}
+function skFirstParas(){
+  var ed=document.getElementById('rte-editor'),arr=[];
+  ed.querySelectorAll('p').forEach(function(p){var t=(p.innerText||'').replace(/\s+/g,' ').trim();if(t.length>=50&&!p.closest('blockquote,li,table'))arr.push(t);});
+  return arr;
+}
+function skGuessKeyword(){
+  var ed=document.getElementById('rte-editor');
+  var title=document.getElementById('ed-title').value||'';
+  var heads=[].map.call(ed.querySelectorAll('h2,h3'),function(h){return h.innerText;}).join(' . ');
+  var body=ed.innerText||'';
+  var tok=function(t){return (t.toLowerCase().replace(/[’']/g,' ').match(/[a-zà-öø-ÿ0-9][a-zà-öø-ÿ0-9-]+/g)||[]);};
+  var score={};
+  var add=function(text,w){
+    text.split(/[.!?;:\n,()–—|]+/).forEach(function(seg){
+      var ws=tok(seg);
+      for(var n=2;n<=3;n++)for(var i=0;i+n<=ws.length;i++){
+        var g=ws.slice(i,i+n);
+        if(STOP_FR.indexOf(g[0])>-1||STOP_FR.indexOf(g[n-1])>-1)continue;
+        if(g.some(function(x){return x.length<2;}))continue;
+        var k=g.join(' ');score[k]=(score[k]||0)+w;
+      }
+    });
+  };
+  add(body,1);add(heads,3);add(title,4);
+  var best=null,bs=0;
+  Object.keys(score).forEach(function(k){
+    var n=k.split(' ').length,c=score[k];
+    var occ=(body.toLowerCase().split(k).length-1);
+    if(occ<2&&c<4)return;
+    var v=c*(n===2?1.3:1);
+    if(v>bs){bs=v;best=k;}
+  });
+  if(best)return best;
+  var uni={};tok(title+' '+heads+' '+body).forEach(function(w){if(w.length>4&&STOP_FR.indexOf(w)<0)uni[w]=(uni[w]||0)+1;});
+  var u=Object.keys(uni).sort(function(a,b){return uni[b]-uni[a];})[0];
+  return u||'';
+}
+function skHeuristicSeo(){
+  var paras=skFirstParas();
+  var all=paras.join(' ');
+  var sents=skSentences(all);
+  var excerpt='',meta='';
+  var acc='';
+  for(var i=0;i<sents.length;i++){
+    if((acc+' '+sents[i]).trim().length>210&&acc)break;
+    acc=(acc+' '+sents[i]).trim();
+    if(acc.length>=130)break;
+  }
+  excerpt=skClip(acc||all,210);
+  var m='',j=0;
+  while(j<sents.length&&(m+' '+sents[j]).trim().length<=158){m=(m+' '+sents[j]).trim();j++;}
+  // trop court (<120) : on complète avec le début de la phrase suivante, coupé proprement
+  if(m.length<120&&j<sents.length)m=skClip((m+' '+sents[j]).trim(),158);
+  meta=skClip(m||all,158);
+  return {excerpt:excerpt,metaDescription:meta,focusKeyword:skGuessKeyword()};
+}
+async function skAiSeo(){
+  try{
+    var ses=await window.__sbAdmin.auth.getSession();
+    var tok=ses&&ses.data&&ses.data.session&&ses.data.session.access_token;if(!tok)return null;
+    var ctrl=new AbortController();var to=setTimeout(function(){ctrl.abort();},45000);
+    var r=await fetch('/.netlify/functions/admin-seo-fields',{method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json',Authorization:'Bearer '+tok},
+      body:JSON.stringify({title:document.getElementById('ed-title').value,text:(document.getElementById('rte-editor').innerText||'')})});
+    clearTimeout(to);
+    if(!r.ok)return null;return await r.json();
+  }catch(e){return null;}
+}
+var seoBusy=false;
+async function autoFillSeo(opts){
+  opts=opts||{};
+  var words=(document.getElementById('rte-editor').innerText||'').trim().split(/\s+/).filter(Boolean).length;
+  if(words<25){toast('Écrivez ou collez d\'abord le texte de l\'article','amber');return;}
+  if(seoBusy)return;seoBusy=true;
+  var btn=document.getElementById('btn-seo-auto');if(btn){btn.disabled=true;btn.textContent='⏳ Génération…';}
+  var force=!!opts.force;
+  var elx=document.getElementById('ed-excerpt'),elm=document.getElementById('ed-meta'),elk=document.getElementById('ed-focus-kw');
+  var can={excerpt:force||!seoDirty.excerpt||!elx.value.trim(),meta:force||!seoDirty.meta||!elm.value.trim(),kw:force||!seoDirty.kw||!elk.value.trim()};
+  var apply=function(r){
+    if(can.excerpt&&r.excerpt){elx.value=r.excerpt;}
+    if(can.meta&&r.metaDescription){elm.value=r.metaDescription;onMeta(r.metaDescription);}
+    if(can.kw&&r.focusKeyword){elk.value=r.focusKeyword;}
+    updateSeo();scheduleAutosave();
+  };
+  try{
+    var h=skHeuristicSeo();apply(h);
+    var ai=await skAiSeo();
+    if(ai&&(ai.excerpt||ai.metaDescription)){
+      // ne pas écraser ce que l'utilisateur a retouché pendant l'appel
+      ['excerpt','meta','kw'].forEach(function(k){var el={excerpt:elx,meta:elm,kw:elk}[k];if(!force&&seoDirty[k]&&el.value.trim())can[k]=false;});
+      apply(ai);
+      var tEl=document.getElementById('ed-title');
+      if(ai.title&&!tEl.value.trim()){tEl.value=ai.title;onTitle(ai.title);}
+      toast('Extrait, méta description et mot-clé générés','green');
+    }else{
+      toast('Champs SEO générés (mode simplifié — IA indisponible)','amber');
+    }
+  }finally{
+    seoBusy=false;if(btn){btn.disabled=false;btn.textContent='✨ Générer auto';}
+  }
 }
 function insertLink(){
   savedRange=null;
@@ -1599,7 +1938,9 @@ function confirmLink(){
     var sel=window.getSelection();
     sel.removeAllRanges();sel.addRange(savedRange);
   }
-  document.execCommand('insertHTML',false,`<a href="${url}">${txt||url}</a>`);
+  var esc=function(v){return String(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');};
+  if(!/^(https?:|mailto:|tel:|\/|#)/i.test(url))url='https://'+url;
+  document.execCommand('insertHTML',false,'<a href="'+esc(url)+'">'+esc(txt||url)+'</a>');
   closeLinkModal();
 }
 
@@ -1693,37 +2034,69 @@ async function openArticlePreview(){
   var heroUrl=hero;
   var now=new Date();
   var dateLabel=now.toLocaleDateString(en?'en-GB':'fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  var words=(document.getElementById('rte-editor').innerText||'').trim().split(/\s+/).filter(Boolean).length;
+  var mins=Math.max(1,Math.ceil(words/200));
+  var slug=document.getElementById('ed-slug').value.trim();
+  var metaT=document.getElementById('ed-title').value.trim();
+  var metaD=document.getElementById('ed-meta').value.trim();
+  var origin=location.origin;
+  var attr=function(v){return String(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');};
+  var txt=function(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;');};
 
   var heroBlock=heroUrl?`<div style="height:340px;background:#1a1a2e;display:flex;align-items:flex-end;padding:0;position:relative;overflow:hidden;">
-    <img src="${heroUrl}" alt="${heroAlt.replace(/"/g,'&quot;')}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;"/>
+    <img src="${attr(heroUrl)}" alt="${attr(heroAlt)}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;"/>
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,26,46,.2) 0%,rgba(26,26,46,.85) 100%);"></div>
   </div>`:'';
+  var snippet=(metaT||metaD)?`<div style="margin:0 0 28px;padding:14px 16px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;font-family:Arial,sans-serif;">
+      <div style="font-size:11px;color:#6b7280;margin-bottom:4px">${T('Aperçu Google')} · sparklin.io › blog › ${txt(slug||'…')}</div>
+      <div style="font-size:18px;color:#1a0dab;line-height:1.3">${txt(metaT||title)}</div>
+      <div style="font-size:13px;color:#4d5156;line-height:1.5;margin-top:3px">${txt(metaD||excerpt)}</div>
+    </div>`:'';
 
-  var doc=`<!DOCTYPE html><html lang="${en?'en':'fr'}"><head><meta charset="UTF-8"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:wght@300;400;500&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="/assets/css/style.css"/>
-    <style>body{padding-top:0}.sk-nav,.sk-footer{display:none!important}</style>
+  var doc=`<!DOCTYPE html><html lang="${en?'en':'fr'}"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <base href="${origin}/" target="_blank"/>
+    <link rel="stylesheet" href="${origin}/assets/css/style.css"/>
+    <style>
+      html,body{margin:0;background:#fff}body,main{padding-top:0!important;margin-top:0!important}
+      .sk-nav,.sk-footer,.cookie-banner,#cookie-banner,.sk-skip{display:none!important}
+      .reveal,[data-reveal],.fade-up,.animate-on-scroll{opacity:1!important;transform:none!important}
+      .blog-body img{max-width:100%;height:auto;border-radius:10px;display:block;margin:24px 0}
+      .blog-body table{width:100%;border-collapse:collapse;margin:0 0 22px;font-size:15px}
+      .blog-body th,.blog-body td{border:1px solid #e5e7eb;padding:8px 10px;text-align:left}
+      .blog-body blockquote{border-left:3px solid var(--orange,#ff6a1f);margin:24px 0;padding:4px 0 4px 18px;color:var(--text-mid,#555)}
+      .blog-body pre{background:#1a1a2e;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:13px}
+      .blog-body code{font-size:.9em;background:#f3f4f6;padding:1px 5px;border-radius:4px}.blog-body pre code{background:none;padding:0}
+      .blog-body hr{border:none;border-top:1px solid #e5e7eb;margin:36px 0}
+      .pv-flag{background:#FFF3E0;color:#B45309;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;display:inline-block;margin-bottom:16px}
+    </style>
     </head><body>
-    <main style="padding-top:24px;">
+    <main>
     ${heroBlock}
-    <article style="padding:40px clamp(20px,5vw,80px);">
+    <article style="padding:44px clamp(20px,5vw,80px) 60px;">
       <div class="sk-wrap sk-wrap--narrow blog-body">
-        <div style="background:#FFF3E0;color:#B45309;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;display:inline-block;margin-bottom:16px;">${T('APERÇU — non publié')}${en?' · English translation':''}</div>
-        ${category?`<div style="font-size:12px;font-weight:600;color:var(--text-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;">${category}</div>`:''}
-        <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:20px;">${title}</h1>
+        <div class="pv-flag">${T('APERÇU — non publié')}${en?' · English translation':''} · ${words.toLocaleString(en?'en-GB':'fr-FR')} ${en?'words':'mots'} · ${mins} min</div>
+        ${snippet}
+        ${category?`<div style="font-size:12px;font-weight:600;color:var(--text-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;">${txt(category)}</div>`:''}
+        <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:20px;">${txt(title)}</h1>
         <div class="blog-byline"><div class="blog-byline-avatar">S</div><span>${T('Par')} <strong>${T('Équipe Sparklin')}</strong></span><span class="blog-byline-dot"></span><span>${dateLabel}</span></div>
-        ${excerpt?`<div style="margin-bottom:32px;">${excerpt}</div>`:''}
+        ${excerpt?`<div style="margin-bottom:32px;">${txt(excerpt)}</div>`:''}
         ${body}
       </div>
     </article>
     </main>
+    <script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a)e.preventDefault();});<\/script>
     </body></html>`;
 
   var frame=document.getElementById('article-preview-frame');
   frame.srcdoc=doc;
   document.getElementById('article-preview-modal').classList.add('open');
+  setPreviewDevice(window.__pvDevice||'desktop');
+}
+function setPreviewDevice(d){
+  window.__pvDevice=d;
+  var w={desktop:'100%',tablet:'768px',mobile:'390px'}[d]||'100%';
+  var f=document.getElementById('article-preview-frame');f.style.width=w;f.style.boxShadow=d==='desktop'?'none':'0 0 0 1px var(--border),0 8px 30px rgba(0,0,0,.12)';
+  document.querySelectorAll('#pv-seg button').forEach(function(b){b.classList.toggle('on',b.dataset.pv===d);});
 }
 function closeArticlePreview(){
   document.getElementById('article-preview-modal').classList.remove('open');
