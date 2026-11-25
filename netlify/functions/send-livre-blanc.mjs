@@ -36,6 +36,18 @@ const common = (a, b) => [
   "❓&nbsp; Conseils pratiques &amp; FAQ",
 ];
 export const GUIDES = {
+  entreprises: {
+    label: "Entreprises", title: "Bornes de recharge en entreprise : le guide complet 2026",
+    sector: "votre entreprise", list: 4,
+    items: [
+      "⚖️&nbsp; Réglementation 2024-2030&nbsp;: loi LOM, Décret Tertiaire, quotas de parking",
+      "⚡&nbsp; Load balancing &amp; smart charging (Spark Plus, Spark Pilot)",
+      "🔌&nbsp; Interopérabilité&nbsp;: OCPP 2.0 &amp; GIREVE",
+      "👥&nbsp; RH &amp; fiscalité&nbsp;: remboursement URSSAF, avantage en nature",
+      "💶&nbsp; Financement&nbsp;: Advenir 2026 et montage optimal",
+      "🧩&nbsp; La gamme Spark 1 / Spark Plus / Spark Go-e / Spark Pilot",
+    ],
+  },
   collectivites: {
     label: "Collectivités", title: "La recharge électrique, enjeu stratégique pour les collectivités",
     sector: "votre collectivité", list: 10,

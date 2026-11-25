@@ -14,6 +14,12 @@ $rcSite = $_ENV['RECAPTCHA_SITE_KEY'] ?? '';
 
 $guides = [
   [
+    'key' => 'entreprises', 'sector' => 'Entreprises', 'pages' => 16,
+    'title' => 'Bornes de recharge en entreprise : le guide complet 2026',
+    'hook'  => 'Tout ce que votre entreprise doit savoir avant de déployer des bornes de recharge.',
+    'points' => ['Réglementation LOM, Décret Tertiaire et quotas de parking', 'Load balancing, OCPP et interopérabilité GIREVE', 'Fiscalité, remboursement URSSAF et financement Advenir'],
+  ],
+  [
     'key' => 'restaurants', 'sector' => 'Restaurants', 'pages' => 17,
     'title' => 'Le guide pour installer des bornes de recharge dans votre restaurant',
     'hook'  => 'Un repas dure 45 min à 2 h : exactement le temps d’une recharge.',
@@ -122,7 +128,7 @@ foreach ($guides as $g) {
   <header class="lbx-hero">
     <span style="display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--orange);margin-bottom:16px;">Ressources · Livres blancs</span>
     <h1>Votre guide pour installer des bornes de recharge, <em>secteur par secteur.</em></h1>
-    <p>Réglementation, choix des bornes, installation, supervision et financement : un guide de 16 pages, gratuit, écrit pour votre métier.</p>
+    <p>Réglementation, choix des bornes, installation, supervision et financement : un guide gratuit, écrit pour votre métier.</p>
     <nav class="lbx-chips" aria-label="Aller à un guide">
       <?php foreach ($guides as $g): ?><a href="#guide-<?= $g['key'] ?>"><?= $g['sector'] ?></a><?php endforeach; ?>
     </nav>
@@ -152,11 +158,10 @@ foreach ($guides as $g) {
     <div class="sk-wrap" style="background:var(--bg-off);border-radius:20px;padding:34px clamp(22px,4vw,48px);display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;">
       <div style="max-width:560px;">
         <h3 style="font-family:var(--font-display);font-size:1.25rem;font-weight:800;color:var(--dark);margin:0 0 6px;">Votre secteur n’est pas dans la liste&nbsp;?</h3>
-        <p style="font-size:14px;color:var(--text-mid);margin:0;line-height:1.6;">Parlez-nous de votre site : nous dimensionnons l’installation et chiffrons le projet avec vous. Le livre blanc général « Entreprise » reste disponible.</p>
+        <p style="font-size:14px;color:var(--text-mid);margin:0;line-height:1.6;">Parlez-nous de votre site : nous dimensionnons l’installation et chiffrons le projet avec vous. </p>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:10px;">
         <a class="btn-primary" href="/contact/">Parler à un expert →</a>
-        <a href="/livre-blanc/" style="display:inline-flex;align-items:center;padding:13px 20px;border:1.5px solid var(--border);border-radius:12px;font-weight:600;font-size:14px;color:var(--dark);text-decoration:none;background:#fff;">Livre blanc Entreprise</a>
       </div>
     </div>
   </section>
